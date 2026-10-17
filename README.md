@@ -2,7 +2,7 @@
 
 面向 A 股日频、周频研究的量化分析系统，目标是建立可追溯的数据历史，支持市场状态判断、选股、择时、风险控制与公平对照回测，并在本地生成每日精选 3–5 只股票和指定标的分析的静态日报，供手机浏览。
 
-**当前已实现最小 SQLite 数据层和 TASK-003 历史日线适配器。** 数据层提供初始化/迁移、校验、原子写入、追加版本和按时点读取；采集子集只支持 AKShare 单接口的沪深 A 股、不复权、过去日期日线，已有离线测试，真实接口手工测试尚未执行。完整证券主数据、日历、复权计算、完整 DataAccess/快照服务、策略、回测、日报、发布和 CI 仍未实现，系统未部署、不连接账户或自动下单，也不保证收益。详见 [TASK-002](docs/IMPLEMENTATION_TASK_002.md) 和 [TASK-003 实施记录](docs/IMPLEMENTATION_TASK_003.md)。
+**当前已实现最小 SQLite 数据层和 TASK-003 历史日线适配器。** 数据层提供初始化/迁移、校验、原子写入、追加版本和按时点读取；采集子集只支持 AKShare 单接口的沪深 A 股、不复权、过去日期日线，已有离线测试。TASK-003B 已安装 AKShare 1.19.1 并实际尝试请求，真实接口验收被 TLS 错误阻断，尚未通过。完整证券主数据、日历、复权计算、完整 DataAccess/快照服务、策略、回测、日报、发布和 CI 仍未实现，系统未部署、不连接账户或自动下单，也不保证收益。详见 [TASK-002](docs/IMPLEMENTATION_TASK_002.md)、[TASK-003](docs/IMPLEMENTATION_TASK_003.md) 和 [TASK-003B 验收记录](docs/IMPLEMENTATION_TASK_003B.md)。
 
 ## 功能范围与关键约束
 
@@ -72,7 +72,8 @@ AI-trade/
 │       ├── test_db.py
 │       ├── test_market_data_repository.py
 │       ├── test_data_validation.py
-│       └── test_akshare_ingestion.py
+│       ├── test_akshare_ingestion.py
+│       └── test_manual_acceptance_checks.py
 └── docs/
     ├── ARCHITECTURE.md
     ├── AUDIT.md
@@ -82,7 +83,8 @@ AI-trade/
     ├── ACCEPTANCE_TESTS.md
     ├── P0_IMPLEMENTATION_PLAN.md
     ├── IMPLEMENTATION_TASK_002.md
-    └── IMPLEMENTATION_TASK_003.md
+    ├── IMPLEMENTATION_TASK_003.md
+    └── IMPLEMENTATION_TASK_003B.md
 ```
 
 以下为长期工程布局，已建立的基础模块单独标注；其他条目仍为规划。包内最小领域对象暂放 `data_access/models.py`，完整领域层后续再拆分。
@@ -160,6 +162,8 @@ $env:QUANT_DB_PATH = "./data/sqlite/local.sqlite3"
 初始化命令可重复执行，不覆盖已有行情；`.env.example` 仅为模板，不自动加载。单元测试始终使用临时数据库，不读取上述本地数据库。安装依赖可能需要网络，核心测试不需要网络；回测、日报构建及发布入口仍待实现。
 
 TASK-003 已提供采集 API 和默认跳过的手工集成测试，调用方式、SDK 可选安装与 `--run-akshare-integration` 开关见 [实施说明](docs/IMPLEMENTATION_TASK_003.md)。没有定时采集或采集 CLI。请求必须显式指定 `none`；成交量从手转换为股，实际观察时间保守作为可用时间，不能把新下载的历史数据倒填成历史入库。SDK 未暴露的限流状态可能只能报告为未知响应或空响应。
+
+手工测试的请求追踪、SQLite 读回、可见性与证据断言已补强；本轮依赖安装诊断、可复现命令和真实 TLS 失败记录见 [TASK-003B](docs/IMPLEMENTATION_TASK_003B.md)。默认离线测试通过不代表真实接口或完整数据验收通过。
 
 ## 后续测试操作与门禁
 
