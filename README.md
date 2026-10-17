@@ -2,13 +2,13 @@
 
 面向 A 股日频、周频研究的量化分析系统，目标是建立可追溯的数据历史，支持市场状态判断、选股、择时、风险控制与公平对照回测，并在本地生成每日精选 3–5 只股票和指定标的分析的静态日报，供手机浏览。
 
-**当前状态（2026-10-17）：** 已合并 TASK-002 SQLite 数据层、TASK-003 AKShare 单接口历史日线适配器、TASK-003C TLS 诊断，以及隔离式 Streamlit 本地演示页面。GitHub Actions 已运行离线 pytest；TASK-003C 仅在指定环境和批次通过真实行情验收。Streamlit 页面尚无 Windows 本地真实网络端到端验收记录。尚未实现完整证券主数据、交易日历、复权、市场状态、选股、回测、日报和 AWS 部署；不连接交易账户或自动下单。**权威当前状态与验收边界见 [项目状态](docs/PROJECT_STATUS.md)。** 原实施记录保留当时环境、分支和测试结果，不作为最新状态。
+**当前状态（2026-10-17）：** 已合并 TASK-002 SQLite 数据层、TASK-003 AKShare 单接口历史日线适配器、TASK-003C TLS 诊断，以及隔离式 Streamlit 本地演示页面。本 TASK-004 分支新增证券主数据与日期级交易日历的模型、Schema v2、不可变修订和 `as_of` 查询，尚待 PR 审查合并；仅通过合成事实和隔离 SQLite 离线测试，真实主数据/日历来源与历史覆盖未验收，ST 历史未实现。GitHub Actions 已运行既有离线 pytest；TASK-003C 仅在指定环境和批次通过真实行情验收。Streamlit 页面尚无 Windows 本地真实网络端到端验收记录。复权、市场状态、选股、回测、日报和 AWS 部署仍未实现；不连接交易账户或自动下单。**权威当前状态与验收边界见 [项目状态](docs/PROJECT_STATUS.md)。** 原实施记录保留当时环境、分支和测试结果，不作为最新状态。
 
 ## 功能范围与关键约束
 
 | 规划能力 | 范围与约束 | 当前状态 |
 | --- | --- | --- |
-| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已有最小日线仓储、单接口历史采集与 SDK 快照证据；指定批次真实源验收通过，其余数据集待完成 |
+| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已有最小日线仓储、单接口历史采集与 SDK 快照证据；本分支新增主数据/日历模型、存储及查询，其真实历史与 ST 未验收/未实现；指定行情批次验收不代表全部数据集通过 |
 | 市场与板块 | 全 A 等权等市场宽度、连续普跌恢复、历史行业/概念强弱 | 待实现，部分规则待确认 |
 | 选股与择时 | 非 ST、可交易、历史可得总市值不少于 100 亿元的保守股票池；成长、龙头、热度评分及日/周信号 | 待实现，业务定义待确认 |
 | 风控与回测 | 仓位、集中度、止损；停牌、涨跌停、复权、公司行为、费用与滑点；允许空仓与持续持仓对照 | 待实现 |
@@ -49,6 +49,17 @@ AI-trade/
 ├── pyproject.toml
 ├── src/ai_trade/
 │   ├── __init__.py
+│   ├── reference_data/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── validation.py
+│   │   └── repository_support.py
+│   ├── security_master/
+│   │   ├── __init__.py
+│   │   └── repository.py
+│   ├── trading_calendar/
+│   │   ├── __init__.py
+│   │   └── repository.py
 │   ├── demo_app.py                 # 已有：隔离 Streamlit 演示
 │   ├── market_data/
 │   │   ├── __init__.py
@@ -60,6 +71,7 @@ AI-trade/
 │   │   ├── __init__.py
 │   │   ├── __main__.py            # 仅初始化/迁移数据库
 │   │   ├── db.py
+│   │   ├── reference_schema.py    # Schema v2；复用既有事务/迁移
 │   │   └── schema.py
 │   └── data_access/
 │       ├── __init__.py
@@ -72,6 +84,7 @@ AI-trade/
 │   ├── manual/test_akshare_daily_live.py # 默认跳过，需显式启用
 │   └── unit/
 │       ├── test_db.py
+│       ├── test_reference_data.py # 合成主数据/日历与真实临时 SQLite
 │       ├── test_market_data_repository.py
 │       ├── test_data_validation.py
 │       ├── test_akshare_ingestion.py
@@ -89,6 +102,7 @@ AI-trade/
     ├── IMPLEMENTATION_TASK_003.md
     ├── IMPLEMENTATION_TASK_003B.md
     ├── IMPLEMENTATION_TASK_003C.md
+    ├── IMPLEMENTATION_TASK_004.md
     ├── LOCAL_MARKET_DEMO.md
     └── PROJECT_STATUS.md
 ```
@@ -104,8 +118,9 @@ AI-trade/
 ├── src/ai_trade/                  # 已建立：仅数据基础设施
 │   ├── domain/                    # 待实现：领域对象、元数据、错误类型
 │   ├── market_data/               # 已有：最小 AKShare 历史日线适配；其余来源待实现
-│   ├── trading_calendar/          # 待实现：交易会话
-│   ├── security_master/           # 待实现：证券身份及历史状态
+│   ├── reference_data/            # 本分支已有：参考数据领域对象及校验
+│   ├── trading_calendar/          # 本分支已有：日期级版本查询；真实来源/会话待实现
+│   ├── security_master/           # 本分支已有：实体及名称有效期；真实历史/ST 待实现
 │   ├── corporate_actions/         # 待实现：公司行为与复权
 │   ├── storage/                   # 已有：SQLite、事务与版本迁移
 │   ├── data_access/               # 已有：最小日线仓储；完整查询/快照服务待实现
@@ -149,7 +164,7 @@ Codex Cloud 与 GitHub 的协作分工是本文补充的开发流程建议；计
 ## 后续开发操作
 
 1. 先阅读七份文档，评审并记录 [DECISIONS.md](docs/DECISIONS.md) 的 Q-001 至 Q-010：来源许可、数据截点、复权、成交、股票池、市场状态、全球代理、期货字段、发布访问及标的范围。未确认规则不得隐式写入策略。
-2. TASK-002 已建立 Python 环境声明、配置模板、忽略规则、数据库初始化入口和 pytest 命令；格式工具及最小 已建立最小离线 CI。按 P0-0 完善剩余工程基线。
+2. TASK-002 已建立 Python 环境声明、配置模板、忽略规则、数据库初始化入口和 pytest 命令；已有最小离线 CI，格式工具待完善。按 P0-0 完善剩余工程基线。
 3. 按 P0-1 至 P0-8 的依赖顺序开发，每个工作包提交对应的迁移、版本化配置、测试和操作说明。数据源适配器必须隔离外部字段与失败方式；业务模块通过 `DataAccess` 读取。
 4. 数据底座通过验收后，再引入经许可的少量历史数据。每次运行固化 `run_id`、代码版本、规则/配置版本、`data_snapshot_id`、`as_of` 与成本模型版本，保留可复现证据。
 5. 推送开发分支并通过 PR 审查；在 Codex Cloud 中使用合成数据复现测试，真实数据和受保护配置继续留在本地 PC。
@@ -175,6 +190,8 @@ TASK-003 已提供采集 API 和默认跳过的手工集成测试，调用方式
 
 ## 后续测试操作与门禁
 
+TASK-004 接口、时间字段、来源审查、隔离临时库示例及真实测试结果见 [实施报告](docs/IMPLEMENTATION_TASK_004.md)。证券版本唯一键为 `(instrument_id, record_version)`，日历版本键为 `(exchange, session_date, record_version)`；修订追加并显式关联前驱，禁止静默覆盖。所有模式同时过滤 `available_at` 与 `ingested_at`，缺失日历不等于休市。只有结构/离线测试通过，不能据此初始化生产库或声称真实历史数据已验收。
+
 当前 [ACCEPTANCE_TESTS.md](docs/ACCEPTANCE_TESTS.md) 是完整 P0 验收规范，**不是已执行或已通过的测试记录**。TASK-002 已有数据层单元测试，实际执行结果见实施记录；不能据此宣称完整 P0 验收通过。CI 已建立最小离线 pytest，但未覆盖真实网络与 Streamlit 页面。
 
 1. 建立最小合成数据集，固定时钟、数据快照与规则版本，测试成功不能依赖在线数据的偶然可用性。
@@ -197,7 +214,7 @@ P0 只实现本地构建和发布边界验证，不部署 AWS。P1 在人工审�
 
 ## P0 / P1 / P2 路线
 
-以下为完整路线；TASK-002/003 仅落地工程/数据层与最小采集子集，不代表这些工作包或完整 P0 已完成。
+以下为完整路线；TASK-002/003/004 仅落地工程、数据层、最小采集及主数据/日历子集，不代表这些工作包或完整 P0 已完成。
 
 | 阶段 | 开发顺序与范围 | 完成条件 |
 | --- | --- | --- |

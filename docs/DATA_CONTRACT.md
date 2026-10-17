@@ -64,3 +64,41 @@
 | C：不可验证 | 缺乏稳定公开字段或无法追溯主体 | “不可验证，未纳入模型” | 估计为真实机构净持仓 |
 
 任何日报、评分或回测字段都应携带 `evidence_grade` 和 `definition`。A/B 等级也不构成投资建议。
+
+## TASK-004：主数据与日历的最小落地契约
+
+以下细化有效时间和版本语义，不放宽以上时间可得性要求；不代表真实来源和历史覆盖已验收。
+
+### 证券身份与有效期
+
+- `instrument_id` 由调用方的实体登记过程提供，禁止直接使用六位代码或带交易所的代码作为 ID。代码复用须创建不同上市实体的 ID，不能合并历史。
+- 复用 TASK-002 的不可变 `instruments` 身份锚点。同一 ID 的改代码/跨交易所迁移本任务明确拒绝，不能自动另造 ID 伪装为已支持；后续需独立设计代码别名和迁移方案。
+- 证券模型支持 SH/SZ/BJ、显式 `A_SHARE`；仅校验代码形式和交易所后缀一致，不以代码前缀证明真实证券类型。ETF、指数、B 股等暂不接受。
+- 上市生命期为 `[listing_date, delisting_date)`；退市日定义为首次不再上市的日期，null 仅表示没有已记录的退市事实，不证明永不退市。
+- 名称有效期为 `[effective_from, effective_to)`，有效期允许缺口，缺口必须报未知，不能把当前名称填至上市日。ST/风险历史未实现，返回 `risk_status=None` 和告警，不能从名称推断 ST 或正常状态。
+
+### 不可变时间线版本
+
+`security_versions` 每个版本原子保存一个实体的完整“已知名称有效期”时间线；JSON 中 1–256 个有序、不重叠区间可以不覆盖全部生命期。逻辑上的 `instrument_id,effective_from` 仍界定有效段，物理上作为不可变版本的一部分保存，避免关闭旧有效段时 UPDATE 历史。整个版本单行写入，不存在事后追加子记录改变旧版本的问题。
+
+每个实体只有一条已确认版本链，版本唯一键为 `(instrument_id, record_version)`，单根、单后继、父版本外键，禁止分叉。不同来源不能并列成为互相冲突的根版本；换源必须显式指定前驱版本和 `revision_reason`，系统不自动选优。代码相同的不同实体，其生命期在系统可见区间相交时也不得重叠；检查包含被后续修订替代前的历史版本。
+
+新证据需要修订时，调用方提供完整已知时间线、前驱与依据；旧版本不覆盖。`quality_status=accepted` 仅代表结构校验通过，不代表来源真实性、完整性或历史证据已认证。其他主数据质量状态暂不接收。
+
+### 来源、事件与系统时间
+
+两类数据均要求显式 `source`、`record_version`、`event_time`、`available_at`、`observed_at`、`ingested_at`、`evidence_kind` 和 `evidence_ref`。来源为 `provider:endpoint:adapter_version`；证据种类只能是 `synthetic` 或 `source_observation`，前者读取时始终告警，后者是调用方的来源声明，不是系统自动认证结果。
+
+这里 `event_time` 表示参考数据版本描述的事实/公告事件时点；对于预先发布的日历，是日历版本发布事件，不是未来交易日收盘时刻。它与业务有效日期分开。缺乏该时间的来源不能被自动补造为历史发布事件。`event_time <= available_at`、`event_time <= observed_at <= ingested_at`，统一 UTC 固定微秒精度；允许实际可用时间晚于观察/入库（如另有使用限制），但查询仍等待两个截止条件。
+
+所有模式都同时限制 `available_at <= as_of`、`ingested_at <= as_of`。修订三项 available/observed/ingested 时间不得倒退，`max(available_at,ingested_at)` 必须严格推进。业务有效日期可早于或晚于观察日期；不能让今天才观察到的修订出现在过去的 as_of。
+
+### 交易日历
+
+日历按 `(exchange, session_date)` 建立唯一版本链，版本键再含 `record_version`；不同交易所不互相复制。accepted 必须明确布尔 `is_trading_day`；source_error 必须为空状态并附错误说明。source_error 版本不允许回退读取旧 accepted 版本。
+
+单日查询区分：已知开市 true、已知休市 false、缺失 CalendarDataMissingError、源错误 CalendarSourceError。没有记录绝不等于 false。
+
+区间为两端包含，最多 36600 个日期。research 返回已知开市记录，并显式给出 missing_dates、source_error_dates、complete 和告警；严格/纸面模式遇任一缺失或错误则失败。最近已知交易日查询必须给出 search_start 和不包含的 before；research 可返回带不完整标记的最近已知开市日，不承诺它是实际紧邻上一交易日。无可用日时依次保留源错误、缺失或“已知区间无开市日”的错误类别。
+
+本任务仅支持日期级状态，不提供开收盘时刻、临时半日市、停牌/涨跌停或日内可交易性。单条/查询结果的 data_snapshot_id 是带查询范围和血缘的观测摘要，不是可重开的全库或完整实验快照。
