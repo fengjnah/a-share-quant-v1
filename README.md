@@ -2,13 +2,13 @@
 
 面向 A 股日频、周频研究的量化分析系统，目标是建立可追溯的数据历史，支持市场状态判断、选股、择时、风险控制与公平对照回测，并在本地生成每日精选 3–5 只股票和指定标的分析的静态日报，供手机浏览。
 
-**当前已实现最小 SQLite 数据层和 TASK-003 历史日线适配器。** 数据层提供初始化/迁移、校验、原子写入、追加版本和按时点读取；采集子集只支持 AKShare 单接口的沪深 A 股、不复权、过去日期日线，已有离线测试。TASK-003B 已安装 AKShare 1.19.1 并实际尝试请求，真实接口验收被 TLS 错误阻断，尚未通过。完整证券主数据、日历、复权计算、完整 DataAccess/快照服务、策略、回测、日报、发布和 CI 仍未实现，系统未部署、不连接账户或自动下单，也不保证收益。详见 [TASK-002](docs/IMPLEMENTATION_TASK_002.md)、[TASK-003](docs/IMPLEMENTATION_TASK_003.md) 和 [TASK-003B 验收记录](docs/IMPLEMENTATION_TASK_003B.md)。
+**当前状态（2026-10-17）：** 已合并 TASK-002 SQLite 数据层、TASK-003 AKShare 单接口历史日线适配器、TASK-003C TLS 诊断，以及隔离式 Streamlit 本地演示页面。GitHub Actions 已运行离线 pytest；TASK-003C 仅在指定环境和批次通过真实行情验收。Streamlit 页面尚无 Windows 本地真实网络端到端验收记录。尚未实现完整证券主数据、交易日历、复权、市场状态、选股、回测、日报和 AWS 部署；不连接交易账户或自动下单。**权威当前状态与验收边界见 [项目状态](docs/PROJECT_STATUS.md)。** 原实施记录保留当时环境、分支和测试结果，不作为最新状态。
 
 ## 功能范围与关键约束
 
 | 规划能力 | 范围与约束 | 当前状态 |
 | --- | --- | --- |
-| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已有最小日线仓储及单接口历史采集、SDK 快照证据；真实源验收和其余数据集待完成 |
+| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已有最小日线仓储、单接口历史采集与 SDK 快照证据；指定批次真实源验收通过，其余数据集待完成 |
 | 市场与板块 | 全 A 等权等市场宽度、连续普跌恢复、历史行业/概念强弱 | 待实现，部分规则待确认 |
 | 选股与择时 | 非 ST、可交易、历史可得总市值不少于 100 亿元的保守股票池；成长、龙头、热度评分及日/周信号 | 待实现，业务定义待确认 |
 | 风控与回测 | 仓位、集中度、止损；停牌、涨跌停、复权、公司行为、费用与滑点；允许空仓与持续持仓对照 | 待实现 |
@@ -22,7 +22,7 @@
 ## 总体架构（规划）
 
 ```text
-公开数据源（AKShare 仅为候选适配器）
+公开数据源（已接入 AKShare 单接口适配器）
   → 采集适配器 / 日历 / 证券主数据 / 公司行为
   → 原始载荷归档 + 标准化验证 + 数据血缘
   → DataAccess（默认 SQLite；未来预留 Parquet/DuckDB）
@@ -44,10 +44,12 @@ AI-trade/
 ├── .git/                          # 已存在：Git 元数据
 ├── README.md
 ├── .gitignore
+├── .github/workflows/offline-pytest.yml # 已有：PR 和 main 离线测试
 ├── .env.example
 ├── pyproject.toml
 ├── src/ai_trade/
 │   ├── __init__.py
+│   ├── demo_app.py                 # 已有：隔离 Streamlit 演示
 │   ├── market_data/
 │   │   ├── __init__.py
 │   │   ├── models.py
@@ -73,7 +75,8 @@ AI-trade/
 │       ├── test_market_data_repository.py
 │       ├── test_data_validation.py
 │       ├── test_akshare_ingestion.py
-│       └── test_manual_acceptance_checks.py
+│       ├── test_manual_acceptance_checks.py
+│       └── test_tls_diagnostics.py
 └── docs/
     ├── ARCHITECTURE.md
     ├── AUDIT.md
@@ -84,7 +87,10 @@ AI-trade/
     ├── P0_IMPLEMENTATION_PLAN.md
     ├── IMPLEMENTATION_TASK_002.md
     ├── IMPLEMENTATION_TASK_003.md
-    └── IMPLEMENTATION_TASK_003B.md
+    ├── IMPLEMENTATION_TASK_003B.md
+    ├── IMPLEMENTATION_TASK_003C.md
+    ├── LOCAL_MARKET_DEMO.md
+    └── PROJECT_STATUS.md
 ```
 
 以下为长期工程布局，已建立的基础模块单独标注；其他条目仍为规划。包内最小领域对象暂放 `data_access/models.py`，完整领域层后续再拆分。
@@ -93,7 +99,7 @@ AI-trade/
 AI-trade/
 ├── pyproject.toml                 # 已有：Python >=3.11、依赖、pytest 配置
 ├── .gitignore                     # 已有：数据、凭据及运行产物忽略规则
-├── .github/workflows/             # 待实现：CI
+├── .github/workflows/             # 已有：最小离线 CI
 ├── configs/                       # 待实现：配置样例与版本化规则；不提交密钥
 ├── src/ai_trade/                  # 已建立：仅数据基础设施
 │   ├── domain/                    # 待实现：领域对象、元数据、错误类型
@@ -135,7 +141,7 @@ AI-trade/
 | --- | --- | --- |
 | 本地 PC | 数据采集、清洗、归档、SQLite、指标、研究、回测、日报构建及人工审阅；后续本地定时任务 | 受保护配置保留在本地；已有数据库初始化入口，其余运行工具待实现，P0 不使用交易凭据 |
 | Codex Cloud | 在隔离开发环境中辅助修改代码、审查契约、运行合成数据测试和准备 PR | 开发协作角色；非生产采集或回测运行平台，不依赖本地数据库和生产密钥；尚未配置环境 |
-| GitHub | 代码与文档版本管理、分支、PR 审查及后续 CI | 已连接 fengjnah/a-share-quant-v1；默认 main；不存储私密配置、原始数据、SQLite 或运行产物；CI 待实现 |
+| GitHub | 代码与文档版本管理、分支、PR 审查及后续 CI | 已连接 fengjnah/a-share-quant-v1；默认 main；不存储私密配置、原始数据、SQLite 或运行产物；已有最小离线 CI |
 | AWS EC2 t3.micro | Nginx 只读托管本地已构建、审核的静态 HTML/JSON、资源和 manifest | 尚未部署；不保存全量历史库或数据源/交易凭据，不采集、不计算、不回测、不连接交易账户 |
 
 Codex Cloud 与 GitHub 的协作分工是本文补充的开发流程建议；计算及 AWS 运行边界来自已采纳的 ADR-003。
@@ -143,10 +149,10 @@ Codex Cloud 与 GitHub 的协作分工是本文补充的开发流程建议；计
 ## 后续开发操作
 
 1. 先阅读七份文档，评审并记录 [DECISIONS.md](docs/DECISIONS.md) 的 Q-001 至 Q-010：来源许可、数据截点、复权、成交、股票池、市场状态、全球代理、期货字段、发布访问及标的范围。未确认规则不得隐式写入策略。
-2. TASK-002 已建立 Python 环境声明、配置模板、忽略规则、数据库初始化入口和 pytest 命令；格式工具及最小 CI 待建设。按 P0-0 完善剩余工程基线。
+2. TASK-002 已建立 Python 环境声明、配置模板、忽略规则、数据库初始化入口和 pytest 命令；格式工具及最小 已建立最小离线 CI。按 P0-0 完善剩余工程基线。
 3. 按 P0-1 至 P0-8 的依赖顺序开发，每个工作包提交对应的迁移、版本化配置、测试和操作说明。数据源适配器必须隔离外部字段与失败方式；业务模块通过 `DataAccess` 读取。
 4. 数据底座通过验收后，再引入经许可的少量历史数据。每次运行固化 `run_id`、代码版本、规则/配置版本、`data_snapshot_id`、`as_of` 与成本模型版本，保留可复现证据。
-5. GitHub 远端配置完成后，推送开发分支并通过 PR 审查；在 Codex Cloud 中使用合成数据复现测试，真实数据和受保护配置继续留在本地 PC。
+5. 推送开发分支并通过 PR 审查；在 Codex Cloud 中使用合成数据复现测试，真实数据和受保护配置继续留在本地 PC。
 
 在 Python 3.11 或更高版本的干净环境中，项目根目录可执行（PowerShell）：
 
@@ -169,7 +175,7 @@ TASK-003 已提供采集 API 和默认跳过的手工集成测试，调用方式
 
 ## 后续测试操作与门禁
 
-当前 [ACCEPTANCE_TESTS.md](docs/ACCEPTANCE_TESTS.md) 是完整 P0 验收规范，**不是已执行或已通过的测试记录**。TASK-002 已有数据层单元测试，实际执行结果见实施记录；不能据此宣称完整 P0 验收通过。CI 待建设。
+当前 [ACCEPTANCE_TESTS.md](docs/ACCEPTANCE_TESTS.md) 是完整 P0 验收规范，**不是已执行或已通过的测试记录**。TASK-002 已有数据层单元测试，实际执行结果见实施记录；不能据此宣称完整 P0 验收通过。CI 已建立最小离线 pytest，但未覆盖真实网络与 Streamlit 页面。
 
 1. 建立最小合成数据集，固定时钟、数据快照与规则版本，测试成功不能依赖在线数据的偶然可用性。
 2. 先验证严格可得性、历史修订、日/周边界、成分历史、ST/退市、停牌、涨跌停、公司行为及重复采集；再验证成本、组合记账、可复现性和静态发布边界。
