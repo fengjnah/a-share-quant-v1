@@ -1,7 +1,7 @@
 name: Offline pytest
 on:
   push:
-    branches: [feature/task-003c-tls-rebased]
+    branches: [main]
   pull_request:
     branches: [main]
 jobs:
