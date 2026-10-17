@@ -35,3 +35,21 @@
 ## 存储实现契约
 
 SQLite 实现负责事务、约束、索引、迁移和只读快照；上层不得依赖 SQLite 专有返回类型。推荐单写多读、采集批次短事务、WAL 模式（实施时验证网络盘兼容性）。未来 `ParquetDuckDBDataAccess` 必须通过同一契约，保持相同 `as_of` 可见性和版本选择，不能以“列式读取性能”为由跳过血缘或可得性过滤。
+
+## TASK-004 已实现的最小端口
+
+完整端口规划继续有效，下列只是日期级模型/存储/查询子集，不接入真实来源，不代表完整主数据、ST 历史、交易会话或可交易性服务。
+
+| 实现 | 方法 | 语义 |
+| --- | --- | --- |
+| `SQLiteSecurityMaster` / `SecurityMaster` Protocol | `write_many(records, run_id=...)` | 事务写入不可变 SecuritySnapshot；重复、分叉、冲突明确失败，空批次拒绝 |
+| 同上 | `get(instrument_id=..., valid_on=..., as_of=..., mode=...)` | 先选择系统时点可见的完整版本，再按业务日期取名称有效段；生命期外与有效段缺失用不同错误 |
+| 同上 | `resolve(symbol=..., valid_on=..., as_of=..., mode=...)` | 按当时有效上市实体解析代码；不按当前代码合并历史，歧义显式失败 |
+| `SQLiteTradingCalendar` / `TradingCalendar` Protocol | `write_many(records, run_id=...)` | 明确存储 CalendarDay 的开市、休市或源错误，不根据缺失合成休市 |
+| 同上 | `get_day(exchange=..., session_date=..., as_of=..., mode=...)` | 返回带元数据的领域日历对象；value.is_trading_day 为判断结果，未知与错误抛不同异常 |
+| 同上 | `trading_days(exchange=..., start=..., end=..., as_of=..., mode=...)` | 返回日期排序的已知开市对象；research 显式披露缺失/错误，严格模式拒绝不完整区间 |
+| 同上 | `previous_known_trading_day(exchange=..., before=..., search_start=..., as_of=..., mode=...)` | 搜索有界且不含 before；缺失不被跨越后悄悄宣称“实际上一交易日” |
+
+`ReferenceResult[T]` 统一包含 value、as_of、mode、data_snapshot_id、definitions_version、warnings、lineage_refs，以及日历查询的 missing_dates/source_error_dates/complete。ST/risk_status 始终未知并告警；尚未提供独立风险状态端口。合成数据告警在所有模式保留，测试通过不认证真实来源。
+
+所有查询必须显式传 mode/as_of。观察可见性过滤和版本选择在一个 SELECT 内完成，范围查询不会逐日开启连接拼出混合快照。前一已知日的血缘/摘要覆盖完整搜索区间。所有写入复用已有 Database.transaction；run_id 与日线仓储共用 ingestion_runs 命名空间，不可跨独立批次复用。本任务不提供跨主数据/日历两个仓储的一体事务 API。

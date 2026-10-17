@@ -4,6 +4,8 @@ import hashlib
 import json
 from dataclasses import dataclass
 
+from ai_trade.storage.reference_schema import reference_statements
+
 
 @dataclass(frozen=True)
 class Migration:
@@ -125,4 +127,7 @@ _APPEND_ONLY = tuple(
     for operation in ("UPDATE", "DELETE")
 )
 
-MIGRATIONS = (Migration(1, "daily_bar_foundation", _IDENTITY + _VERSIONS + _APPEND_ONLY),)
+MIGRATIONS = (
+    Migration(1, "daily_bar_foundation", _IDENTITY + _VERSIONS + _APPEND_ONLY),
+    Migration(2, "security_master_and_calendar", reference_statements(_TIME_CHECK)),
+)

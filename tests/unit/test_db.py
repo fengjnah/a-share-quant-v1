@@ -14,7 +14,7 @@ from ai_trade.storage.schema import MIGRATIONS, Migration
 
 def test_first_initialization_and_ledger(tmp_path):
     db = Database(DatabaseConfig(tmp_path / "nested" / "test.sqlite3", "test"))
-    assert db.initialize() == 1
+    assert db.initialize() == len(MIGRATIONS)
     with db.connection() as conn:
         ledger = conn.execute("SELECT * FROM schema_migrations").fetchone()
         assert ledger["version"] == 1
@@ -30,10 +30,10 @@ def test_first_initialization_and_ledger(tmp_path):
 def test_repeated_initialization_preserves_data(database, repository, bar, query):
     repository.write_many([bar], run_id="first")
     before = query()
-    assert database.initialize() == database.initialize() == 1
+    assert database.initialize() == database.initialize() == len(MIGRATIONS)
     assert query() == before
     with database.connection() as conn:
-        assert conn.execute("SELECT count(*) FROM schema_migrations").fetchone()[0] == 1
+        assert conn.execute("SELECT count(*) FROM schema_migrations").fetchone()[0] == len(MIGRATIONS)
 
 
 @pytest.mark.parametrize("raises", [False, True])
@@ -82,24 +82,24 @@ def test_foreign_keys_enforced(database):
 
 
 def test_second_migration_is_repeatable(database):
-    registry = MIGRATIONS + (Migration(2, "test_extension", ("CREATE TABLE extension (id INTEGER)",)),)
-    assert database.initialize(registry) == 2
+    registry = MIGRATIONS + (Migration(len(MIGRATIONS)+1, "test_extension", ("CREATE TABLE extension (id INTEGER)",)),)
+    assert database.initialize(registry) == len(registry)
     with database.transaction() as conn:
         conn.execute("INSERT INTO extension VALUES (42)")
-    assert database.initialize(registry) == 2
+    assert database.initialize(registry) == len(registry)
     with database.connection() as conn:
         assert conn.execute("SELECT id FROM extension").fetchone()[0] == 42
 
 
 def test_failed_migration_rolls_back_ddl_and_version(database):
-    registry = MIGRATIONS + (Migration(2, "broken", (
+    registry = MIGRATIONS + (Migration(len(MIGRATIONS)+1, "broken", (
         "CREATE TABLE half_created (id INTEGER)", "INSERT INTO nonexistent VALUES (1)")),)
     with pytest.raises(sqlite3.OperationalError):
         database.initialize(registry)
     with database.connection() as conn:
-        assert conn.execute("SELECT max(version) FROM schema_migrations").fetchone()[0] == 1
+        assert conn.execute("SELECT max(version) FROM schema_migrations").fetchone()[0] == len(MIGRATIONS)
         assert conn.execute("SELECT 1 FROM sqlite_master WHERE name='half_created'").fetchone() is None
-    assert database.initialize() == 1
+    assert database.initialize() == len(MIGRATIONS)
 
 
 def test_first_migration_failure_is_atomic(tmp_path):
@@ -108,24 +108,24 @@ def test_first_migration_failure_is_atomic(tmp_path):
         db.initialize((Migration(1, "broken", ("CREATE TABLE half_created (id INTEGER)", "INVALID SQL")),))
     with db.connection() as conn:
         assert conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall() == []
-    assert db.initialize() == 1
+    assert db.initialize() == len(MIGRATIONS)
 
 
 def test_checksum_drift_rejected(database):
-    changed = (replace(MIGRATIONS[0], name="rewritten_history"),)
+    changed = (replace(MIGRATIONS[0], name="rewritten_history"),) + MIGRATIONS[1:]
     with pytest.raises(IntegrityError, match="checksum drift"):
         database.initialize(changed)
 
 
 def test_future_schema_rejected(database):
-    database.initialize(MIGRATIONS + (Migration(2, "extension", ("CREATE TABLE extra (id INTEGER)",)),))
+    database.initialize(MIGRATIONS + (Migration(len(MIGRATIONS)+1, "extension", ("CREATE TABLE extra (id INTEGER)",)),))
     with pytest.raises(IntegrityError, match="newer"):
         database.initialize()
 
 
 def test_history_gap_rejected(database):
     with database.transaction() as conn:
-        conn.execute("UPDATE schema_migrations SET version=2")
+        conn.execute("UPDATE schema_migrations SET version=? WHERE version=?", (len(MIGRATIONS)+1, len(MIGRATIONS)))
     with pytest.raises(IntegrityError, match="gap"):
         database.initialize()
 
@@ -197,7 +197,7 @@ def test_initialization_cli_from_another_directory(tmp_path, monkeypatch):
     for _ in range(2):
         result = subprocess.run([sys.executable, "-m", "ai_trade.storage"],
                                 cwd=tmp_path, capture_output=True, text=True, check=True)
-        assert "schema version 1" in result.stdout
+        assert f"schema version {len(MIGRATIONS)}" in result.stdout
     assert path.is_file()
 
 
