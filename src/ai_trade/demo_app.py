@@ -82,6 +82,11 @@ def proxy_is_selected() -> bool:
         return False
 
 
+def record_collect_click() -> None:
+    """Distinguish a new click from a Streamlit rerun of a submitted form."""
+    st.session_state.collect_click_id = st.session_state.get("collect_click_id", 0) + 1
+
+
 st.set_page_config(page_title="A股量化系统 V1.3 · 行情工作台", page_icon="📈", layout="wide")
 st.title("A股量化系统 V1.3")
 st.caption("本地行情采集工作台 · AKShare 1.19.1 → 现有采集适配器 → 隔离 SQLite")
@@ -120,9 +125,14 @@ with st.form("collect_form"):
     start_date = date_cols[0].date_input("开始日期", value=date(2026, 10, 14))
     end_date = date_cols[1].date_input("结束日期", value=date(2026, 10, 15))
     adjustment = st.selectbox("复权口径", options=["none"], format_func=lambda _: "不复权")
-    submitted = st.form_submit_button("采集真实行情", type="primary", use_container_width=True)
+    submitted = st.form_submit_button(
+        "采集真实行情", type="primary", use_container_width=True,
+        on_click=record_collect_click,
+    )
 
-if submitted:
+click_id = st.session_state.get("collect_click_id", 0)
+if submitted and click_id > st.session_state.get("processed_collect_click_id", 0):
+    st.session_state.processed_collect_click_id = click_id
     try:
         symbol = normalize_symbol(raw_symbol)
         if start_date > end_date:
@@ -183,7 +193,7 @@ if "last_result" in st.session_state:
     st.subheader("最近一次采集结果")
     m1, m2, m3 = st.columns(3)
     m1.metric("状态", result["status"])
-    m2.metric("返回行数", str(result["returned_rows"]))
+    m2.metric("返回行数", str(result["returned_rows"]) if result["observed_at"] is not None else "未知")
     m3.metric("入库行数", str(result["inserted_rows"]))
     st.write("来源：", result["source"])
     st.write("运行批次：", result["run_id"])
