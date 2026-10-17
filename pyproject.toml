@@ -10,7 +10,8 @@ requires-python = ">=3.11"
 dependencies = ["tzdata>=2024.1; sys_platform == 'win32'"]
 
 [project.optional-dependencies]
-test = ["pytest>=8,<9"]
+test = ["pytest>=8,<9", "pandas>=2,<4", "requests>=2.32,<3"]
+akshare = ["akshare==1.19.1", "pandas>=2,<4", "requests>=2.32,<3"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -19,3 +20,4 @@ where = ["src"]
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
 pythonpath = ["src"]
+markers = ["manual_integration: live AKShare call, requires --run-akshare-integration"]
