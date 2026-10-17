@@ -98,7 +98,11 @@ def test_akshare_daily_live(tmp_path, monkeypatch):
         assert not audit["http"], "manual acceptance permits one HTTP attempt; no retries or redirects"
         params = parse_qs(url.query)
         event = {"host": url.hostname, "path": url.path, "method": prepared.method,
-                 "parameters": {key: params.get(key) for key in ("secid", "beg", "end", "klt", "fqt")}}
+                 "parameters": {key: params.get(key) for key in ("secid", "beg", "end", "klt", "fqt")},
+                 "proxy_configured": bool(kwargs.get("proxies")),
+                 "certificate_verification": kwargs.get("verify", True) is True
+                     or isinstance(kwargs.get("verify"), str) and bool(kwargs["verify"])}
+        assert event["certificate_verification"], "manual acceptance must retain TLS verification"
         audit["http"].append(event)
         try:
             response = original_send(session, prepared, **kwargs)
