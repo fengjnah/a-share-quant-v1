@@ -3,6 +3,7 @@
 import hashlib
 import json
 import socket
+from http.client import RemoteDisconnected
 from dataclasses import replace
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -12,11 +13,12 @@ import pandas as pd
 import pytest
 from requests import Response
 from requests.exceptions import HTTPError, Timeout, ConnectionError, JSONDecodeError
+from urllib3.exceptions import ProtocolError
 
 from ai_trade.data_access.models import DataUnavailableError, DuplicateRecordError, ValidationError
 from ai_trade.market_data.akshare_adapter import AkshareDailyClient, check_frame, map_frame
 from ai_trade.market_data.evidence import EvidenceStore
-from ai_trade.market_data.ingestor import DailyHistoryIngestor
+from ai_trade.market_data.ingestor import DailyHistoryIngestor, _transport_type_chain
 from ai_trade.market_data.models import (
     DailyHistoryRequest, EvidenceWriteError, IngestionStatus, SourceSchemaError,
 )
@@ -203,6 +205,35 @@ def test_network_error_has_evidence_but_no_rows(harness, history_request, databa
     assert result.observed_at is None and result.response_sha256 is None
     assert row_count(database) == 0
     assert read_evidence(result, "result.json")["status"] == "network_error"
+
+
+def test_transport_failure_keeps_safe_type_chain_without_secrets(harness, history_request, database):
+    service, client, _ = harness
+    secret = "https://proxy-user:proxy-password@proxy.example/path?token=hidden"
+    remote = RemoteDisconnected(secret)
+    protocol = ProtocolError(secret)
+    protocol.__context__ = remote
+    failure = ConnectionError(secret)
+    failure.__cause__ = protocol
+    client.error = failure
+
+    result = service.collect(history_request, run_id="safe-network-diagnostic")
+    saved = read_evidence(result, "result.json")
+    assert result.status == IngestionStatus.NETWORK_ERROR
+    assert result.observed_at is None and result.response_sha256 is None
+    assert result.inserted_rows == row_count(database) == 0
+    assert not (Path(result.evidence_directory) / "response.json").exists()
+    assert "cause_types=ConnectionError > ProtocolError > RemoteDisconnected" in result.issues[0]
+    assert "failure_stage=sdk_fetch_transport; network_phase=undetermined" in result.issues[0]
+    assert saved["issues"] == list(result.issues)
+    assert secret not in json.dumps(saved) and "proxy-password" not in json.dumps(saved)
+
+
+def test_transport_type_chain_masks_unrecognized_exception_names():
+    unknown = type("CredentialLikeName", (Exception,), {})("private-token")
+    failure = ConnectionError("transport failed")
+    failure.__cause__ = unknown
+    assert _transport_type_chain(failure) == "ConnectionError > OtherError"
 
 
 @pytest.mark.parametrize("code", [429, 403, 500])

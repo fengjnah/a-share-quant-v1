@@ -25,6 +25,27 @@ def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+_SAFE_TRANSPORT_TYPES = frozenset({
+    "ConnectionError", "ProxyError", "SSLError", "SSLEOFError", "SSLCertVerificationError",
+    "Timeout", "ConnectTimeout", "ReadTimeout", "TimeoutError", "ProtocolError",
+    "RemoteDisconnected", "NewConnectionError", "NameResolutionError", "gaierror",
+    "ConnectionResetError", "ConnectionAbortedError", "ConnectionRefusedError", "OSError",
+})
+
+
+def _transport_type_chain(exc: BaseException) -> str:
+    """Retain bounded exception types without persisting URLs, credentials or messages."""
+    names: list[str] = []
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen and len(names) < 8:
+        seen.add(id(current))
+        name = type(current).__name__
+        names.append(name if name in _SAFE_TRANSPORT_TYPES else "OtherError")
+        current = current.__cause__ or current.__context__
+    return " > ".join(names)
+
+
 class DailyHistoryIngestor:
     """Archive an observed SDK response, validate, then commit a complete batch.
 
@@ -106,7 +127,11 @@ class DailyHistoryIngestor:
             status = IngestionStatus.RATE_LIMITED if http_status == 429 else IngestionStatus.NETWORK_ERROR
             issues = (f"HTTP error from source; status={http_status}; no automatic retry",)
         except (RequestException, TimeoutError, ConnectionError) as exc:
-            status, issues = IngestionStatus.NETWORK_ERROR, (f"{type(exc).__name__}: source transport failed",)
+            status = IngestionStatus.NETWORK_ERROR
+            chain = _transport_type_chain(exc)
+            issues = (f"{chain.split(' > ', 1)[0]}: source transport failed; "
+                      f"cause_types={chain}; "
+                      "failure_stage=sdk_fetch_transport; network_phase=undetermined",)
         except SourceSchemaError as exc:
             status, issues = IngestionStatus.SCHEMA_ERROR, (str(exc),)
         except DuplicateRecordError as exc:
