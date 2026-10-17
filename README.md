@@ -212,3 +212,9 @@ P0 只实现本地构建和发布边界验证，不部署 AWS。P1 在人工审�
 | [架构决策与待确认事项](docs/DECISIONS.md) | ADR-001 至 ADR-006、Q-001 至 Q-010 |
 | [验收测试](docs/ACCEPTANCE_TESTS.md) | AT-001 至 AT-022 与质量门禁 |
 | [分阶段实施计划](docs/P0_IMPLEMENTATION_PLAN.md) | P0 工作包、P1/P2 路线、依赖及审查责任 |
+
+
+## 本地行情展示页
+
+已添加最小 Streamlit 演示页：`src/ai_trade/demo_app.py`。启动方式、隔离临时 SQLite 规则和真实行情采集说明见 [本地行情展示指南](docs/LOCAL_MARKET_DEMO.md)。页面不会创建或读取生产数据库；点击采集按钮才会请求真实行情，失败时不会显示虚构价格。
+
