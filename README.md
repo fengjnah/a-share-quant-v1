@@ -2,13 +2,13 @@
 
 面向 A 股日频、周频研究的量化分析系统，目标是建立可追溯的数据历史，支持市场状态判断、选股、择时、风险控制与公平对照回测，并在本地生成每日精选 3–5 只股票和指定标的分析的静态日报，供手机浏览。
 
-**当前已实现 TASK-002 最小 SQLite 数据基础设施。** 已有七份架构文档，以及数据库初始化/版本迁移、日线校验、原子批量写入、追加修订版本、按时点读取和离线单元测试。采集、完整证券主数据、完整 DataAccess/快照服务、策略、回测、日报、发布和 CI 均未实现，系统未部署。系统定位为研究与分析，不连接真实账户、不自动下单，也不保证收益。实现边界与运行方法见 [TASK-002 实施记录](docs/IMPLEMENTATION_TASK_002.md)。
+**当前已实现最小 SQLite 数据层和 TASK-003 历史日线适配器。** 数据层提供初始化/迁移、校验、原子写入、追加版本和按时点读取；采集子集只支持 AKShare 单接口的沪深 A 股、不复权、过去日期日线，已有离线测试，真实接口手工测试尚未执行。完整证券主数据、日历、复权计算、完整 DataAccess/快照服务、策略、回测、日报、发布和 CI 仍未实现，系统未部署、不连接账户或自动下单，也不保证收益。详见 [TASK-002](docs/IMPLEMENTATION_TASK_002.md) 和 [TASK-003 实施记录](docs/IMPLEMENTATION_TASK_003.md)。
 
 ## 功能范围与关键约束
 
 | 规划能力 | 范围与约束 | 当前状态 |
 | --- | --- | --- |
-| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已实现最小日线 SQLite 仓储与校验；采集及其他数据集待实现 |
+| 数据底座 | 公开行情、历史证券状态、交易日历、公司行为、财务公告和历史成分；原始载荷归档与版本化 | 已有最小日线仓储及单接口历史采集、SDK 快照证据；真实源验收和其余数据集待完成 |
 | 市场与板块 | 全 A 等权等市场宽度、连续普跌恢复、历史行业/概念强弱 | 待实现，部分规则待确认 |
 | 选股与择时 | 非 ST、可交易、历史可得总市值不少于 100 亿元的保守股票池；成长、龙头、热度评分及日/周信号 | 待实现，业务定义待确认 |
 | 风控与回测 | 仓位、集中度、止损；停牌、涨跌停、复权、公司行为、费用与滑点；允许空仓与持续持仓对照 | 待实现 |
@@ -48,6 +48,12 @@ AI-trade/
 ├── pyproject.toml
 ├── src/ai_trade/
 │   ├── __init__.py
+│   ├── market_data/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── akshare_adapter.py
+│   │   ├── evidence.py
+│   │   └── ingestor.py
 │   ├── storage/
 │   │   ├── __init__.py
 │   │   ├── __main__.py            # 仅初始化/迁移数据库
@@ -60,10 +66,13 @@ AI-trade/
 │       └── validation.py
 ├── tests/
 │   ├── conftest.py
+│   ├── fixtures/akshare_daily.json # 合成响应
+│   ├── manual/test_akshare_daily_live.py # 默认跳过，需显式启用
 │   └── unit/
 │       ├── test_db.py
 │       ├── test_market_data_repository.py
-│       └── test_data_validation.py
+│       ├── test_data_validation.py
+│       └── test_akshare_ingestion.py
 └── docs/
     ├── ARCHITECTURE.md
     ├── AUDIT.md
@@ -72,7 +81,8 @@ AI-trade/
     ├── DECISIONS.md
     ├── ACCEPTANCE_TESTS.md
     ├── P0_IMPLEMENTATION_PLAN.md
-    └── IMPLEMENTATION_TASK_002.md
+    ├── IMPLEMENTATION_TASK_002.md
+    └── IMPLEMENTATION_TASK_003.md
 ```
 
 以下为长期工程布局，已建立的基础模块单独标注；其他条目仍为规划。包内最小领域对象暂放 `data_access/models.py`，完整领域层后续再拆分。
@@ -85,7 +95,7 @@ AI-trade/
 ├── configs/                       # 待实现：配置样例与版本化规则；不提交密钥
 ├── src/ai_trade/                  # 已建立：仅数据基础设施
 │   ├── domain/                    # 待实现：领域对象、元数据、错误类型
-│   ├── market_data/               # 待实现：来源适配器、采集与标准化
+│   ├── market_data/               # 已有：最小 AKShare 历史日线适配；其余来源待实现
 │   ├── trading_calendar/          # 待实现：交易会话
 │   ├── security_master/           # 待实现：证券身份及历史状态
 │   ├── corporate_actions/         # 待实现：公司行为与复权
@@ -102,8 +112,8 @@ AI-trade/
 │   ├── daily_report/              # 待实现：静态日报构建
 │   └── publisher/                 # 待实现：发布白名单、校验与回执
 ├── tests/                         # 已有：合成数据与隔离临时数据库
-│   ├── fixtures/                  # 待实现：合成数据、固定时钟与快照
-│   ├── unit/                      # 已有：TASK-002 数据层测试
+│   ├── fixtures/                  # 已有：合成日线响应；其余场景待补齐
+│   ├── unit/                      # 已有：数据层与单接口采集离线测试
 │   ├── contract/                  # 待实现：数据/接口契约测试
 │   ├── integration/               # 待实现：迁移与完整回放
 │   └── acceptance/                # 待实现：AT-001 至 AT-022
@@ -147,7 +157,9 @@ $env:QUANT_DB_PATH = "./data/sqlite/local.sqlite3"
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-初始化命令可重复执行，不覆盖已有行情；`.env.example` 仅为模板，不自动加载。单元测试始终使用临时数据库，不读取上述本地数据库。安装依赖可能需要网络，核心测试不需要网络；采集、回测、日报构建及发布入口仍待实现。
+初始化命令可重复执行，不覆盖已有行情；`.env.example` 仅为模板，不自动加载。单元测试始终使用临时数据库，不读取上述本地数据库。安装依赖可能需要网络，核心测试不需要网络；回测、日报构建及发布入口仍待实现。
+
+TASK-003 已提供采集 API 和默认跳过的手工集成测试，调用方式、SDK 可选安装与 `--run-akshare-integration` 开关见 [实施说明](docs/IMPLEMENTATION_TASK_003.md)。没有定时采集或采集 CLI。请求必须显式指定 `none`；成交量从手转换为股，实际观察时间保守作为可用时间，不能把新下载的历史数据倒填成历史入库。SDK 未暴露的限流状态可能只能报告为未知响应或空响应。
 
 ## 后续测试操作与门禁
 
@@ -173,7 +185,7 @@ P0 只实现本地构建和发布边界验证，不部署 AWS。P1 在人工审�
 
 ## P0 / P1 / P2 路线
 
-以下为完整路线；TASK-002 仅落地 P0-0/1/2 中的数据基础设施子集，不代表这些工作包或完整 P0 已完成。
+以下为完整路线；TASK-002/003 仅落地工程/数据层与最小采集子集，不代表这些工作包或完整 P0 已完成。
 
 | 阶段 | 开发顺序与范围 | 完成条件 |
 | --- | --- | --- |
