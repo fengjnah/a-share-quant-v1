@@ -2,11 +2,12 @@
 import streamlit as st
 
 from .core import METRICS, PlanError, calculate, dependency_failures, load, snapshots
+from .views import recent_deliveries, task_rows
 
 
 def render():
-    st.title("项目进度 · A股量化系统 V1.3")
-    st.caption("离线管理看板 · 只读正式 TASK_METRICS.json · 不采集行情、不创建数据库、不改任务状态")
+    st.title("项目进度")
+    st.caption("A股量化系统 V1.3 · 只读看板 · 不采集行情、不创建数据库")
     try:
         data = load()
         result, current = calculate(data), snapshots(data)
@@ -14,9 +15,26 @@ def render():
         st.error(f"任务数据无效，未显示伪造的完成率：{exc}")
         st.stop()
     st.metric("有证据的加权完成率", f"{result['project_percent']:.4f}%")
-    st.info("这是首版规划权重下的验收进度，不是生产就绪率。无证据计零，失败计零；历史诊断零权重，避免重复计数。")
-    st.write("数据截止：", data['updated_at'], "；依据 main：", data['baseline'], "；计划版本：", data['plan_version'])
-    st.caption("阶段权重 × 阶段内任务权重 × 通过验收点权重；代码、测试、独立审查、合并和生产准入分列。")
+    st.caption(f"强制验收通过 {result['state_counts']['PASS']} / {len(data['tasks'])} 项 · 阻塞或依赖缺口 {len(result['blockers'])} 项")
+    st.info("正式验收进度，不是生产就绪率。研究 Demo 单独展示；未知、失败和未执行项不计分。")
+    st.caption(f"数据截止：{data['updated_at']} · 计划 {data['plan_version']}")
+    with st.expander("数据版本与计算依据"):
+        st.write("依据 main：", data['baseline'])
+        st.write("阶段权重 × 阶段内任务权重 × 通过验收点权重；代码、测试、独立审查、合并和生产准入分列。")
+    st.subheader("近期交付与实际能力")
+    deliveries = recent_deliveries(data)
+    if not deliveries:
+        st.info("暂无当前快照引用、绑定提交的交付记录；不从任务名称推断能力。")
+    for evidence in deliveries:
+        with st.container(border=True):
+            title, separator, body = evidence['summary'].partition(' · ')
+            if separator:
+                st.markdown(f"**{title}**")
+                st.markdown(body)
+            else:
+                st.markdown(title)
+            st.caption(f"证据 {evidence['id']} · 提交 {evidence['source_commit'][:12]} · 记录 {evidence['recorded_at']}")
+    st.caption("交付证据不会自动增加正式计划分母或权重，也不替代独立审查、历史覆盖或生产授权。详见任务详情和原始证据。")
     nxt = result['next']
     if nxt:
         st.success(f"推荐下一项：{nxt['id']} · {nxt['title']}")
@@ -31,6 +49,20 @@ def render():
         st.progress(value/100, text=f"{s['id']} {s['name']} · 权重 {s['weight']}% · 已证实 {value:g}%")
     st.subheader("TASK 状态分布")
     st.bar_chart(result['state_counts'], use_container_width=True)
+    st.subheader("正式任务总览")
+    st.caption("未单列表示原任务没有此类独立验收项；不是通过。仅建议立项的任务仍保持 PLANNED。")
+    filters = st.columns(2)
+    states = filters[0].multiselect("按状态筛选", list(result['state_counts']), key="progress_states")
+    stages = filters[1].multiselect("按阶段筛选", [s['id'] for s in data['stages']], key="progress_stages")
+    query = st.text_input("搜索 TASK 或名称", key="progress_search").strip().casefold()
+    rows = [r for r in task_rows(data, result)
+            if (not states or r['状态'] in states) and (not stages or r['阶段'] in stages)
+            and (not query or query in (r['TASK'] + ' ' + r['名称']).casefold())]
+    st.caption(f"显示 {len(rows)} / {len(data['tasks'])} 项；筛选只改变展示，不改变完成率。")
+    if rows:
+        st.dataframe(rows, hide_index=True, use_container_width=True)
+    else:
+        st.info("没有符合筛选条件的任务。可清空筛选后查看全部任务。")
     options = [t['id'] for t in data['tasks']]
     selected = st.selectbox("任务详情", options)
     task = next(t for t in data['tasks'] if t['id'] == selected)
@@ -48,6 +80,11 @@ def render():
                    "证据":', '.join(event['results'][a['id']]['evidence']) or '无'} for a in task['acceptance']],
                  hide_index=True, use_container_width=True)
     st.write("最近更新依据：", event['at'], event['reason'], "；证据 ID：", event['basis'])
+    with st.expander("查看本任务最近更新证据"):
+        for evidence in data['evidence']:
+            if evidence['id'] in event['basis']:
+                st.write(evidence['id'], ' · ', evidence['kind'], ' · ', evidence['summary'])
+                st.caption(f"{evidence['ref']} · SHA256 {evidence['sha256']} · 依据提交 {evidence['source_commit'] or '未记录'}")
     missing = dependency_failures(task, current)
     if missing:
         st.warning("当前前置条件缺口（不篡改旧验收记录）："+'；'.join(missing))

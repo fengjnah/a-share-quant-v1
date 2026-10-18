@@ -2,8 +2,8 @@
 
 <!-- Generated from TASK_METRICS.json; edit reviewed data, then --render. -->
 
-数据截止：2026-10-18T08:07:13.712493+00:00；计划版本 1.0。
-**按首版规划口径的已证实完成率：21.6700%**；不是生产就绪率。
+数据截止：2026-10-19T07:09:15+08:00；计划版本 1.0。
+**按首版规划口径的已证实完成率：21.8500%**；不是生产就绪率。
 
 公式：Σ阶段权重 × Σ阶段内任务权重 × Σ有类型匹配证据的 PASS 验收点权重；三层均除以 100。
 PLANNED/REJECTED 计零；PARTIAL/BLOCKED 仅计已有通过点。历史诊断任务权重为 0，避免反复修复增加项目分母或重复计分。
@@ -17,6 +17,15 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 
 推荐：**TASK-018-REVIEW**（SUGGESTION）：先独立审查已交付治理/看板，绑定最终 SHA，避免未审规则继续扩散。
 
+## 近期交付与实际能力
+
+以下为当前快照引用、绑定提交的交付证据，不是新增正式任务或生产准入；原计划与权重保持不变。
+
+- TASK-M2 研究交易分析 · PR #25 已合并：腾讯600000 / 2026-01-05～10-15真实187行，写入/读回均187，内置浏览器已展示MA5/10/20/60、ATR14、量比、研究评分与止损参考；CI 617 passed、1 skipped。研究评分40、正式候选0、市场数据不足；不等于正式策略/样本外回测/生产准入。（E-DELIVERY-25；提交 `5adfacdace69396d88b57b9a7a88b36aa7175c4a`）
+- M1 行情工作台 · PR #24 已合并：本地查询与主动采集分开，价格/成交量图和明细共用SQLite数据。复用真实2行样本，刷新仍1批次/2版本，无新行情请求；CI 581 passed、1 skipped。仅临时演示库，不代表生产存储。（E-DELIVERY-24；提交 `fa2ac20152170719d35bb42b5dc694398a59ce15`）
+- TASK-022A-H / M0 · PR #23 已合并：CFFEX 限定离线修复经独立复核，CI 568 passed、1 skipped；M0 腾讯600000 / 2026-10-14～15真实返回、写入、读回各2行，内置浏览器实际验收。CFFEX真实日历、持久仓储、R04和生产HTTPS仍未验收。（E-DELIVERY-23；提交 `a579f033b0ccb01efdc2855a577f1c2e6567d510`）
+- TASK-018：PR #21 已合并，正式看板及开源调研制度已在 main；独立治理/看板审查仍未验证，不改写历史待审报告。（E-PROGRESS-21；提交 `2a5332448b32083ddbedc6b16ea0cf49057e3cb8`）
+
 ## 状态总表
 
 | TASK / 名称 | 类型/优先级 | 唯一指定模型 / 实际模型 | 估计小时 / 实际小时 | 状态 / 验收率 | 前置条件 | 审查 / PR / 生产 |
@@ -25,7 +34,7 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 | TASK-GOV-001 · 模型路由治理 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PARTIAL / 70% | 无 | UNVERIFIED / #12 MERGED / NOT_RUN |
 | TASK-016 · 分支与 worktree 审计 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PASS / 100% | 无 | UNVERIFIED / #19 MERGED / NOT_RUN |
 | TASK-017 · 干净 main 与统一工作区 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PASS / 100% | TASK-016:audit | UNVERIFIED / #20 MERGED / NOT_RUN |
-| TASK-018 · 正式任务看板与进度机制 [REQUESTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 6–12 / 未知 | PARTIAL / 80% | TASK-017:baseline,isolation; TASK-GOV-001:rules | UNVERIFIED / #21 OPEN / NOT_RUN |
+| TASK-018 · 正式任务看板与进度机制 [REQUESTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 6–12 / 未知 | PARTIAL / 85% | TASK-017:baseline,isolation; TASK-GOV-001:rules | UNVERIFIED / #21 MERGED / NOT_RUN |
 | TASK-002 · SQLite 数据基础设施 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | 无 | UNVERIFIED / #1 MERGED / NOT_RUN |
 | TASK-003 · AKShare 历史日线适配 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | TASK-002:code,offline | UNVERIFIED / #2 CLOSED, #5 MERGED / NOT_RUN |
 | TASK-004 · 证券主数据与日历最小存储 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | TASK-002:code,offline | UNVERIFIED / #10 MERGED / NOT_RUN |
@@ -123,7 +132,7 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 ### TASK-018 · 正式任务看板与进度机制
 
 目标：正式任务看板与进度机制；仅限所列验收范围。阶段 S2；阶段内权重 60%。
-结果依据：实际Draft PR #21已创建；最终离线446/1、换行格式与原工作树保护复核通过。独立审查、合并、生产仍未完成（2026-10-18T08:07:13.712493+00:00）；快照序号 44。
+结果依据：重新核实PR #21已合并，补记merge验收；引用后续M0/M1/M2及CFFEX交付证据，不新建正式任务、不改计划权重，研究Demo不计作正式策略通过。独立审查仍未验证。（2026-10-19T07:09:15+08:00）；快照序号 45。
 
 | 验收点 | 权重 | 强制 | 实际状态 | 证据 ID |
 | --- | --- | --- | --- | --- |
@@ -132,9 +141,9 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 | offline · 完整离线回归与隔离 | 15% | True | PASS | E-018-portable-offline |
 | ui · 真实浏览器离线进度页 | 15% | True | PASS | E-018-ui |
 | review · 独立审查最终 SHA | 15% | True | UNVERIFIED | 无 |
-| merge · 看板 PR 合并 | 5% | True | UNVERIFIED | 无 |
+| merge · 看板 PR 合并 | 5% | True | PASS | E-PROGRESS-21 |
 
-阻塞：等待独立 H 审查冻结提交及用户合并；不影响独立审查任务立项
+阻塞：独立治理/看板审查尚无通过证据；PR #21已合并不替代该门槛。
 后续候选（仍须满足其全部依赖）：TASK-018-REVIEW
 
 ### TASK-002 · SQLite 数据基础设施
@@ -202,7 +211,7 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 ### TASK-009 · 腾讯候选源与 Demo 集成
 
 目标：腾讯候选源与 Demo 集成；仅限所列验收范围。阶段 S3；阶段内权重 25%。
-结果依据：由实际文档与 PR 状态导入，未证实项目保守保留；只计本任务范围（2026-10-18T07:37:07.731648+00:00）；快照序号 10。
+结果依据：PR #17的集成实现已在main；后续M0/M1/M2已分别验证腾讯真实样本和临时SQLite/UI（历史2行及187行），不是健康CLI或完整历史质量验收。独立集成边界审查、腾讯原始口径/授权等仍未知。（2026-10-19T07:09:15+08:00）；快照序号 46。
 
 | 验收点 | 权重 | 强制 | 实际状态 | 证据 ID |
 | --- | --- | --- | --- | --- |
@@ -217,7 +226,7 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 ### TASK-015 · 健康检查与调度入口
 
 目标：健康检查与调度入口；仅限所列验收范围。阶段 S3；阶段内权重 50%。
-结果依据：由实际文档与 PR 状态导入，未证实项目保守保留；只计本任务范围（2026-10-18T07:37:07.731648+00:00）；快照序号 11。
+结果依据：PR #18健康框架已合并；后续Demo真实成功不经过健康CLI，不能将live/calendar或freshness验收补为PASS；无独立连接探针/可靠日历expectation接线、未装OS计划任务的限制仍保留。（2026-10-19T07:09:15+08:00）；快照序号 47。
 
 | 验收点 | 权重 | 强制 | 实际状态 | 证据 ID |
 | --- | --- | --- | --- | --- |
@@ -706,6 +715,13 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 | E-018-delivery-pr / pr | docs/evidence/TASK_018_DELIVERY.json | 实际创建Draft PR #21，OPEN/未合并；快照早于本次追加提交，不冒充审查或合并通过；SHA256 8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224 |
 | E-018-portable-offline / offline | docs/evidence/TASK_018_DELIVERY.json | 最终完整离线446 passed/1 skipped、44.44秒，明确包含中间失败及修复；不是实际Linux或真实行情验收；SHA256 8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224 |
 | E-018-hash-format / report | docs/evidence/TASK_018_HASH_FORMAT.json | 显式保留50条原始Windows CRLF字节哈希，新证据默认UTF-8 LF；只重建已记录换行，不忽略其他内容；SHA256 f350b7792e272da3d4c44564a214677aaccd095086e8fec1f656286965498a77 |
+| E-PROGRESS-21 / pr | docs/evidence/PROJECT_PROGRESS_20261019.json | TASK-018：PR #21 已合并，正式看板及开源调研制度已在 main；独立治理/看板审查仍未验证，不改写历史待审报告。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-DELIVERY-23 / pr | docs/evidence/PROJECT_PROGRESS_20261019.json | TASK-022A-H / M0 · PR #23 已合并：CFFEX 限定离线修复经独立复核，CI 568 passed、1 skipped；M0 腾讯600000 / 2026-10-14～15真实返回、写入、读回各2行，内置浏览器实际验收。CFFEX真实日历、持久仓储、R04和生产HTTPS仍未验收。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-DELIVERY-24 / pr | docs/evidence/PROJECT_PROGRESS_20261019.json | M1 行情工作台 · PR #24 已合并：本地查询与主动采集分开，价格/成交量图和明细共用SQLite数据。复用真实2行样本，刷新仍1批次/2版本，无新行情请求；CI 581 passed、1 skipped。仅临时演示库，不代表生产存储。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-DELIVERY-25 / pr | docs/evidence/PROJECT_PROGRESS_20261019.json | TASK-M2 研究交易分析 · PR #25 已合并：腾讯600000 / 2026-01-05～10-15真实187行，写入/读回均187，内置浏览器已展示MA5/10/20/60、ATR14、量比、研究评分与止损参考；CI 617 passed、1 skipped。研究评分40、正式候选0、市场数据不足；不等于正式策略/样本外回测/生产准入。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-M2-LIVE / live | docs/evidence/PROJECT_PROGRESS_20261019.json | PR #25 收尾记录与本机脱敏摘要交叉核对：腾讯187/187/187，响应SHA256和时间见快照；HTTP状态及GET总数未观测。本轮仅复核既有证据，不重发行情请求。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-M2-UI / ui | docs/evidence/PROJECT_PROGRESS_20261019.json | M0/M1/M2 的内置浏览器历史操作见PR #23～25；M2指标及候选/排除/止损参考实际展示。未验证Edge/Chrome；不能把历史界面观察视为本轮页面验收。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
+| E-M2-OFFLINE / offline | docs/evidence/PROJECT_PROGRESS_20261019.json | PR #25 head c76c09e 的CI39138829139为617 passed、1 skipped；本地完整同数量。只记录历史回归，不冒充本次修改后的测试。；SHA256 16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953 |
 
 ## 反馈与重算操作
 

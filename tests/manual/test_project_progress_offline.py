@@ -25,11 +25,25 @@ def only_loopback(sock,address):
     raise AssertionError('no external networking')
 socket.socket.connect=only_loopback
 with patch.object(Database,'initialize',side_effect=RuntimeError('synthetic unavailable database')) as db, patch.object(requests.Session,'send',side_effect=AssertionError('market network forbidden')) as send:
-    app=AppTest.from_file('src/ai_trade/demo_app.py')
+    # Cold Windows imports (pandas/chart stack) can exceed AppTest's 3s default.
+    # Keep all network/DB assertions and a bounded process timeout.
+    app=AppTest.from_file('src/ai_trade/demo_app.py', default_timeout=30)
     app.query_params['view']='progress';app.run()
     assert not app.exception
     assert any(m.label=='有证据的加权完成率' for m in app.metric)
     assert db.call_count==0 and send.call_count==0
+    assert any('近期交付与实际能力' in h.value for h in app.subheader)
+    assert any('TASK-M2' in m.value for m in app.markdown)
+    assert any('187' in m.value for m in app.markdown)
+    assert next(m for m in app.metric if m.label=='有证据的加权完成率').value=='21.8500%'
+    app=app.text_input[0].set_value('TASK-004A').run()
+    assert len(app.dataframe[0].value)==1
+    assert app.dataframe[0].value.iloc[0]['状态']=='BLOCKED'
+    app=app.multiselect[0].set_value(['PASS']).run()
+    assert any('没有符合筛选条件' in m.value for m in app.info)
+    assert next(m for m in app.metric if m.label=='有证据的加权完成率').value=='21.8500%'
+    app=app.text_input[0].set_value('').run()
+    app=app.multiselect[0].set_value([]).run()
     app=app.radio[0].set_value('行情工作台').run()
     assert db.call_count==1 and any('初始化失败' in e.value for e in app.error)
     app=app.radio[0].set_value('项目进度').run()
@@ -42,7 +56,7 @@ with patch.object(Database,'initialize',side_effect=RuntimeError('synthetic unav
 print(json.dumps({'progress':'opened_before_and_after_market_failure','network_calls':0,'production_created':False}))
 '''
     r=subprocess.run([sys.executable,'-c',script,str(tmp_path/'production.sqlite3')],cwd=ROOT,
-                     capture_output=True,text=True,encoding='utf-8',timeout=40)
+                     capture_output=True,text=True,encoding='utf-8',timeout=90)
     assert r.returncode==0,r.stdout+'\n'+r.stderr
     assert json.loads(r.stdout)['network_calls']==0
 

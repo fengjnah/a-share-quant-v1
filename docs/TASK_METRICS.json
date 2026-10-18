@@ -2,8 +2,8 @@
   "schema_version": 1,
   "project": "A股量化交易系统 V1.3",
   "plan_version": "1.0",
-  "updated_at": "2026-10-18T08:07:13.712493+00:00",
-  "baseline": "f1382c10f2c3d356be6e059aad5611d15d687a62",
+  "updated_at": "2026-10-19T07:09:15+08:00",
+  "baseline": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
   "weight_basis": "首版任务规划：治理10%、数据25%、市场/选股20%、风险10%、回测20%、日报10%、最终5%；十阶段细分和任务点数是可审查的规划参数，不是工时或生产收益实测。历史诊断零权重，实际工时未知保留 null；不是生产就绪率。调整需独立计划修订，保留事件/evidence/Git 历史。",
   "stages": [
     {
@@ -3105,6 +3105,69 @@
       "source_commit": null,
       "summary": "显式保留50条原始Windows CRLF字节哈希，新证据默认UTF-8 LF；只重建已记录换行，不忽略其他内容",
       "recorded_at": "2026-10-18T08:07:13.712493+00:00"
+    },
+    {
+      "id": "E-PROGRESS-21",
+      "kind": "pr",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "2a5332448b32083ddbedc6b16ea0cf49057e3cb8",
+      "summary": "TASK-018：PR #21 已合并，正式看板及开源调研制度已在 main；独立治理/看板审查仍未验证，不改写历史待审报告。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-DELIVERY-23",
+      "kind": "pr",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "a579f033b0ccb01efdc2855a577f1c2e6567d510",
+      "summary": "TASK-022A-H / M0 · PR #23 已合并：CFFEX 限定离线修复经独立复核，CI 568 passed、1 skipped；M0 腾讯600000 / 2026-10-14～15真实返回、写入、读回各2行，内置浏览器实际验收。CFFEX真实日历、持久仓储、R04和生产HTTPS仍未验收。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-DELIVERY-24",
+      "kind": "pr",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "fa2ac20152170719d35bb42b5dc694398a59ce15",
+      "summary": "M1 行情工作台 · PR #24 已合并：本地查询与主动采集分开，价格/成交量图和明细共用SQLite数据。复用真实2行样本，刷新仍1批次/2版本，无新行情请求；CI 581 passed、1 skipped。仅临时演示库，不代表生产存储。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-DELIVERY-25",
+      "kind": "pr",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+      "summary": "TASK-M2 研究交易分析 · PR #25 已合并：腾讯600000 / 2026-01-05～10-15真实187行，写入/读回均187，内置浏览器已展示MA5/10/20/60、ATR14、量比、研究评分与止损参考；CI 617 passed、1 skipped。研究评分40、正式候选0、市场数据不足；不等于正式策略/样本外回测/生产准入。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-M2-LIVE",
+      "kind": "live",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+      "summary": "PR #25 收尾记录与本机脱敏摘要交叉核对：腾讯187/187/187，响应SHA256和时间见快照；HTTP状态及GET总数未观测。本轮仅复核既有证据，不重发行情请求。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-M2-UI",
+      "kind": "ui",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+      "summary": "M0/M1/M2 的内置浏览器历史操作见PR #23～25；M2指标及候选/排除/止损参考实际展示。未验证Edge/Chrome；不能把历史界面观察视为本轮页面验收。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
+    },
+    {
+      "id": "E-M2-OFFLINE",
+      "kind": "offline",
+      "ref": "docs/evidence/PROJECT_PROGRESS_20261019.json",
+      "sha256": "16711947f427f2d5d9e4a653a94bde39805858a7e8c81707ef3c3f5e1ffa2953",
+      "source_commit": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+      "summary": "PR #25 head c76c09e 的CI39138829139为617 passed、1 skipped；本地完整同数量。只记录历史回归，不冒充本次修改后的测试。",
+      "recorded_at": "2026-10-19T07:09:15+08:00"
     }
   ],
   "events": [
@@ -5198,6 +5261,223 @@
       "seq": 44,
       "previous_hash": "c6ed55ad3407051259f80a5dd037d646878a9412e188e0849c625dd43f764606",
       "hash": "b902e289735801cfe9b94f66640fb048260c5d73d083a36ebab8adf6a9f034f5"
+    },
+    {
+      "task_id": "TASK-018",
+      "at": "2026-10-19T07:09:15+08:00",
+      "state": "PARTIAL",
+      "results": {
+        "data": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-code"
+          ]
+        },
+        "engine": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-code"
+          ]
+        },
+        "offline": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-portable-offline"
+          ]
+        },
+        "ui": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-ui"
+          ]
+        },
+        "review": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        },
+        "merge": {
+          "status": "PASS",
+          "evidence": [
+            "E-PROGRESS-21"
+          ]
+        }
+      },
+      "review": {
+        "status": "UNVERIFIED",
+        "evidence": []
+      },
+      "production": {
+        "status": "NOT_RUN",
+        "evidence": []
+      },
+      "prs": [
+        {
+          "number": 21,
+          "state": "MERGED",
+          "merged": true,
+          "evidence": [
+            "E-PROGRESS-21"
+          ]
+        }
+      ],
+      "blockers": [
+        "独立治理/看板审查尚无通过证据；PR #21已合并不替代该门槛。"
+      ],
+      "actual_hours": null,
+      "reason": "重新核实PR #21已合并，补记merge验收；引用后续M0/M1/M2及CFFEX交付证据，不新建正式任务、不改计划权重，研究Demo不计作正式策略通过。独立审查仍未验证。",
+      "basis": [
+        "E-018-code",
+        "E-018-offline",
+        "E-018-ui",
+        "E-018-final-offline",
+        "E-018-oss-policy",
+        "E-018-delivery-pr",
+        "E-018-portable-offline",
+        "E-018-hash-format",
+        "E-PROGRESS-21",
+        "E-DELIVERY-23",
+        "E-DELIVERY-24",
+        "E-DELIVERY-25",
+        "E-M2-LIVE",
+        "E-M2-UI",
+        "E-M2-OFFLINE"
+      ],
+      "seq": 45,
+      "previous_hash": "b902e289735801cfe9b94f66640fb048260c5d73d083a36ebab8adf6a9f034f5",
+      "hash": "ae67f7d20572589cabf81895ca6b14a5d81631a3f62d57eda4e5c4979c5b8a23"
+    },
+    {
+      "task_id": "TASK-009",
+      "at": "2026-10-19T07:09:15+08:00",
+      "state": "PARTIAL",
+      "results": {
+        "code": {
+          "status": "PASS",
+          "evidence": [
+            "E-009-code"
+          ]
+        },
+        "offline": {
+          "status": "PASS",
+          "evidence": [
+            "E-009-offline"
+          ]
+        },
+        "review": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        },
+        "merge": {
+          "status": "PASS",
+          "evidence": [
+            "E-PR"
+          ]
+        }
+      },
+      "review": {
+        "status": "UNVERIFIED",
+        "evidence": []
+      },
+      "production": {
+        "status": "NOT_RUN",
+        "evidence": []
+      },
+      "prs": [
+        {
+          "number": 17,
+          "state": "MERGED",
+          "merged": true,
+          "evidence": [
+            "E-PR"
+          ]
+        }
+      ],
+      "blockers": [],
+      "actual_hours": null,
+      "reason": "PR #17的集成实现已在main；后续M0/M1/M2已分别验证腾讯真实样本和临时SQLite/UI（历史2行及187行），不是健康CLI或完整历史质量验收。独立集成边界审查、腾讯原始口径/授权等仍未知。",
+      "basis": [
+        "E-009-code",
+        "E-009-offline",
+        "E-PR",
+        "E-DELIVERY-23",
+        "E-DELIVERY-24",
+        "E-DELIVERY-25",
+        "E-M2-LIVE",
+        "E-M2-UI",
+        "E-M2-OFFLINE"
+      ],
+      "seq": 46,
+      "previous_hash": "ae67f7d20572589cabf81895ca6b14a5d81631a3f62d57eda4e5c4979c5b8a23",
+      "hash": "1198025384de32b5c9b9d246e9c214395f9e3137bbc2823a38234f13665a90f3"
+    },
+    {
+      "task_id": "TASK-015",
+      "at": "2026-10-19T07:09:15+08:00",
+      "state": "PARTIAL",
+      "results": {
+        "code": {
+          "status": "PASS",
+          "evidence": [
+            "E-015-code"
+          ]
+        },
+        "offline": {
+          "status": "PASS",
+          "evidence": [
+            "E-015-offline"
+          ]
+        },
+        "review": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        },
+        "merge": {
+          "status": "PASS",
+          "evidence": [
+            "E-PR"
+          ]
+        },
+        "live": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        },
+        "calendar": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        }
+      },
+      "review": {
+        "status": "UNVERIFIED",
+        "evidence": []
+      },
+      "production": {
+        "status": "NOT_RUN",
+        "evidence": []
+      },
+      "prs": [
+        {
+          "number": 18,
+          "state": "MERGED",
+          "merged": true,
+          "evidence": [
+            "E-PR"
+          ]
+        }
+      ],
+      "blockers": [
+        "当前真实健康未知；无独立连接探针/已验收日历，CLI 尚无已验证 expectation 输入；未安装 OS 任务"
+      ],
+      "actual_hours": null,
+      "reason": "PR #18健康框架已合并；后续Demo真实成功不经过健康CLI，不能将live/calendar或freshness验收补为PASS；无独立连接探针/可靠日历expectation接线、未装OS计划任务的限制仍保留。",
+      "basis": [
+        "E-015-code",
+        "E-015-offline",
+        "E-PR",
+        "E-DELIVERY-25"
+      ],
+      "seq": 47,
+      "previous_hash": "1198025384de32b5c9b9d246e9c214395f9e3137bbc2823a38234f13665a90f3",
+      "hash": "53e800d70887881279e42d1b8a8bd1fcd8c818579883d573dc147b21787d3dd4"
     }
   ]
 }
