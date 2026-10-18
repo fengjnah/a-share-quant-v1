@@ -1,5 +1,7 @@
 # 本地行情展示页（最小版）
 
+健康检查采用独立、默认离线的 [TASK-015 入口](SOURCE_HEALTH_CHECKS.md)，不会在页面启动或 rerun 时自动执行。可只读展示其序列化报告；配置成功不代表真实行情健康。本轮没有改变 Demo 默认数据源、请求逻辑或生产数据库配置。
+
 ## 功能
 
 - 使用现有 `AkshareDailyClient`（东方财富主源）与 `TxDailyClient`（腾讯备用候选，TASK-008A）通过同一 `DailyHistoryIngestor` 与 `SQLiteMarketDataRepository`。
