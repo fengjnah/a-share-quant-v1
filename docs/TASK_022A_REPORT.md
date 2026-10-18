@@ -1,148 +1,72 @@
-# TASK-022A：CFFEX 股指期货会员持仓适配器 实施记录
+# TASK-022A：CFFEX 适配器交付与验收
 
-| 字段 | 值 |
-| --- | --- |
-| TASK ID / 标题 | TASK-022A / CFFEX 股指期货会员持仓适配器（设计/离线） |
-| 类型 | implementation（离线适配器 + 单元测试；不含自动采集、生产存储或全历史回补） |
-| 前置依赖 | TASK-022（数据源调查）已完成；TASK-022-REVIEW 有条件批准（§G 必须修复 5 项） |
-| 基线 SHA | main `2a53324`（TASK-018 合并后） |
-| 分支 | `codex/task-022a-cffex-adapter`（独立 worktree `F:\codex-agnes\AI-trade-task-022A`） |
-| 执行模型 | Agnes 3.0 Flash（TASK-022 指定 medium 档） |
+更新：2026-10-18。本文是 TASK-022A / TASK-022A-H 的权威交付入口。PR #23 收敛原 #22；代码合并不代表生产准入。保留既有独立审查，不重新开展整轮审查。
 
-## 1. 目标与非目标
+## 基线与交付
 
-**目标**：
-- 实现 IF/IH/IC/IM 四个品种的会员持仓 CSV 适配器（`src/ai_trade/market_data/cffex_rankings.py`）。
-- 支持 2020+ 具名格式与 2010–2019 旧版聚合格式。
-- 验证 CSV 日期、品种、合约、榜单类型、排名字段完整性。
-- 区分代客、自营、unknown 范围；未知范围不得混入已知范围汇总。
-- 保留 `payload_sha256`、`run_id`、`source_version`、`supersedes_version` 等可追溯字段。
-- 对 404 页面、首页兜底、空文件、格式错误各自独立报错，不混用。
-- 遵守现有 SQLite 契约（`futures_rankings` 表），不修改正式表结构。
+- main：`2a5332448b32083ddbedc6b16ea0cf49057e3cb8`；原 #22：`33e33c8e0583b70e1864ca7fb40e94152a338b6c`。
+- 独立复核冻结代码：`72b176aac256f1f6dd2eb6ce9f2a864919c21711`；后续整理仅改文档，源码/测试未变。
+- 执行记录沿用本会话用户确认的 GPT-6.1 Sol / High；工具未独立暴露根会话型号和费用。独立验证为同型号/High/单独只读上下文，不是异模型交叉验证。
+- 四个 `src/ai_trade/market_data/cffex_rankings*.py` 模块实现请求/解析、模型、日历端口和版本纯函数；两个 `tests/unit/test_cffex*.py` 文件提供离线回归。未改正式 SQLite Schema、策略、Demo 或其他行情适配器。
+- 请求仅限 IF/IH/IC/IM 的 CFFEX HTTPS CSV；证书验证开启，无重试/重定向，超时和响应大小有界。支持严格 GBK / UTF-8 BOM 的 named、legacy、mixed 格式。
 
-**非目标**（本任务明确不做）：
-- 不实现自动采集/定时任务（16:35 定时采集设计已就绪但未启用，留待 022C）。
-- 不创建或修改生产数据库。
-- 不执行全历史回补（022C 范围）。
-- 不修改现有选股、入场、止损策略。
+## 问题、修复与限制
 
-## 2. §G 必须修复项对应
-
-| §G 项 | 实现位置 | 说明 |
+| 原问题 | 修复及验证 | 仍未实现/验收 |
 | --- | --- | --- |
-| G.1 `available_at` 保守规则 | `build_record` + `_next_session_floor` | `available_at = max(publication_time, ingested_at)`；未知发布时刻取 `ingested_at`；地板到次日 09:30 CST（即次日 01:30 UTC），16:35 采集的 D 日数据不得用于 D 日盘中。 |
-| G.2 代客/自营口径参数化 | `net_positions(scope=...)` + `MemberScope` 枚举 | `scope` 必须是 `AGENT` 或 `PROPRIO`；传 `UNKNOWN`/`AGENT_AND_PROPRIO` 直接 `ValueError`。`build_record` 中 `unknown_scope` 行数写入 `warnings`。 |
-| G.3 换月/到期月字段 | `CffexRankingsRecord.contracts` + OI=0 行 | 到期月合约（近月归零）的 OI=0 行被正确解析为"进榜但 OI=0"（`open_interest_known=True`），与"榜外 UNKNOWN"（`open_interest_known=False`）口径区分。合同范围记录于 `contracts` 字段；`expiry_month`/`rollover_flag` 派生留待 022C。 |
-| G.4 迟到/修订/断点续跑 | `payload_sha256`、`run_id`、`source_version` | `source_version = "payload-sha256:{digest}"`；重复采集时 `payload_sha256` 相同但 `run_id` 不同，调用方可据此识别重复/修订，不覆盖历史版本。`supersedes_version` 字段预留（本任务未启用写入，留待 022C 采集层）。 |
-| G.5 16:35 发布延迟保护 | `ingest()` + `RankingResponseError` | HTTP 404 → `no_session`；首页兜底 → `response_error`；空文件 → `response_error`；格式错误 → `schema_error`；均不伪造成功记录。重试逻辑（16:35→17:30）属 022C 采集层，本任务仅保证失败路径不混淆。 |
+| 下一自然日被当作交易会话；事件时间使用采集时刻 | 显式 CFFEX 会话端口；event_time 为收盘，未知发布时间为 null；available_at 为采集之后首个已知后续会话开盘；缺日历阻断 | 无可靠真实 CFFEX 日历和历史首发时间，不用工作日或 SH 日历替代 |
+| 404 被判作非交易日 | 默认 unavailable、原因未知；仅独立可见日历明确 closed 才 no_session；首页/HTML/空响应/格式错误不算零行成功 | 不能自动确认未发布 |
+| 跨到期月汇总、缺失补零或范围混合 | 强制合约及 as_of/mode；只配对同会员/范围/合约/日期；缺侧 null，已知零保留；UNKNOWN/代客/自营分离 | expiry_month 仅 YYMM；真实到期日、换月与跨合约净额未实现 |
+| 重复排名、乱码、宽松混合解析及残缺文件 | 统一校验表头/列宽/日期/合约/整数/重复项/完整榜单，拒绝显式声明但为空的段；成交量与持仓分离 | 不证明来源真实、历史覆盖完整或最终客户身份 |
+| 元数据被当作持久幂等和完整版本链 | 显式前驱/原因；重复载荷不覆盖；拒绝缺父/分叉/重复版本；读取实际过滤 available_at、ingested_at | 仅纯函数与调用方链；无持久仓储/全局去重/事务登记/重启恢复；不支持 A→B→A 复用 digest 版本键 |
+| 私人夹具目录缺失时跳过关键测试 | 默认使用标注 synthetic 的可移植夹具；旧真实样本只读重放 | 合成测试不是真实来源验收 |
 
-## 3. 字段映射（CFFEX CSV → RankingRow）
+原始复现包括：重复排名被接受为 243 个领域行、周五可见时间落到周六、未指定合约产生 39 个混合净额。独立复核首版另发现 HIGH：mixed 的某段只有表头时静默降级，分别返回 legacy/6 行、named/60 行且 ingestion=success。增加空声明段拒绝和两个精确回归后，独立复核新 SHA，限定离线范围无剩余 BLOCKER/HIGH。
 
-### 3.1 具名格式（2020-03 起）
+历史勘误：2010/2019 保存件实际含类别和具名两段；裸会员名仍 UNKNOWN。公开会员持仓不等于最终机构/客户持仓。`futures_rankings` 只是领域契约，Schema v2 没有该物理表。
 
-CSV 表头（2 行）：
-```
-交易日,合约,排名,成交量排名,,,持买单量排名,,,持卖单量排名,,
-,,,会员简称,成交量,比上一交易日增减,会员简称,持买单量,比上一交易日增减,会员简称,持卖单量,比上一交易日增减
-```
+## 实际验证
 
-数据行（12 字段）：
-| 字段序号 | 含义 | → RankingRow 字段 |
-| --- | --- | --- |
-| 1 | 交易日 `YYYYMMDD` | `trade_date`（校验与 request 一致） |
-| 2 | 合约代码 `IF2611` 等 | `contract`（校验前 2 字符 == variety） |
-| 3 | 名次 `1..20` | `rank`（校验 1≤rank≤20） |
-| 4 | 成交量会员简称 | `member`（`volume` side） |
-| 5 | 成交量 | `open_interest`（`volume` side） |
-| 6 | 成交量变化 | `open_interest_change`（`volume` side） |
-| 7 | 持买单会员简称 | `member`（`long` side） |
-| 8 | 持买单 OI | `open_interest`（`long` side） |
-| 9 | 持买单变化 | `open_interest_change`（`long` side） |
-| 10 | 持卖单会员简称 | `member`（`short` side） |
-| 11 | 持卖单 OI | `open_interest`（`short` side） |
-| 12 | 持卖单变化 | `open_interest_change`（`short` side） |
-
-### 3.2 旧版聚合格式（2010–2019）
-
-CSV 表头（1 行）：
-```
-交易日,合约,会员类别,总成交量,比上交易日增减,总持买单量,比上交易日增减,总持卖单量,比上一交易日增减
-```
-
-数据行（9 字段）：
-| 字段序号 | 含义 | → RankingRow 字段 |
-| --- | --- | --- |
-| 1 | 交易日 | `trade_date` |
-| 2 | 合约 | `contract` |
-| 3 | 会员类别（`期货公司`/`非期货公司`） | `member`（`rank_format="legacy"`，`member_scope=UNKNOWN`） |
-| 4 | 总成交量 | `open_interest`（`volume` side） |
-| 5 | 成交量变化 | `open_interest_change`（`volume` side） |
-| 6 | 总持买单 | `open_interest`（`long` side） |
-| 7 | 持买单变化 | `open_interest_change`（`long` side） |
-| 8 | 总持卖单 | `open_interest`（`short` side） |
-| 9 | 持卖单变化 | `open_interest_change`（`short` side） |
-
-旧版文件可内嵌具名块（混合格式）；解析器按行内首个非空字段判断 section，遇到 `交易日`（12 列）切到 named section，遇到空首列（12 列）跳过具名表头第二行。
-
-### 3.3 会员范围（`member_scope`）识别
-
-| 会员简称后缀 | → `member_scope` |
+| 验证 | 结果 |
 | --- | --- |
-| `(代客)` | `MemberScope.AGENT` |
-| `(自营)` | `MemberScope.PROPRIO` |
-| 其他 / 缺失 / `-` | `MemberScope.UNKNOWN`（不得混入已知范围汇总） |
+| 原 #22 未改基线完整回归 | 472 passed, 1 skipped，43.43s |
+| 最终相关测试 | 主会话 122 passed / 0.78s；独立上下文 122 passed / 0.82s |
+| 最终完整离线回归 | 主会话 568 passed, 1 skipped / 43.35s；独立上下文同数量 / 42.99s |
+| 本次收尾精简后的唯一一次本地完整回归 | 568 passed, 1 skipped / 44.66s；pip check、保留 JSON/报告链接及 diff 检查通过，源码和测试无变化 |
+| 原交付 c038bee 的 PR #23 CI | [39134358504](https://github.com/fengjnah/a-share-quant-v1/actions/runs/39134358504)：568 passed, 1 skipped / 21.18s；整理提交必须重新确认 CI |
+| 依赖及差异 | pip check 无破损依赖；git diff --check 通过 |
+| 历史 CSV 离线重放 | 13 份全部 parse 成功：2010 三份各 66、2019 一份 198、其余九份各 240 个展开领域行，不是新 HTTP 返回行数 |
 
-## 4. 可复现验证命令
+独立首版完整运行曾有 **2 failed, 564 passed, 1 skipped**：既有 project_progress 的 Windows 子进程编码解码失败。仅对测试进程设置 UTF-8 后完整重跑通过，无排除文件、无降低断言。唯一跳过项为未启用的真实 AKShare 集成。首次失败、日志哈希及源码 blob 保留在[测试证据](reviews/TASK_022A_TEST_EVIDENCE.json)；原始日志保存在本机外部目录 `task-022a-h-20261018`，不作为可移植依赖。
 
-```bash
-# 离线测试（使用 TASK-022 保存的真实 CSV fixture）
-# fixture 目录：F:\codex-agnes\AI-trade-task-022\artifacts\task-022\
-# 可用环境变量 CFFEX_TASK022_ARTIFACTS 覆盖路径
-python -m pytest tests/unit/test_cffex_rankings.py -v
-# => 26 passed
+Python 3.12.14、pytest 8.4.2、Requests 2.34.2、AKShare 1.19.1，未安装新依赖。可复现离线命令：
 
-# 全项目离线回归（排除 jsonschema 缺失的两个环境既有文件）
-python -m pytest -q \
-  --ignore=tests/manual/test_project_progress_offline.py \
-  --ignore=tests/unit/test_project_progress.py
-# => 434 passed, 5 skipped
-
-# 注：test_db.py::test_initialization_cli_from_another_directory 在 venv 环境下已 PASS
-#（TASK-022 审查报告记录的 1 failed 是环境既有问题，本任务修复后消失）
+```powershell
+$env:PYTHONPATH = (Resolve-Path src).Path
+$env:PYTHONUTF8 = '1'
+$env:PYTHONIOENCODING = 'utf-8'
+python -m pytest -q tests/unit/test_cffex_rankings.py tests/unit/test_cffex_high_assurance.py
+python -m pytest -q
+python -m pip check
+git diff --check
 ```
 
-## 5. 测试结果
+CFFEX 验收未执行真实请求、生产数据库、UI、样本外回测、部署或全历史回补；未执行专门类型/漏洞/依赖许可审计。[样本证据](reviews/TASK_022A_SAMPLE_REPLAY.json)保留来源、字节哈希、日期/合约和数量；原始 CSV/ZIP 未提交、未删除。
 
-- **新增测试** `tests/unit/test_cffex_rankings.py`：**26 passed**（全部离线，无网络依赖）。
-- **全项目离线回归**（排除 2 个环境缺 `jsonschema` 的既有文件后）：**434 passed, 5 skipped**，无失败。
-- 排除文件说明：`tests/manual/test_project_progress_offline.py` 与 `tests/unit/test_project_progress.py` 因 `jsonschema` 未安装而收集失败（环境缺依赖，非本任务缺陷；TASK-022 报告已如实标注）。**排除后 434 passed 非全套测试通过，须如实标注。**
+## 文件精简与追溯
 
-## 6. 与 TASK-022 审查报告的对应关系
+按用户明确授权，将重复结论合入本文；保留本文、[局部契约](reviews/TASK_022A_CFFEX_CONTRACT.md)及上述两个长期证据 JSON。删除 **4 个中间文件**（均位于 docs/reviews）：`TASK_022A_HIGH_ASSURANCE_REVIEW.md`、`TASK_022A_INDEPENDENT_VERIFICATION.md`、`TASK_022A_REDUNDANCY_AUDIT.md`、`TASK_022A_FILE_INVENTORY.json`。已核查引用并迁移有效结论，不删代码、测试、fixture、正式契约、原始证据或其他任务文件。
 
-审查报告 §K 验收状态中各判定：
-- **数据来源真实性** → VERIFIED（真实 CSV fixture 离线测试通过）
-- **持仓口径**（代客/自营参数化）→ VERIFIED（`net_positions(scope=...)` 强制单 known scope）
-- **缺失语义**（404/非交易日/榜外）→ VERIFIED（各自独立异常类型）
-- **未来函数控制**（`available_at` 保守）→ VERIFIED（`_next_session_floor` 地板到次日 09:30 CST）
-- **测试基线** → VERIFIED（434 passed 独立复现；排除项已如实标注）
-- **数据授权（R04）** → UNKNOWN（生产前必须核实，不影响离线开发，留待上线门禁）
+旧报告及 106 个跟踪文件、107 个相关证据的盘点可从提交 `c038bee49f82cb69bffd350d27b3f30e421a345f` 恢复，例如 `git show c038bee:docs/reviews/TASK_022A_HIGH_ASSURANCE_REVIEW.md`。无字节完全重复组不代表无语义重复。原 17 个工作树、1581 个清单文件在高强度验收前后保持 HEAD/分支/索引/差异哈希/字节不变；本次不清理它们或缓存。旧原始 CSV/ZIP 和审计 fixture 仍受保护。
 
-## 7. 遗留 / 后续 TASK
+## 准入边界
 
-| 项 | 归属 |
+| 领域 | 状态 |
 | --- | --- |
-| 16:35 定时采集器 + 重试/退避/断点续跑 | TASK-022C |
-| 全历史 1400 交易日回补（2020-03 起） | TASK-022C |
-| `supersedes_version` 写入与迟到/修订跟踪 | TASK-022C |
-| 独立 H 审查（G05/G06 强制范围） | 本 PR 合并前须通过 |
-| 数据授权（R04）书面确认 | 项目方/法务，上线前门禁 |
-| HTTPS 443 可达性补验（大陆内网/代理环境） | 独立网络诊断 TASK |
+| 代码质量、缺失/会员范围 | VERIFIED，仅冻结代码的离线解析/派生范围 |
+| 未来函数与时间 | PARTIAL；注入日历和读时门禁已验，真实日历/发布时间/权威历史读路径待验 |
+| 版本链与幂等 | PARTIAL；缺持久化仓储、约束和账本 |
+| 数据授权 R04 | UNKNOWN；商业/生产/再分发准入未确认 |
+| HTTPS 生产可达性 | UNKNOWN；本轮未探测，历史失败不代替当前结果 |
 
-## 8. 交付文件
-
-| 文件 | 说明 |
-| --- | --- |
-| `src/ai_trade/market_data/cffex_rankings.py` | 适配器主体（解析、分类、派生、时间语义） |
-| `src/ai_trade/market_data/cffex_rankings_models.py` | 数据模型（record/request/row/exception/scope） |
-| `tests/unit/test_cffex_rankings.py` | 离线单元测试（26 条，基于真实 CSV） |
-| `docs/TASK_022A_REPORT.md` | 本实施记录 |
+整体仍为 PARTIAL。收敛离线适配器代码不批准正式策略、自动采集或生产运行。M0 A 股日线 Demo 复用既有腾讯/东方财富→临时 SQLite 路径，与 CFFEX 门禁分离；启动说明见[本地 Demo](LOCAL_MARKET_DEMO.md)。
