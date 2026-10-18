@@ -1,21 +1,35 @@
-# 项目状态与验收边界（2026-10-17）
+# 项目状态与验收边界（2026-10-18）
 
-## TASK-015 健康框架待审分支（2026-10-18）
+## 当前 GitHub 状态（TASK-016 核验）
 
-已核实 TASK-009 的 PR #17 合并为 `main@31a575f6834067749ea006931282e62e8f666a18`，腾讯候选适配器及 #13/#14 的局部修复已随该集成进入 main；旧 PR 自身状态不据此改写。本 TASK-015 分支新增独立健康模型、默认离线检查、临时库验收、审计/报告和 OS 调度入口，未进入 main，待独立 H 审查。完整离线 412 passed、1 skipped；实际 6 次离线配置/未启用检查网络尝试为 0，两源当前可用性仍未知。无独立连接探针、无真实日历配置、无计划任务安装、无生产库/部署。详见 [实施报告](IMPLEMENTATION_TASK_015.md) 与 [使用说明](SOURCE_HEALTH_CHECKS.md)。下文保留历史任务记录，不追溯改写旧测试。
+GitHub API 已确认最新 main 为 `693fab10fe7f88581fc326015556ddc0aa83c1ea`，PR [#18](https://github.com/fengjnah/a-share-quant-v1/pull/18) 已于 2026-10-18 合并，健康检查框架已进入 main；父提交为 `31a575f6834067749ea006931282e62e8f666a18`（PR [#17](https://github.com/fengjnah/a-share-quant-v1/pull/17)，TASK-009）。**代码合并不改变生产准入状态。** 本文件是当前状态索引；旧实施报告保留当时分支、测试和“待审”事实，不追溯改写。
 
-## TASK-009 待审集成分支（2026-10-18 新增）
+本机没有 `refs/heads/main`。本轮 Git fetch 因 GitHub 443 连接失败，`origin/main` 缓存仍为 `31a575f…`，不能当作最新远端；最新 SHA 由成功的 GitHub API 确认。原仓库 `F:\codex-agnes\AI-trade` 的 TASK-004 修改和旧 Demo 的 TASK-008 修改全部保留。完整清单、SHA、哈希与整理方案见 [TASK-016 报告](IMPLEMENTATION_TASK_016.md) 和 [审计 JSON](evidence/TASK_016_BRANCH_AUDIT.json)。
 
-本节仅描述待审分支，不表示已进入 main。基于 `main@c65a3189daf72c1aa97b5930e3a22215bda3f1c8` 整合未合并 #13/#14 的局部修复与本地 TASK-008 腾讯候选 Demo；东方财富仍默认，无自动切源。最终离线测试 363 passed、1 skipped；本轮真实行情请求 0 次，只复用旧 2 行成功/临时库只读证据。腾讯授权、原始调整键、去重前冲突、隐含请求/timeout 和历史覆盖仍未验收。独立 H 审查与用户合并审批待完成；原 TASK-004/TASK-008 修改、旧 PR 和分支全部保留。详见 [实施报告](IMPLEMENTATION_TASK_009.md) 与 [治理矩阵](PR_GOVERNANCE_TASK_009.md)。下文保留此前状态，不追溯将未合并工作写成 main 已有功能。
+## TASK-015：已合并，真实健康验收仍未完成
 
-本文件是当前状态索引；TASK 实施记录保留历史环境、旧 PR 和当时结果，不追溯改写。
+- 已实现并进入 main：独立健康模型/服务、请求预算、追加审计报告、CLI 与 daily/weekly/monthly 调度计划；默认离线，无自动切源。
+- TASK-015 当时完整离线结果为 **412 passed、1 skipped**；TASK-016 在同一 main 文件树重新运行也是 **412 passed、1 skipped**（另有一条 pytest 缓存写入警告，测试退出码 0）。离线通过不能替代真实数据验收。
+- **真实行情可用性尚未验收**；TASK-015/TASK-016 均未发起真实行情请求。独立连接探针未实现/未运行，connectivity_check 为 not_run。
+- **真实交易日历和可信新鲜度尚未验收**。`health_cli.py` 目前没有输入已验证日历期望的参数，也没有向 `HealthService.check` 传入 `expectation`。服务 API 能显式接收 `CalendarExpectation`，但不等于 CLI 已接线；无日历时 expected_data_date / is_stale 保持 null，行情及 SQLite 成功也不能宣称 freshness 通过。
+- 后续需独立审查日历来源、as_of、收盘截点和只读 CLI 接线；不得用星期推算、人工强制 known 或忽略未知来制造成功。
+- **未安装操作系统计划任务**；周/月是可调用计划，仍需外部负责人串接。未初始化生产数据库、未部署。
+- **腾讯仍为候选源，生产未获准**。许可、原始调整键、SDK 去重前冲突、历史覆盖、长期稳定性等缺口仍在。
+
+详见 [TASK-015 历史实施报告](IMPLEMENTATION_TASK_015.md) 与 [健康检查说明](SOURCE_HEALTH_CHECKS.md)。本轮没有独立 H 审查通过的新增证据，不把用户合并或 CI 通过冒充该结论。
+
+## TASK-009：集成已进入 main
+
+PR #17 已合并为 `31a575f6834067749ea006931282e62e8f666a18`，腾讯候选适配器、来源元数据修正、数值校验及 #13/#14 的点击去重/未知行数/安全异常链修复均在 main。东方财富仍为默认源，腾讯手选，无自动故障转移。当时离线 **363 passed、1 skipped**；本次不重复旧网络请求。
+
+旧 TASK-008 的最小两行成功证据已在 TASK-009 中复核并脱敏归档，不代表新集成或健康框架通过真实网络端到端验收。原报告的“1 次”仅能证明一次 SDK 采集调用，不能证明完整 HTTP GET 数；腾讯许可和口径/覆盖问题未解决。详见 [TASK-009 历史报告](IMPLEMENTATION_TASK_009.md) 与 [历史治理矩阵](PR_GOVERNANCE_TASK_009.md)，最新 PR 状态以 TASK-016 为准。
 
 ## GitHub 集成状态
 
-- 已合并：PR #1（TASK-002 SQLite）、#5（TASK-003 AKShare）、#6（TASK-003C TLS）、#7（Streamlit 演示）、#8（工程基线）、#9（讨论归档）、[#10（TASK-004 模型与存储基础）](https://github.com/fengjnah/a-share-quant-v1/pull/10)。这是 TASK-GOV-001 执行前重新读取 GitHub 后确认的状态；不表示真实参考数据验收完成。
-- 已关闭且未合并：#2（由 #5 替代）、#3（由 #6 替代）、#4（由 #7 替代）。
-- 默认分支：`main`；本次治理任务基线为 `0578f9c30039cf3f8e9f4618a6806c5c8411b1dd`（#10 squash 合并），其文件树与 #10 head `bb596a9` 一致。TASK-004 原实施记录保留当时的分支和状态，不追溯改写。
-- 代码库在本次核查时仍为 public；不要提交密钥、SQLite、原始数据或网络响应。
+- 已合并：#1（TASK-002）、#5（TASK-003）、#6（TLS）、#7（Demo）、#8（工程基线）、#9（归档）、#10（TASK-004）、#12（治理）、#17（TASK-009）、#18（TASK-015）。
+- 已关闭且未合并：#2 / #3 / #4，由 #5 / #6 / #7 替代。
+- 仍开放：#11（004A 报告及重复 TASK-004 代码）、#13 / #14（修复内容已随 #17 整合，PR 自身未合并）、#15（历史报告）、#16（诊断工具/报告，base 仍为 #14 分支）。不自动关闭或合并。
+- TASK-004 模型/存储已经由 #10 合并；真实证券历史、ST、退市覆盖与完整可信日历尚未验收。004A 报告仍不在 main：历史主数据请求 TLS 失败，新浪日历有一次响应证据，真实参考数据 SQLite 验收未执行，不能当作完整通过。
 
 ## 代码与文档映射
 
@@ -35,7 +49,7 @@
 - 未实现：全市场增量采集、复权及公司行为、市场宽度、期货持仓/恐贪、选股、择时、风控、回测、日报、AWS 发布。
 - 离线测试通过不能证明 Streamlit 页面在用户 Windows PC 的代理/TLS 环境可正常采集；该验收必须使用实际 Windows 会话。
 - Streamlit 临时 SQLite 是会话隔离的演示库，不能用来声称生产持久化已验收。
-- 当前 CI 使用 `pip install -e '.[test]'`，不会安装 Streamlit 或 AKShare 可选依赖；因此它不执行演示页启动或真实请求测试。
+- 当前 CI 安装 `.[test,demo]`，包含离线 Streamlit AppTest；不安装 AKShare 可选依赖、不执行真实行情请求或 Edge/Chrome 实机 UI。
 
 ## 本地 Streamlit 端到端验收步骤
 
@@ -51,8 +65,8 @@
 可在 Windows PowerShell 中执行：
 
 ```powershell
-git switch main
-git pull --ff-only
+# 在从已核实 main SHA 建立的干净任务工作树中执行；
+# 本机尚无本地 main，不在原 dirty 工作树中切换、覆盖或拉取。
 .\.venv\Scripts\python.exe -m pip install -e ".[akshare,demo]"
 $env:NO_PROXY = "push2his.eastmoney.com"  # 仅在组织网络策略允许直连时使用
 .\.venv\Scripts\python.exe -m streamlit run src/ai_trade/demo_app.py
@@ -67,9 +81,9 @@ $env:NO_PROXY = "push2his.eastmoney.com"  # 仅在组织网络策略允许直连
 3. 为主数据/日历选择有许可及发布时间证据的可靠来源，独立验收覆盖和缺口；不从当前列表倒推历史。
 4. 在数据可得性与历史身份可靠后，推进市场状态、选股、回测。
 
-## TASK-GOV-001：模型路由与成本治理
+## TASK-GOV-001：历史实施记录（规则已随 PR #12 合并）
 
-这是 2026-10-17 新增制度，不追溯声称历史任务曾按此执行。本分支 `docs/model-routing-governance` 只新增/更新以下五个文档，提交 PR 后等待审查，不自动合并：
+这是 2026-10-17 新增制度，不追溯声称历史任务曾按此执行。五份规则文档已随 PR #12 进入 main；下文保留当时的执行记录。独立治理审查仍没有本轮可核实的完成证据，规则合并不等于审查通过：
 
 | 文件 | 职责 |
 | --- | --- |
