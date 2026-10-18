@@ -1,0 +1,297 @@
+{
+  "task": "TASK-015",
+  "created_at": "2026-10-18T06:24:46.677178+00:00",
+  "baseline_main_sha": "31a575f6834067749ea006931282e62e8f666a18",
+  "dependency_pr": {
+    "number": 17,
+    "merged": true,
+    "merge_sha": "31a575f6834067749ea006931282e62e8f666a18"
+  },
+  "execution_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "model_verification": "prior user confirmation of current session; tools do not independently expose runtime model",
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "akshare": "1.19.1",
+      "pytest": "8.4.2",
+      "pandas": "3.0.6",
+      "requests": "2.34.2",
+      "streamlit": "1.66.0"
+    }
+  },
+  "actual_offline_checks": [
+    {
+      "exit_code": 0,
+      "result": {
+        "check_id": "health-ee13250e4bc04ec5a0b36a0ef2e273bc",
+        "source_id": "eastmoney",
+        "interface_id": "akshare.stock_zh_a_hist",
+        "started_at": "2026-10-18T06:24:46.015829+00:00",
+        "finished_at": "2026-10-18T06:24:46.017830+00:00",
+        "check_type": "configuration_check",
+        "status": "success",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": false,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "sdk_version": "1.19.1",
+          "reason": "configuration_only_not_network_health"
+        }
+      }
+    },
+    {
+      "exit_code": 2,
+      "result": {
+        "check_id": "health-d7f5d458c8a8481bb91b9f81cc0316e0",
+        "source_id": "eastmoney",
+        "interface_id": "akshare.stock_zh_a_hist",
+        "started_at": "2026-10-18T06:24:46.146670+00:00",
+        "finished_at": "2026-10-18T06:24:46.146670+00:00",
+        "check_type": "market_data_check",
+        "status": "not_run",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": false,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "reason": "real_network_not_enabled"
+        }
+      }
+    },
+    {
+      "exit_code": 2,
+      "result": {
+        "check_id": "health-2f0de33442a6424abfdebaa9647157cd",
+        "source_id": "eastmoney",
+        "interface_id": "akshare.stock_zh_a_hist",
+        "started_at": "2026-10-18T06:24:46.209261+00:00",
+        "finished_at": "2026-10-18T06:24:46.209261+00:00",
+        "check_type": "connectivity_check",
+        "status": "not_run",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": false,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "reason": "no_independent_approved_probe"
+        }
+      }
+    },
+    {
+      "exit_code": 0,
+      "result": {
+        "check_id": "health-6d7ad0da13d34e8eab8adaab70b1dac9",
+        "source_id": "tencent",
+        "interface_id": "akshare.stock_zh_a_hist_tx",
+        "started_at": "2026-10-18T06:24:46.283607+00:00",
+        "finished_at": "2026-10-18T06:24:46.284606+00:00",
+        "check_type": "configuration_check",
+        "status": "success",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": true,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "sdk_version": "1.19.1",
+          "reason": "configuration_only_not_network_health"
+        }
+      }
+    },
+    {
+      "exit_code": 2,
+      "result": {
+        "check_id": "health-e57ae016184a4110a423dd56cca44180",
+        "source_id": "tencent",
+        "interface_id": "akshare.stock_zh_a_hist_tx",
+        "started_at": "2026-10-18T06:24:46.552925+00:00",
+        "finished_at": "2026-10-18T06:24:46.552925+00:00",
+        "check_type": "market_data_check",
+        "status": "not_run",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": true,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "reason": "real_network_not_enabled"
+        }
+      }
+    },
+    {
+      "exit_code": 2,
+      "result": {
+        "check_id": "health-d3adc386cea941e598e52b6c3bcab02d",
+        "source_id": "tencent",
+        "interface_id": "akshare.stock_zh_a_hist_tx",
+        "started_at": "2026-10-18T06:24:46.617053+00:00",
+        "finished_at": "2026-10-18T06:24:46.617053+00:00",
+        "check_type": "connectivity_check",
+        "status": "not_run",
+        "failure_stage": null,
+        "error_type": null,
+        "request_count": 0,
+        "http_status": null,
+        "dataframe_rows": null,
+        "data_date_min": null,
+        "data_date_max": null,
+        "expected_data_date": null,
+        "is_stale": null,
+        "validation_status": "not_run",
+        "db_write_status": "not_run",
+        "db_rows_inserted": null,
+        "db_rows_read_back": null,
+        "details_redacted": {
+          "candidate": true,
+          "production_accepted": false,
+          "sdk_calls": 0,
+          "request_state": "not_attempted",
+          "reason": "no_independent_approved_probe"
+        }
+      }
+    }
+  ],
+  "source_reports": [
+    {
+      "source_id": "eastmoney",
+      "last_check_at": "2026-10-18T06:24:46.209261+00:00",
+      "last_check_type": "connectivity_check",
+      "last_check_result": "not_run",
+      "last_market_result": "not_run",
+      "state": "current_status_unknown",
+      "consecutive_market_failures": 0,
+      "last_market_success_at": null,
+      "failure_stage": null,
+      "data_date": null,
+      "is_stale": null,
+      "request_count": 0,
+      "last_market_request_count": 0,
+      "dataframe_rows": null,
+      "http_status": null,
+      "candidate": false,
+      "db_write_status": "not_run",
+      "next_action": "explicit_market_check_or_manual_review",
+      "production_accepted": false
+    },
+    {
+      "source_id": "tencent",
+      "last_check_at": "2026-10-18T06:24:46.617053+00:00",
+      "last_check_type": "connectivity_check",
+      "last_check_result": "not_run",
+      "last_market_result": "not_run",
+      "state": "current_status_unknown",
+      "consecutive_market_failures": 0,
+      "last_market_success_at": null,
+      "failure_stage": null,
+      "data_date": null,
+      "is_stale": null,
+      "request_count": 0,
+      "last_market_request_count": 0,
+      "dataframe_rows": null,
+      "http_status": null,
+      "candidate": true,
+      "db_write_status": "not_run",
+      "next_action": "explicit_market_check_or_manual_review",
+      "production_accepted": false
+    }
+  ],
+  "network_check_status": "not_run",
+  "market_http_requests": 0,
+  "network_guard_attempts": 0,
+  "production_database_accessed": false,
+  "installed_scheduled_tasks": false,
+  "tests": {
+    "full_offline": {
+      "passed": 412,
+      "skipped": 1,
+      "failed": 0,
+      "seconds": 20.35,
+      "exit_code": 0
+    },
+    "new_health_tests": 49,
+    "pip_check": "No broken requirements found."
+  },
+  "limitations": [
+    "configuration success is not source availability",
+    "no certified real calendar configured",
+    "connectivity probe deliberately not implemented",
+    "Tencent remains candidate with raw-adjustment/licensing/history gaps",
+    "transport count is adapter send attempts, not proof of upstream processing"
+  ],
+  "preservation": {
+    "task004_files_checked": 37,
+    "task008_files_checked": 77,
+    "all_file_hashes_and_git_status_index_work_diffs_unchanged": true
+  },
+  "diff_check": {
+    "exit_code": 0,
+    "local_file_links_checked": 11,
+    "fences": "passed",
+    "full_markdown_lint": "not configured"
+  }
+}
