@@ -1,93 +1,52 @@
-# 项目状态与验收边界（2026-10-18）
+# 项目状态与验收边界（2026-10-19）
 
-## TASK-018：正式看板待审（本分支）
+## 当前基线与进度
 
-本轮成功 ls-remote/fetch 核实 main 为 `f1382c10f2c3d356be6e059aad5611d15d687a62`，PR #19/#20 均已合并。TASK-017 已建立干净的 `F:\codex-agnes\AI-trade-dev/main`；本任务从最新 origin/main 建独立工作树，未移动本地 main 或覆盖旧目录。下方 TASK-016 段落的“无本地 main/旧缓存”是当时记录，不是当前机器状态。
+GitHub API 本轮确认 main 为 **`5adfacdace69396d88b57b9a7a88b36aa7175c4a`**（PR #25 / M2）；本地 `AI-trade-dev` 在该基线上建立 `codex/project-progress-refresh`，复用现有工作区，不建新 worktree。Git `ls-remote` 本轮连接重置，最新状态来自成功的认证 GitHub API，而非缓存。原仓库 TASK-004 修改未移动或覆盖。
 
-本分支新增 [正式任务看板](TASK_BOARD.md)、[十阶段路线图](ROADMAP_V1_3.md)、[单一结构化数据](TASK_METRICS.json) 和 Demo 的独立“项目进度”入口；百分比由验收点计算，不在本索引手填。数据截止、模型/工时未知、真实/离线/独立审查/PR/生产边界及下一项建议以该看板为准。TASK-018 尚待独立审查与用户合并，不把新页面或规则当作 main 已有功能或生产准入；历史报告不追溯改写。
+正式进度以 [TASK_METRICS.json](TASK_METRICS.json) 为唯一计算源，[任务看板](TASK_BOARD.md) 与 [路线图](ROADMAP_V1_3.md) 自动生成。按计划 1.0，**加权验收进度由 21.67% 重算为 21.85%**：仅补记 TASK-018 的 PR #21 合并验收，增加 `6% × 60% × 5% = 0.18` 个百分点。没有修改阶段/任务权重、任务定义或验收门槛，旧 44 条事件及证据保持原样前缀。
 
-用户本轮追加的[开源调研制度](OPEN_SOURCE_RESEARCH_POLICY.md)已写入本分支，并接入 AGENTS、任务模板及看板。新增规则同样待独立 H 审查；没有重新开展外部项目或许可证调研，不将 TASK-REF-001 的旧本地材料升级为已验收。
+M0/M1/M2 和 CFFEX 为首版任务定义之后的实际交付，作为绑定提交的证据显示在“近期交付与实际能力”，不伪造成原计划中正式策略/风险/回测任务已经执行，也不重复加分。若要扩展正式任务分母或重新分配阶段权重，需经计划修订审查，不能为了提高百分比直接调整。该百分比不是开发工时比例或生产就绪率。
 
-## 当前 GitHub 状态（TASK-016 核验）
+本轮只维护进度与展示，不发真实行情请求、不操作生产库、不执行新的独立审查或自动合并。修改后的页面/测试/PR实际结果由本次交付PR记录；下表是已合并版本的历史证据，不冒充本轮回归结果。
 
-GitHub API 已确认最新 main 为 `693fab10fe7f88581fc326015556ddc0aa83c1ea`，PR [#18](https://github.com/fengjnah/a-share-quant-v1/pull/18) 已于 2026-10-18 合并，健康检查框架已进入 main；父提交为 `31a575f6834067749ea006931282e62e8f666a18`（PR [#17](https://github.com/fengjnah/a-share-quant-v1/pull/17)，TASK-009）。**代码合并不改变生产准入状态。** 本文件是当前状态索引；旧实施报告保留当时分支、测试和“待审”事实，不追溯改写。
+## 已交付的本地能力
 
-本机没有 `refs/heads/main`。本轮 Git fetch 因 GitHub 443 连接失败，`origin/main` 缓存仍为 `31a575f…`，不能当作最新远端；最新 SHA 由成功的 GitHub API 确认。原仓库 `F:\codex-agnes\AI-trade` 的 TASK-004 修改和旧 Demo 的 TASK-008 修改全部保留。完整清单、SHA、哈希与整理方案见 [TASK-016 报告](IMPLEMENTATION_TASK_016.md) 和 [审计 JSON](evidence/TASK_016_BRANCH_AUDIT.json)。
+| 范围 | 已核实交付及合并 | 实际验收与边界 |
+| --- | --- | --- |
+| 数据基础 | #1 SQLite、#5 AKShare、#10 证券主数据/日期级日历、#17 腾讯候选集成已在 main | 离线模型/事务/版本/as_of已实现；不等于真实历史身份、ST、退市、复权及完整日历已验收 |
+| TASK-018 治理与看板 | [#21](https://github.com/fengjnah/a-share-quant-v1/pull/21) 已合并为 `2a5332448b32083ddbedc6b16ea0cf49057e3cb8` | 原看板/模型路由/开源制度已落库；独立治理/看板审查仍未验证。旧实施报告保留当时待审状态 |
+| TASK-022A-H / M0 | [#23](https://github.com/fengjnah/a-share-quant-v1/pull/23) 已合并为 `a579f033b0ccb01efdc2855a577f1c2e6567d510` | CFFEX 限定离线修复经独立复核；CI 568 passed、1 skipped。M0 腾讯600000 / 2026-10-14～15真实返回/写入/读回各2行，内置浏览器验收 |
+| M1 行情工作台 | [#24](https://github.com/fengjnah/a-share-quant-v1/pull/24) 已合并为 `fa2ac20152170719d35bb42b5dc694398a59ce15` | 本地查询与主动采集分开，价格/成交量图和明细同源；复用真实2行样本，刷新仍1批次/2版本。CI 581 passed、1 skipped |
+| M2 研究交易分析 | [#25](https://github.com/fengjnah/a-share-quant-v1/pull/25) 已合并为 `5adfacdace69396d88b57b9a7a88b36aa7175c4a` | 腾讯600000实际2026-01-05～10-15共187行，写入及读回均187；内置浏览器展示MA、ATR、量比、研究评分和止损参考。CI 617 passed、1 skipped；市场数据不足、正式候选0 |
 
-## TASK-015：已合并，真实健康验收仍未完成
+M2 的研究评分40及止损参考可解释、可复现，但没有经过样本外预测能力验证。当前没有已验收的主要指数/全市场、历史ST/市值、周线完整性、公司行为和交易执行门禁。不能据此宣布正式策略、风控执行、回测或生产准入通过。
 
-- 已实现并进入 main：独立健康模型/服务、请求预算、追加审计报告、CLI 与 daily/weekly/monthly 调度计划；默认离线，无自动切源。
-- TASK-015 当时完整离线结果为 **412 passed、1 skipped**；TASK-016 在同一 main 文件树重新运行也是 **412 passed、1 skipped**（另有一条 pytest 缓存写入警告，测试退出码 0）。离线通过不能替代真实数据验收。
-- **真实行情可用性尚未验收**；TASK-015/TASK-016 均未发起真实行情请求。独立连接探针未实现/未运行，connectivity_check 为 not_run。
-- **真实交易日历和可信新鲜度尚未验收**。`health_cli.py` 目前没有输入已验证日历期望的参数，也没有向 `HealthService.check` 传入 `expectation`。服务 API 能显式接收 `CalendarExpectation`，但不等于 CLI 已接线；无日历时 expected_data_date / is_stale 保持 null，行情及 SQLite 成功也不能宣称 freshness 通过。
-- 后续需独立审查日历来源、as_of、收盘截点和只读 CLI 接线；不得用星期推算、人工强制 known 或忽略未知来制造成功。
-- **未安装操作系统计划任务**；周/月是可调用计划，仍需外部负责人串接。未初始化生产数据库、未部署。
-- **腾讯仍为候选源，生产未获准**。许可、原始调整键、SDK 去重前冲突、历史覆盖、长期稳定性等缺口仍在。
+本地现有服务：`http://127.0.0.1:8502/`，侧栏可切换行情工作台、交易分析、项目进度；直接进度入口为 `/?view=progress`。操作与通用启动命令见 [LOCAL_MARKET_DEMO](LOCAL_MARKET_DEMO.md)。项目进度页在行情/SQLite初始化之前分流，不依赖行情可用性。实际 UI 证据为 Codex 内置浏览器，未冒充 Edge/Chrome 验收。
 
-详见 [TASK-015 历史实施报告](IMPLEMENTATION_TASK_015.md) 与 [健康检查说明](SOURCE_HEALTH_CHECKS.md)。本轮没有独立 H 审查通过的新增证据，不把用户合并或 CI 通过冒充该结论。
+上述 PR 状态、CI链接、来源范围、187行摘要及限制见[本轮脱敏证据快照](evidence/PROJECT_PROGRESS_20261019.json)。不提交原始行情或SQLite，HTTP状态和HTTP GET总数未观测时保持未知。
 
-## TASK-009：集成已进入 main
+## 仍未通过的门槛
 
-PR #17 已合并为 `31a575f6834067749ea006931282e62e8f666a18`，腾讯候选适配器、来源元数据修正、数值校验及 #13/#14 的点击去重/未知行数/安全异常链修复均在 main。东方财富仍为默认源，腾讯手选，无自动故障转移。当时离线 **363 passed、1 skipped**；本次不重复旧网络请求。
+- **TASK-004 / 004A**：模型、存储、稳定身份与双时间查询已合并；真实主数据字段响应、历史覆盖、历史ST/停牌及可信日历仍未完整验收。#11仍开放；此前TLS失败不等于当前源已关闭，不得以当前列表倒填历史。
+- **TASK-015 健康框架**：#18已合并，当时412 passed、1 skipped。M0/M2成功经过Demo，不经过健康CLI，不能补为当前健康链路验收通过。`health_cli.py` 尚无已验证日历 expectation 输入，expected_data_date/is_stale保持未知；无独立连接探针验收，未安装操作系统计划任务。见[SOURCE_HEALTH_CHECKS](SOURCE_HEALTH_CHECKS.md)。
+- **腾讯候选源**：SDK原始调整键、去重前冲突、历史覆盖、长期稳定性和生产数据授权仍未验收。手动选择，无自动故障转移，东方财富仍为默认源。本轮不重测任何行情源。
+- **CFFEX**：限定离线代码审查不扩展为真实来源、日历/发布时间、持久化版本仓储、回测接线、R04或生产HTTPS通过。唯一交付入口见[TASK_022A_REPORT](TASK_022A_REPORT.md)。
+- **治理/正式策略**：独立治理/看板及基础集成审查无新增通过证据；全市场宽度、正式选股、风险执行、费用滑点/样本外回测、日报自动化和最终生产准入仍按规划门槛执行，不因研究Demo合并而解除。
+- **生产边界**：没有已确认生产数据库；临时demo.sqlite3不等于生产持久化。未部署AWS、未连接交易账户。分析所用行情是2026-10-18才取得的历史数据，不能伪装为历史盘中已知。
 
-旧 TASK-008 的最小两行成功证据已在 TASK-009 中复核并脱敏归档，不代表新集成或健康框架通过真实网络端到端验收。原报告的“1 次”仅能证明一次 SDK 采集调用，不能证明完整 HTTP GET 数；腾讯许可和口径/覆盖问题未解决。详见 [TASK-009 历史报告](IMPLEMENTATION_TASK_009.md) 与 [历史治理矩阵](PR_GOVERNANCE_TASK_009.md)，最新 PR 状态以 TASK-016 为准。
+## GitHub 与工作区治理
 
-## GitHub 集成状态
+- 本轮确认 #21/#23/#24/#25 已合并。#22被#23取代；因其head是#23祖先，GitHub自动标为merged，不代表单独执行过#22合并。
+- #11/#13/#14/#15/#16仍开放；#13/#14核心修复已随#17集成，但PR自身未合并，不在本任务关闭它们。#2/#3/#4此前已由#5/#6/#7替代并关闭。
+- 后续正式开发从经过远端确认的最新main，在推荐开发工作区建立任务分支。本次复用AI-trade-dev，不直接提交main。
+- M1已安全移除4个TASK-022中间工作区，保留原调研/审查目录的独有报告与原始CSV；本轮不再次清理或生成清理报告。旧现场说明见[TASK-016](IMPLEMENTATION_TASK_016.md)、[TASK-017](IMPLEMENTATION_TASK_017.md)，不把其中当时的“无本地main/旧缓存”当作今天状态。
 
-- 已合并：#1（TASK-002）、#5（TASK-003）、#6（TLS）、#7（Demo）、#8（工程基线）、#9（归档）、#10（TASK-004）、#12（治理）、#17（TASK-009）、#18（TASK-015）。
-- 已关闭且未合并：#2 / #3 / #4，由 #5 / #6 / #7 替代。
-- 仍开放：#11（004A 报告及重复 TASK-004 代码）、#13 / #14（修复内容已随 #17 整合，PR 自身未合并）、#15（历史报告）、#16（诊断工具/报告，base 仍为 #14 分支）。不自动关闭或合并。
-- TASK-004 模型/存储已经由 #10 合并；真实证券历史、ST、退市覆盖与完整可信日历尚未验收。004A 报告仍不在 main：历史主数据请求 TLS 失败，新浪日历有一次响应证据，真实参考数据 SQLite 验收未执行，不能当作完整通过。
+## 后续顺序
 
-## 代码与文档映射
+看板推荐来自原计划的依赖图；当前第一项仍是已有的 `TASK-018-REVIEW` 建议，尚未创建或执行，本次不新增审查TASK。产品数据方向应先解决TASK-004A真实主数据/日历及数据质量缺口，并补齐相应独立验收，再进入正式全市场统计、策略、风险和回测。已有研究Demo可以用于展示与解释，不解除下游门槛。
 
-| 功能 | 主要代码 | 相关文档 | 验收 |
-| --- | --- | --- | --- |
-| SQLite 初始化、事务、迁移 | `src/ai_trade/storage/db.py`, `schema.py` | `IMPLEMENTATION_TASK_002.md` | 离线单元测试覆盖 |
-| 日线验证、追加版本、时点读取 | `src/ai_trade/data_access/` | `DATA_CONTRACT.md`, `IMPLEMENTATION_TASK_002.md` | 最小数据契约测试；不是完整多数据集服务 |
-| 证券主数据、日期级日历 | `src/ai_trade/reference_data/`, `security_master/`, `trading_calendar/`, `storage/reference_schema.py` | `IMPLEMENTATION_TASK_004.md` | #10 已合并模型/存储及离线测试；真实来源、历史覆盖未验收 |
-| AKShare 历史日线、证据、采集 | `src/ai_trade/market_data/` | `IMPLEMENTATION_TASK_003.md`, `IMPLEMENTATION_TASK_003B.md` | 离线测试；指定真实批次见 TASK-003C |
-| TLS 诊断 | `tools/diagnose_akshare_tls.py` | `IMPLEMENTATION_TASK_003C.md` | 诊断单元测试及指定环境的历史验收 |
-| 本地 Streamlit 演示 | `src/ai_trade/demo_app.py` | `LOCAL_MARKET_DEMO.md` | 已集成，真实 UI→网络→SQLite 端到端未验收 |
-| CI | `.github/workflows/offline-pytest.yml` | 本文件 | Python 3.11 pytest；不等于线上集成验收 |
-
-## 已知缺口
-
-- TASK-004：main 已实现稳定实体身份、已知名称时间线、上市/退市边界、日期级日历、不可变版本与双时间可见性查询；真实历史来源/覆盖未验收，历史 ST/停牌、代码变更别名、完整交易会话与可重开快照仍未实现。本治理任务不运行 TASK-004A，也不新增数据源或更改这些功能状态。
-- 未实现：全市场增量采集、复权及公司行为、市场宽度、期货持仓/恐贪、选股、择时、风控、回测、日报、AWS 发布。
-- 离线测试通过不能证明 Streamlit 页面在用户 Windows PC 的代理/TLS 环境可正常采集；该验收必须使用实际 Windows 会话。
-- Streamlit 临时 SQLite 是会话隔离的演示库，不能用来声称生产持久化已验收。
-- 当前 CI 安装 `.[test,demo]`，包含离线 Streamlit AppTest；不安装 AKShare 可选依赖、不执行真实行情请求或 Edge/Chrome 实机 UI。
-
-## 本地 Streamlit 端到端验收步骤
-
-先从最新 `main` 拉取代码，按 `LOCAL_MARKET_DEMO.md` 安装 `.[akshare,demo]` 并启动。应在浏览器中人工完成：
-
-1. 页面可启动、输入默认代码 `600000` 和指定日期；点击前不发送真实行情请求。
-2. 点击“采集真实行情”后，核对真实请求结果、返回/入库行数、来源、观察时间和响应摘要；不以空表冒充成功。
-3. 核对页面显示的会话临时 `demo.sqlite3` 路径，以及页面从同一 SQLite 数据库读回的行情。
-4. 失败场景展示网络/TLS 错误，不关闭证书验证；不自动绕过组织代理政策。
-5. 确认不会读取或写入 `QUANT_DB_PATH` 指向的业务数据库，不泄露证据文件或密钥。
-6. 保存脱敏的执行时间、环境、请求参数、结果、行数、数据库读回证据和问题记录。未完成前保持“待验收”。
-
-可在 Windows PowerShell 中执行：
-
-```powershell
-# 在从已核实 main SHA 建立的干净任务工作树中执行；
-# 本机尚无本地 main，不在原 dirty 工作树中切换、覆盖或拉取。
-.\.venv\Scripts\python.exe -m pip install -e ".[akshare,demo]"
-$env:NO_PROXY = "push2his.eastmoney.com"  # 仅在组织网络策略允许直连时使用
-.\.venv\Scripts\python.exe -m streamlit run src/ai_trade/demo_app.py
-```
-
-**验收状态：待用户 Windows 本地真实操作与证据。** GitHub 云端测试不等同于本机 GUI、代理与真实源端到端测试。
-
-## 后续优先级
-
-1. 以治理模板安排后续任务，并另行指派独立 H 治理审查；TASK-004 真实来源/历史质量继续独立验收，不因 #10 合并而视为通过。
-2. 在 Windows 本地完成 Streamlit 真实端到端验收，记录缺陷。
-3. 为主数据/日历选择有许可及发布时间证据的可靠来源，独立验收覆盖和缺口；不从当前列表倒推历史。
-4. 在数据可得性与历史身份可靠后，推进市场状态、选股、回测。
+历史记录保留原事实：[TASK-018实施报告](IMPLEMENTATION_TASK_018.md)、[TASK-009实施报告](IMPLEMENTATION_TASK_009.md)、[TASK-015实施报告](IMPLEMENTATION_TASK_015.md)。更新当前索引不追溯改写历史交付状态。
 
 ## TASK-GOV-001：历史实施记录（规则已随 PR #12 合并）
 

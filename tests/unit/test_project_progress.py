@@ -15,6 +15,7 @@ from ai_trade.project_progress.core import (
     ROOT, METRICS, PlanError, calculate, load, propose, read_json, seal, snapshots, validate,
 )
 from ai_trade.project_progress.render import board, roadmap
+from ai_trade.project_progress.views import recent_deliveries, task_rows
 
 
 @pytest.fixture
@@ -208,3 +209,52 @@ def test_rejected_scenario_does_not_subtract_credit_twice(data,tmp_path):
     assert r.returncode==0,r.stdout
     result=json.loads(r.stdout)
     assert result['after_percent']==result['before_percent']
+
+
+def test_delivery_feedback_keeps_original_plan_and_event_prefix(data):
+    # Trusted pre-update event hash, not a freshly resealed rewrite of old history.
+    assert data['events'][43]['hash']=='b902e289735801cfe9b94f66640fb048260c5d73d083a36ebab8adf6a9f034f5'
+    assert data['plan_version']=='1.0'
+    assert len(data['tasks'])==40
+    assert calculate(data)['project_percent']==21.85
+    event=snapshots(data)['TASK-018']
+    assert event['results']['merge']['status']=='PASS'
+    assert event['review']['status']=='UNVERIFIED'
+    assert event['state']=='PARTIAL'
+    assert event['production']['status']=='NOT_RUN'
+    assert all(calculate(data)['stage_percent'][f'S{i}']==0 for i in range(5,11))
+
+
+def test_delivery_projection_requires_current_citation_commit_and_pr_type(data):
+    ids={e['id'] for e in recent_deliveries(data)}
+    assert ids=={'E-PROGRESS-21','E-DELIVERY-23','E-DELIVERY-24','E-DELIVERY-25'}
+    assert not {'E-M2-LIVE','E-M2-OFFLINE','E-M2-UI'} & ids
+    assert len(recent_deliveries(data,limit=2))==2
+    data['evidence'].append({**data['evidence'][-1], 'id':'synthetic-uncited', 'kind':'pr'})
+    assert 'synthetic-uncited' not in {e['id'] for e in recent_deliveries(data)}
+    for event in data['events']:
+        event['basis']=[ref for ref in event['basis'] if ref!='E-DELIVERY-25']
+    assert 'E-DELIVERY-25' not in {e['id'] for e in recent_deliveries(data)}
+
+
+def test_task_matrix_does_not_conflate_code_live_review_merge_and_production(data):
+    before=copy.deepcopy(data)
+    rows={r['TASK']:r for r in task_rows(data,calculate(data))}
+    assert rows['TASK-018']['PR']=='#21 MERGED'
+    assert rows['TASK-018']['UI']=='PASS'
+    assert rows['TASK-018']['独立审查']=='UNVERIFIED'
+    assert rows['TASK-018']['生产准入']=='NOT_RUN'
+    assert rows['TASK-004A']['真实源']=='FAIL'
+    assert rows['TASK-015']['真实源']=='UNVERIFIED'
+    assert rows['TASK-009']['UI']=='未单列'
+    assert rows['TASK-PLAN-SELECTION']['状态']=='PLANNED'
+    assert rows['TASK-PLAN-SELECTION']['代码']=='UNVERIFIED'
+    assert data==before
+
+
+def test_delivery_order_compares_instants_not_timezone_strings(data):
+    a=next(e for e in data['evidence'] if e['id']=='E-DELIVERY-24')
+    b=next(e for e in data['evidence'] if e['id']=='E-DELIVERY-25')
+    a['recorded_at']='2026-10-18T23:10:00Z'
+    b['recorded_at']='2026-10-19T07:09:15+08:00'
+    assert recent_deliveries(data)[0]['id']=='E-DELIVERY-24'

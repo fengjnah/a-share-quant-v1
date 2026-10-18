@@ -1,5 +1,6 @@
 """Generate both formal Markdown views from the same validated metrics."""
 from .core import calculate, dependency_failures, snapshots
+from .views import recent_deliveries
 
 
 def _cell(value):
@@ -20,6 +21,10 @@ def board(data):
              "", "## 下一项与阻塞", ""]
     nxt = result['next']
     lines.append(f"推荐：**{nxt['id']}**（{nxt['origin']}）：{nxt['reason']}。" if nxt else "没有依赖满足的可推荐任务；先人工解除阻塞。")
+    lines += ["", "## 近期交付与实际能力", "",
+              "以下为当前快照引用、绑定提交的交付证据，不是新增正式任务或生产准入；原计划与权重保持不变。", ""]
+    for e in recent_deliveries(data):
+        lines.append(f"- {_cell(e['summary'])}（{e['id']}；提交 `{e['source_commit']}`）")
     lines += ["", "## 状态总表", "", "| TASK / 名称 | 类型/优先级 | 唯一指定模型 / 实际模型 | 估计小时 / 实际小时 | 状态 / 验收率 | 前置条件 | 审查 / PR / 生产 |", "| --- | --- | --- | --- | --- | --- | --- |"]
     for t in data['tasks']:
         e = current[t['id']]

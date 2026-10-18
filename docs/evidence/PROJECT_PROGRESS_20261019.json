@@ -1,0 +1,233 @@
+{
+  "checked_at": "2026-10-19T07:09:15+08:00",
+  "baseline": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+  "verification": "Authenticated GitHub branches/main and pulls API; git ls-remote failed with curl 28 connection reset. Cached tracking ref was not used as remote evidence.",
+  "task_record": {
+    "scope": "更新既有项目进度数据及只读展示；不改权重/任务定义/验收条件/治理规则/行情逻辑",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "basis": "沿用本会话用户已确认的配置；工具未提供独立运行时读数",
+    "research": "不适用新增调研：复用既有进度 Schema、计算器、Streamlit 和验收证据，无新依赖/数据源/算法",
+    "cost": "未知",
+    "rules": "G01–G12；只提交范围明确 PR，不自动合并",
+    "review": "普通自检，不是独立审查"
+  },
+  "prs": [
+    {
+      "number": 11,
+      "state": "open",
+      "merged": false,
+      "head_sha": "39be058d35f5ebc49ab88af4fcbcf0b356a96c97",
+      "merge_sha": null,
+      "merged_at": null,
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/11"
+    },
+    {
+      "number": 13,
+      "state": "open",
+      "merged": false,
+      "head_sha": "b31847ff41e200d5b7cb8ef9193c785e1e3e16be",
+      "merge_sha": null,
+      "merged_at": null,
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/13"
+    },
+    {
+      "number": 14,
+      "state": "open",
+      "merged": false,
+      "head_sha": "365a01ca3d6400225ea130188187655211a1cdd1",
+      "merge_sha": "8899aee25fa4258b1e554d71132f3c830c974b94",
+      "merged_at": null,
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/14"
+    },
+    {
+      "number": 15,
+      "state": "open",
+      "merged": false,
+      "head_sha": "b7cbe9ef05623aa99e081b1141528f14817f553e",
+      "merge_sha": "3265b77df36666d8cc20f90840169a865e33571d",
+      "merged_at": null,
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/15"
+    },
+    {
+      "number": 16,
+      "state": "open",
+      "merged": false,
+      "head_sha": "d4701c826ca1eed65074b48ffc6da90e6ff908ad",
+      "merge_sha": "1b3d6c064528ab2bad4abbbb7688162269427e38",
+      "merged_at": null,
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/16"
+    },
+    {
+      "number": 21,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "3619312540dbfcfe336042c425f79042f0acb196",
+      "merge_sha": "2a5332448b32083ddbedc6b16ea0cf49057e3cb8",
+      "merged_at": "2026-10-18T08:12:45Z",
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/21"
+    },
+    {
+      "number": 22,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "33e33c8e0583b70e1864ca7fb40e94152a338b6c",
+      "merge_sha": "33e33c8e0583b70e1864ca7fb40e94152a338b6c",
+      "merged_at": "2026-10-18T14:19:48Z",
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/22"
+    },
+    {
+      "number": 23,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "dfc0f93be93915d7005cad83d24de329e10a2e47",
+      "merge_sha": "a579f033b0ccb01efdc2855a577f1c2e6567d510",
+      "merged_at": "2026-10-18T14:19:47Z",
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/23"
+    },
+    {
+      "number": 24,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "34625b8571c8477840b28acbef710329aff3a1b2",
+      "merge_sha": "fa2ac20152170719d35bb42b5dc694398a59ce15",
+      "merged_at": "2026-10-18T14:38:59Z",
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/24"
+    },
+    {
+      "number": 25,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "c76c09ee1fbef2f170456f13e7d6af767fe5c8c2",
+      "merge_sha": "5adfacdace69396d88b57b9a7a88b36aa7175c4a",
+      "merged_at": "2026-10-18T15:05:56Z",
+      "url": "https://github.com/fengjnah/a-share-quant-v1/pull/25"
+    }
+  ],
+  "deliveries": [
+    {
+      "id": "TASK-018",
+      "title": "正式看板已随 PR #21 合并",
+      "source_pr": 21,
+      "merge_sha": "2a5332448b32083ddbedc6b16ea0cf49057e3cb8",
+      "limitations": [
+        "独立治理/看板审查无新增通过证据",
+        "合并不等于生产准入"
+      ]
+    },
+    {
+      "id": "TASK-022A-H / M0",
+      "title": "CFFEX 离线修复与 M0 真实行情链路",
+      "source_pr": 23,
+      "ci": {
+        "run_id": 39135336064,
+        "passed": 568,
+        "skipped": 1
+      },
+      "live": {
+        "source": "Tencent via AKShare 1.19.1",
+        "symbol": "600000.SH",
+        "start": "2026-10-14",
+        "end": "2026-10-15",
+        "returned": 2,
+        "inserted": 2,
+        "readback": 2,
+        "ui": "Codex in-app browser",
+        "http_status": null,
+        "http_get_count": null
+      },
+      "limitations": [
+        "CFFEX 仅离线范围独立复核通过，不扩展为 SQLite/适配器通用审查",
+        "真实 CFFEX 日历/首发时间/持久仓储/R04/生产 HTTPS 未验收",
+        "腾讯原始调整键与长期稳定性/授权仍未验收"
+      ]
+    },
+    {
+      "id": "M1",
+      "title": "行情工作台",
+      "source_pr": 24,
+      "ci": {
+        "run_id": 39136769014,
+        "passed": 581,
+        "skipped": 1
+      },
+      "ui": {
+        "source": "已存 M0 真实腾讯样本",
+        "rows": 2,
+        "features": [
+          "本地查询与显式采集分开",
+          "同源价格/成交量图及明细",
+          "SQLite 读回核对",
+          "刷新不新增采集批次"
+        ],
+        "new_vendor_calls": 0,
+        "browser": "Codex in-app browser"
+      },
+      "limitations": [
+        "Edge/Chrome 未实际操作",
+        "临时演示库不代表生产持久化"
+      ]
+    },
+    {
+      "id": "TASK-M2",
+      "title": "研究交易分析 Demo",
+      "source_pr": 25,
+      "ci": {
+        "run_id": 39138829139,
+        "passed": 617,
+        "skipped": 1
+      },
+      "local_tests": {
+        "related_passed": 43,
+        "full_passed": 617,
+        "full_skipped": 1
+      },
+      "live": {
+        "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+        "symbol": "600000.SH",
+        "adjustment": "none",
+        "requested_start": "2026-01-01",
+        "requested_end": "2026-10-15",
+        "actual_start": "2026-01-05",
+        "actual_end": "2026-10-15",
+        "returned": 187,
+        "inserted": 187,
+        "readback": 187,
+        "observed_at": "2026-10-18T14:50:03.378746+00:00",
+        "response_sha256": "eeca2fba8f26770a41826f4b1195c43f075d5af177bab63dbf461cab3cb88606",
+        "http_status": null,
+        "http_get_count": null,
+        "run_id": "m2-tencent-600000-20260101-20261015",
+        "sqlite_checks": "quick_check=ok; foreign_key_check empty; 1 ingestion run/187 versions",
+        "provenance": "PR #25 收尾记录与本机 m2-live-summary.json 交叉核对；未重新请求供应商。原始响应和数据库不提交。"
+      },
+      "ui": {
+        "browser": "Codex in-app browser",
+        "features": [
+          "MA5/10/20/60",
+          "Wilder ATR14",
+          "量比及形态",
+          "研究评分/排除原因",
+          "结构及 ATR 止损参考",
+          "可选权益 1% 预算"
+        ],
+        "latest_close": 9.64,
+        "ma5": 9.618,
+        "ma10": 9.461,
+        "ma20": 9.303,
+        "ma60": 9.225166666666667,
+        "atr14": 0.17643949419056834,
+        "research_score": 40,
+        "formal_candidates": 0,
+        "market": "数据不足"
+      },
+      "limitations": [
+        "研究评分不是样本外预测或正式策略验收",
+        "指数/全市场、历史 ST/市值、周线完整性、公司行为和执行门禁仍未知",
+        "正式策略、风险执行、回测与生产准入不因 Demo 完成而计通过"
+      ]
+    }
+  ],
+  "weight_decision": "保持计划1.0及所有阶段/任务/验收点权重原样。只补 TASK-018 的 merge 验收，21.67% -> 21.85%（6% × 60% × 5% = 0.18个百分点）。M0/M1/M2 和 CFFEX 作为后续交付证据展示，不伪造原计划中的正式策略完成或重复加分。若要扩展正式 TASK 分母，需另经计划修订审查。",
+  "next_action": "沿用已有满足依赖的建议队列，不创建/执行新的审查 TASK。优先补已记录的主数据/日历与数据质量缺口；正式回测仍受数据和未来函数门槛约束。"
+}

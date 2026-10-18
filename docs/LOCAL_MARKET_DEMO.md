@@ -1,13 +1,15 @@
 # 本地行情展示页（最小版）
 
-## 项目进度入口（TASK-018 分支新增）
+## 项目进度入口（已随 PR #21 合并）
 
-同一个 Demo 的侧栏“工作区”可选择“项目进度”，或打开 `http://127.0.0.1:8501/?view=progress` 直接进入。该页在导入行情/SQLite 模块之前分流，读取 [TASK_METRICS.json](TASK_METRICS.json)，不创建数据库、不请求行情，也不修改任务状态；行情初始化或接口失败不影响进度页。东方财富仍是行情工作台的默认源。
+同一个 Demo 的侧栏“工作区”可选择“项目进度”，或打开现有本地服务 `http://127.0.0.1:8502/?view=progress` 直接进入（其他端口以启动日志为准）。该页在导入行情/SQLite 模块之前分流，读取 [TASK_METRICS.json](TASK_METRICS.json)，不创建数据库、不请求行情，也不修改任务状态；行情初始化或接口失败不影响进度页。东方财富仍是行情工作台的默认源。
+
+页面顶部展示近期交付证据（M0/M1/M2等）和正式加权验收进度，两者不会互相替代；任务总览可按状态、阶段和编号/名称筛选。筛选不改变完成率。任务详情可展开来源、摘要、绑定提交与哈希；旧事件和证据保留，展示不后台同步GitHub或改写任务状态。
 
 独立启动同一进度渲染器：
 
 ```powershell
-# 合并前在 TASK-018 工作树，合并后使用含该版本代码的干净任务工作树及其环境
+# 在含当前版本代码的干净开发目录及项目虚拟环境执行
 $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 .\.venv\Scripts\python.exe -m streamlit run src/ai_trade/project_progress/app.py --server.address 127.0.0.1
 .\.venv\Scripts\python.exe -m ai_trade.project_progress --check-docs
@@ -82,4 +84,4 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 - 如果代理配置不允许直连该域名，请遵循组织网络策略；不要关闭 TLS 证书验证或擅自添加自动直连回退。
 - 页面代理字段仅表示 Requests 配置推断，不证明实际 socket 路由。腾讯 SDK 会访问 `web.ifzq.gtimg.cn` 探测起始日、再访问 `proxy.finance.qq.com` 按年获取数据；一次点击/SDK 调用可能包含多次 HTTP GET，且起始日探测没有传入 timeout。Demo 不修改这些域名的系统代理。
 - 腾讯 SDK 会去重，并在 `day` 缺失时选择 `hfqday/qfqday`；仅凭 SDK DataFrame 无法核验原始响应所选口径或去重前冲突。当前请求明确使用 `adjust=""`，但原始口径证据仍是生产使用阻断项，不能把该候选用于已验收的严格历史研究。
-- TASK-009 只复用 TASK-008 的历史 2 行成功及只读 SQLite 核对，没有再次请求真实行情。当前集成测试是离线合成夹具和 Streamlit AppTest，不代表本轮真实 UI→网络→SQLite 通过。详见 [集成与治理报告](IMPLEMENTATION_TASK_009.md)。
+- TASK-009当时只复用TASK-008历史2行，见[历史集成报告](IMPLEMENTATION_TASK_009.md)；后续M0/M1与M2已有内置浏览器真实样本验收（2行/187行）。此处区分历史任务与后续交付，不将离线夹具、一次Demo成功或代码合并等同生产/长期覆盖验收。最新范围和证据见[项目状态](PROJECT_STATUS.md)。
