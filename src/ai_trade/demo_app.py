@@ -1,16 +1,11 @@
-"""Small local Streamlit UI for the existing AKShare -> SQLite ingestion path.
-
-Supports two data sources: Eastmoney (primary, existing) and Tencent (backup
-candidate, TASK-008A). The app always uses an isolated temporary SQLite database.
-It never resolves or initializes the configured production/local database.
-Real network access occurs only after the user explicitly presses the
-collection button.
-"""
+"""Local M1 market workbench over the existing vendor/SQLite infrastructure."""
 from __future__ import annotations
 
+import os
 import tempfile
 import uuid
-from datetime import date
+from dataclasses import asdict
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import streamlit as st
@@ -23,70 +18,33 @@ if workspace == "项目进度":
     render()
     st.stop()
 
-# The offline management page exits before loading any market or database modules.
-import pandas as pd
+# Keep progress independent of all market/storage imports and failures.
 import requests
-
 from ai_trade.data_access.repository import SQLiteMarketDataRepository
+from ai_trade.demo_data import SOURCES, chart_data, existing_demo_root, make_request, read_bars, verify_written
 from ai_trade.market_data.akshare_adapter import AkshareDailyClient
+from ai_trade.market_data.tx_adapter import TxDailyClient
 from ai_trade.market_data.evidence import EvidenceStore
 from ai_trade.market_data.ingestor import DailyHistoryIngestor
 from ai_trade.market_data.models import DailyHistoryRequest, EvidenceWriteError
 from ai_trade.storage.db import Database, DatabaseConfig
-from ai_trade.market_data.tx_adapter import TxDailyClient
-
-PROVIDER_HOST = "push2his.eastmoney.com"
-
-
-def normalize_symbol(raw: str) -> str:
-    """Accept six-digit A-share codes or explicit .SH/.SZ suffixes."""
-    value = raw.strip().upper()
-    if len(value) == 6 and value.isdigit():
-        if value.startswith(("600", "601", "603", "605", "688", "689")):
-            return value + ".SH"
-        if value.startswith(("000", "001", "002", "003", "300", "301")):
-            return value + ".SZ"
-        raise ValueError("该代码不在当前适配器支持的沪深 A 股代码范围内。")
-    if len(value) == 9 and value[:6].isdigit() and value[6:] in (".SH", ".SZ"):
-        return value
-    raise ValueError("请输入 6 位沪深 A 股代码，例如 600000，或明确后缀 600000.SH。")
 
 
 def get_demo_root() -> Path:
-    """Create a per-Streamlit-session scratch area, never the production DB."""
     if "demo_root" not in st.session_state:
-        st.session_state.demo_root = tempfile.mkdtemp(prefix="a-share-quant-demo-")
+        configured = os.environ.get("AI_TRADE_DEMO_ROOT")
+        st.session_state.demo_root = str(existing_demo_root(configured)) if configured else tempfile.mkdtemp(prefix="a-share-quant-demo-")
     return Path(st.session_state.demo_root)
 
 
 def get_components():
     root = get_demo_root()
-    db_path = root / "demo.sqlite3"
-    db = Database(DatabaseConfig(db_path, environment="test", journal_mode="DELETE"))
+    db = Database(DatabaseConfig(root / "demo.sqlite3", environment="test", journal_mode="DELETE"))
     db.initialize()
-    repository = SQLiteMarketDataRepository(db)
-    evidence = EvidenceStore(root / "evidence")
-    return db, repository, evidence
-
-
-def saved_rows(db: Database) -> pd.DataFrame:
-    with db.connection() as conn:
-        rows = conn.execute(
-            """SELECT i.symbol AS symbol, b.trade_date AS trade_date,
-                      v.open AS open, v.high AS high, v.low AS low, v.close AS close,
-                      v.volume AS volume_shares, v.amount AS amount_cny,
-                      v.source AS source, v.available_at AS available_at,
-                      v.ingested_at AS ingested_at, v.quality_status AS quality_status
-               FROM daily_bars b
-               JOIN instruments i ON i.instrument_id=b.instrument_id
-               JOIN daily_bar_versions v ON v.bar_id=b.bar_id
-               ORDER BY b.trade_date DESC, i.symbol"""
-        ).fetchall()
-    return pd.DataFrame([dict(row) for row in rows])
+    return db, SQLiteMarketDataRepository(db), EvidenceStore(root / "evidence")
 
 
 def proxy_configuration_label(url: str) -> str:
-    """Resolve Requests configuration, without claiming the actual socket route."""
     try:
         selected = requests.utils.select_proxy(url, requests.utils.get_environ_proxies(url))
         return "选择代理" if selected else "未选择代理"
@@ -95,18 +53,12 @@ def proxy_configuration_label(url: str) -> str:
 
 
 def record_collect_click() -> None:
-    """Distinguish a new click from a Streamlit rerun of a submitted form."""
     st.session_state.collect_click_id = st.session_state.get("collect_click_id", 0) + 1
 
 
-st.title("A股量化系统 V1.3")
-st.caption("本地行情采集工作台 · AKShare 1.19.1 → 现有采集适配器 → 隔离 SQLite")
-
-st.warning(
-    "演示环境：数据库位于操作系统临时目录，与项目 local.sqlite3 / 生产数据库完全隔离。"
-    "只有点击“采集真实行情”才会发出网络请求；不会使用合成行情填充结果。"
-)
-
+st.title("M1 行情工作台")
+st.caption("查询本地数据不联网 · 重新采集需主动点击 · 图表与表格共用 SQLite 验证数据")
+st.warning("仅使用系统临时演示数据库，与生产库隔离；不自动采集、不自动切换数据源。")
 try:
     db, repository, evidence = get_components()
 except Exception as exc:
@@ -115,128 +67,129 @@ except Exception as exc:
 
 with st.sidebar:
     st.subheader("运行环境")
-    st.write("AKShare：固定版本 1.19.1（运行时核验）")
-    st.write("东方财富代理配置（推断）：" + proxy_configuration_label(f"https://{PROVIDER_HOST}/"))
-    st.write("腾讯行情代理配置（推断）：" + proxy_configuration_label("https://proxy.finance.qq.com/"))
-    st.write("腾讯起始日探测代理配置（推断）：" + proxy_configuration_label("https://web.ifzq.gtimg.cn/"))
-    st.caption("以上是 Requests 配置解析结果，实际连接路由未在页面观测。")
-    st.write("TLS 证书验证：保持 requests 默认验证")
+    st.write("AKShare：采集时核验固定版本 1.19.1")
+    for name, host in [("东方财富", "push2his.eastmoney.com"), ("腾讯行情", "proxy.finance.qq.com"), ("腾讯起始日探测", "web.ifzq.gtimg.cn")]:
+        st.write(f"{name}代理配置（推断）：" + proxy_configuration_label(f"https://{host}/"))
+    st.caption("仅为 Requests 配置解析；实际路由未观测。TLS 证书验证保持开启。")
     st.code(str(db.config.path), language="text")
-    st.caption("该临时数据库路径只属于当前演示会话。")
-    if st.button("清空本演示数据", type="secondary"):
-        st.session_state.pop("demo_root", None)
+    st.caption("指定 AI_TRADE_DEMO_ROOT 可在浏览器刷新后继续打开同一个已有临时演示库。未指定时按会话隔离。")
+    if st.button("新建隔离演示区", type="secondary"):
+        st.session_state.demo_root = tempfile.mkdtemp(prefix="a-share-quant-demo-")
+        for key in ("last_result", "display_request", "display_source", "operation_error"):
+            st.session_state.pop(key, None)
         st.rerun()
 
-col1, col2, col3 = st.columns(3)
-col1.metric("演示数据库", "已初始化")
-col2.metric("已保存日线", str(len(saved_rows(db))))
-col3.metric("数据源", "AKShare / 东方财富（默认）· 腾讯（备用）")
-
-st.subheader("历史日线采集")
 with st.form("collect_form"):
-    source_choice = st.selectbox(
-        "行情数据源",
-        options=["东方财富（主源）", "腾讯（备用候选）"],
-        index=0,
-        help="腾讯为 TASK-008A 备用候选，尚未通过生产适用性验收。",
-    )
-    raw_symbol = st.text_input("股票代码", value="600000", help="支持 600000 或 600000.SH")
-    date_cols = st.columns(2)
-    start_date = date_cols[0].date_input("开始日期", value=date(2026, 10, 14))
-    end_date = date_cols[1].date_input("结束日期", value=date(2026, 10, 15))
-    adjustment = st.selectbox("复权口径", options=["none"], format_func=lambda _: "不复权")
-    submitted = st.form_submit_button(
-        "采集真实行情", type="primary", use_container_width=True,
-        on_click=record_collect_click,
-    )
+    source_choice = st.selectbox("行情数据源", options=list(SOURCES), index=0)
+    st.caption("仅列出已接入来源；当前网络可用性以采集结果为准。腾讯仍为候选源，未获生产准入。")
+    raw_symbol = st.text_input("股票代码", value="600000", help="沪深 A 股六位代码或明确 .SH/.SZ 后缀")
+    left, right = st.columns(2)
+    start_date = left.date_input("开始日期", value=date(2026, 10, 14))
+    end_date = right.date_input("结束日期", value=date(2026, 10, 15))
+    st.selectbox("复权口径", options=["none"], format_func=lambda _: "不复权")
+    query_clicked = st.form_submit_button("查询本地已有数据", type="primary")
+    submitted = st.form_submit_button("采集真实行情", on_click=record_collect_click)
+    st.caption("采集真实行情会重新请求供应商；重复行情由既有唯一约束明确拒绝，不会静默覆盖。")
 
 click_id = st.session_state.get("collect_click_id", 0)
-if submitted and click_id > st.session_state.get("processed_collect_click_id", 0):
-    st.session_state.processed_collect_click_id = click_id
+collect_clicked = submitted and click_id > st.session_state.get("processed_collect_click_id", 0)
+if query_clicked or collect_clicked:
+    if collect_clicked:
+        st.session_state.processed_collect_click_id = click_id
+        st.session_state.pop("last_result", None)
+    st.session_state.pop("operation_error", None)
     try:
-        symbol = normalize_symbol(raw_symbol)
-        if start_date > end_date:
-            raise ValueError("开始日期不能晚于结束日期。")
-        request = DailyHistoryRequest(
-            instrument_id=f"cn-equity:{symbol.replace('.', ':')}",
-            symbol=symbol,
-            start_date=start_date.isoformat(),
-            end_date=end_date.isoformat(),
-            adjustment_method=adjustment,
-        )
-        use_tx = source_choice.startswith("腾讯")
-        if use_tx:
-            sdk = TxDailyClient()
+        request = make_request(raw_symbol, start_date, end_date)
+        st.session_state.display_request = asdict(request)
+        st.session_state.display_source = SOURCES[source_choice]
+        if collect_clicked:
+            use_tx = source_choice.startswith("腾讯")
+            sdk = TxDailyClient() if use_tx else AkshareDailyClient()
+            with st.spinner("正在采集真实行情并写入临时 SQLite……"):
+                result = DailyHistoryIngestor(sdk, repository, evidence, timeout=10.0).collect(
+                    request, run_id=f"demo-{uuid.uuid4().hex}")
+            st.session_state.last_result = {
+                "status": result.status.value, "source": result.source, "run_id": result.run_id,
+                "request": asdict(request), "returned_rows": result.returned_rows,
+                "inserted_rows": result.inserted_rows, "http_status": result.http_status,
+                "issues": list(result.issues), "warnings": list(result.warnings),
+                "evidence_directory": result.evidence_directory, "response_sha256": result.response_sha256,
+                "observed_at": result.observed_at, "use_tx": use_tx, "readback_rows": None,
+            }
+            if result.status.value == "success":
+                count = verify_written(repository, result.records)
+                st.session_state.last_result["readback_rows"] = count
+                st.success(f"真实采集成功：返回 {result.returned_rows} 行，插入 {result.inserted_rows} 行；SQLite 逐字段读回 {count} 行一致。")
+            else:
+                st.error(f"采集未通过：{result.status.value}。下方仅展示本地既有数据，不是本次失败请求的响应。")
         else:
-            sdk = AkshareDailyClient()
-        with st.spinner("正在请求真实行情并写入隔离 SQLite……"):
-            result = DailyHistoryIngestor(
-                sdk, repository, evidence, timeout=10.0
-            ).collect(request, run_id=f"demo-{uuid.uuid4().hex}")
-        st.session_state.last_result = {
-            "status": result.status.value,
-            "source": result.source,
-            "run_id": result.run_id,
-            "returned_rows": result.returned_rows,
-            "inserted_rows": result.inserted_rows,
-            "http_status": result.http_status,
-            "issues": list(result.issues),
-            "warnings": list(result.warnings),
-            "evidence_directory": result.evidence_directory,
-            "response_sha256": result.response_sha256,
-            "observed_at": result.observed_at,
-            "use_tx": use_tx,
-        }
-        if result.status.value == "success":
-            # Verify the saved record through the repository's point-in-time read API.
-            for bar in result.records:
-                repository.get_bar(
-                    instrument_id=bar.instrument_id,
-                    trade_date=bar.trade_date,
-                    source=bar.source,
-                    adjustment_method=bar.adjustment_method,
-                    as_of=bar.ingested_at,
-                    mode="strict_backtest",
-                )
-            st.success(
-                f"真实采集成功：返回 {result.returned_rows} 行，"
-                f"插入 {result.inserted_rows} 行；SQLite 时点读回检查通过。"
-            )
-        else:
-            st.error(f"采集未通过：{result.status.value}。没有把失败解释为空行情。")
+            st.info("本地查询完成：未请求行情接口、未创建采集批次。")
     except EvidenceWriteError as exc:
-        st.error(
-            f"采集证据写入失败：{exc}。database_committed={exc.database_committed}；"
-            "请先检查临时数据库与证据目录，再决定是否重试。"
-        )
+        st.session_state.operation_error = f"采集证据写入失败：database_committed={exc.database_committed}。检查临时数据库及证据目录后再决定是否重试。"
     except Exception as exc:
-        st.error(f"操作失败：{type(exc).__name__}: {exc}")
-        st.caption("页面未生成虚构行情。若为网络/TLS 问题，请检查已审查的代理与 NO_PROXY 配置。")
+        if "last_result" in st.session_state and st.session_state.last_result["status"] == "success":
+            st.session_state.last_result["status"] = "readback_error"
+        st.session_state.operation_error = f"操作失败：{type(exc).__name__}: {exc}"
+        st.session_state.pop("display_request", None)
+
+if "operation_error" in st.session_state:
+    st.error(st.session_state.operation_error)
+    st.caption("检查股票代码、交易所后缀、日期顺序和日期范围；仅支持已结束的历史日期。不会生成示例行情。")
 
 if "last_result" in st.session_state:
     result = st.session_state.last_result
     st.subheader("最近一次采集结果")
-    m1, m2, m3 = st.columns(3)
+    m1, m2, m3, m4 = st.columns(4)
     m1.metric("状态", result["status"])
     m2.metric("返回行数", str(result["returned_rows"]) if result["observed_at"] is not None else "未知")
     m3.metric("入库行数", str(result["inserted_rows"]))
+    m4.metric("本批次核对行数", str(result["readback_rows"]) if result["readback_rows"] is not None else "未验证")
+    st.write("采集请求：", result["request"])
     st.write("来源：", result["source"])
     st.write("运行批次：", result["run_id"])
-    st.write("HTTP 状态：", result["http_status"] if result["http_status"] is not None else "无 HTTP 响应 / SDK 未暴露")
+    st.write("HTTP 状态：", result["http_status"] if result["http_status"] is not None else "未知 / SDK 未暴露")
     st.write("实际观察时间：", result["observed_at"] or "未取得")
-    st.write("证据目录：", result["evidence_directory"])
-    st.write("SDK 响应摘要：", result["response_sha256"] or "无")
-    if result.get("use_tx"):
-        st.warning("本批次使用腾讯备用候选接口，尚未通过生产适用性验收。")
+    if result["status"] == "success" and result["readback_rows"] is None:
+        st.error("数据库已提交，但读回核对未通过；禁止将本批次判为完整成功，请检查后再重试。")
     if result["issues"]:
         st.error("；".join(result["issues"]))
-    if result["warnings"]:
-        st.caption("边界说明：" + "；".join(result["warnings"]))
+        st.caption("网络失败：检查代理/网络后手动重试；空响应：核对请求范围及源覆盖；重复：改用本地查询。不会自动重试或切换源。")
+    with st.expander("采集证据与限制"):
+        st.write("证据目录：", result["evidence_directory"])
+        st.write("SDK 响应摘要：", result["response_sha256"] or "无")
+        st.write("边界说明：", "；".join(result["warnings"]))
 
-st.subheader("SQLite 实际读回的行情")
-bars = saved_rows(db)
-if bars.empty:
-    st.info("当前演示数据库没有已保存的行情。请点击“采集真实行情”；网络失败时此表保持为空。")
+if "display_request" not in st.session_state:
+    st.info("尚未查询。请选择股票与日期，点击本地查询或主动采集。")
 else:
-    st.dataframe(bars, use_container_width=True, hide_index=True)
-    st.caption("以上数据直接从本次演示会话的 SQLite 读回，不是静态示例数据。")
+    request = DailyHistoryRequest(**st.session_state.display_request)
+    source = st.session_state.display_source
+    st.subheader("SQLite 查询结果")
+    st.write(f"{request.symbol} · {request.start_date} 至 {request.end_date} · 不复权")
+    st.caption("实际来源：" + source)
+    try:
+        with st.spinner("正在从 SQLite 读取并校验……"):
+            bars = read_bars(db, request, source=source, as_of=datetime.now(timezone.utc).isoformat())
+        st.metric("数据库读回行数", str(len(bars)))
+        if bars.empty:
+            st.info("当前股票、来源和日期范围没有本地数据；这不代表休市或供应商返回零行。可调整查询，或主动采集。")
+        else:
+            st.success("完整性：现有领域校验及可见版本读取通过；交易日覆盖完整性尚未认证。")
+            st.caption(f"数据日期：{bars.trade_date.min()} ～ {bars.trade_date.max()}；入库时间：{bars.ingested_at.max()}；批次：{'、'.join(bars.run_id.unique())}")
+            prices, volumes = chart_data(bars)
+            price_col, volume_col = st.columns(2)
+            with price_col:
+                st.subheader("收盘价走势（元）")
+                if len(bars) >= 2:
+                    st.line_chart(prices)
+                else:
+                    st.info("仅有 1 条记录，不足以显示价格走势；请扩大已有数据查询范围或主动采集。")
+            with volume_col:
+                st.subheader("成交量（股）")
+                st.bar_chart(volumes)
+            st.subheader("SQLite 实际读回的行情")
+            st.dataframe(bars, use_container_width=True, hide_index=True)
+            st.caption("图表和明细来自同一份 SQLite 验证数据；成交量单位为股，成交额为元，不再做单位转换。")
+    except Exception as exc:
+        st.error(f"SQLite 读取或数据校验失败：{type(exc).__name__}: {exc}")
+        st.caption("本次未展示未经验证的图表或行情。检查演示库路径、锁定状态和数据版本；不要删除库后盲目重试。")
