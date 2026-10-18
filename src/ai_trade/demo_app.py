@@ -1,12 +1,13 @@
 """Small local Streamlit UI for the existing AKShare -> SQLite ingestion path.
 
-The app always uses an isolated temporary SQLite database. It never resolves or
-initializes the configured production/local database. Real network access occurs
-only after the user explicitly presses the collection button.
+Supports two data sources: Eastmoney (primary, existing) and Tencent (backup
+candidate, TASK-008A). The app always uses an isolated temporary SQLite database.
+It never resolves or initializes the configured production/local database.
+Real network access occurs only after the user explicitly presses the
+collection button.
 """
 from __future__ import annotations
 
-import os
 import tempfile
 import uuid
 from datetime import date
@@ -22,6 +23,7 @@ from ai_trade.market_data.evidence import EvidenceStore
 from ai_trade.market_data.ingestor import DailyHistoryIngestor
 from ai_trade.market_data.models import DailyHistoryRequest, EvidenceWriteError
 from ai_trade.storage.db import Database, DatabaseConfig
+from ai_trade.market_data.tx_adapter import TxDailyClient
 
 PROVIDER_HOST = "push2his.eastmoney.com"
 
@@ -73,13 +75,18 @@ def saved_rows(db: Database) -> pd.DataFrame:
     return pd.DataFrame([dict(row) for row in rows])
 
 
-def proxy_is_selected() -> bool:
+def proxy_configuration_label(url: str) -> str:
+    """Resolve Requests configuration, without claiming the actual socket route."""
     try:
-        return bool(requests.utils.get_environ_proxies(
-            f"https://{PROVIDER_HOST}/api/qt/stock/kline/get"
-        ))
+        selected = requests.utils.select_proxy(url, requests.utils.get_environ_proxies(url))
+        return "选择代理" if selected else "未选择代理"
     except Exception:
-        return False
+        return "未知"
+
+
+def record_collect_click() -> None:
+    """Distinguish a new click from a Streamlit rerun of a submitted form."""
+    st.session_state.collect_click_id = st.session_state.get("collect_click_id", 0) + 1
 
 
 st.set_page_config(page_title="A股量化系统 V1.3 · 行情工作台", page_icon="📈", layout="wide")
@@ -100,7 +107,10 @@ except Exception as exc:
 with st.sidebar:
     st.subheader("运行环境")
     st.write("AKShare：固定版本 1.19.1（运行时核验）")
-    st.write(f"行情域名走环境代理：{'是' if proxy_is_selected() else '否'}")
+    st.write("东方财富代理配置（推断）：" + proxy_configuration_label(f"https://{PROVIDER_HOST}/"))
+    st.write("腾讯行情代理配置（推断）：" + proxy_configuration_label("https://proxy.finance.qq.com/"))
+    st.write("腾讯起始日探测代理配置（推断）：" + proxy_configuration_label("https://web.ifzq.gtimg.cn/"))
+    st.caption("以上是 Requests 配置解析结果，实际连接路由未在页面观测。")
     st.write("TLS 证书验证：保持 requests 默认验证")
     st.code(str(db.config.path), language="text")
     st.caption("该临时数据库路径只属于当前演示会话。")
@@ -111,23 +121,33 @@ with st.sidebar:
 col1, col2, col3 = st.columns(3)
 col1.metric("演示数据库", "已初始化")
 col2.metric("已保存日线", str(len(saved_rows(db))))
-col3.metric("数据源", "AKShare / 东方财富接口")
+col3.metric("数据源", "AKShare / 东方财富（默认）· 腾讯（备用）")
 
 st.subheader("历史日线采集")
 with st.form("collect_form"):
+    source_choice = st.selectbox(
+        "行情数据源",
+        options=["东方财富（主源）", "腾讯（备用候选）"],
+        index=0,
+        help="腾讯为 TASK-008A 备用候选，尚未通过生产适用性验收。",
+    )
     raw_symbol = st.text_input("股票代码", value="600000", help="支持 600000 或 600000.SH")
     date_cols = st.columns(2)
     start_date = date_cols[0].date_input("开始日期", value=date(2026, 10, 14))
     end_date = date_cols[1].date_input("结束日期", value=date(2026, 10, 15))
     adjustment = st.selectbox("复权口径", options=["none"], format_func=lambda _: "不复权")
-    submitted = st.form_submit_button("采集真实行情", type="primary", use_container_width=True)
+    submitted = st.form_submit_button(
+        "采集真实行情", type="primary", use_container_width=True,
+        on_click=record_collect_click,
+    )
 
-if submitted:
+click_id = st.session_state.get("collect_click_id", 0)
+if submitted and click_id > st.session_state.get("processed_collect_click_id", 0):
+    st.session_state.processed_collect_click_id = click_id
     try:
         symbol = normalize_symbol(raw_symbol)
         if start_date > end_date:
             raise ValueError("开始日期不能晚于结束日期。")
-        sdk = AkshareDailyClient()
         request = DailyHistoryRequest(
             instrument_id=f"cn-equity:{symbol.replace('.', ':')}",
             symbol=symbol,
@@ -135,6 +155,11 @@ if submitted:
             end_date=end_date.isoformat(),
             adjustment_method=adjustment,
         )
+        use_tx = source_choice.startswith("腾讯")
+        if use_tx:
+            sdk = TxDailyClient()
+        else:
+            sdk = AkshareDailyClient()
         with st.spinner("正在请求真实行情并写入隔离 SQLite……"):
             result = DailyHistoryIngestor(
                 sdk, repository, evidence, timeout=10.0
@@ -151,6 +176,7 @@ if submitted:
             "evidence_directory": result.evidence_directory,
             "response_sha256": result.response_sha256,
             "observed_at": result.observed_at,
+            "use_tx": use_tx,
         }
         if result.status.value == "success":
             # Verify the saved record through the repository's point-in-time read API.
@@ -183,7 +209,7 @@ if "last_result" in st.session_state:
     st.subheader("最近一次采集结果")
     m1, m2, m3 = st.columns(3)
     m1.metric("状态", result["status"])
-    m2.metric("返回行数", str(result["returned_rows"]))
+    m2.metric("返回行数", str(result["returned_rows"]) if result["observed_at"] is not None else "未知")
     m3.metric("入库行数", str(result["inserted_rows"]))
     st.write("来源：", result["source"])
     st.write("运行批次：", result["run_id"])
@@ -191,6 +217,8 @@ if "last_result" in st.session_state:
     st.write("实际观察时间：", result["observed_at"] or "未取得")
     st.write("证据目录：", result["evidence_directory"])
     st.write("SDK 响应摘要：", result["response_sha256"] or "无")
+    if result.get("use_tx"):
+        st.warning("本批次使用腾讯备用候选接口，尚未通过生产适用性验收。")
     if result["issues"]:
         st.error("；".join(result["issues"]))
     if result["warnings"]:
