@@ -219,3 +219,73 @@ print(json.dumps({'calls':calls, 'production_created':production.exists(), 'read
     assert result.returncode == 0, result.stderr
     evidence = json.loads(result.stdout)
     assert evidence == {"calls": [provider], "production_created": False, "readback": "matched"}
+
+
+@pytest.mark.skipif(importlib.util.find_spec("streamlit") is None, reason="install demo extra")
+def test_m1_local_query_charts_empty_invalid_and_database_error():
+    """Synthetic data exercise UI behavior; never count this as real-source acceptance."""
+    script = r'''
+import os,socket,sqlite3,tempfile,json
+from dataclasses import replace
+from pathlib import Path
+from unittest.mock import patch
+import requests
+from streamlit.testing.v1 import AppTest
+from ai_trade.data_access.models import DailyBar
+from ai_trade.data_access.repository import SQLiteMarketDataRepository
+from ai_trade.demo_data import SOURCES
+from ai_trade.storage.db import Database,DatabaseConfig
+real=socket.socket.connect
+def loopback(sock,address):
+    if isinstance(address,tuple) and address[0] in ('127.0.0.1','::1'): return real(sock,address)
+    raise AssertionError('offline: no external network')
+socket.socket.connect=loopback
+with tempfile.TemporaryDirectory(prefix='a-share-quant-demo-') as folder:
+    os.environ['AI_TRADE_DEMO_ROOT']=folder
+    db=Database(DatabaseConfig(Path(folder)/'demo.sqlite3',environment='test',journal_mode='DELETE'));db.initialize()
+    bar=DailyBar(instrument_id='synthetic:m1:600000',symbol='600000.SH',trade_date='2026-10-14',
+        open=10.0,high=12.0,low=9.0,close=11.0,volume=12300,amount=135300.0,
+        source=SOURCES['腾讯（备用候选）'],source_version='synthetic-1',
+        event_time='2026-10-14T07:00:00+00:00',available_at='2026-10-16T09:00:00+00:00',
+        ingested_at='2026-10-16T09:01:00+00:00',adjustment_method='none')
+    SQLiteMarketDataRepository(db).write_many([bar,replace(bar,trade_date='2026-10-15',
+        event_time='2026-10-15T07:00:00+00:00',source_version='synthetic-2',close=10.5,volume=23400)],run_id='synthetic-m1')
+    with patch.object(requests.Session,'send',side_effect=AssertionError('local query cannot request')) as send:
+        app=AppTest.from_file('src/ai_trade/demo_app.py').run()
+        assert not app.exception
+        next(s for s in app.selectbox if s.label=='行情数据源').set_value('腾讯（备用候选）')
+        def query(app): return next(b for b in app.button if b.label=='查询本地已有数据').click().run()
+        app=query(app)
+        assert not app.exception
+        assert next(m.value for m in app.metric if m.label=='数据库读回行数')=='2'
+        assert app.dataframe[0].value.volume_shares.tolist()==[12300,23400]
+        assert app.dataframe[0].value.close.tolist()==[11.0,10.5]
+        assert len(app.get('vega_lite_chart'))==2
+        app=app.run()
+        assert len(app.dataframe[0].value)==2 and not app.exception
+        # A new browser session reopens the same explicitly selected scratch DB.
+        fresh=AppTest.from_file('src/ai_trade/demo_app.py').run()
+        assert fresh.session_state['demo_root']==folder
+        next(s for s in app.selectbox if s.label=='行情数据源').set_value('东方财富（主源）')
+        app=query(app)
+        assert next(m.value for m in app.metric if m.label=='数据库读回行数')=='0'
+        assert any('没有本地数据' in i.value for i in app.info)
+        next(t for t in app.text_input if t.label=='股票代码').set_value('600000.SZ')
+        app=query(app)
+        assert any('操作失败' in e.value for e in app.error) and not app.dataframe
+        next(t for t in app.text_input if t.label=='股票代码').set_value('600000')
+        next(s for s in app.selectbox if s.label=='行情数据源').set_value('腾讯（备用候选）')
+        with patch.object(SQLiteMarketDataRepository,'get_bar',side_effect=RuntimeError('synthetic read failure')):
+            app=query(app)
+            assert any('SQLite 读取或数据校验失败' in e.value for e in app.error)
+            assert not app.dataframe and not app.get('vega_lite_chart')
+        assert send.call_count==0
+    with db.connection() as c:
+        assert c.execute('select count(*) from ingestion_runs').fetchone()[0]==1
+        assert c.execute('select count(*) from daily_bar_versions').fetchone()[0]==2
+print(json.dumps({'local_query':'2 rows, 2 charts','rerun_runs':1,'network_calls':0,'empty_invalid_db_error':'explicit'}))
+'''
+    result = subprocess.run([sys.executable, "-c", script], cwd=Path(__file__).resolve().parents[2],
+                            capture_output=True, text=True, encoding="utf-8", timeout=40)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert json.loads(result.stdout)["network_calls"] == 0
