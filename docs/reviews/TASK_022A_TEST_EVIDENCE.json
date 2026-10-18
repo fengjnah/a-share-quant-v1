@@ -1,0 +1,143 @@
+{
+  "task": "TASK-022A-H",
+  "recorded_at": "2026-10-18T21:58:39.914708+08:00",
+  "main": "2a5332448b32083ddbedc6b16ea0cf49057e3cb8",
+  "pr22_head": "33e33c8e0583b70e1864ca7fb40e94152a338b6c",
+  "verified_code_commit": "72b176aac256f1f6dd2eb6ce9f2a864919c21711",
+  "code_blob_shas": {
+    "src/ai_trade/market_data/cffex_rankings.py": "c73900e4cbbdfc79bc7771cadac4f861f692048c",
+    "src/ai_trade/market_data/cffex_rankings_models.py": "4216bb2388d5ac00badc1416f6c097fcb3939780",
+    "src/ai_trade/market_data/cffex_rankings_time.py": "fd26a8ff1e46e608621a20dba1714f387bcd040e",
+    "src/ai_trade/market_data/cffex_rankings_versions.py": "ca894d7600181c79aa0fdeb84fe264c13d01b24c",
+    "tests/unit/test_cffex_rankings.py": "0cbb12f2f667d16b4cb7a315e62ed574b86f0083",
+    "tests/unit/test_cffex_high_assurance.py": "dfc5202acf6f62d2354c16f94179efab91eb9509"
+  },
+  "model": {
+    "configured": "gpt-6.1-sol/high",
+    "basis": "user confirmation in this conversation; independent verifier explicitly configured with same model/high",
+    "independent_runtime_readout": false,
+    "actual_cost": null
+  },
+  "baseline": {
+    "passed": 472,
+    "skipped": 1,
+    "seconds": 43.43,
+    "exit_code": 0
+  },
+  "final_primary": {
+    "passed": 568,
+    "skipped": 1,
+    "seconds": 43.35,
+    "exit_code": 0
+  },
+  "independent": {
+    "task": "TASK-022A-H-VERIFY",
+    "context": "fresh read-only context, same model, no implementation",
+    "first_code": "0f7cb1cca96dc8ccac66f5501c485c1fc6bd2d12",
+    "first_full": {
+      "failed": 2,
+      "passed": 564,
+      "skipped": 1,
+      "seconds": 37.37,
+      "exit_code": 1
+    },
+    "environment_diagnosis": "Windows subprocess encoding in existing project_progress tests; process-only UTF-8 settings, no exclusions/expectation edits",
+    "first_full_utf8": {
+      "passed": 566,
+      "skipped": 1,
+      "seconds": 41.73,
+      "exit_code": 0
+    },
+    "finding": "HIGH: empty declared mixed section silently downgraded; independently reproduced and minimally repaired",
+    "final_focused": {
+      "passed": 122,
+      "seconds": 0.82,
+      "exit_code": 0
+    },
+    "final_full": {
+      "passed": 568,
+      "skipped": 1,
+      "seconds": 42.99,
+      "exit_code": 0
+    },
+    "conclusion": "Verified only the frozen offline correction scope; no remaining code BLOCKER/HIGH found, production and live acceptance excluded"
+  },
+  "pip_check": {
+    "exit_code": 0,
+    "message": "No broken requirements found."
+  },
+  "preservation": {
+    "original_worktrees": 17,
+    "original_file_entries": 1581,
+    "all_unchanged": true,
+    "deleted_repository_files": [],
+    "before_sha256": "b157e43455327896b733e5d9248c2ebb3cc785f127d1b0a4d47c94792e5c8bfb",
+    "after_sha256": "6475f41c691fa6a6102860586ba388817cfda0cb05ce1fefbc9d1ea7aa0ba95e"
+  },
+  "new_cffex_or_market_requests": 0,
+  "archived_csv_parser_replays": 13,
+  "database": "isolated existing-schema unit tests only; no production access",
+  "r04": "UNKNOWN",
+  "https_production": "NOT_RUN",
+  "real_cffex_calendar": "NOT_IMPLEMENTED_OR_ACCEPTED",
+  "durable_rankings_repository_and_idempotence": "NOT_IMPLEMENTED",
+  "backtest_engine_integration": "NOT_IMPLEMENTED",
+  "overall": "PARTIAL",
+  "logs": [
+    {
+      "log_name": "baseline-pytest.txt",
+      "sha256": "2ef0a2ee0c292e334e37edcb526cbc268d1a0f30738e77af6ee7c896c0f146c2",
+      "bytes": 791
+    },
+    {
+      "log_name": "baseline-reproductions.json",
+      "sha256": "d94cab8e0df3ed976d59693d347cf6eabcd7c26da2581aaad5b5ac9fa7bf17fb",
+      "bytes": 241
+    },
+    {
+      "log_name": "full-first.txt",
+      "sha256": "4a06405cc3c8c4a981430da9171b9ff5d8d52681faa9c4ee34b446cf19b3423d",
+      "bytes": 872
+    },
+    {
+      "log_name": "full-final.txt",
+      "sha256": "9530688cd32954aa9bf0e6d8cfd658243f4f1fdbc4370b05e13e9a6d22a669ae",
+      "bytes": 872
+    },
+    {
+      "log_name": "full-after-independent-fix.txt",
+      "sha256": "85244c71733f56857df87f25bcb560a6b4cfe74bc6835830143bb9f8a6cc5fd2",
+      "bytes": 872
+    },
+    {
+      "log_name": "verify-adversarial.log",
+      "sha256": "b004b2515cf86fcf9e5ff306d2f8c3c06807ce285f13805be94515aaeffeed4e",
+      "bytes": 210
+    },
+    {
+      "log_name": "verify-full.log",
+      "sha256": "ca5aa5f0840d8f116217b55023cd1f4c307dcf488a26bd0e576a89724809e66a",
+      "bytes": 12888
+    },
+    {
+      "log_name": "verify-full-utf8.log",
+      "sha256": "fd8f7d37692833ea4ce1d80c6a8f71dd1b9587e0dc472af7c0f873f35c914bf3",
+      "bytes": 872
+    },
+    {
+      "log_name": "verify-v2-focused.log",
+      "sha256": "a120e8a3c8f36979cfd69c3da9960567df6ef0fcfbcc8c8cb3e93add79514ed6",
+      "bytes": 183
+    },
+    {
+      "log_name": "verify-v2-full.log",
+      "sha256": "cf9458a02fccac95010a5cdaa8f94a4aeeba76d87afc8ebdbaef611809731fc8",
+      "bytes": 872
+    },
+    {
+      "log_name": "verify-pip-check.log",
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf",
+      "bytes": 31
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "task": "TASK-022A-H",
+  "code_commit": "72b176aac256f1f6dd2eb6ce9f2a864919c21711",
+  "network_requests": 0,
+  "kind": "archived source files, offline parser replay only",
+  "source_authenticity_and_permission": "NOT_REVALIDATED",
+  "record_build_sqlite_and_live_http": "NOT_RUN: verified CFFEX calendar and persistent rankings repository absent",
+  "samples": [
+    {
+      "file": "sj__ccpm__201004__16__IF_1.csv",
+      "sha256": "737fde729d28e0320a3563746cba25e3779e07cedfb0b13984986c5f40e3d7d6",
+      "trade_date": "2010-04-16",
+      "variety": "IF",
+      "format": "mixed",
+      "rows": 66,
+      "contracts": [
+        "IF1005"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__201004__19__IF_1.csv",
+      "sha256": "0f617d76a792d1f02bfe4124e0cdb2be7118deae7693a33fe25403c33fb5c682",
+      "trade_date": "2010-04-19",
+      "variety": "IF",
+      "format": "mixed",
+      "rows": 66,
+      "contracts": [
+        "IF1005"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__201004__30__IF_1.csv",
+      "sha256": "655ca29c2a5933ed4995867048549782f74d4d0b9e130606a5beb489547df936",
+      "trade_date": "2010-04-30",
+      "variety": "IF",
+      "format": "mixed",
+      "rows": 66,
+      "contracts": [
+        "IF1005"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__201908__05__IF_1.csv",
+      "sha256": "761d33bbd0c2b524a5c6d87239e86aec6aae17a1c5a30f5a4d153c9bd6238295",
+      "trade_date": "2019-08-05",
+      "variety": "IF",
+      "format": "mixed",
+      "rows": 198,
+      "contracts": [
+        "IF1908",
+        "IF1909",
+        "IF1912"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202003__16__IF_1.csv",
+      "sha256": "4dbfeea75a3380389ed42773c29070c31384a546a975aa6a2b84f1efbc9345fd",
+      "trade_date": "2020-03-16",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2003",
+        "IF2004",
+        "IF2006",
+        "IF2009"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202410__16__IF_1.csv",
+      "sha256": "bc182691d6764fb98d109378c81f296f4ccc45c39cd826b952bce601551d5afb",
+      "trade_date": "2024-10-16",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2410",
+        "IF2411",
+        "IF2412",
+        "IF2503"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202510__16__IF_1.csv",
+      "sha256": "b8e16aac10a2d03680d4a782b441b6276cc1a22c84de867df546aa5875798a9b",
+      "trade_date": "2025-10-16",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2510",
+        "IF2511",
+        "IF2512",
+        "IF2603"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__13__IF_1.csv",
+      "sha256": "1a94f3e64fa033f61375337e8e71f28708d78bb06e2bf461319922d2143b49e2",
+      "trade_date": "2026-10-13",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2610",
+        "IF2611",
+        "IF2612",
+        "IF2703"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__15__IF_1.csv",
+      "sha256": "810a5c0740e17d1552abce4ba441562a999e20feaa6f71b6b05c24f5646f1419",
+      "trade_date": "2026-10-15",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2610",
+        "IF2611",
+        "IF2612",
+        "IF2703"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__16__IC_1.csv",
+      "sha256": "f50b7d8ecb925bd0303ba377fbd576f9211d18b76d99585e8dffa6beced49985",
+      "trade_date": "2026-10-16",
+      "variety": "IC",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IC2610",
+        "IC2611",
+        "IC2612",
+        "IC2703"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__16__IF_1.csv",
+      "sha256": "9f6ae746bf675f951b10edd1da280ce14717729b683973a165969211da1b9792",
+      "trade_date": "2026-10-16",
+      "variety": "IF",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IF2610",
+        "IF2611",
+        "IF2612",
+        "IF2703"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__16__IH_1.csv",
+      "sha256": "652b34342547b6f829bdbb4af56bf81d01fcf61a5cb1e3a702912107c94032e3",
+      "trade_date": "2026-10-16",
+      "variety": "IH",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IH2610",
+        "IH2611",
+        "IH2612",
+        "IH2703"
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "sj__ccpm__202610__16__IM_1.csv",
+      "sha256": "0a8ec6ca08e9e013743f6fcd827a8e1dc88fd9bd8a1578703910f1d5a4f4b9c4",
+      "trade_date": "2026-10-16",
+      "variety": "IM",
+      "format": "named",
+      "rows": 240,
+      "contracts": [
+        "IM2610",
+        "IM2611",
+        "IM2612",
+        "IM2703"
+      ],
+      "status": "PASS"
+    }
+  ]
+}
