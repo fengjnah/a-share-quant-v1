@@ -85,3 +85,33 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 - 页面代理字段仅表示 Requests 配置推断，不证明实际 socket 路由。腾讯 SDK 会访问 `web.ifzq.gtimg.cn` 探测起始日、再访问 `proxy.finance.qq.com` 按年获取数据；一次点击/SDK 调用可能包含多次 HTTP GET，且起始日探测没有传入 timeout。Demo 不修改这些域名的系统代理。
 - 腾讯 SDK 会去重，并在 `day` 缺失时选择 `hfqday/qfqday`；仅凭 SDK DataFrame 无法核验原始响应所选口径或去重前冲突。当前请求明确使用 `adjust=""`，但原始口径证据仍是生产使用阻断项，不能把该候选用于已验收的严格历史研究。
 - TASK-009当时只复用TASK-008历史2行，见[历史集成报告](IMPLEMENTATION_TASK_009.md)；后续M0/M1与M2已有内置浏览器真实样本验收（2行/187行）。此处区分历史任务与后续交付，不将离线夹具、一次Demo成功或代码合并等同生产/长期覆盖验收。最新范围和证据见[项目状态](PROJECT_STATUS.md)。
+
+# TASK-M3：市场分析工作台（2026-10-19）
+
+同一 `src/ai_trade/demo_app.py` 的侧栏新增 **M3 市场分析**，直接入口 `/?view=market`。M1、M2 保留。界面最多两列，核心结论靠前，排名/原始数据/计算依据展开查看；在390×844 CSS视口检查布局，尚未完成实际手机HTTPS访问。
+
+本任务从当时最新 origin/main `5adfacdace69396d88b57b9a7a88b36aa7175c4a` 开始，当前工作区原 TASK-004 改动保存在命名 stash 中，未创建工作树。已读根 AGENTS、MODEL_ROUTING_POLICY、OPEN_SOURCE_RESEARCH_POLICY、TASK_022A_CFFEX_CONTRACT，以及行情适配器、M1/M2、相关测试。沿用 G01/G06/G07/G08 的现场、时间、真实性和网络约束。用户本次明确覆盖 G09/G11/G12 的默认人工合并、全量本地审查及另建审查任务流程：只做相关回归，等现有CI后合并；不增加审查 TASK。全程同一当前执行模型，未调用子代理或外部模型；宿主未向执行工具暴露具体模型ID/推理档位，不能伪造其核验结果。费用未知。
+
+有界复用既有实现：CFFEX `task-022a-h-v2` 客户端/解析/RankingRow、SQLite验证读回和M2价格可见性校验；不改正式Schema或available_at。新增计算为原创规则，无外部浪型库、机器学习或交易策略。仅阅读已安装 AKShare 1.19.1 的指数/宽度函数及其主项目[指数接口源码](https://github.com/akfamily/akshare/blob/main/akshare/index/index_stock_zh.py)核对字段，不复制源码或引入新数据供应商；上游动态链接未冻结，未运行上游测试。软件包可安装不代表数据可再分发，所有对外展示/商业授权保持待确认。
+
+实际数据及限制：
+
+- 新浪财经 `stock_zh_index_daily`，经现有AKShare 1.19.1查询沪深300，保留2024-07-09～2026-10-16共550条；实际观察时间2026-10-19 07:24:26（北京时间）。日周方向偏空，收盘4170.613、MA20约4385.89、MA60约4542.93；并列展示下跌中继与反转候选，均为低置信研究情景。确认转折94个；右侧3条出现才确认；当前周排除。最近异向确认转折的斐波那契参考约4520.05/4500.49/4480.93，与原始起止日期并列显示，不视为目标价。
+- M1/M2既有腾讯真实SQLite行情：600000.SH，2026-01-05～2026-10-15共187条。M3复用同源读回和时间校验；旧日期数据为今天可见的历史重建，不能冒充历史盘中信号。
+- CFFEX IF、2026-10-16：本地HTTPS连接失败；现有EC2单次HTTPS检查亦连接超时。未降级HTTP，未把历史HTTP样本冒充已通过的真实来源。四品种、三侧排名、中信净额、会员/口径/合约隔离、未知与零、单合约历史图表均已实现并通过合成离线测试；本次真实持仓未验收。缺权威CFFEX日历时即使获取原榜单，也仅作原始观察，available_at=UNKNOWN，不进入综合方向。
+- 乐咕乐股 `stock_market_activity_legu`：本地TLS错误、EC2返回403。本次没有真实市场家数或涨跌停快照；完整恐贪分数及极端后收益显示数据不足。指数代理37.48、此前252条分位23.41%、因子权重覆盖65%，仅由价格趋势/动量/波动计算，完整分数不补值。原始指数未提供成交额，因此不虚构成交额因子。
+- 综合结论为“数据不足”：期货席位与完整恐贪证据不足；方向冲突优先于完整性判定，不把三类证据相加或输出胜率。实验性代理不冒充全市场情绪。
+
+本机已验证启动方式（仓库根目录PowerShell，复用现有依赖环境）：
+
+```powershell
+$env:PYTHONPATH = 'F:\codex-agnes\AI-trade\src'
+$env:AI_TRADE_DEMO_ROOT = 'C:\Users\iyoyi\AppData\Local\Temp\a-share-quant-demo-m2-q_hbvuaj'
+& 'F:\codex-agnes\AI-trade-main-demo\.venv\Scripts\python.exe' -m streamlit run src/ai_trade/demo_app.py --server.address 127.0.0.1 --server.port 8513 --server.headless true --browser.gatherUsageStats false
+```
+
+新环境可按原项目 `pip install -e '.[test,demo,akshare]'` 安装；默认测试断网。M3本地观察以原始载荷/内容摘要文件保存在同一演示目录 `m3-observations/`，不提交原始数据；最多1000个观察文件，每个不超过2MB。仅显式按钮联网；指数/宽度SDK隔离进程总限30秒，HTTP连接5秒/读取8秒，保持TLS验证，无自动重试/换源。CFFEX沿用8秒分阶段超时。
+
+部署准备在 `deploy/`：`update-workbench.sh MAIN_SHA /absolute/deploy.env` 只更新已配置的服务。脚本校验指定SHA位于fetch后的main、Python3.12、精确依赖版本、内存/磁盘、只读模式、仓库外持久目录、HTTPS未认证401、认证与本机健康正文ok、运行进程实际发布目录及重启前后数据清单；失败恢复旧发布链接并返回非零。现有项目没有依赖锁文件，`requirements.lock`冻结本机已装57个包，Ubuntu安装尚未验证。systemd/Nginx均为供现有配置对照的样例，脚本不安装或覆盖服务。`AI_TRADE_WORKBENCH_ROOT`必须为仓库和系统临时目录之外的独立目录，使用专门 `workbench.sqlite3`，拒绝开发 `demo.sqlite3`。初次目录/服务/HTTPS/身份认证需由操作者按现有环境完成配置后才能更新；不自动创建基础设施。
+
+EC2只读检查：Ubuntu现有Python3.14.4，约908MiB内存、可用约310MiB、无swap、根分区余量约2.7GiB；Java八字服务约273MiB RSS，Nginx目前仅HTTP80反代8080，无已配置HTTPS/量化服务。未取得安全组API访问，不声称安全组已验收。用户随后要求暂不产生新的AWS账单，因此暂缓部署及服务器变更：没有创建AWS资源、安装依赖、改Nginx或重启现有服务。手机受保护HTTPS入口、部署SHA、服务自动启动、EC2数据持久化与失败回滚仍未实机验收；仅完成脚本语法及本地相关测试，不能报部署成功。后续仅在免费额度/成本和访问控制均确认后考虑部署，不启用Actions自动部署。
