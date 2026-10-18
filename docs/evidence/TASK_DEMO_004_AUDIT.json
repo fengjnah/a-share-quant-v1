@@ -1,0 +1,114 @@
+{
+  "started_at": "2026-10-18T01:52:35.815715+00:00",
+  "target": {
+    "host": "push2his.eastmoney.com",
+    "path": "/api/qt/stock/kline/get",
+    "symbol": "600000.SH",
+    "start_date": "2026-10-14",
+    "end_date": "2026-10-15",
+    "period": "daily",
+    "adjustment_method": "none"
+  },
+  "request_budget": {
+    "max_target_get": 1,
+    "adapter_get_count": 1,
+    "session_send_count": 1
+  },
+  "dns": [
+    {
+      "host": "push2his.eastmoney.com",
+      "port": 443,
+      "status": "resolved",
+      "addresses": [
+        "117.184.38.143"
+      ]
+    }
+  ],
+  "tcp": [
+    {
+      "peer_ip": "117.184.38.143",
+      "peer_port": 443,
+      "status": "connected"
+    }
+  ],
+  "tls": [
+    {
+      "server_hostname": "push2his.eastmoney.com",
+      "verify_mode": "CERT_REQUIRED",
+      "check_hostname": true,
+      "status": "handshake_complete",
+      "protocol": "TLSv1.3"
+    }
+  ],
+  "http_send_calls": [
+    {
+      "status": "local_send_completed"
+    }
+  ],
+  "http_status_lines": [
+    {
+      "status": "failed",
+      "error_types": [
+        "RemoteDisconnected"
+      ]
+    }
+  ],
+  "http": {
+    "status": "not_observed"
+  },
+  "requests": {
+    "method": "GET",
+    "host": "push2his.eastmoney.com",
+    "path": "/api/qt/stock/kline/get",
+    "selected_proxy": null,
+    "verify_enabled": true,
+    "redirects_disabled": true,
+    "timeout_seconds": 10.0,
+    "urllib3_retries_disabled": true
+  },
+  "blocked_requests": [],
+  "akshare": {
+    "status": "network_error",
+    "returned_rows": null,
+    "source": "akshare-eastmoney:stock_zh_a_hist:task-003-v1+sdk-1.19.1",
+    "run_id": "demo-004-e4e87389a005411390620f1632e457bc",
+    "inserted_rows": 0,
+    "observed_at": null,
+    "issues": [
+      "ConnectionError: source transport failed; cause_types=ConnectionError > OtherError > ProtocolError; failure_stage=sdk_fetch_transport; network_phase=undetermined"
+    ],
+    "response_sha256": null,
+    "fields": null
+  },
+  "sqlite_write": {
+    "status": "not_executed"
+  },
+  "sqlite_readback": {
+    "status": "not_executed"
+  },
+  "configuration": {
+    "no_proxy": "push2his.eastmoney.com",
+    "no_proxy_match": true,
+    "selected_environment_proxy": null,
+    "tls_verification": "enabled",
+    "retry_policy": "urllib3 total/connect/read/redirect/status=0 for this call",
+    "redirect_policy": "allow_redirects=False for this call"
+  },
+  "temporary_root": "<isolated-system-temp-directory>",
+  "elapsed_seconds": 0.844,
+  "stop_reason": "ingestion_not_success",
+  "completed_at": "2026-10-18T01:52:36.681895+00:00",
+  "evidence_files": [
+    {
+      "name": "request.json",
+      "sha256": "38125be4a10783c3e01cd8d69ec2116f9d45d4e9536cfb513c1cd2d702cee11d",
+      "bytes": 822
+    },
+    {
+      "name": "result.json",
+      "sha256": "f9d3123b6655291ae4e3838692bec162f99b9d3b6aa5c201db66c505fe8cd54d",
+      "bytes": 1009
+    }
+  ],
+  "audit_note": "sanitized post-run copy; evidence filenames and SHA-256 calculated from local failure files; no SDK response file exists"
+}
