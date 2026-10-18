@@ -306,3 +306,14 @@ def test_scope_tampering_and_self_revision_are_rejected_by_read():
     rows[i]=replace(rows[i],member_scope=MemberScope.AGENT)
     for record in [replace(first,rows=tuple(rows)),replace(first,supersedes_version=first.source_version,revision_reason='bad')]:
         with pytest.raises(RankingVersionError):_net(record,contract='IF2611')
+
+
+@pytest.mark.parametrize('missing',['named','legacy'])
+def test_declared_mixed_section_cannot_silently_disappear(missing):
+    lines=legacy('2026-10-16','IF2611').decode('gbk').splitlines()
+    truncated=lines[:5] if missing=='named' else [lines[0],*lines[3:]]
+    payload=('\n'.join(truncated)+'\n').encode('gbk')
+    with pytest.raises(RankFormatError):cr.parse(payload,_req('IF'))
+    client=Mock();client.fetch.return_value=payload
+    outcome=_ingest(client,_req('IF'),**TIMES)
+    assert outcome.status=='schema_error' and outcome.record is None

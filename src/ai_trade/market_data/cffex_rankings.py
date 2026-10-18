@@ -224,6 +224,10 @@ def _parse_sections(payload, request, expected):
                 rows.append(row)
     if not rows or section == 'named_header':
         raise RankFormatError('empty or truncated CSV section')
+    if expected == _LEGACY_HEADER_0 and not legacy_contracts:
+        raise RankFormatError('declared legacy section has no category data')
+    if named_seen and not named_contracts:
+        raise RankFormatError('declared named section has no ranking data')
     for contract in named_contracts:
         if {rank for c, rank in ranks if c == contract} != set(range(1, RANK_TOP_N+1)):
             raise RankingValidationError('incomplete named rank list')
