@@ -1,0 +1,48 @@
+{
+  "status": "success",
+  "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+  "returned_rows": 2,
+  "inserted_rows": 2,
+  "observed_at": "2026-10-18T05:31:33.635382+00:00",
+  "issues": [],
+  "sqlite_readback_rows": 2,
+  "sqlite_quick_check": "ok",
+  "task": "TASK-008",
+  "note": "Real Tencent request via project ingestor chain; isolated temp SQLite; production DB untouched.",
+  "test_summary": {
+    "passed": 358,
+    "skipped": 1,
+    "failed": 0,
+    "pip_check": "No broken requirements found.",
+    "git_diff_check": "clean (CRLF normalization warning only, exit 0)"
+  },
+  "preserved_original_sha256": "2187bbe665ecfb4a449bb4a92b348b06f28d63e576a534ba4119d653841cae87",
+  "request_count_evidence": "one SDK collection reported; actual HTTP GET count not observed",
+  "task009_network_requests": 0,
+  "task009_readonly_recheck": {
+    "database_exists": true,
+    "rows": 2,
+    "sample_fields_match_original_audit": true,
+    "quick_check": "ok",
+    "production_database_used": false
+  },
+  "original_evidence_files": [
+    {
+      "name": "request.json",
+      "sha256": "0db98786aa07c5cf04360beea3476b62fad2dbce349a5a4bfacb3ead25b8f5df"
+    },
+    {
+      "name": "response.json",
+      "sha256": "767897b8471e71aee21610e1ffd370b80b985305a3a93954ad972969fbed13e9"
+    },
+    {
+      "name": "result.json",
+      "sha256": "ba4be1a9e639c796149c9c864b16573134e03a9a1d7c14abdc50fe7654f42470"
+    }
+  ],
+  "limitations": [
+    "original manifest provider/endpoint incorrectly eastmoney; source label tencent",
+    "raw adjustment selection and full HTTP request count unverified",
+    "summary copied and sanitized; no response body or database committed"
+  ]
+}

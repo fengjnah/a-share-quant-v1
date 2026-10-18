@@ -25,6 +25,27 @@ def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+_SAFE_TRANSPORT_TYPES = frozenset({
+    "ConnectionError", "ProxyError", "SSLError", "SSLEOFError", "SSLCertVerificationError",
+    "Timeout", "ConnectTimeout", "ReadTimeout", "TimeoutError", "ProtocolError",
+    "RemoteDisconnected", "NewConnectionError", "NameResolutionError", "gaierror",
+    "ConnectionResetError", "ConnectionAbortedError", "ConnectionRefusedError", "OSError",
+})
+
+
+def _transport_type_chain(exc: BaseException) -> str:
+    """Retain bounded exception types without persisting URLs, credentials or messages."""
+    names: list[str] = []
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen and len(names) < 8:
+        seen.add(id(current))
+        name = type(current).__name__
+        names.append(name if name in _SAFE_TRANSPORT_TYPES else "OtherError")
+        current = current.__cause__ or current.__context__
+    return " > ".join(names)
+
+
 class DailyHistoryIngestor:
     """Archive an observed SDK response, validate, then commit a complete batch.
 
@@ -43,8 +64,13 @@ class DailyHistoryIngestor:
         self.evidence = evidence
         self.clock = clock
         self.timeout = float(timeout)
-        self.source = f"akshare-eastmoney:stock_zh_a_hist:{ADAPTER_VERSION}+sdk-{client.sdk_version}"
+        self.source = (client.source_label() if hasattr(client, "source_label") else
+                       f"akshare-eastmoney:stock_zh_a_hist:{ADAPTER_VERSION}+sdk-{client.sdk_version}")
+        self.provider = getattr(client, "provider", "eastmoney")
+        self.endpoint = getattr(client, "endpoint", "akshare.stock_zh_a_hist")
         text_field(self.source, "source")
+        text_field(self.provider, "provider")
+        text_field(self.endpoint, "endpoint")
 
     def _now(self, previous: str | None = None) -> str:
         current = self.clock()
@@ -60,14 +86,17 @@ class DailyHistoryIngestor:
         started = self._now()
         validate_request(request, now=datetime.fromisoformat(started))
         text_field(run_id, "run_id")
+        parameters = {"symbol": request.symbol[:6], "period": "daily",
+                      "start_date": request.start_date.replace("-", ""),
+                      "end_date": request.end_date.replace("-", ""), "adjust": "",
+                      "timeout": self.timeout}
+        if hasattr(self.client, "request_parameters"):
+            parameters = self.client.request_parameters(request, timeout=self.timeout)
         folder = self.evidence.begin(run_id, {
             "run_id": run_id, "request": asdict(request), "started_at": started,
             "source": self.source, "sdk_version": self.client.sdk_version,
-            "endpoint": "akshare.stock_zh_a_hist", "provider": "eastmoney",
-            "parameters": {"symbol": request.symbol[:6], "period": "daily",
-                           "start_date": request.start_date.replace("-", ""),
-                           "end_date": request.end_date.replace("-", ""), "adjust": "",
-                           "timeout": self.timeout},
+            "endpoint": self.endpoint, "provider": self.provider,
+            "parameters": parameters,
             "availability_policy": "observed_on_fetch; no historical publication timestamp provided",
             "event_time_policy": "trade_date at regular-session 15:00 Asia/Shanghai; calendar not certified",
         })
@@ -87,12 +116,14 @@ class DailyHistoryIngestor:
             if isinstance(frame, pd.DataFrame):
                 returned = len(frame.index)
                 digest = self.evidence.response(folder, frame)
-            check_frame(frame)
+            frame_check = getattr(self.client, "check_frame", check_frame)
+            frame_mapper = getattr(self.client, "map_frame", map_frame)
+            frame_check(frame)
             if returned == 0:
                 status = IngestionStatus.EMPTY_RESPONSE
                 issues = ("SDK returned zero rows; cause and coverage are unproven, not a successful ingestion",)
             else:
-                candidate = map_frame(frame, request, source=self.source, observed_at=observed)
+                candidate = frame_mapper(frame, request, source=self.source, observed_at=observed)
                 validated = self._now(observed)
                 records = tuple(validate_bar(replace(bar, ingested_at=validated)) for bar in candidate)
                 written = self.writer.write_many(records, run_id=run_id)
@@ -106,7 +137,11 @@ class DailyHistoryIngestor:
             status = IngestionStatus.RATE_LIMITED if http_status == 429 else IngestionStatus.NETWORK_ERROR
             issues = (f"HTTP error from source; status={http_status}; no automatic retry",)
         except (RequestException, TimeoutError, ConnectionError) as exc:
-            status, issues = IngestionStatus.NETWORK_ERROR, (f"{type(exc).__name__}: source transport failed",)
+            status = IngestionStatus.NETWORK_ERROR
+            chain = _transport_type_chain(exc)
+            issues = (f"{chain.split(' > ', 1)[0]}: source transport failed; "
+                      f"cause_types={chain}; "
+                      "failure_stage=sdk_fetch_transport; network_phase=undetermined",)
         except SourceSchemaError as exc:
             status, issues = IngestionStatus.SCHEMA_ERROR, (str(exc),)
         except DuplicateRecordError as exc:
