@@ -2,7 +2,7 @@
   "schema_version": 1,
   "project": "A股量化交易系统 V1.3",
   "plan_version": "1.0",
-  "updated_at": "2026-10-18T07:59:35.938352+00:00",
+  "updated_at": "2026-10-18T08:07:13.712493+00:00",
   "baseline": "f1382c10f2c3d356be6e059aad5611d15d687a62",
   "weight_basis": "首版任务规划：治理10%、数据25%、市场/选股20%、风险10%、回测20%、日报10%、最终5%；十阶段细分和任务点数是可审查的规划参数，不是工时或生产收益实测。历史诊断零权重，实际工时未知保留 null；不是生产就绪率。调整需独立计划修订，保留事件/evidence/Git 历史。",
   "stages": [
@@ -3078,6 +3078,33 @@
       "source_commit": null,
       "summary": "新增制度入口及最终代码实际445 passed/1 skipped，pip check/Schema/历史前缀/有限链接检查通过；不是独立审查或真实源验收",
       "recorded_at": "2026-10-18T07:59:35.938352+00:00"
+    },
+    {
+      "id": "E-018-delivery-pr",
+      "kind": "pr",
+      "ref": "docs/evidence/TASK_018_DELIVERY.json",
+      "sha256": "8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224",
+      "source_commit": null,
+      "summary": "实际创建Draft PR #21，OPEN/未合并；快照早于本次追加提交，不冒充审查或合并通过",
+      "recorded_at": "2026-10-18T08:07:13.712493+00:00"
+    },
+    {
+      "id": "E-018-portable-offline",
+      "kind": "offline",
+      "ref": "docs/evidence/TASK_018_DELIVERY.json",
+      "sha256": "8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224",
+      "source_commit": null,
+      "summary": "最终完整离线446 passed/1 skipped、44.44秒，明确包含中间失败及修复；不是实际Linux或真实行情验收",
+      "recorded_at": "2026-10-18T08:07:13.712493+00:00"
+    },
+    {
+      "id": "E-018-hash-format",
+      "kind": "report",
+      "ref": "docs/evidence/TASK_018_HASH_FORMAT.json",
+      "sha256": "f350b7792e272da3d4c44564a214677aaccd095086e8fec1f656286965498a77",
+      "source_commit": null,
+      "summary": "显式保留50条原始Windows CRLF字节哈希，新证据默认UTF-8 LF；只重建已记录换行，不忽略其他内容",
+      "recorded_at": "2026-10-18T08:07:13.712493+00:00"
     }
   ],
   "events": [
@@ -5096,6 +5123,81 @@
       "seq": 43,
       "previous_hash": "44dbff5a8b9b1da3c5a82293fca727591a7fc5be4664d8f8e13ab9c58bbe2ae3",
       "hash": "c6ed55ad3407051259f80a5dd037d646878a9412e188e0849c625dd43f764606"
+    },
+    {
+      "task_id": "TASK-018",
+      "at": "2026-10-18T08:07:13.712493+00:00",
+      "state": "PARTIAL",
+      "results": {
+        "data": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-code"
+          ]
+        },
+        "engine": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-code"
+          ]
+        },
+        "offline": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-portable-offline"
+          ]
+        },
+        "ui": {
+          "status": "PASS",
+          "evidence": [
+            "E-018-ui"
+          ]
+        },
+        "review": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        },
+        "merge": {
+          "status": "UNVERIFIED",
+          "evidence": []
+        }
+      },
+      "review": {
+        "status": "UNVERIFIED",
+        "evidence": []
+      },
+      "production": {
+        "status": "NOT_RUN",
+        "evidence": []
+      },
+      "prs": [
+        {
+          "number": 21,
+          "state": "OPEN",
+          "merged": false,
+          "evidence": [
+            "E-018-delivery-pr"
+          ]
+        }
+      ],
+      "blockers": [
+        "等待独立 H 审查冻结提交及用户合并；不影响独立审查任务立项"
+      ],
+      "actual_hours": null,
+      "reason": "实际Draft PR #21已创建；最终离线446/1、换行格式与原工作树保护复核通过。独立审查、合并、生产仍未完成",
+      "basis": [
+        "E-018-code",
+        "E-018-offline",
+        "E-018-ui",
+        "E-018-final-offline",
+        "E-018-oss-policy",
+        "E-018-delivery-pr",
+        "E-018-portable-offline",
+        "E-018-hash-format"
+      ],
+      "seq": 44,
+      "previous_hash": "c6ed55ad3407051259f80a5dd037d646878a9412e188e0849c625dd43f764606",
+      "hash": "b902e289735801cfe9b94f66640fb048260c5d73d083a36ebab8adf6a9f034f5"
     }
   ]
 }

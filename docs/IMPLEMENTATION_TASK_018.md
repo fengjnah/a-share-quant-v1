@@ -39,12 +39,14 @@
 | `tests/manual/test_project_progress_offline.py` | 默认执行的离线 AppTest：阻断网络/库初始化、行情失败仍可打开看板 |
 | `pyproject.toml` | 增加直接依赖 `jsonschema>=4,<5`，进行真实 Schema 校验；未引入其他数据库或服务 |
 | `docs/TASK_METRICS.json`、`.schema.json`、`TASK_BOARD.md`、`ROADMAP_V1_3.md` | 结构数据、Schema 与两份可重生成视图 |
-| `docs/evidence/TASK_018_GITHUB.json`、`TASK_018_ACCEPTANCE.json`、`TASK_018_FINAL_CHECKS.json` | 冻结的 GitHub、浏览器与最终验证摘要；旧证据不随新结果覆盖 |
+| `docs/evidence/TASK_018_GITHUB.json`、`TASK_018_ACCEPTANCE.json`、`TASK_018_FINAL_CHECKS.json`、`TASK_018_HASH_FORMAT.json`、`TASK_018_DELIVERY.json` | 冻结的 GitHub、浏览器、验证与交付快照，以及原始证据字节换行格式；旧证据不随新结果覆盖 |
 | `docs/PROJECT_STATUS.md`、`docs/LOCAL_MARKET_DEMO.md` | 当前基线/待审边界、只读页启动和操作说明 |
 | `docs/OPEN_SOURCE_RESEARCH_POLICY.md`、`AGENTS.md`、`docs/tasks/TASK_TEMPLATE.md` | 用户追加的调研制度、执行入口和开始记录要求 |
 | 本报告 | 实际执行、证据、限制与交付说明 |
 
 JSON 重复键、NaN、非法状态/字段、循环依赖、无证据通过、将代码冒充独立审查/生产/合并均会拒绝。反馈只能追加同一计划版本的事件/证据；需要修改权重、TASK 定义或验收标准时，另建人工计划修订 PR 并保留旧版本依据。仅哈希链不防止整链重算，必须同时使用可信旧文件 `--baseline` 和 Git diff 审查。文件 SHA256 是一致性凭据，不是内容真实性或许可证认证。
+
+跨平台检出复核发现：50 条既有证据的 SHA256 来自 Windows UTF-8 CRLF 文件（其中 45 条为历史资料，5 条为本轮输出），而 Git blob/Linux 检出为 LF。原始哈希及历史记录保持不变，另以 TASK_018_HASH_FORMAT.json 明确列出这些 ID。新文本证据默认按 UTF-8 LF 计算 SHA256，其他记录格式须显式登记。离线验证分别模拟 LF/CRLF 检出，重建已记录格式后比对相同 SHA256，不忽略任何非换行字节；不是重算旧证据或放宽内容检查。首次格式复查遗漏本轮 5 条 CRLF 输出，两个格式反例测试均失败（444 passed、2 failed、1 skipped），扩展为逐条核实所有本地证据后重新验证。该格式清单和证据真实性也在独立审查范围。
 
 ## 用户追加：开源调研制度
 
@@ -87,6 +89,7 @@ git diff --check
 | 补充反例后的完整回归 | 444 passed、1 skipped，46.84 秒，退出码 0；冻结摘要见 TASK_018_ACCEPTANCE.json |
 | 新制度入口和最终文档回归 | **445 passed、1 skipped，40.87 秒，退出码 0**；`pytest-delivery.txt`，不覆盖前述冻结证据 |
 | 历史追加后的最终回归 | **445 passed、1 skipped，40.47 秒，退出码 0**；`pytest-after-history.txt`。中间单元复查曾 1 failed、30 passed：夹具把最后事件误当规划任务；改为按 SUGGESTION 身份定位，未放宽校验，再跑完整套件通过 |
+| 跨平台字节格式验证后的完整回归 | **446 passed、1 skipped，44.44 秒，退出码 0**；`pytest-portable-final.txt`。相关单元测试 32 passed，覆盖 LF/CRLF 两种检出；后续 PR 状态仅追加管理快照，不修改业务代码 |
 | 依赖检查 | `No broken requirements found.`，退出码 0 |
 | JSON/Schema/文档/历史前缀 | `--check-docs --baseline` 退出码 0；项目/阶段/任务权重合法，文档从同源生成 |
 | 失败动态重算 | TASK-002 的 offline 模拟 FAIL，21.67% → 20.65%，显示 TASK-003/TASK-004 等依赖缺口；不写正式 JSON |
@@ -122,4 +125,6 @@ git diff --check
 
 未解决事项：首版权重和历史证据导入需独立审核；历史模型/实际工时仍有缺失；历史真实源证据不证明今天可用；TASK-004A/可信日历/新鲜度、腾讯原始口径和许可、后续业务及生产准入仍未验收。治理规则本身待独立 H 审查，不等于已部署强制 CI 门禁。
 
-交付仅独立 Draft PR，不合并；PR/提交信息由实际创建结果提供。推荐下一步是对冻结 SHA 执行独立 TASK-018-REVIEW，用户未批准前不启动。
+已创建独立 [Draft PR #21](https://github.com/fengjnah/a-share-quant-v1/pull/21)，base 为 main/f1382c10…，OPEN、未合并。首版远端提交 `dd23743a1b5d01e59f2969a9b54944cd40eda638` 与本地 `37f9b8341565866343841e9ff14c01e241345c25` 的树均为 `2440773714aa2fc34bfe608f06a1db688346bb19`。通过认证 GitHub connector 发布，作者/提交时间元数据不同，不能声称两个提交 SHA 相同。交付快照记录的是该次观察到的 head，不假装能预知追加快照本身的提交；后续提交以 PR 实际 head 和最终反馈为准。
+
+PR 状态以新事件追加，看板 TASK-018 保持 PARTIAL、80%，整体仍为 21.67%，独立审查和合并验收保持未知。推荐下一步是对最终冻结 SHA 执行独立 TASK-018-REVIEW，用户未批准前不启动。不合并、不部署，也不删除任何旧工作区。

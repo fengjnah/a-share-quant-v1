@@ -55,6 +55,7 @@ def board(data):
               "候选反馈结构为 `{\"event\": <完整快照，不含 seq/hash/previous_hash>, \"new_evidence\": [...]}`；可从最新对应快照复制，填写 at/state/results/blockers/reason/basis/工时/审查/PR/生产，不复用未适用的通过证据。",
               "只读 `--simulate TASK-ID ACCEPTANCE-ID FAIL` 展示验收点失败后的分数和下游阻塞，不写文件或发网络。新证据需记录来源、SHA256、类型、时点和适用范围；证据内容真实性仍需人工/独立审查，Schema 不是真实性认证。",
               "未知模型/工时/许可证/真实可用性不会自动补齐，GitHub 不会被页面后台轮询。首版阶段和任务分配是规划参数，不是开发耗时或收益预测。", ""]
+    lines += ["文本证据新 SHA256 按 UTF-8 LF 计算；既有 Windows CRLF 哈希的明确 ID 清单见 [TASK_018_HASH_FORMAT](evidence/TASK_018_HASH_FORMAT.json)，核验时只重建已记录换行，不忽略其他字节。", ""]
     return "\n".join(lines)
 
 

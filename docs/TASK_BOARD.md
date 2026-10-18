@@ -2,7 +2,7 @@
 
 <!-- Generated from TASK_METRICS.json; edit reviewed data, then --render. -->
 
-数据截止：2026-10-18T07:59:35.938352+00:00；计划版本 1.0。
+数据截止：2026-10-18T08:07:13.712493+00:00；计划版本 1.0。
 **按首版规划口径的已证实完成率：21.6700%**；不是生产就绪率。
 
 公式：Σ阶段权重 × Σ阶段内任务权重 × Σ有类型匹配证据的 PASS 验收点权重；三层均除以 100。
@@ -25,7 +25,7 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 | TASK-GOV-001 · 模型路由治理 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PARTIAL / 70% | 无 | UNVERIFIED / #12 MERGED / NOT_RUN |
 | TASK-016 · 分支与 worktree 审计 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PASS / 100% | 无 | UNVERIFIED / #19 MERGED / NOT_RUN |
 | TASK-017 · 干净 main 与统一工作区 [EXECUTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 未知 / 未知 | PASS / 100% | TASK-016:audit | UNVERIFIED / #20 MERGED / NOT_RUN |
-| TASK-018 · 正式任务看板与进度机制 [REQUESTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 6–12 / 未知 | PARTIAL / 80% | TASK-017:baseline,isolation; TASK-GOV-001:rules | UNVERIFIED / 无/未创建 / NOT_RUN |
+| TASK-018 · 正式任务看板与进度机制 [REQUESTED] | implementation/P0 | gpt-6.1-sol / gpt-6.1-sol | 6–12 / 未知 | PARTIAL / 80% | TASK-017:baseline,isolation; TASK-GOV-001:rules | UNVERIFIED / #21 OPEN / NOT_RUN |
 | TASK-002 · SQLite 数据基础设施 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | 无 | UNVERIFIED / #1 MERGED / NOT_RUN |
 | TASK-003 · AKShare 历史日线适配 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | TASK-002:code,offline | UNVERIFIED / #2 CLOSED, #5 MERGED / NOT_RUN |
 | TASK-004 · 证券主数据与日历最小存储 [EXECUTED] | implementation/P0 | gpt-6.1-sol / 未知 | 未知 / 未知 | PARTIAL / 80% | TASK-002:code,offline | UNVERIFIED / #10 MERGED / NOT_RUN |
@@ -123,13 +123,13 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 ### TASK-018 · 正式任务看板与进度机制
 
 目标：正式任务看板与进度机制；仅限所列验收范围。阶段 S2；阶段内权重 60%。
-结果依据：用户追加开源制度后完成最终离线445/1与现场保护复核；只追加证据，独立H审查和合并仍待执行（2026-10-18T07:59:35.938352+00:00）；快照序号 43。
+结果依据：实际Draft PR #21已创建；最终离线446/1、换行格式与原工作树保护复核通过。独立审查、合并、生产仍未完成（2026-10-18T08:07:13.712493+00:00）；快照序号 44。
 
 | 验收点 | 权重 | 强制 | 实际状态 | 证据 ID |
 | --- | --- | --- | --- | --- |
 | data · 结构化权重/文档一致 | 25% | True | PASS | E-018-code |
 | engine · 重算/历史/依赖/候选反馈 | 25% | True | PASS | E-018-code |
-| offline · 完整离线回归与隔离 | 15% | True | PASS | E-018-final-offline |
+| offline · 完整离线回归与隔离 | 15% | True | PASS | E-018-portable-offline |
 | ui · 真实浏览器离线进度页 | 15% | True | PASS | E-018-ui |
 | review · 独立审查最终 SHA | 15% | True | UNVERIFIED | 无 |
 | merge · 看板 PR 合并 | 5% | True | UNVERIFIED | 无 |
@@ -703,6 +703,9 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 | E-018-ui / ui | docs/evidence/TASK_018_ACCEPTANCE.json | 实际 Codex 内置浏览器进度页/行情故障隔离/任务详情，非 Edge 或 Chrome 系统浏览器认证；SHA256 659ecf7100b519564002a76fe5e47a86b4e0316ac245afdad2f977da56cbfef6 |
 | E-018-oss-policy / report | docs/OPEN_SOURCE_RESEARCH_POLICY.md | 用户在TASK-018明确增加的开源调研制度：实际源码/测试/许可/数据授权/时点风险/采用决定；已写入规则与模板，待独立H审查；没有新增外部调研或许可证验收；SHA256 d60326ae866ed0f71c064d53363513732b3f1a5768bc6ef7b329072548eb9246 |
 | E-018-final-offline / offline | docs/evidence/TASK_018_FINAL_CHECKS.json | 新增制度入口及最终代码实际445 passed/1 skipped，pip check/Schema/历史前缀/有限链接检查通过；不是独立审查或真实源验收；SHA256 1e21539aed22f2ea205155cd3e6e3b6aaa7555f127a4e9b6108c8f713a942fad |
+| E-018-delivery-pr / pr | docs/evidence/TASK_018_DELIVERY.json | 实际创建Draft PR #21，OPEN/未合并；快照早于本次追加提交，不冒充审查或合并通过；SHA256 8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224 |
+| E-018-portable-offline / offline | docs/evidence/TASK_018_DELIVERY.json | 最终完整离线446 passed/1 skipped、44.44秒，明确包含中间失败及修复；不是实际Linux或真实行情验收；SHA256 8b4a14640bf5c5d9e8e69f3ba6171a5b697e50f4936bef893e8a747b06de8224 |
+| E-018-hash-format / report | docs/evidence/TASK_018_HASH_FORMAT.json | 显式保留50条原始Windows CRLF字节哈希，新证据默认UTF-8 LF；只重建已记录换行，不忽略其他内容；SHA256 f350b7792e272da3d4c44564a214677aaccd095086e8fec1f656286965498a77 |
 
 ## 反馈与重算操作
 
@@ -714,3 +717,5 @@ SUGGESTION 表示仅建议立项，尚未创建、执行或完成；READY 只表
 候选反馈结构为 `{"event": <完整快照，不含 seq/hash/previous_hash>, "new_evidence": [...]}`；可从最新对应快照复制，填写 at/state/results/blockers/reason/basis/工时/审查/PR/生产，不复用未适用的通过证据。
 只读 `--simulate TASK-ID ACCEPTANCE-ID FAIL` 展示验收点失败后的分数和下游阻塞，不写文件或发网络。新证据需记录来源、SHA256、类型、时点和适用范围；证据内容真实性仍需人工/独立审查，Schema 不是真实性认证。
 未知模型/工时/许可证/真实可用性不会自动补齐，GitHub 不会被页面后台轮询。首版阶段和任务分配是规划参数，不是开发耗时或收益预测。
+
+文本证据新 SHA256 按 UTF-8 LF 计算；既有 Windows CRLF 哈希的明确 ID 清单见 [TASK_018_HASH_FORMAT](evidence/TASK_018_HASH_FORMAT.json)，核验时只重建已记录换行，不忽略其他字节。

@@ -116,12 +116,22 @@ def test_tampered_history_and_criteria_revision_are_rejected(data):
     with pytest.raises(PlanError,match='plan'):validate(altered,baseline=data)
 
 
-def test_formal_docs_and_local_evidence_hashes_are_reproducible(data):
+@pytest.mark.parametrize('checkout_newline', ['LF', 'CRLF'])
+def test_formal_docs_and_local_evidence_hashes_are_reproducible(data, checkout_newline):
     assert (ROOT/'docs/TASK_BOARD.md').read_text(encoding='utf-8')==board(data)
     assert (ROOT/'docs/ROADMAP_V1_3.md').read_text(encoding='utf-8')==roadmap(data)
+    formats=read_json(ROOT/'docs/evidence/TASK_018_HASH_FORMAT.json')
+    assert formats['default_recorded_bytes']=='UTF-8 LF'
+    crlf_ids=set(formats['historical_crlf_evidence_ids'])
+    assert crlf_ids <= {e['id'] for e in data['evidence']}
     for ev in data['evidence']:
         if ev['ref'].startswith(('docs/','src/','tests/')):
-            assert hashlib.sha256((ROOT/ev['ref']).read_bytes()).hexdigest()==ev['sha256']
+            raw=(ROOT/ev['ref']).read_bytes().replace(b'\r\n',b'\n')
+            # Emulate both clean Git checkout formats, then reconstruct the recorded format.
+            if checkout_newline=='CRLF':raw=raw.replace(b'\n',b'\r\n')
+            recorded=raw.replace(b'\r\n',b'\n')
+            if ev['id'] in crlf_ids:recorded=recorded.replace(b'\n',b'\r\n')
+            assert hashlib.sha256(recorded).hexdigest()==ev['sha256'],ev['id']
 
 
 def test_governance_entry_points_and_local_document_links_resolve():
