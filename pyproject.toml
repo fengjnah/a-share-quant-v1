@@ -7,7 +7,7 @@ name = "a-share-quant-v1"
 version = "0.1.0"
 description = "Auditable SQLite data foundation for A-share research"
 requires-python = ">=3.11"
-dependencies = ["tzdata>=2024.1; sys_platform == 'win32'"]
+dependencies = ["tzdata>=2024.1; sys_platform == 'win32'", "jsonschema>=4,<5"]
 
 [project.optional-dependencies]
 test = ["pytest>=8,<9", "pandas>=2,<4", "requests>=2.32,<3"]

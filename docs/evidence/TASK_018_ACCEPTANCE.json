@@ -1,0 +1,47 @@
+{
+  "task": "TASK-018",
+  "recorded_at": "2026-10-18T07:49:01.122672+00:00",
+  "baseline": "f1382c10f2c3d356be6e059aad5611d15d687a62",
+  "model": "gpt-6.1-sol/high; user confirmed in this session, no independent runtime metadata",
+  "offline": {
+    "passed": 444,
+    "skipped": 1,
+    "seconds": 46.84,
+    "exit_code": 0,
+    "log_sha256": "e4c69c0cba215834cef7553ca1684d0f5d90a81986e83f43679764f7b84fc3d7",
+    "skip_reason": "real AKShare integration requires explicit flag"
+  },
+  "pip_check": {
+    "exit_code": 0,
+    "text": "No broken requirements found."
+  },
+  "browser": {
+    "name": "ChatGPT in-app browser (Codex browser tool inventory)",
+    "url": "http://127.0.0.1:8518/?view=progress",
+    "actual_observations": [
+      "Independent page opened and showed computed 18.7900% before accepting this task evidence",
+      "10 phase bars, 7 state categories, 40-task selector were rendered",
+      "Market page showed injected database initialization failure",
+      "Returning to progress restored valid metrics without network or database initialization",
+      "TASK-004A selected: BLOCKED, historical master FAIL, SQLite/review UNVERIFIED, PR #11 OPEN"
+    ],
+    "market_requests": 0,
+    "requests_send_attempts": 0,
+    "blocked_external_sockets": 0,
+    "blocked_market_database_initializations": 1,
+    "production_sentinel_created": false,
+    "screenshots": "Actual UI screenshot and AX observations in task conversation; no claim of Edge/Chrome verification"
+  },
+  "preservation": {
+    "worktrees": 13,
+    "file_entries": 942,
+    "all_preserved": true,
+    "log_sha256": "eed11f20a5cecef02b15c70697242b6cfab0ee921e3fc9488cb6bada50241d61"
+  },
+  "management_limits": [
+    "Evidence import is not an independent review",
+    "Task review, merge, production approval remain unverified",
+    "No real source requests, production DB, strategy, scheduler or backtest",
+    "History chain needs trusted baseline/Git review to detect complete rewriting"
+  ]
+}

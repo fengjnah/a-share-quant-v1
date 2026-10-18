@@ -1,0 +1,576 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "plan_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "baseline": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "weight_basis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "deliverables": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exit_condition": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "weight",
+          "depends_on",
+          "deliverables",
+          "exit_condition"
+        ]
+      },
+      "minItems": 10,
+      "maxItems": 10
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^TASK-[A-Z0-9-]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2"
+            ]
+          },
+          "stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "origin": {
+            "enum": [
+              "EXECUTED",
+              "REQUESTED",
+              "SUGGESTION"
+            ]
+          },
+          "assigned_model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assigned_effort": {
+            "enum": [
+              "high",
+              "medium",
+              "not_supported",
+              "to_verify"
+            ]
+          },
+          "model_assignment": {
+            "enum": [
+              "CONFIRMED",
+              "PROPOSED_FOR_CONTINUATION"
+            ]
+          },
+          "actual_model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "actual_effort": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "model_basis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cost_class": {
+            "enum": [
+              "H",
+              "L",
+              "UNKNOWN"
+            ]
+          },
+          "estimated_hours": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "low": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "high": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "basis": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "low",
+                  "high",
+                  "basis"
+                ]
+              }
+            ]
+          },
+          "goal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "task": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "acceptance": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "task",
+                "acceptance"
+              ]
+            }
+          },
+          "acceptance": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "weight": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "mandatory": {
+                  "type": "boolean"
+                },
+                "evidence_kinds": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "code",
+                      "offline",
+                      "live",
+                      "ui",
+                      "review",
+                      "pr",
+                      "report",
+                      "production"
+                    ]
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "id",
+                "label",
+                "weight",
+                "mandatory",
+                "evidence_kinds"
+              ]
+            },
+            "minItems": 1
+          },
+          "recommendation_rank": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "recommendation_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "priority",
+          "stage",
+          "weight",
+          "origin",
+          "assigned_model",
+          "assigned_effort",
+          "model_assignment",
+          "actual_model",
+          "actual_effort",
+          "model_basis",
+          "cost_class",
+          "estimated_hours",
+          "goal",
+          "depends_on",
+          "acceptance",
+          "recommendation_rank",
+          "recommendation_reason"
+        ]
+      },
+      "minItems": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "code",
+              "offline",
+              "live",
+              "ui",
+              "review",
+              "pr",
+              "report",
+              "production"
+            ]
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "source_commit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recorded_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "ref",
+          "sha256",
+          "source_commit",
+          "summary",
+          "recorded_at"
+        ]
+      },
+      "minItems": 1
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "task_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "enum": [
+              "PLANNED",
+              "READY",
+              "IN_PROGRESS",
+              "BLOCKED",
+              "PARTIAL",
+              "PASS",
+              "REJECTED"
+            ]
+          },
+          "results": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "enum": [
+                    "PASS",
+                    "FAIL",
+                    "UNVERIFIED",
+                    "NOT_RUN"
+                  ]
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "status",
+                "evidence"
+              ]
+            }
+          },
+          "review": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNVERIFIED",
+                  "NOT_RUN",
+                  "NOT_APPLICABLE"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "status",
+              "evidence"
+            ]
+          },
+          "production": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "enum": [
+                  "PASS",
+                  "FAIL",
+                  "UNVERIFIED",
+                  "NOT_RUN",
+                  "NOT_APPLICABLE"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "status",
+              "evidence"
+            ]
+          },
+          "prs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "number": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "state": {
+                  "enum": [
+                    "OPEN",
+                    "MERGED",
+                    "CLOSED"
+                  ]
+                },
+                "merged": {
+                  "type": "boolean"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "number",
+                "state",
+                "merged",
+                "evidence"
+              ]
+            }
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "actual_hours": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "basis": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "previous_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "at",
+          "state",
+          "results",
+          "review",
+          "production",
+          "prs",
+          "blockers",
+          "actual_hours",
+          "reason",
+          "basis",
+          "previous_hash",
+          "hash"
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "project",
+    "plan_version",
+    "updated_at",
+    "baseline",
+    "weight_basis",
+    "stages",
+    "tasks",
+    "evidence",
+    "events"
+  ]
+}

@@ -1,5 +1,20 @@
 # 本地行情展示页（最小版）
 
+## 项目进度入口（TASK-018 分支新增）
+
+同一个 Demo 的侧栏“工作区”可选择“项目进度”，或打开 `http://127.0.0.1:8501/?view=progress` 直接进入。该页在导入行情/SQLite 模块之前分流，读取 [TASK_METRICS.json](TASK_METRICS.json)，不创建数据库、不请求行情，也不修改任务状态；行情初始化或接口失败不影响进度页。东方财富仍是行情工作台的默认源。
+
+独立启动同一进度渲染器：
+
+```powershell
+# 合并前在 TASK-018 工作树，合并后使用含该版本代码的干净任务工作树及其环境
+$env:PYTHONPATH = Join-Path (Get-Location) 'src'
+.\.venv\Scripts\python.exe -m streamlit run src/ai_trade/project_progress/app.py --server.address 127.0.0.1
+.\.venv\Scripts\python.exe -m ai_trade.project_progress --check-docs
+```
+
+采用已有 `.[demo,test]` 安装方式；新增直接轻量依赖 jsonschema 用于真正的 JSON Schema 验证。本轮既有环境已安装，未升级或重装。正式口径/反馈与候选文件操作见 [任务看板](TASK_BOARD.md)，十阶段见 [路线图](ROADMAP_V1_3.md)。验收证据、PR 和生产准入分列；首版权重不是生产就绪率，历史真实样本不能证明当前源健康。
+
 健康检查采用独立、默认离线的 [TASK-015 入口](SOURCE_HEALTH_CHECKS.md)，不会在页面启动或 rerun 时自动执行。可只读展示其序列化报告；配置成功不代表真实行情健康。本轮没有改变 Demo 默认数据源、请求逻辑或生产数据库配置。
 
 ## 功能
