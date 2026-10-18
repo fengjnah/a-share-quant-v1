@@ -37,6 +37,84 @@
 
 见 [冗余审计](TASK_022A_REDUNDANCY_AUDIT.md) 和 [逐文件清单](TASK_022A_FILE_INVENTORY.json)。先提交审计后才修复；本轮删除 0 个文件，未知与唯一证据均保留。
 
-## 验收记录（执行中）
+## 修复、接口及勘误
 
-修复、测试与独立复核尚未完成；不能以本报告存在或基线 472 passed 宣称修复通过。后续在本节追加实际命令、失败/通过及未验证项。
+实际修复与 [局部契约](TASK_022A_CFFEX_CONTRACT.md) 对应：统一 named/legacy/mixed 校验；拒绝重复排名/同侧会员/残缺段；严格编码与数值；volume 独立字段；显式单合约与 as_of；CFFEX 会话端口和不可用门禁；结构化 404/HTTP/网络分类；载荷比较及调用方完整链的可见版本读取。未新增第三方依赖。
+
+| 问题 | 代码范围验收 | 仍未完成的集成门禁 |
+| --- | --- | --- |
+| F01 / F10 时间 | 已验证：会话收盘 event_time、未知发布时间保留 null、周末/合成假日/迟到/盘前边界、日历知识截止及实际 available/ingested 过滤 | 真实 CFFEX 日历、历史发布时间与权威持久读路径未验收；不能批准接入正式回测 |
+| F02 404 | 已验证：响应不证明休市/未发布，只有独立可见 closed 日历才能 no_session；保留 HTTP 状态（若可取得） | 没有自动判断 unpublished 的证据，也未部署真实发布监控 |
+| F03 汇总 | 已验证：缺合约/错误合约拒绝；同会员/范围/合约/日期两侧匹配，缺侧 null、零值已知，legacy/UNKNOWN 不混用 | 跨合约净额、真实到期日和换月规则未实现；expiry_month 仅 YYMM 标记，rollover_flag=null |
+| F04 版本 | 已验证：显式前驱/修订依据、不可倒退的时间、重复载荷不重写旧记录、缺父/分叉/重复版本拒绝、按 as_of 选可见版本 | **尚无持久幂等登记、版本账本、事务写入或权威完整历史**；纯函数不是仓储，G.4 不算整体完成 |
+| F05 / F07 解析 | 已验证：两路径共同校验、重复/格式漂移/编码/截断/空段失败；独立复核首次发现的残留 HIGH 已在新 SHA 修复 | 结构校验不能证明源数据真实性/完整合约宇宙/所有历史格式 |
+| F06 字段 | 已验证：volume/change 与 OI/change 分开；供应商整数原值保留，无二次单位转换 | 未开展新的真实数据字段或持仓所有权验收 |
+| F08 测试 | 已验证：默认使用标注合成夹具，无个人目录/缺失即跳过路径；单侧场景确实存在 | 合成通过不等于真实来源验收 |
+| F09 传输 | 已验证：HTTPS 域名、证书验证、有限连接/读取超时、一次 GET、无自动重定向/重试、响应大小和资源释放、异常链保留但不输出秘密 | 没有当前 HTTPS 生产请求或端到端时延 SLA 验收 |
+| F11 文档 | 本报告勘误，旧报告保留；Schema v2 / SQLite / 策略代码未改 | futures_rankings 只是契约数据集，正式物理表与回测引擎均未实现 |
+
+另有实际样本勘误：旧报告将 2010/2019 笼统写为“无具名、仅类别”，但保存件实际是类别段加具名段；裸会员名的代客/自营范围仍 UNKNOWN。这不支持任意年份的完整具名覆盖，更不能证明最终客户身份。旧报告的 VERIFIED 字样不适用于本次完整验收。
+
+13 份旧 CSV 在最终代码 `72b176aac256f1f6dd2eb6ce9f2a864919c21711` 上再次离线重放，全部 parse 成功：2010 三份各 66 个领域行、2019 一份 198 行（均 mixed），2020/2024/2025/2026 九份各 240 行（named）。这是每个 CSV 数据行展开三榜单后的数量，不是新 HTTP 返回行数。哈希、日期、合约及限制见 [样本重放摘要](TASK_022A_SAMPLE_REPLAY.json)。0 次真实请求；因真实 CFFEX 日历和正式仓储缺失，没有 build/入库/生产读回验收。未提交原始 CSV/ZIP/正文。
+
+## 独立上下文复核
+
+TASK-022A-H-VERIFY 以单独空白上下文、显式 GPT-6.1 Sol / High 做只读复核，根会话未委派实现。它核对冻结 SHA `0f7cb1cca96dc8ccac66f5501c485c1fc6bd2d12`，实际找到了首轮代码残留 HIGH：mixed 声明某段后删除该段全部数据会静默降级。原复现分别返回 legacy/6 行及 named/60 行，ingest=success。根会话只增加空声明段拒绝与两个精确反例，再冻结为 `72b176aac256f1f6dd2eb6ce9f2a864919c21711`。
+
+原独立上下文在新的 detached 工作树重新阅读差异、执行相关及完整回归，结论为：**该 SHA 的限定离线修复范围通过，未发现剩余 BLOCKER/HIGH；生产与真实数据验收不在通过范围**。完整边界见 [独立复核记录](TASK_022A_INDEPENDENT_VERIFICATION.md)。后续报告/元数据提交不扩大这个结论的代码范围；任何源码再变更须重新复核，不能沿用旧批准。
+
+## 实际测试与可复现命令
+
+实际解释器：已有验证 venv，Python 3.12.14；pytest 8.4.2、jsonschema 4.26.0、Streamlit 1.66.0、pandas 3.0.6、Requests 2.34.2、AKShare 1.19.1。没有安装、重建或升级环境；原报告缺 jsonschema 的环境未被假装修过。本轮环境已包含声明的依赖，pip check 实际退出 0。
+
+| 执行上下文 / 版本 | 实际输出 | 退出码 |
+| --- | --- | --- |
+| 主会话：未修改 33e33c8 基线全套 | 472 passed, 1 skipped，43.43s | 0 |
+| 主会话：首批新增反例（两 CFFEX 文件） | 111 passed，0.64s | 0 |
+| 主会话：第一轮全套 | 557 passed, 1 skipped，40.54s | 0 |
+| 主会话：冻结首版全套 | 566 passed, 1 skipped，39.95s | 0 |
+| 独立复核：首版定向 | 120 passed，0.77s | 0 |
+| 独立复核：首版完整首次 | **2 failed, 564 passed, 1 skipped**，37.37s | 1 |
+| 独立复核：首版仅设置进程 UTF-8 重跑 | 566 passed, 1 skipped，41.73s | 0 |
+| 主会话：空段修复后定向 | 122 passed，0.78s | 0 |
+| 主会话：新冻结 SHA 完整 | **568 passed, 1 skipped**，43.35s | 0 |
+| 独立复核：新冻结 SHA 定向 / 完整 | **122 passed / 568 passed, 1 skipped**，0.82s / 42.99s | 0 / 0 |
+| 两上下文依赖检查 | No broken requirements found. | 0 |
+
+独立首次的两个全套失败来自既有 project_progress 子进程输出：Windows 本地编码被测试按 UTF-8 解码，出现 UnicodeDecodeError / stdout=None；只设置当前进程 PYTHONUTF8/PYTHONIOENCODING 后原样重跑通过。没有排除文件、改测试期望或把失败抹掉。唯一跳过项是未显式启用的真实 AKShare 集成，不计通过。根会话从开始就设置了 PYTHONIOENCODING，因此未出现该环境错误。
+
+以下是在已安装项目声明依赖的环境中、从仓库根目录可复现的命令（不依赖个人工作树路径）：
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path src).Path
+$env:PYTHONUTF8 = '1'
+$env:PYTHONIOENCODING = 'utf-8'
+python -m pytest -q tests/unit/test_cffex_rankings.py tests/unit/test_cffex_high_assurance.py
+python -m pytest -q
+python -m pip check
+git diff --check
+```
+
+干净环境按 `python -m pip install -e ".[test,demo]"` 安装已有声明；本轮未实际重装，也没有引入新服务或依赖。未配置 mypy/专用 lint/漏洞扫描工具，本轮未安装它们，不能称为完成全依赖许可或漏洞审计。
+
+实际完整输出、基线复现 JSON、前后现场哈希和独立挑战日志保存在**本机外部日志目录**（不作为项目依赖链接）：`task-022a-h-20261018`。关键文件名：baseline-pytest.txt、baseline-reproductions.json、full-first.txt、full-final.txt、full-after-independent-fix.txt、verify-adversarial.log、verify-full.log、verify-full-utf8.log、verify-v2-focused.log、verify-v2-full.log、verify-pip-check.log。仓库只提交脱敏摘要/哈希，原始响应及其他任务补丁不提交。
+
+## 最终分域状态与未解门禁
+
+[脱敏测试/日志哈希/代码 blob 证据](TASK_022A_TEST_EVIDENCE.json)保留两个上下文的真实输出和首次失败。结束时逐项比较原 17 个工作树、1581 个清单文件：HEAD/分支/状态、索引、暂存和未暂存差异哈希、文件字节均未变；没有删除旧工作树。新增修复及两个冻结审查树保留，不清理。被审源码/测试相对独立复核 SHA 没有后续改动；后续只追加审查文本和脱敏摘要。
+
+| 域 | 状态 | 准确范围 / 下一步 |
+| --- | --- | --- |
+| 代码质量验收 | VERIFIED（限定代码/离线范围） | 新冻结 SHA 经独立上下文实际复核，未发现剩余代码 BLOCKER/HIGH |
+| 未来函数与时间语义 | PARTIAL | 注入日历及读时门禁已验；真实 CFFEX 日历和权威历史数据路径仍阻断正式回测 |
+| 数据缺失与会员范围 | VERIFIED（限定解析/派生范围） | 单合约、UNKNOWN、零值、404 原因不确定等离线反例通过；不证明原始数据真实完整 |
+| 版本链与幂等 | PARTIAL | 纯比较与调用方链读取可测；正式持久约束、全局去重、事务/审计账本未实现 |
+| 仓库冗余治理 | VERIFIED（本轮审计范围） | 清单先提交、0 删除；未知/唯一证据保留，未清理其他 worktree |
+| 测试与 CI | 本地 VERIFIED；新 PR CI 以实际运行结果单列 | 完整两次上下文回归如上，不能把原 PR #22 CI 当新 PR CI |
+| 数据授权 R04 | UNKNOWN | 本轮未新增授权/法律确认；生产/商业/再分发仍为未解门禁 |
+| HTTPS 生产可达性 | UNKNOWN（本轮未执行） | 旧 443 失败是历史线索，本轮没有连接探针或真实行情请求 |
+| 真实网络 / UI / 样本外回测 / 生产部署 | 未执行 | 不以离线绿灯或旧 HTTP 文件替代 |
+
+**整体 PARTIAL，不批准生产或正式策略接入**。仍未解的高风险集成条件是可靠 CFFEX 日历/历史可得性、持久仓储版本/幂等、R04 与 HTTPS；这些不是本次被伪造关闭的验收项。后续分别立独立 H 契约/来源/仓储验收任务，再决定采集器与调度，不能直接开始全历史回补。
+
+交付独立 Draft PR，关联原 #22；原 PR/评论和历史分支保持。没有自动合并、部署、清理或更改选股/入场/止损/仓位逻辑。分支和最终提交以 PR 实际 head 为准；报告中的 SHA 精确绑定接受复核的源码版本。
