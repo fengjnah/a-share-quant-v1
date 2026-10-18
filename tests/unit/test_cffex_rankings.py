@@ -1,59 +1,85 @@
-"""Offline tests for the CFFEX index-futures member-holdings adapter (TASK-022A).
+"""Portable synthetic offline fixtures; never count as real CFFEX acceptance.
 
-Fixtures are the *real* CSVs saved during TASK-022 (in the task worktree's
-artifacts directory); if that directory is absent the tests skip with a clear
-message rather than fabricate data. No network, no production database, no
-automatic source fallback.
+Original raw samples remain protected outside the repository. Explicit replay is
+reported separately and does not determine default unit-test availability.
 """
-
 import hashlib
-from pathlib import Path
+from dataclasses import replace
+from datetime import date
+from unittest.mock import Mock
 
 import pytest
 
 from ai_trade.market_data import cffex_rankings as cr
 from ai_trade.market_data.cffex_rankings_models import (
-    CffexRankingsRequest,
-    IngestionOutcome,
-    MemberScope,
-    RankingResponseError,
-    RankingSide,
-    RankingValidationError,
-    RankFormatError,
+    CffexRankingsRequest, MemberScope, RankingResponseError, RankingSide,
+    RankingValidationError, RankFormatError, RankingSessionDay, RankingCalendarError,
+    RankingVersionError, RankingDataUnavailableError, RankingTransportError,
 )
+from ai_trade.market_data.cffex_rankings_versions import compare_revision, select_visible_version
+
+HEADER0='交易日,合约,排名,成交量排名,,,持买单量排名,,,持卖单量排名,,'
+HEADER1=',,,会员简称,成交量,比上一交易日增减,会员简称,持买单量,比上一交易日增减,会员简称,持卖单量,比上一交易日增减'
+LEGACY='交易日,合约,会员类别,总成交量,比上交易日增减,总持买单量,比上交易日增减,总持卖单量,比上一交易日增减'
 
 
-def _fixture_dir() -> Path | None:
-    # The real evidence lives in the sibling TASK-022 worktree
-    # (F:\codex-agnes\AI-trade-task-022\artifacts\task-022). Allow an env
-    # override so the same tests can run from any checkout.
-    import os
-    env = os.environ.get("CFFEX_TASK022_ARTIFACTS")
-    if env:
-        p = Path(env)
-        return p if p.is_dir() else None
-    candidate = Path(__file__).resolve().parents[2].parent / "AI-trade-task-022" / "artifacts" / "task-022"
-    return candidate if candidate.is_dir() else None
+def named(variety='IF', day='2026-10-16', contracts=None):
+    contracts=contracts or [variety+c for c in ('2610','2611','2612','2703')]
+    rows=[HEADER0,HEADER1]
+    for contract in contracts:
+        for rank in range(1,21):
+            long_name={1:'甲会员(代客)',2:'乙会员(自营)',3:'单侧多(代客)'}.get(rank,f'多{rank}(代客)')
+            short_name={1:'甲会员(代客)',2:'乙会员(自营)',3:'单侧空(代客)'}.get(rank,f'空{rank}(代客)')
+            long,short=(0,0) if contract.endswith('2610') else (3000-rank,2000-rank)
+            rows.append(f'{day.replace("-","")},{contract},{rank},量{rank}(代客),{5000-rank},1,{long_name},{long},{-4286 if rank==1 else 1},{short_name},{short},1')
+    return ('\n'.join(rows)+'\n').encode('gbk')
 
 
-FIX_DIR = _fixture_dir()
+def legacy(day, contract):
+    rows=[LEGACY,f'{day.replace("-","")},{contract},期货公司,100,1,90,1,80,-1',
+          f'{day.replace("-","")},{contract},非期货公司,20,1,10,1,10,1']
+    return ('\n'.join(rows)+'\n').encode('gbk')+named(day=day,contracts=[contract])
 
 
-@pytest.fixture(scope="module")
-def fixtures() -> dict[str, bytes]:
-    base = FIX_DIR
-    if base is None:
-        pytest.skip("TASK-022 real CSV artifacts not found; refusing to fabricate data")
-    out = {}
-    for name in ("IF", "IC", "IH", "IM"):
-        f = base / f"sj__ccpm__202610__16__{name}_1.csv"
-        if not f.is_file():
-            pytest.skip(f"missing fixture {f.name}")
-        out[name] = f.read_bytes()
-    out["IF_15"] = (base / "sj__ccpm__202610__15__IF_1.csv").read_bytes()
-    out["LEGACY_2019"] = (base / "sj__ccpm__201908__05__IF_1.csv").read_bytes()
-    out["LEGACY_2010"] = (base / "sj__ccpm__201004__16__IF_1.csv").read_bytes()
-    return out
+class SyntheticCalendar:
+    """Explicit scenario dates, NOT a weekday algorithm or certified calendar."""
+    def __init__(self):
+        self.days={d:False for d in ['2026-10-01','2026-10-02','2026-10-03','2026-10-04',
+                                   '2026-10-05','2026-10-06','2026-10-07','2026-10-08',
+                                   '2026-10-10','2026-10-11','2026-10-17','2026-10-18']}
+        self.days.update({d:True for d in ['2026-09-30','2026-10-09','2026-10-12','2026-10-13',
+                                        '2026-10-14','2026-10-15','2026-10-16','2026-10-19',
+                                        '2026-10-20','2026-10-21']})
+    def get_day(self, *, exchange, session_date, as_of):
+        opened=self.days[session_date]
+        return RankingSessionDay(exchange,session_date,opened,
+            session_date+'T09:30:00+08:00' if opened else None,
+            session_date+'T15:00:00+08:00' if opened else None,
+            '2026-01-01T00:00:00Z','2026-01-01T00:00:00Z',
+            'synthetic:calendar:v1','synthetic:'+session_date,'synthetic')
+
+
+@pytest.fixture(scope='module')
+def fixtures():
+    data={v:named(v) for v in ('IF','IH','IC','IM')}
+    data.update(IF_15=named(day='2026-10-15'),LEGACY_2019=legacy('2019-08-05','IF1908'),
+                LEGACY_2010=legacy('2010-04-16','IF1005'))
+    return data
+
+
+def _build(*args, **kwargs):
+    kwargs.setdefault('calendar',SyntheticCalendar());kwargs.setdefault('evidence_kind','synthetic')
+    return cr.build_record(*args,**kwargs)
+
+
+def _ingest(*args, **kwargs):
+    kwargs.setdefault('calendar',SyntheticCalendar());kwargs.setdefault('evidence_kind','synthetic')
+    return cr.ingest(*args,**kwargs)
+
+
+def _net(record, **kwargs):
+    kwargs.setdefault('as_of','2026-10-20T01:30:00Z');kwargs.setdefault('mode','research')
+    return cr.net_positions(record,**kwargs)
 
 
 def _req(variety: str, trade_date: str = "2026-10-16") -> CffexRankingsRequest:
@@ -66,7 +92,7 @@ class TestUrlAndRequest:
 
     def test_url_rejects_bad_variety_at_ingest(self):
         client = cr.CffexRankingsClient()
-        outcome = cr.ingest(client, CffexRankingsRequest("CFFEX", "XX", "2026-10-16"),
+        outcome = _ingest(client, CffexRankingsRequest("CFFEX", "XX", "2026-10-16"),
                             run_id="r1", observed_at="2026-10-18T09:00:00+00:00",
                             ingested_at="2026-10-18T09:00:00+00:00")
         assert outcome.status == "validation_error" and outcome.record is None
@@ -118,21 +144,22 @@ class TestNamedParsing:
 
 class TestNetPosition:
     def test_net_is_none_when_side_missing(self, fixtures):
-        record = cr.build_record(_req("IF"), fixtures["IF"], run_id="run-net",
+        record = _build(_req("IF"), fixtures["IF"], run_id="run-net",
                                  observed_at="2026-10-18T08:35:00+00:00",
                                  ingested_at="2026-10-18T08:35:00+00:00")
-        nets = cr.net_positions(record, scope=MemberScope.AGENT, contract="IF2611")
+        nets = _net(record, scope=MemberScope.AGENT, contract="IF2611")
         assert nets
         # A member present on only one side must have net None (UNKNOWN), not a guess.
         one_sided = [n for n in nets if (n.long_oi is None) != (n.short_oi is None)]
+        assert one_sided, "fixture must actually exercise a missing side"
         for n in one_sided:
             assert n.net is None
 
     def test_net_known_when_both_sides_known(self, fixtures):
-        record = cr.build_record(_req("IF"), fixtures["IF"], run_id="run-net2",
+        record = _build(_req("IF"), fixtures["IF"], run_id="run-net2",
                                  observed_at="2026-10-18T08:35:00+00:00",
                                  ingested_at="2026-10-18T08:35:00+00:00")
-        nets = cr.net_positions(record, scope=MemberScope.AGENT, contract="IF2611")
+        nets = _net(record, scope=MemberScope.AGENT, contract="IF2611")
         both = [n for n in nets if n.long_oi is not None and n.short_oi is not None]
         assert both
         for n in both:
@@ -140,37 +167,37 @@ class TestNetPosition:
             assert n.evidence_grade == "B"
 
     def test_refuses_unknown_or_combined_scope(self, fixtures):
-        record = cr.build_record(_req("IF"), fixtures["IF"], run_id="run-net3",
+        record = _build(_req("IF"), fixtures["IF"], run_id="run-net3",
                                  observed_at="2026-10-18T08:35:00+00:00",
                                  ingested_at="2026-10-18T08:35:00+00:00")
-        with pytest.raises(ValueError):
-            cr.net_positions(record, scope=MemberScope.UNKNOWN)
-        with pytest.raises(ValueError):
-            cr.net_positions(record, scope=MemberScope.AGENT_AND_PROPRIO)
+        with pytest.raises(RankingValidationError):
+            _net(record, scope=MemberScope.UNKNOWN)
+        with pytest.raises(RankingValidationError):
+            _net(record, scope=MemberScope.AGENT_AND_PROPRIO)
 
 
 class TestTimeSemantics:
     def test_available_at_floors_to_next_session(self, fixtures):
-        record = cr.build_record(_req("IF"), fixtures["IF"], run_id="run-time",
+        record = _build(_req("IF"), fixtures["IF"], run_id="run-time",
                                  observed_at="2026-10-16T08:35:00+00:00",
                                  ingested_at="2026-10-16T08:35:00+00:00")
         # 16:35 Asia/Shanghai == 08:35 UTC on 2026-10-16 -> usable from 2026-10-17 09:30 +08
-        assert record.available_at.startswith("2026-10-17T01:30:00")  # 09:30 +08 == 01:30 UTC
+        assert record.available_at.startswith("2026-10-19T01:30:00")  # 09:30 +08 == 01:30 UTC
         assert "publication_time unknown" in " ".join(record.warnings)
 
     def test_known_publication_time_advances_available_at(self, fixtures):
-        record = cr.build_record(_req("IF"), fixtures["IF"], run_id="run-time2",
+        record = _build(_req("IF"), fixtures["IF"], run_id="run-time2",
                                  observed_at="2026-10-16T08:35:00+00:00",
                                  ingested_at="2026-10-16T08:35:00+00:00",
-                                 publication_time="2026-10-16T09:00:00+00:00")
+                                 publication_time="2026-10-16T08:30:00+00:00")
         # published 09:00Z > ingested 08:35Z -> available_at = max(pub, ingested)
-        # = 09:00Z on 10-16, still floored to next session (01:30 UTC 10-17)
+        # = 09:00Z on 10-16, still floored to next known opening (01:30 UTC 10-19)
         # because 10-16 data cannot be read during 10-16's own intraday session.
-        assert record.available_at.startswith("2026-10-17T01:30:00")
+        assert record.available_at.startswith("2026-10-19T01:30:00")
 
     def test_ingested_before_observed_rejected(self, fixtures):
         with pytest.raises(RankingValidationError):
-            cr.build_record(_req("IF"), fixtures["IF"], run_id="run-time3",
+            _build(_req("IF"), fixtures["IF"], run_id="run-time3",
                            observed_at="2026-10-16T08:40:00+00:00",
                            ingested_at="2026-10-16T08:35:00+00:00")
 
@@ -239,22 +266,22 @@ class TestIngestOutcomes:
 
     def test_success_returns_record(self, fixtures):
         client = self._client_returning(fixtures["IF"])
-        outcome = cr.ingest(client, _req("IF"), run_id="ok",
+        outcome = _ingest(client, _req("IF"), run_id="ok",
                             observed_at="2026-10-18T08:35:00+00:00",
                             ingested_at="2026-10-18T08:35:00+00:00")
         assert outcome.status == "success"
         assert outcome.record is not None
         assert outcome.record.payload_sha256 == hashlib.sha256(fixtures["IF"]).hexdigest()
 
-    def test_transport_error_is_network(self):
+    def test_404_known_closed_requires_calendar(self):
         client = cr.CffexRankingsClient()
 
         class _Boom:
             def fetch(self, request):
-                raise RankingResponseError("HTTP 404 for 2026-10-17: likely non-trading day or not yet published")
+                raise RankingResponseError("HTTP 404; reason unknown", code="unavailable", http_status=404)
 
         client = _Boom()
-        outcome = cr.ingest(client, _req("IF", "2026-10-17"), run_id="r404",
+        outcome = _ingest(client, _req("IF", "2026-10-17"), run_id="r404",
                            observed_at="2026-10-18T08:35:00+00:00",
                            ingested_at="2026-10-18T08:35:00+00:00")
         assert outcome.status == "no_session"
@@ -262,7 +289,7 @@ class TestIngestOutcomes:
 
     def test_home_fallback_is_response_error_not_success(self, fixtures):
         client = self._client_returning(b"<!DOCTYPE html>" + b"y" * 99000)
-        outcome = cr.ingest(client, _req("IF"), run_id="home",
+        outcome = _ingest(client, _req("IF"), run_id="home",
                             observed_at="2026-10-18T08:35:00+00:00",
                             ingested_at="2026-10-18T08:35:00+00:00")
         assert outcome.status == "response_error"

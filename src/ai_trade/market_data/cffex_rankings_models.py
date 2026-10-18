@@ -10,15 +10,18 @@ Semantics that MUST NOT be violated (see TASK-022 review, section G):
   * A member absent from the Top-N of one side is UNKNOWN, not zero OI.
   * ``member_scope`` is one of {代客, 自营, 代客+自营, unknown}. Published names
     carry a category suffix; we preserve it and never merge unknown with known.
-  * ``available_at`` is conservative: when the publication timestamp is unknown,
-    it equals the observed/ingested time, and the record is only usable from the
-    NEXT session (no same-day intraday use).
+  * ``available_at`` requires a visible CFFEX calendar and session window; absent
+    knowledge blocks record construction. Publication time may remain unknown.
   * ``net`` is a derived proxy (evidence_grade B), never a final-client fact.
 """
 
 from dataclasses import dataclass, field
+from datetime import date
 from enum import Enum
-from typing import Optional
+import re
+from typing import Optional, Protocol
+
+from ai_trade.data_access.models import DataUnavailableError
 
 
 class CffexRankingsError(RuntimeError):
@@ -32,6 +35,27 @@ class RankFormatError(CffexRankingsError):
 
 class RankingResponseError(CffexRankingsError):
     """The endpoint returned a non-CSV fallback (home page, error page, 404 body)."""
+
+    def __init__(self, message: str, *, code: str = 'response_error', http_status: int | None = None):
+        super().__init__(message)
+        self.code = code
+        self.http_status = http_status
+
+
+class RankingTransportError(CffexRankingsError):
+    """Network failure, distinct from an HTTP response or empty data."""
+
+
+class RankingCalendarError(DataUnavailableError, CffexRankingsError):
+    """CFFEX session knowledge is absent, erroneous or not visible at the cutoff."""
+
+
+class RankingVersionError(CffexRankingsError):
+    """Ambiguous, incomplete or conflicting caller-supplied revision history."""
+
+
+class RankingDataUnavailableError(DataUnavailableError, CffexRankingsError):
+    """No ranking version is visible at this as_of."""
 
 
 class RankingValidationError(CffexRankingsError):
@@ -62,16 +86,26 @@ class CffexRankingsRequest:
     """One variety, one trade date, fetched as a single reviewable unit.
 
     ``trade_date`` is the *trade session* the file describes; the URL is keyed
-    by its calendar month/day, so ``2026-10-17`` (a non-trading Saturday) is a
-    legitimate request that must resolve to an explicit "no session" outcome,
-    never to a fabricated row.
+    by its calendar month/day. A missing file is ambiguous unless independent
+    CFFEX calendar evidence explicitly establishes a closed session.
     """
 
     exchange: str  # always "CFFEX" for this adapter
     variety: str  # one of IF, IH, IC, IM
     trade_date: str  # YYYY-MM-DD
 
+    def validate(self) -> None:
+        if self.exchange != 'CFFEX' or self.variety not in ('IF', 'IH', 'IC', 'IM'):
+            raise RankingValidationError('request: explicit CFFEX and IF/IH/IC/IM required')
+        if not isinstance(self.trade_date, str) or not re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}', self.trade_date):
+            raise RankingValidationError('trade_date: expected YYYY-MM-DD')
+        try:
+            date.fromisoformat(self.trade_date)
+        except ValueError as exc:
+            raise RankingValidationError('trade_date: invalid date') from exc
+
     def url(self) -> str:
+        self.validate()
         basic = self.trade_date.replace("-", "")
         return (f"https://www.cffex.com.cn/sj/ccpm/{basic[:6]}/{basic[6:]}/"
                 f"{self.variety}_1.csv")
@@ -95,6 +129,8 @@ class RankingRow:
     open_interest_change: Optional[int]
     open_interest_known: bool
     rank_format: str  # "named" or "legacy"
+    volume: Optional[int] = None
+    volume_change: Optional[int] = None
 
 
 @dataclass(frozen=True)
@@ -113,15 +149,51 @@ class CffexRankingsRecord:
     event_time: str
     available_at: str
     ingested_at: str
-    rank_format: str  # "named" | "legacy"
+    rank_format: str  # "named" | "legacy" | "mixed"
     warnings: tuple[str, ...] = field(default_factory=tuple)
+    observed_at: str = ''
+    publication_time: Optional[str] = None
+    earliest_session_date: str = ''
+    calendar_refs: tuple[str, ...] = field(default_factory=tuple)
+    evidence_kind: str = 'source_observation'
+    supersedes_version: Optional[str] = None
+    revision_reason: Optional[str] = None
 
 
 @dataclass(frozen=True)
 class IngestionOutcome:
-    """Explicit result of one fetch; a non-SUCCESS outcome carries no records."""
+    """Explicit result of one fetch; a non-success outcome carries no record.
+
+    duplicate_payload compares an explicit prior record only; no durable registry
+    exists. unavailable does not claim a holiday or a publication delay.
+    """
 
     status: str  # one of: success, no_session, unpublished, network_error,
                  # response_error, schema_error, validation_error
     record: Optional[CffexRankingsRecord]
     issues: tuple[str, ...]
+    http_status: Optional[int] = None
+
+
+@dataclass(frozen=True)
+class RankingSessionDay:
+    """Injected CFFEX knowledge, never synthesized from weekday or SH calendar.
+
+    Dates marked closed have no session times. Metadata is an explicit caller
+    declaration, not automatic certification of historical coverage or permission.
+    """
+
+    exchange: str
+    session_date: str
+    is_trading_day: bool
+    opens_at: Optional[str]
+    closes_at: Optional[str]
+    available_at: str
+    ingested_at: str
+    source: str
+    evidence_ref: str
+    evidence_kind: str = 'source_observation'
+
+
+class RankingCalendar(Protocol):
+    def get_day(self, *, exchange: str, session_date: str, as_of: str) -> RankingSessionDay: ...
