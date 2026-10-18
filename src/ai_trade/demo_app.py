@@ -13,9 +13,19 @@ import uuid
 from datetime import date
 from pathlib import Path
 
+import streamlit as st
+
+st.set_page_config(page_title="A股量化系统 V1.3 · 行情与项目进度", page_icon="📈", layout="wide")
+workspace = st.sidebar.radio("工作区", ["行情工作台", "项目进度"],
+                             index=1 if st.query_params.get("view") == "progress" else 0)
+if workspace == "项目进度":
+    from ai_trade.project_progress.page import render
+    render()
+    st.stop()
+
+# The offline management page exits before loading any market or database modules.
 import pandas as pd
 import requests
-import streamlit as st
 
 from ai_trade.data_access.repository import SQLiteMarketDataRepository
 from ai_trade.market_data.akshare_adapter import AkshareDailyClient
@@ -89,7 +99,6 @@ def record_collect_click() -> None:
     st.session_state.collect_click_id = st.session_state.get("collect_click_id", 0) + 1
 
 
-st.set_page_config(page_title="A股量化系统 V1.3 · 行情工作台", page_icon="📈", layout="wide")
 st.title("A股量化系统 V1.3")
 st.caption("本地行情采集工作台 · AKShare 1.19.1 → 现有采集适配器 → 隔离 SQLite")
 

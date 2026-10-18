@@ -1,0 +1,187 @@
+{
+  "checked_at": "2026-10-18T07:37:07.731648+00:00",
+  "baseline": "f1382c10f2c3d356be6e059aad5611d15d687a62",
+  "note": "GitHub API actual PR states; no live market requests; merge_commit_sha on an unmerged PR is not proof of merging",
+  "prs": [
+    {
+      "number": 20,
+      "title": "TASK-017: record clean main and unified development workspace",
+      "state": "closed",
+      "merged_at": "2026-10-18T07:15:22Z",
+      "merge_commit_sha": "f1382c10f2c3d356be6e059aad5611d15d687a62",
+      "head": "8cad2eb7e6b2aefad1dc298117813693d6beedeb",
+      "base": "main"
+    },
+    {
+      "number": 19,
+      "title": "TASK-016: audit worktrees and branches after TASK-015 merge",
+      "state": "closed",
+      "merged_at": "2026-10-18T07:00:13Z",
+      "merge_commit_sha": "6987ed1d1435e19067fdd218beb68763eaa76f83",
+      "head": "0340c21c7b970bf62968acf41e6b444c7d17338d",
+      "base": "main"
+    },
+    {
+      "number": 18,
+      "title": "TASK-015: add explicit source health checks and scheduler entry",
+      "state": "closed",
+      "merged_at": "2026-10-18T06:35:46Z",
+      "merge_commit_sha": "693fab10fe7f88581fc326015556ddc0aa83c1ea",
+      "head": "15eb0f149fa0b84c7b26add4db3e395ad99d9560",
+      "base": "main"
+    },
+    {
+      "number": 17,
+      "title": "TASK-009: integrate manual Tencent Demo source and audit PR governance",
+      "state": "closed",
+      "merged_at": "2026-10-18T06:06:05Z",
+      "merge_commit_sha": "31a575f6834067749ea006931282e62e8f666a18",
+      "head": "74d0a186b04377b30198a6916f56e8fee8302bda",
+      "base": "main"
+    },
+    {
+      "number": 16,
+      "title": "TASK-DEMO-004: audit one formal AKShare direct request",
+      "state": "open",
+      "merged_at": null,
+      "merge_commit_sha": "1b3d6c064528ab2bad4abbbb7688162269427e38",
+      "head": "d4701c826ca1eed65074b48ffc6da90e6ff908ad",
+      "base": "codex/task-demo-002-network-diagnostics"
+    },
+    {
+      "number": 15,
+      "title": "TASK-DEMO-003: record proxy TLS and direct HTTP preflight failures",
+      "state": "open",
+      "merged_at": null,
+      "merge_commit_sha": "3265b77df36666d8cc20f90840169a865e33571d",
+      "head": "b7cbe9ef05623aa99e081b1141528f14817f553e",
+      "base": "main"
+    },
+    {
+      "number": 14,
+      "title": "TASK-DEMO-002: diagnose AKShare transport failures without exposing request details",
+      "state": "open",
+      "merged_at": null,
+      "merge_commit_sha": "8899aee25fa4258b1e554d71132f3c830c974b94",
+      "head": "365a01ca3d6400225ea130188187655211a1cdd1",
+      "base": "main"
+    },
+    {
+      "number": 13,
+      "title": "fix: guard Demo collection on rerun and show unknown row count",
+      "state": "open",
+      "merged_at": null,
+      "merge_commit_sha": null,
+      "head": "b31847ff41e200d5b7cb8ef9193c785e1e3e16be",
+      "base": "main"
+    },
+    {
+      "number": 12,
+      "title": "TASK-GOV-001：低成本优先的模型路由与开发治理",
+      "state": "closed",
+      "merged_at": "2026-10-17T15:08:35Z",
+      "merge_commit_sha": "c65a3189daf72c1aa97b5930e3a22215bda3f1c8",
+      "head": "b53e5b7f740cf60733405fa409438c4c63ae1210",
+      "base": "main"
+    },
+    {
+      "number": 11,
+      "title": "TASK-004A 第一轮：真实数据源研究与验收计划",
+      "state": "open",
+      "merged_at": null,
+      "merge_commit_sha": null,
+      "head": "39be058d35f5ebc49ab88af4fcbcf0b356a96c97",
+      "base": "main"
+    },
+    {
+      "number": 10,
+      "title": "TASK-004：证券主数据与交易日历基础",
+      "state": "closed",
+      "merged_at": "2026-10-17T14:49:17Z",
+      "merge_commit_sha": "0578f9c30039cf3f8e9f4618a6806c5c8411b1dd",
+      "head": "bb596a9bcf9d34c2ae29b43334873cc8e08c3313",
+      "base": "main"
+    },
+    {
+      "number": 9,
+      "title": "docs: archive V1.0–V1.3 trading system conversations and decisions",
+      "state": "closed",
+      "merged_at": "2026-10-17T05:03:15Z",
+      "merge_commit_sha": "d09a259ec34fec8e587baa54b63706ba96c3b9af",
+      "head": "b7113d1ae3ecc6f6d3a6e90ae22a0eb72c8e7908",
+      "base": "main"
+    },
+    {
+      "number": 8,
+      "title": "chore: reconcile README, CI, project status and E2E checklist",
+      "state": "closed",
+      "merged_at": "2026-10-17T04:41:12Z",
+      "merge_commit_sha": "824d634bb143ac9a9c0c406d9f9b43dee2ffd925",
+      "head": "0ab86e1e6553090f1b80f50be626a7d57d195737",
+      "base": "main"
+    },
+    {
+      "number": 7,
+      "title": "feat: isolated Streamlit market demo rebased onto main",
+      "state": "closed",
+      "merged_at": "2026-10-17T04:23:46Z",
+      "merge_commit_sha": "74536e020b04bc264c41d1ea4302e9583fd51266",
+      "head": "b3e4e31dac5a6044f84b56d8f054bbe3e86f27bc",
+      "base": "main"
+    },
+    {
+      "number": 6,
+      "title": "TASK-003C: TLS diagnostics rebased onto main",
+      "state": "closed",
+      "merged_at": "2026-10-17T04:21:18Z",
+      "merge_commit_sha": "804a33103dfb2dfcff8be0f9a5d5b437437416b6",
+      "head": "9df3660912ea2c518d0eeedf3e3cc188165db221",
+      "base": "main"
+    },
+    {
+      "number": 5,
+      "title": "feat: add AKShare historical daily ingestion adapter",
+      "state": "closed",
+      "merged_at": "2026-10-17T04:17:23Z",
+      "merge_commit_sha": "a102ac9f1dddc0ba0009372a0f81ec823b867a1d",
+      "head": "08388c5c4c3f734ddfbc978b740467e58beec09d",
+      "base": "main"
+    },
+    {
+      "number": 4,
+      "title": "feat: add isolated local market data demo",
+      "state": "closed",
+      "merged_at": null,
+      "merge_commit_sha": "c16ecbf68856416ca6ec24303c5ccd92a4ce7824",
+      "head": "25b005cd312c86b7fb6bedf327b080736ff442c8",
+      "base": "codex/task-003c-tls-diagnostics"
+    },
+    {
+      "number": 3,
+      "title": "TASK-003C：TLS 路径诊断与指定批次真实行情验收",
+      "state": "closed",
+      "merged_at": null,
+      "merge_commit_sha": "6728fb92fd108c3701dcc6345a21533b9f27f026",
+      "head": "80b5a8ec4c509e1e482daadfacae14c610911f8a",
+      "base": "feature/task-003-akshare-adapter"
+    },
+    {
+      "number": 2,
+      "title": "TASK-003：AKShare 历史日线适配器与离线验证",
+      "state": "closed",
+      "merged_at": null,
+      "merge_commit_sha": null,
+      "head": "fc692e7ed0c1aeffa7c3db0eb5a8b0ac9be9ca8f",
+      "base": "main"
+    },
+    {
+      "number": 1,
+      "title": "TASK-002：SQLite 数据基础设施与日线数据契约落地",
+      "state": "closed",
+      "merged_at": "2026-10-17T03:09:25Z",
+      "merge_commit_sha": "cd1b2b1412e4dbe345e4eac09330b94977211372",
+      "head": "4b73f8a4b23ec3a474a51d2850f31ba2f4678155",
+      "base": "main"
+    }
+  ]
+}

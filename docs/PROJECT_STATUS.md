@@ -1,5 +1,13 @@
 # 项目状态与验收边界（2026-10-18）
 
+## TASK-018：正式看板待审（本分支）
+
+本轮成功 ls-remote/fetch 核实 main 为 `f1382c10f2c3d356be6e059aad5611d15d687a62`，PR #19/#20 均已合并。TASK-017 已建立干净的 `F:\codex-agnes\AI-trade-dev/main`；本任务从最新 origin/main 建独立工作树，未移动本地 main 或覆盖旧目录。下方 TASK-016 段落的“无本地 main/旧缓存”是当时记录，不是当前机器状态。
+
+本分支新增 [正式任务看板](TASK_BOARD.md)、[十阶段路线图](ROADMAP_V1_3.md)、[单一结构化数据](TASK_METRICS.json) 和 Demo 的独立“项目进度”入口；百分比由验收点计算，不在本索引手填。数据截止、模型/工时未知、真实/离线/独立审查/PR/生产边界及下一项建议以该看板为准。TASK-018 尚待独立审查与用户合并，不把新页面或规则当作 main 已有功能或生产准入；历史报告不追溯改写。
+
+用户本轮追加的[开源调研制度](OPEN_SOURCE_RESEARCH_POLICY.md)已写入本分支，并接入 AGENTS、任务模板及看板。新增规则同样待独立 H 审查；没有重新开展外部项目或许可证调研，不将 TASK-REF-001 的旧本地材料升级为已验收。
+
 ## 当前 GitHub 状态（TASK-016 核验）
 
 GitHub API 已确认最新 main 为 `693fab10fe7f88581fc326015556ddc0aa83c1ea`，PR [#18](https://github.com/fengjnah/a-share-quant-v1/pull/18) 已于 2026-10-18 合并，健康检查框架已进入 main；父提交为 `31a575f6834067749ea006931282e62e8f666a18`（PR [#17](https://github.com/fengjnah/a-share-quant-v1/pull/17)，TASK-009）。**代码合并不改变生产准入状态。** 本文件是当前状态索引；旧实施报告保留当时分支、测试和“待审”事实，不追溯改写。

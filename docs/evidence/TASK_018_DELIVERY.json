@@ -1,0 +1,59 @@
+{
+  "task": "TASK-018",
+  "observed_at": "2026-10-18T08:07:13.712493+00:00",
+  "pr_snapshot": {
+    "number": 21,
+    "url": "https://github.com/fengjnah/a-share-quant-v1/pull/21",
+    "state": "OPEN",
+    "draft": true,
+    "merged": false,
+    "base_sha": "f1382c10f2c3d356be6e059aad5611d15d687a62",
+    "observed_head_sha": "dd23743a1b5d01e59f2969a9b54944cd40eda638",
+    "basis": "Successful authenticated GitHub create_pull_request and GET /pulls/21; snapshot before appending this record"
+  },
+  "initial_publication": {
+    "local_commit": "37f9b8341565866343841e9ff14c01e241345c25",
+    "github_commit": "dd23743a1b5d01e59f2969a9b54944cd40eda638",
+    "equal_tree": "2440773714aa2fc34bfe608f06a1db688346bb19",
+    "metadata_differs": true
+  },
+  "final_offline": {
+    "passed": 446,
+    "skipped": 1,
+    "seconds": 44.44,
+    "exit_code": 0,
+    "log_sha256": "e1b401f46c8e9ab7e3ffaf11d53faa204c9ff6c514efeea7c38d8013024e2772",
+    "skip": "Live AKShare test not enabled"
+  },
+  "intermediate_failures": [
+    {
+      "reason": "Fixture incorrectly assumed the last event was a suggestion",
+      "passed": 30,
+      "failed": 1,
+      "resolution": "Select suggestion by task identity, preserve validation requirements"
+    },
+    {
+      "reason": "First newline manifest omitted five this-task Windows CRLF records",
+      "passed": 444,
+      "failed": 2,
+      "skipped": 1,
+      "resolution": "Inspect all local evidence, explicitly register 50 CRLF hashes without rewriting them; emulate LF/CRLF checkouts"
+    }
+  ],
+  "pip_check": {
+    "exit_code": 0,
+    "text": "No broken requirements found."
+  },
+  "preservation": {
+    "worktrees": 13,
+    "file_entries": 942,
+    "all_preserved": true,
+    "manifest_sha256": "edd2e46a84443c9f21dd8fc470a0ae336bed842713ad43fc536b312c6a3bac27"
+  },
+  "progress": 21.67,
+  "review": "UNVERIFIED",
+  "production": "NOT_RUN",
+  "market_requests": 0,
+  "no_auto_merge": true,
+  "note": "No new live-data, license or independent review acceptance. PR metadata append is not a merged acceptance."
+}
