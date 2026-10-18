@@ -59,3 +59,22 @@ print(json.dumps({'proxy': ns['proxy_info'](proxy_url),
 当前证据支持“选中代理路径的本次 TLS 握手失败”，证据强度为本机握手实测。它不支持“东方财富接口关闭”“代理一定有故障”或“行情为空”等判断。用户若自行关闭系统代理，后续应先重新解析配置、只检查新选中路径的 DNS/TCP/TLS，确认安全连接后才在独立验收中对固定参数发出最多一次行情 GET；记录真实 HTTP/异常链、返回/入库/读回和证据摘要。本任务不自动切换路径或重试。
 
 验证：在 PR #14 工作树用该工作树 `src` 作为 `PYTHONPATH` 执行完整离线测试，退出码 0，**329 passed、1 skipped in 10.76s**；跳过项为需显式启用的真实 AKShare 测试。`python -m pip check` 退出码 0，`No broken requirements found.`。PR #14 工作树默认 `data/sqlite/local.sqlite3` 不存在，未访问或创建生产数据库。原工作树修改保持原样；本报告分支不修改业务代码、Schema、代理配置、TLS 或 main。
+
+## 后续授权的直连路径检查（2026-10-18）
+
+本节是上述前置报告完成后的新增证据，不改写原先“该轮行情 GET 为 0 次”的历史结果。用户随后明确要求 Python 直连握手，再授权在本次验收子进程中绕过代理，先发一次最小域名 HTTP GET；仅在 HTTP 检查通过后调用 AKShare。
+
+直连握手记录 `F:\codex-agnes\AI-trade-demo-002\artifacts\task-demo-003\direct-tls.json`：当时通过 `F:\codex-agnes\AI-trade-main-demo\.venv\Scripts\python.exe`（Python 3.12.14）执行，目标域名 `push2his.eastmoney.com`，当次解析并连接 `117.184.38.143:443`。执行代码将域名作为 `ssl.wrap_socket(..., server_hostname=host)` 的 SNI/主机名校验值；JSON 记录未单列 `server_hostname`，这一点同时依据执行代码。证书和主机名验证开启，TLS 1.3 握手成功、证书指纹 `8fba816c6adcf91fad19b2cadb686c476a900638cc2a1beedd8aa4f06351df10`。**该握手不包含 HTTP GET**。
+
+随后在 PR #14 head `365a01ca3d6400225ea130188187655211a1cdd1` 的干净工作树中，使用同一 Python 解释器、AKShare 1.19.1，仅在验收子进程设置 `NO_PROXY=push2his.eastmoney.com`。实际使用的本地受控脚本和脱敏审计分别为 `F:\codex-agnes\AI-trade-demo-002\artifacts\task-demo-003\live_direct_acceptance.py` 与 `live-direct-audit.json`，均被 Git 忽略。脚本用与已审 AKShare 1.19.1 相同的接口参数形状向域名 `/api/qt/stock/kline/get` 发出一次 GET，固定 `secid=1.600000`、`beg=20261014`、`end=20261015`、`klt=101`、`fqt=0`，10 秒超时，不用 IP URL，不关闭 TLS 验证，不自动重试或跟随重定向。完整原始 URL、供应商 `ut` 值、响应正文和代理凭据均未写入脱敏审计。
+
+| 层级 | 新增直连结果 |
+| --- | --- |
+| 代理与实际 socket | 当前子进程 `NO_PROXY` 匹配，Requests 发送参数中的代理选择为 `null`；实际 socket 成功连接公网 `101.42.128.173:443`。这是该次 HTTP 请求的直连证据，与先前单独握手的 IP 不同 |
+| TLS | 前述独立 Python 直连握手 **通过**；此次 Requests GET 保持 `verify=True`，但没有单独记录该连接的握手完成事件，因此不把上次成功握手冒充本次连接的 TLS 逐阶段日志 |
+| HTTP GET | **已执行 1 次，失败**：在约 0.25 秒后得到 `ConnectionError → ProtocolError → RemoteDisconnected`；没有 HTTP 状态码、Content-Type、响应类型或正文。TCP 连接已建立，异常指向等待 HTTP 响应期间的断开；请求是否到达上游服务端无法证明 |
+| 重定向及其他域名 | 仅记录一次对目标域名、目标路径的 `Session.send`；未收到重定向响应，也没有观察到其他请求域名。未知的重定向目标不存在可记录的代理选择 |
+| AKShare | **未执行**：HTTP 前置检查没有取得 200/JSON 响应，按用户给定顺序停止；真实返回行数**未知** |
+| SQLite 写入/读回 | **未执行**：采集入口未运行，脚本未创建测试 SQLite；PR #14 工作树与原工作树的默认 `data/sqlite/local.sqlite3` 均不存在，未访问生产数据库 |
+
+本次失败可定位到“TCP 连接之后、取得行情 HTTP 状态行之前”；`RemoteDisconnected` 是实际异常链，不构成东方财富接口关闭、代理根因或供应商空行情的证明。本次 HTTP 请求的 TLS 握手未单独埋点；若要进一步区分 TLS 完成后的 HTTP 发送/响应读取与中间网络设备断连，需要在**新的、有界诊断任务**中补充同一连接的安全传输事件证据，不应对同一参数盲目重试。用户要求的 AKShare → 临时 SQLite → 读回链路仍**未验收**。本节没有修改业务代码、系统代理或 PR #13/#14。
