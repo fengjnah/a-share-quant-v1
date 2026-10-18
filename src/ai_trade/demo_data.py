@@ -62,6 +62,23 @@ def existing_demo_root(value: str) -> Path:
     return root
 
 
+def persistent_workbench_root(value: str) -> Path:
+    """Explicit deployment-only store, separate from production trading and temp demos."""
+    configured = Path(value).expanduser()
+    if not configured.is_absolute():
+        raise ValueError("工作台持久目录必须使用绝对路径")
+    root = configured.resolve(strict=True)
+    repository = Path(__file__).resolve().parents[2]
+    temp = Path(tempfile.gettempdir()).resolve()
+    if not root.is_dir() or root.is_relative_to(repository) or root.is_relative_to(temp):
+        raise ValueError("持久目录必须在代码仓库与临时目录之外")
+    if (root / "demo.sqlite3").exists():
+        raise ValueError("不能将开发临时演示数据库作为部署存储")
+    if (root / "workbench.sqlite3").resolve().parent != root:
+        raise ValueError("工作台数据库链接不能越出持久目录")
+    return root
+
+
 def read_bars(db: Database, request: DailyHistoryRequest, *, source: str, as_of: str) -> pd.DataFrame:
     """Discover exact keys in SQLite, then select/validate through the existing port.
 

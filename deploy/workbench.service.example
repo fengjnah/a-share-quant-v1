@@ -1,0 +1,25 @@
+# Reference only: reconcile with an EXISTING service. Never overwrite the Java/bazi service.
+[Unit]
+Description=Private A-share research workbench
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/opt/a-share-quant-workbench/current
+Environment=AI_TRADE_WORKBENCH_ROOT=/var/lib/a-share-quant-workbench
+Environment=AI_TRADE_READ_ONLY=1
+Environment=PYTHONPATH=/opt/a-share-quant-workbench/current/src
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/a-share-quant-workbench/current/.venv/bin/python -m streamlit run src/ai_trade/demo_app.py --server.address 127.0.0.1 --server.port 8513 --server.baseUrlPath quant --server.headless true --browser.gatherUsageStats false --server.fileWatcherType none
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/a-share-quant-workbench
+MemoryMax=450M
+CPUQuota=70%
+
+[Install]
+WantedBy=multi-user.target

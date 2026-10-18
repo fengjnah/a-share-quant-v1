@@ -1,5 +1,6 @@
 """M2 view: explicit collection, local-only analysis, no order or prediction API."""
 from dataclasses import asdict
+import os
 from datetime import date, datetime, timezone
 import uuid
 
@@ -34,7 +35,8 @@ def render(db: Database) -> None:
         equity_text = st.text_input("账户权益（元，可留空）", "")
         pool = st.checkbox("同时评分当前本地同源股票池（最多20只）")
         local = st.form_submit_button("分析本地真实行情", type="primary")
-        live = st.form_submit_button("采集该股历史行情并分析", on_click=_clicked)
+        live = st.form_submit_button("采集该股历史行情并分析", on_click=_clicked,
+                                    disabled=os.environ.get("AI_TRADE_READ_ONLY") == "1")
         st.caption("本地分析不联网。采集按钮只请求指定股票及历史区间，不自动重试/换源；重复记录由已有约束拒绝。")
     click = st.session_state.get("m2click", 0)
     collect = live and click > st.session_state.get("m2processed", 0)
