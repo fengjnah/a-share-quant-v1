@@ -1,0 +1,1728 @@
+{
+  "task": "TASK-022A-H",
+  "baseline": "33e33c8e0583b70e1864ca7fb40e94152a338b6c",
+  "inventory": [
+    {
+      "path": ".env.example",
+      "tracked": true,
+      "sha256_at_review": "138c3299567cfd09738b33e6783421055e3f6b3755a639d3fc0236bf1ae7cd63",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": ".github/workflows/offline-pytest.yml",
+      "tracked": true,
+      "sha256_at_review": "469c625cacaca966f87eed0141e85a127decf93e6ba1e543f2095b756d767e98",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": ".gitignore",
+      "tracked": true,
+      "sha256_at_review": "7941966e2c34168a139546754fdd747c1fd448bcb32831c6294bc0b379a3103c",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "AGENTS.md",
+      "tracked": true,
+      "sha256_at_review": "f416797b5153df62dbd23ecaf08bbf0152d7be5fd34ddb0db996835e17967ff3",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 10,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "README.md",
+      "tracked": true,
+      "sha256_at_review": "9a29a44a9a9c782812086ec4411f661b6478e88f0244c804e11d05f74cffebe7",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/ACCEPTANCE_TESTS.md",
+      "tracked": true,
+      "sha256_at_review": "74e4e9a806ef03e0d8131ddf2ea8518d0709c1dafd755dfb318088f1ca248d00",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "tracked": true,
+      "sha256_at_review": "3630604aefb67a983602cc9daf227658437d157d37f2cd38ae846810f4b48b3a",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/AUDIT.md",
+      "tracked": true,
+      "sha256_at_review": "8b288cfa6e52768e85bafb93d3b889b0646d93a6c645bb72ca348eef8136f7af",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/DATA_CONTRACT.md",
+      "tracked": true,
+      "sha256_at_review": "e92391be7b010c58f4e3d2069dded06a6f76f9aa92f30a500ea395cc904863e9",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 14,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "tracked": true,
+      "sha256_at_review": "f782d8c8d43fcb206e63226f0d7033b64478e998544e4f2a87bb88630bd8cd65",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_002.md",
+      "tracked": true,
+      "sha256_at_review": "42811389e580de2be0d38a9cd50817215fbb548fb6816cfba9bf903626af7d00",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_003.md",
+      "tracked": true,
+      "sha256_at_review": "c3b459598586d286c90c889caa63f83daec7282e8aa21404677ca5f58dc6d9fc",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_003B.md",
+      "tracked": true,
+      "sha256_at_review": "c8ec86e8c6f0efa9fe5dc60683364e26f51903fc59d5850c74ceffaa24f99718",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_003C.md",
+      "tracked": true,
+      "sha256_at_review": "85dbf4f350c26be97e668af766f8f1a3fec327ee2d7653763c009f98b891b901",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_004.md",
+      "tracked": true,
+      "sha256_at_review": "13d435a30a0f71daa54ae37aa7fecdca9787558699683d8547417aed8de748e2",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_008.md",
+      "tracked": true,
+      "sha256_at_review": "a8d81bc536dc2123ea2e950fe753b629f043012c4d449bd8cfd417583ad2100d",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_008A.md",
+      "tracked": true,
+      "sha256_at_review": "745a074456a2d36f4b8a9ce7a727febe575d330143fac40a1140c4a1cc6f84bd",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_008B.md",
+      "tracked": true,
+      "sha256_at_review": "320430623284616e6957cdeda987c90a67b4413473fd450aa0a7d774fb16c65c",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_009.md",
+      "tracked": true,
+      "sha256_at_review": "e319aa8fad63f18ce715b2bb2dad6f4bd412662186ec80c2dfefecad6bc0c342",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_015.md",
+      "tracked": true,
+      "sha256_at_review": "552b336625812dcede2d9d86dd5fab5524bf4faf8944ca7a5bbc2dc76a7d65d6",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_016.md",
+      "tracked": true,
+      "sha256_at_review": "a170ffe1b686a9644e0e18777a5aeeadc342193857150cce3f2413a2b3680ab3",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_017.md",
+      "tracked": true,
+      "sha256_at_review": "421ecfd990f005c15762bcd6ae1f98aeab661464ae40fd3ddaf803d9ccc7ec43",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_018.md",
+      "tracked": true,
+      "sha256_at_review": "8b089f6ee35746d2f34562189fd88fbb252529e9caaad49484566ec7997db1d2",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 0,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_DEMO_002.md",
+      "tracked": true,
+      "sha256_at_review": "ce45ce43bf7de87d7e3c782d2a71c8a0de154222b35253a1dced25f2d3c86961",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_TASK_LOCAL_RECONCILE_001.md",
+      "tracked": true,
+      "sha256_at_review": "38efd295214134c28a8ac0b63d7eca36aef29557530526a182bb1ac01eb658cd",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/INTERFACE_CONTRACT.md",
+      "tracked": true,
+      "sha256_at_review": "8729ef0f4b590bd50857bafac045db45ca21d84eac59bc91be1b233ef7fb7fae",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 11,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/LOCAL_MARKET_DEMO.md",
+      "tracked": true,
+      "sha256_at_review": "0028d90398a53a0032bdd3e434cd3abbfc4c94d9790bfdd50c1926b7286284ab",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/MODEL_ROUTING_POLICY.md",
+      "tracked": true,
+      "sha256_at_review": "d001488ebfbd6a1ba6de1cfd3d4f92d26ac03bbc1d69ab1a22ffb44d0170e57f",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 12,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/OPEN_SOURCE_RESEARCH_POLICY.md",
+      "tracked": true,
+      "sha256_at_review": "7d04025d2b0c7b51e0c50cac6e3de72773365f634af478587188ed237e71bf95",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/P0_IMPLEMENTATION_PLAN.md",
+      "tracked": true,
+      "sha256_at_review": "42597a45cd6403c53ea93838987f13ec37f033ba9014d5f3470960d5a8a35eda",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/PROJECT_STATUS.md",
+      "tracked": true,
+      "sha256_at_review": "076ddfda421fe14376c8e23ac514a15e7f04219baaa14be960b71750baebc236",
+      "classification": "MERGE",
+      "basis": "Historical/current status overlap; future owner-reviewed index consolidation, no rewrite here",
+      "text_reference_file_count": 10,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/PR_GOVERNANCE_TASK_009.md",
+      "tracked": true,
+      "sha256_at_review": "b717a1d74cddf7af62dea515d72acd6363ab311e77e6eef21ec3ca7c05b63210",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/ROADMAP_V1_3.md",
+      "tracked": true,
+      "sha256_at_review": "27cc4271eecb0e66f8976e0f1b969fc14ce977c0c3087863d5742d5569d71b15",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/SOURCE_HEALTH_CHECKS.md",
+      "tracked": true,
+      "sha256_at_review": "4a2875c9d138b184b47eef5b4b5662dfdef88af11c79de1e9bfca983edfcbd95",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/TASK_022A_REPORT.md",
+      "tracked": true,
+      "sha256_at_review": "6d00d9474c9cab1e548a2026958213edb87d9ee277e3dbffcbbb28041f6d0e1b",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 0,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/TASK_BOARD.md",
+      "tracked": true,
+      "sha256_at_review": "96372e9da222b97b45aa572790996169da8ae6f6b85e7f49b1591d4609d9aa1f",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/TASK_METRICS.json",
+      "tracked": true,
+      "sha256_at_review": "df79e6034a17250b611bb4d39384b2b691cee5e9481afa1c6d10aefb1afc8ccc",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/TASK_METRICS.schema.json",
+      "tracked": true,
+      "sha256_at_review": "1cf7ed6ebec4f7e6c7b06c3ee65c5718cc17ee099368685e040fd20035c59bea",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/TRADING_SYSTEM_CONVERSATION_ARCHIVE_20261017.md",
+      "tracked": true,
+      "sha256_at_review": "8a7546f3863e93bb6c657d566de6df8480cad6ad8351c486793c15cf11d84f61",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_008_AUDIT.json",
+      "tracked": true,
+      "sha256_at_review": "92ee1d61b7ca63a5bd982bb6ff6a4e609f00dc7fa3b97a3b1d471a4297c9a6ae",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_009_GIT_AUDIT.json",
+      "tracked": true,
+      "sha256_at_review": "050121ef134df8069ae19eaf93537d6f71c61015c8b5920c62ec173a814524b0",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_015_AUDIT.json",
+      "tracked": true,
+      "sha256_at_review": "e1aaddd7d79367f1cf2b733b6a7d39a18b1ff7dc44a0dcbc764e5d3e722d5eec",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_016_BRANCH_AUDIT.json",
+      "tracked": true,
+      "sha256_at_review": "7a2cfd236f227770b2bc9af835a5c38eba6a50e38050c4b869c6513e2a0be248",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_018_ACCEPTANCE.json",
+      "tracked": true,
+      "sha256_at_review": "659ecf7100b519564002a76fe5e47a86b4e0316ac245afdad2f977da56cbfef6",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_018_DELIVERY.json",
+      "tracked": true,
+      "sha256_at_review": "05cd3bf1e64a48f1ceed0c6eb0e17a8f2798a3a1e5c29cd1c66082b159ead4a6",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_018_FINAL_CHECKS.json",
+      "tracked": true,
+      "sha256_at_review": "1e21539aed22f2ea205155cd3e6e3b6aaa7555f127a4e9b6108c8f713a942fad",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_018_GITHUB.json",
+      "tracked": true,
+      "sha256_at_review": "77b999ea109cbdd6baa2cf0e95ffb3292d9ab64e543e1634539d95e84184b633",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/evidence/TASK_018_HASH_FORMAT.json",
+      "tracked": true,
+      "sha256_at_review": "c44b0a49404098054ae4987c9639b770e480ebf0305d9f8f2432cb2e0f4568ea",
+      "classification": "KEEP",
+      "basis": "Immutable historical evidence; current corrections belong in the new review, not deletion",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "docs/tasks/TASK_TEMPLATE.md",
+      "tracked": true,
+      "sha256_at_review": "8c0594c3021c919be2847751762777006a3bf7c29db6ed456d4377a7bb1658fc",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "pyproject.toml",
+      "tracked": true,
+      "sha256_at_review": "09e0a3067dd1d6b60cc735c773302871d650f47999be58252191a0c6cc0fc9ac",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "42a5abd0698d66032a65c48f6990d5aaef4d2ea66d81151804b9f8be8e3dbe49",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/data_access/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "34640c1e8e831530b7b511350a828b48386da33d53b4219773e3aa77197a06a7",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/data_access/models.py",
+      "tracked": true,
+      "sha256_at_review": "f20e8d2be255a7bac48dcb6a366a7ff716ba6e4b4a82b85f138bbd0751798eb3",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/data_access/repository.py",
+      "tracked": true,
+      "sha256_at_review": "aa5f437f79159915ca5ef86bac4743a064edb04a331e761d8cc6a1e8eab980d1",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/data_access/validation.py",
+      "tracked": true,
+      "sha256_at_review": "e24f45a043ba680b0566fbd07fd227027534aa53aafafa2eb9bb177e994ec5ec",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/demo_app.py",
+      "tracked": true,
+      "sha256_at_review": "82091fdb23c0e9ff04443517b3d1ced0a5928187a5835758a9d719d3ab165fc6",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 12,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "c7ab08a7bb70ab2b7744bef2236df9e4aa27b024f48652bc7f2e610d792043ca",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/akshare_adapter.py",
+      "tracked": true,
+      "sha256_at_review": "65df2110c42487303ecb1ad754926930971a4143dd2648080024aef65a247f13",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings.py",
+      "tracked": true,
+      "sha256_at_review": "6bb24d5791c3c7221884b97c6b68411259fd1df5b3ba6b7b344d340002a3821b",
+      "classification": "MERGE",
+      "basis": "Duplicate named-row validation in standalone/mixed parsers; consolidate within existing file",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings_models.py",
+      "tracked": true,
+      "sha256_at_review": "44a57ebd10e8f2c73b40c8f77e094a0bbd7b38ac24f4d7f0a561c953a37cc593",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/evidence.py",
+      "tracked": true,
+      "sha256_at_review": "74ad3943a861697cf4e43fe4276be94db9da245e207b28e7426e89f5c932925a",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_cli.py",
+      "tracked": true,
+      "sha256_at_review": "820acde74e85ddb8c7e891ad128f520e898cf044af3d7e9b84e7ce9dba28af3a",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_models.py",
+      "tracked": true,
+      "sha256_at_review": "85f662f6f1ccae3622d538cacd5b67b7ce462cd7b05eeb53ca1ef5e7a8ce3b98",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_schedule.py",
+      "tracked": true,
+      "sha256_at_review": "9d0b388f688f64960f5c9e41d7bdd16ca0d630804f872711b4c81fd21414a461",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_service.py",
+      "tracked": true,
+      "sha256_at_review": "bc069425d6cfc5308c12059a8f336bbb31f30dcb9c01a8c5366419b39c627dac",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_transport.py",
+      "tracked": true,
+      "sha256_at_review": "026da4b9aa7e5ebac93d94e27069c7a5669f5fd9211fef6addd1b6fec6c29fed",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/ingestor.py",
+      "tracked": true,
+      "sha256_at_review": "010c939163c2569b66da219c22858a068c31de921a763d4c9d26fb9e2c5fc4cf",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/models.py",
+      "tracked": true,
+      "sha256_at_review": "02ee836b6f373b9763f8461e62e55165f740896039ee1bff128638f39b47e55e",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/market_data/tx_adapter.py",
+      "tracked": true,
+      "sha256_at_review": "d72d6c9f616db921199a1a88ecc07c60402cd82d0e4c00fdf5f785e826787e12",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "0b34f6d8ade6210b161249fc6976ab2cd7959df6adfd7f11f6cd470dace593b9",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/__main__.py",
+      "tracked": true,
+      "sha256_at_review": "0b3f8c3617a402d2693c36141b14d1c4ae47003fa487db21702fc0dc91c65972",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/app.py",
+      "tracked": true,
+      "sha256_at_review": "947b4e32f41a38e56790a9f2330767e78abad184b5243dd40d456afbcf527b45",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 12,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/core.py",
+      "tracked": true,
+      "sha256_at_review": "db5cfbfbb17dbc3e90f159f214383feff2081e2dd98fd93f3f0cc2fe06610b13",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/page.py",
+      "tracked": true,
+      "sha256_at_review": "966247edb5a41e4ac83420787a016996cd8888f578661f5cdd72c041c7f0f076",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/project_progress/render.py",
+      "tracked": true,
+      "sha256_at_review": "3a1f0506cbc4051a18c930b95e7ac5996867f45721c4c3438b7e9229f40b8686",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/reference_data/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "6a7b98c53cfacd1495a2942a08c1b104a5329e85b46a46badf06e49cb4e351c9",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/reference_data/models.py",
+      "tracked": true,
+      "sha256_at_review": "8ae8a7b188d4edcd6ffef29cf29f0955f77b10fe0f9330dd9f47067ebc5decf5",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/reference_data/repository_support.py",
+      "tracked": true,
+      "sha256_at_review": "21f2ad84266caf33adf71987088b74577a32db37dc6e93c4fb425827b0e97da7",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/reference_data/validation.py",
+      "tracked": true,
+      "sha256_at_review": "86c34144159de3ef3d8941d953f32b5709bd40d3ad8aece9608f9aebb8c52314",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/security_master/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "032709f12f7e21fe8be35ee4a978909ad0a324f476fb55757285812460707f93",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/security_master/repository.py",
+      "tracked": true,
+      "sha256_at_review": "490bed72bac7b9233522bf7c6e3eeac466cc89c33fecc0b9f17320f0fc9b723f",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/storage/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "35247a23f3711f41afc9dcf420da304a6a4bb6b738e2324c1defa3c4da6b228c",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/storage/__main__.py",
+      "tracked": true,
+      "sha256_at_review": "e19220edf698e8785faac9dd2cd09728e11880df19cfe314f08ea493cab06f19",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/storage/db.py",
+      "tracked": true,
+      "sha256_at_review": "9de3d890c226270b3c5196c5966b1a907737521b99faabc843e4f91b9e6eb4d1",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 9,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/storage/reference_schema.py",
+      "tracked": true,
+      "sha256_at_review": "e1e125e83c8a9c5885070613bf4c97be2010fc73b48f1fa386a362884d6d57a6",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/storage/schema.py",
+      "tracked": true,
+      "sha256_at_review": "f4c49920a19f46e04e7b649779fc8e9dabac4a4f1b4e2b924910603f2216de33",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/trading_calendar/__init__.py",
+      "tracked": true,
+      "sha256_at_review": "6720e2e6292e1ff51e611708aa1ccdc4f18076713f443d74e98fa29b96da60af",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 8,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "src/ai_trade/trading_calendar/repository.py",
+      "tracked": true,
+      "sha256_at_review": "3ca203c37f8f979a50da17cea593a41479e8815ac8f9117d61c1937692c7aa35",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/conftest.py",
+      "tracked": true,
+      "sha256_at_review": "784ef87304e7e03a99826702dc2ba815625e0ae239976c2d2ff1f72ae529901f",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/fixtures/akshare_daily.json",
+      "tracked": true,
+      "sha256_at_review": "4b7a2e59a9bdb6584e79ba1421ffde1b81a8d774ddc369d3c56737b7f79c2deb",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/manual/test_akshare_daily_live.py",
+      "tracked": true,
+      "sha256_at_review": "8417b9e2947a1ce248872b2b0bea67b325d38203c18ab56d8d32f6e5ad8e860a",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/manual/test_project_progress_offline.py",
+      "tracked": true,
+      "sha256_at_review": "230742f6f4f8d6354987777f20fd909cfc06ee378be53bb52913dbe7a7304e10",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/manual/test_streamlit_demo_offline.py",
+      "tracked": true,
+      "sha256_at_review": "3cdbf2974580adac195f432ed99504f42244d635eeb8276107fe978bf05f1337",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 5,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_akshare_ingestion.py",
+      "tracked": true,
+      "sha256_at_review": "3cc5b29180191d219c6e47dcefc372cc65c2504d4cb738ab44f5e4196115ccda",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_cffex_rankings.py",
+      "tracked": true,
+      "sha256_at_review": "a127d5192a1625579383cdb1347f23df72395b2bf9411382eccb28aab681b85a",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 1,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_data_validation.py",
+      "tracked": true,
+      "sha256_at_review": "a9e8e7eaefe1faf705d816b59c46cac1173e61fdf7be28d99751107ac52ee831",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_db.py",
+      "tracked": true,
+      "sha256_at_review": "2eae7d017aebd7451b6828a61ff6f6143636977fd0d806b5de78cfd087d197d2",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 7,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_health_transport_schedule.py",
+      "tracked": true,
+      "sha256_at_review": "f1547a975974f3b1bffe8d742c4fd2d0ccaa2ea4c22a928012a691391fa21673",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_manual_acceptance_checks.py",
+      "tracked": true,
+      "sha256_at_review": "412a93e804af328909812a0c50b505bf642adc0f716caeec17e87fd74541ca84",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_market_data_repository.py",
+      "tracked": true,
+      "sha256_at_review": "19ba5fb7acb1fd1426fb7a6e2298837b999519fc17dbfccc41de50db0c6d2ca4",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_project_progress.py",
+      "tracked": true,
+      "sha256_at_review": "e89ebb596ae986988214b97f7f11e8935c1ad2dc2dbb51cf81dee3032154cef5",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_reference_data.py",
+      "tracked": true,
+      "sha256_at_review": "d4fec8142e0a1033e7738d246e8a8d48cab3e39cbf65d93eb96c16818da775f1",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 6,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_source_health.py",
+      "tracked": true,
+      "sha256_at_review": "6b35cb805c3d1b904bfb504900921af8f758915d1768e65ac07d698083db8c4f",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_tls_diagnostics.py",
+      "tracked": true,
+      "sha256_at_review": "7ac0a49432b894fa5b0580681a0c6c06fa6344eafaaf40c7958dd659cfc476c9",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 2,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tests/unit/test_tx_adapter.py",
+      "tracked": true,
+      "sha256_at_review": "a253720a84988017510faa6f613619638eceb38302657c4dc462ce5e4ed711db",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 3,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    },
+    {
+      "path": "tools/diagnose_akshare_tls.py",
+      "tracked": true,
+      "sha256_at_review": "ed8f2b8c0ac14dbf2134e5763e2f1370eb63a2a2df39bbbd284fa00f33ebbe20",
+      "classification": "KEEP",
+      "basis": "Current implementation, tests, contract or protected audit evidence",
+      "text_reference_file_count": 4,
+      "action": "preserve; only scoped fixes in adapter/tests"
+    }
+  ],
+  "identical_byte_groups": [],
+  "protected_related_task_evidence": [
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/akshare_live_results.json",
+      "sha256": "d9ace695be1cb6474a660eba5983b89d133420fd0932a7015627464a47cd4217",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/akshare_static_audit.json",
+      "sha256": "2710d8ba88b6e752125d8ef77698a36f38976c98e2f51322bbe4231242cae7d6",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/ccpm_parsed.json",
+      "sha256": "aae963938ad9865ff788029eaa83c11375490970519b6695fc5c132b914dfc8d",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_config_js",
+      "sha256": "c0acd8992b39c5d164926b789bffb91acbbed042c9c03fcb4b7455d0f386f9bb",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_config_js.txt",
+      "sha256": "c0acd8992b39c5d164926b789bffb91acbbed042c9c03fcb4b7455d0f386f9bb",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_express_4250.html",
+      "sha256": "7f3f0a9c9177e8f4b6cc3b0453f50d20febff1bc9e1097e916c38e8e9ca6eb4b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_his_index.xml",
+      "sha256": "d36d32caeb973f409b1da44a67de4db69b8e6fca7c2e86e540529cd78e718993",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_home.html",
+      "sha256": "ddea6c2e831bbd023413052f91ef54cc31c16caa9870d6d371b10899696bafe5",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_jystz_html",
+      "sha256": "15f5021a4111d3d29a286292735cb129d022c5bf79d0a6f410d4a354dec40143",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_mrhq_mrhq.dat",
+      "sha256": "ddea6c2e831bbd023413052f91ef54cc31c16caa9870d6d371b10899696bafe5",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxhyxx.html",
+      "sha256": "0f546e5504d7f4510a8e2510e1a7d1322c92177b268c226e901248ca7b389e0b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxhyxx.js",
+      "sha256": "7f3f0a9c9177e8f4b6cc3b0453f50d20febff1bc9e1097e916c38e8e9ca6eb4b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxhyxx_html",
+      "sha256": "0f546e5504d7f4510a8e2510e1a7d1322c92177b268c226e901248ca7b389e0b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxhyxx_index_6883.xml",
+      "sha256": "30a51867d9751c83c802758ec0316576c9a35e2e870372a66ccb0ba3ecf3f621",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxmember.js",
+      "sha256": "9c8d6e2971ca5c889873dd3156329f9a171340045d328a9b519e3a45c44dba38",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxrhq_js",
+      "sha256": "e1e54397259ceb025c2405e539255994b7219415a555172706139804ed502805",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxrhq_js.txt",
+      "sha256": "e1e54397259ceb025c2405e539255994b7219415a555172706139804ed502805",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxrxq.html",
+      "sha256": "47c4adc716df280ec55363291e04c874cddf56ad0df349926d29e1d75f28aea4",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxtj.html",
+      "sha256": "1ee43aeb977f2910eaf508605f6c4edcc588a90eca635c162bb25db2786f07fb",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_qzxtj_js.txt",
+      "sha256": "188d7e131f5eb8cd620d200fe407feb15c1029e748e0ab4c4a02d5da2ca9cd9d",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_search.js",
+      "sha256": "7eec1b2357354ebb89f790984079953ef7d9231d29ef7791469ec5b2ff45c88e",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_search_page.html",
+      "sha256": "862f707a44db0d5be92533102984e9f9e20c4fc63cb9502387ad9668b4e75496",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/cffex_zpxx_html",
+      "sha256": "fde56b494c763b9020f809d17f8c5c576a3d49b9410d7dfd119c2e0a8c6c1ef4",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/citic_net_positions.json",
+      "sha256": "2171356fd52e3d2b156c40ab92bd58a8660dc9b8e5e05be34a8e696dc299bd71",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/index_daily_probe.json",
+      "sha256": "61a7cce6b1d74884db5fd043255151a7539663753be6db852193446ee31335fa",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect2.py",
+      "sha256": "6de5ac51f5c04f46fba076817f312e2f7189bb5ab595ccbe808c8930ac9a79a8",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_hist.py",
+      "sha256": "0ff36a766d2d1ce7e55b07075fc7ae27ae68d5f539134a5389d5c242d30177d2",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_qz.py",
+      "sha256": "a2b958dcf4d6f4eb7aa250ac38765c7f25f8f4e799a7d098f7aeef7e9c73b634",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_qzxhyxx.py",
+      "sha256": "b4e27f7a408511eb5d7601e9c4cf9d752c890c793237215883f1c0f342e43174",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_qzxtj.py",
+      "sha256": "83da73f30059cc6213e36277a75d0563db169bc6b14d40db9bec692450fb54c1",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_qz_pages.py",
+      "sha256": "046f56679a06a7bed7ce26835647b591e822db86805c3dbbb3a47b408c5f5d56",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/inspect_search.py",
+      "sha256": "7c266bf4adea305d547d5ea3c5fef8967acf7ac75918b5905fb6253807147b2e",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/legu_activity_full.json",
+      "sha256": "a470cbd5347e38e5562035cc693a7bde61a7fa50e26975927b76dece4b0902d1",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/market_probe_results.json",
+      "sha256": "9a8e7206c14fbb1d8bcdc150482402b51cef4339639e40bd5191d849a30c41df",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe.py",
+      "sha256": "fb3ac0125e93a0ec4176bc967a7e85f416e3540e1218e7efbd8a6a40239ea598",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe1_cffex_express.json",
+      "sha256": "c0357f3d6b7dc4255ebe11767f15caa4bcdfc2dff98facf3b9f8fcb3ae47484b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_akshare.py",
+      "sha256": "bd27105729cd6ba5f0fc39ff27dfcfc27ac716fc211983cd87014c509b7efea0",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_akshare_live.py",
+      "sha256": "ea554a0b03009b134aab3fd95a87a618b7d836f9db4df93758e1f98e58a98581",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm.json",
+      "sha256": "fe4d0eb476947371f1afc976a0e5d2296563dc973b89259195a27aaf4f19576f",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_early.py",
+      "sha256": "010413ccb0584a5a0f4bf8ecc0d125eb5a40fc99910da9bb717f983d4a38d062",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_history.json",
+      "sha256": "56079dff349c95693fa02e7c03acea42264caa673915682bf34e189877534cc6",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_history.py",
+      "sha256": "a2ae395d72eb767be19b4fd0c87b60d905fa709764377ceaa42fc03675bc57bc",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_history2.json",
+      "sha256": "4b5f50065205b8835430a13bd10c93aed97539863062c58289e6f617aa7db99c",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_history2.py",
+      "sha256": "dd6650b181e62a137eac3848b1bd43e58fa417e203c2b75c38465402c5eb1e47",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_ccpm_parse.py",
+      "sha256": "cd8cde9e31445b9b3f1505d57b544f05debf016a935294c7122b62a3137a3161",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_cffex_api.json",
+      "sha256": "067bbaa975c578419f7c9149dabbeb4bf8ad28a64690257fc6235a93cbb27059",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_cffex_api.py",
+      "sha256": "89d073d591fdc6df5b8e66a7613accd383d5fcde67998cb1b3c2f02372ed44d3",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_citic_compute.py",
+      "sha256": "b4d8d1d1e256b1d66e177de9ed0da6a54610b090a09edd42026ddd2e8eccae8e",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_home.py",
+      "sha256": "84e9057e0daa8fe407f4105e1a3d9ec78a762f79dbbd681b382b8c873f4710b9",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_index_daily.py",
+      "sha256": "e140e6b5cd02285d64c2360ff151655ffb02e8f88837c0d6ecb3040a750e4a20",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_js.py",
+      "sha256": "b006c24b4ae20e1c81306f679a8cb4c95cb1572932159e8dab74343cfe26b226",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_market.py",
+      "sha256": "60398650e9501d3159e0344064cc78151524d4724c8d256f89ede746b05accf2",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_member.json",
+      "sha256": "cad73c99dc5b133fc8f5141642a0dda0109e89e3d8538961bad227d1abbe91c5",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_member.py",
+      "sha256": "0eedf76d9a32bed08e32a0610bbf13d53cd19e8714095a7880f7e6726cfd17c7",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_member2.json",
+      "sha256": "5290632a90b80b838a145349dbd72f55e4cc404549d5c2d39aa704927795d731",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_member2.py",
+      "sha256": "875b1951392212d70e3ccb0b1e8e5925d86febf3b12f9784a4347ba99e3f77a2",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz.py",
+      "sha256": "327fc714e36cf811defe5e9b93169d1b11146fd815065a843a4051d66254c83c",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxh.py",
+      "sha256": "1d582fc142fe723690cb45b210c62b51f81f6e58965d84ed7302211cbf5e40c3",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxhyxx.py",
+      "sha256": "69baadf9517f17a9ac4da20ee2f8ccca5e7b0ec9d7556e46c29e888fe0d52b82",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxhyxx2.py",
+      "sha256": "49e0f5c863dbf96b05c936ad9de233c3e96ef11dfabe0c4bd5fc83aef4adad33",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxmember.py",
+      "sha256": "3fae6bec05fe4fc90ad10f5142d05a1ffc3e9ece19c22882c1da15cdefed9114",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxsj.py",
+      "sha256": "91f0cc66b81f82cd6c8576d42807678a7e516e4eea20fa3309b50850af64b8d1",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxsj2.json",
+      "sha256": "0a4e19930eff4cf9dc40b59653ac9a28105874f05e6d514f8908bf973be513cb",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qzxsj2.py",
+      "sha256": "5e7bb1888da5115dd8f1f5618c7505ee8bd173cb25c0109b244b2d25730b307b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_api.json",
+      "sha256": "a8fa6673679cf137e8a5f5fe2f8216e36da890556a3a1443e5383782237cba4b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_api.py",
+      "sha256": "43c423b06a97329f61ae128a4fe3ac00e2dba8337833b2f5dc7e1404c3c6b09a",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_data.json",
+      "sha256": "db64481dbdbba075c902842dcab5d2193968d6d419bc16c0bb185955f813c84b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_data.py",
+      "sha256": "642faf98aed697b9d92b307509fb82e356bcb61cdc859aa35c41d4341f877b91",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_js.py",
+      "sha256": "bc6549c5abcbf9e75f1fbc0472a77775c041e297adeee2fab9a33df69d0bc194",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_member.json",
+      "sha256": "b5dce2859b9d24c1ebd047fc4bf030ebda243752747558d823c50000d2e96803",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_member.py",
+      "sha256": "f4759804f2f9faa60e5a3a051417b04554d03b8e89f303a9f431308da79ec10c",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_qz_pages.py",
+      "sha256": "276c54bc8a554b3cf46c27129f75a9b0ec0ca9759df948c89e9ec8aa7f93ce02",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search.py",
+      "sha256": "b343bb0e8cc6fa495408746af65dbdac0decee6c7941f35105405995294eefa7",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search_api.json",
+      "sha256": "1fd45570e8096980826bdc6b15187f21df56091a67eb1fbc48e7f4bbaa80b8de",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search_api.py",
+      "sha256": "bc9304619ec37be52e6ed7ceedceeda44b684d3e8b7d8aaeec7286fdc8350b0c",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search_api2.json",
+      "sha256": "4eaf5dbbea2c59d48a21770a6cccd0b0ecd82592832027d86763f95176427755",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search_api2.py",
+      "sha256": "6606e9f01ea79101a8b011eb868de02a4193e55741ff1ca8739d955479c550db",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/probe_search_js.py",
+      "sha256": "905d7b5ba07b03650dc1b56dbfb925ddcad8aae11a8720bb1b4e5baeadc7bfb4",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/search_probe.html",
+      "sha256": "862f707a44db0d5be92533102984e9f9e20c4fc63cb9502387ad9668b4e75496",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/search_会员服务规则.json",
+      "sha256": "fc6fbe93fc26531007669452ea3a703faf0eb4f07bcab25a082ec27c8acabf4c",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/search_持仓排名.json",
+      "sha256": "206269cb5756bad77567e3f4898c0289a79483e097d23bf4966f8d862b530248",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/search_期市公告.json",
+      "sha256": "670898af00a13f0da10c335c7486512abdf0805785cb94eefd21048ee8268197",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sina_index_breadth.json",
+      "sha256": "cfbf1b2e5ba48c573bfb2f2a0be0f496e988b2ddae30676434fa76e6621d0075",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj_historysj_202609_zip_202609.zip",
+      "sha256": "e3452ac97c71652ab75ab2c6080e84d701067d679b6d6d50ae38baeb41784ffc",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj_historysj_202610_zip_202610.zip",
+      "sha256": "9f6a32c06e37619aed3fd5c13e6a113fc57be844d026dbf0a52f3e0e16d83d85",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj_hydm_20261016_IF2611",
+      "sha256": "7f3f0a9c9177e8f4b6cc3b0453f50d20febff1bc9e1097e916c38e8e9ca6eb4b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__201004__16__IF_1.csv",
+      "sha256": "737fde729d28e0320a3563746cba25e3779e07cedfb0b13984986c5f40e3d7d6",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__201004__19__IF_1.csv",
+      "sha256": "0f617d76a792d1f02bfe4124e0cdb2be7118deae7693a33fe25403c33fb5c682",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__201004__30__IF_1.csv",
+      "sha256": "655ca29c2a5933ed4995867048549782f74d4d0b9e130606a5beb489547df936",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__201908__05__IF_1.csv",
+      "sha256": "761d33bbd0c2b524a5c6d87239e86aec6aae17a1c5a30f5a4d153c9bd6238295",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202003__16__IF_1.csv",
+      "sha256": "4dbfeea75a3380389ed42773c29070c31384a546a975aa6a2b84f1efbc9345fd",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202410__16__IF_1.csv",
+      "sha256": "bc182691d6764fb98d109378c81f296f4ccc45c39cd826b952bce601551d5afb",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202510__16__IF_1.csv",
+      "sha256": "b8e16aac10a2d03680d4a782b441b6276cc1a22c84de867df546aa5875798a9b",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__13__IF_1.csv",
+      "sha256": "1a94f3e64fa033f61375337e8e71f28708d78bb06e2bf461319922d2143b49e2",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__15__IF_1.csv",
+      "sha256": "810a5c0740e17d1552abce4ba441562a999e20feaa6f71b6b05c24f5646f1419",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__16__IC_1.csv",
+      "sha256": "f50b7d8ecb925bd0303ba377fbd576f9211d18b76d99585e8dffa6beced49985",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__16__IF_1.csv",
+      "sha256": "9f6ae746bf675f951b10edd1da280ce14717729b683973a165969211da1b9792",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__16__IH_1.csv",
+      "sha256": "652b34342547b6f829bdbb4af56bf81d01fcf61a5cb1e3a702912107c94032e3",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "artifacts/task-022/sj__ccpm__202610__16__IM_1.csv",
+      "sha256": "0a8ec6ca08e9e013743f6fcd827a8e1dc88fd9bd8a1578703910f1d5a4f4b9c4",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "docs/research/CFFEX_POSITION_SOURCE_RESEARCH.md",
+      "sha256": "b8b07ffcdf3b84186713f98e79aff9fc163d1ca90b3861d0cd237f5432028061",
+      "classification": "KEEP",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "docs/research/INSTITUTION_POSITION_FEASIBILITY.md",
+      "sha256": "b2141eb4121184c79ab6b36d5e36fed5d1576773eb80cf5bd45d07eada448d91",
+      "classification": "KEEP",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022",
+      "path": "docs/research/MARKET_SENTIMENT_SOURCE_RESEARCH.md",
+      "sha256": "5c660ea79ecdc151d6d83752d8f5596202630296c8192c33e20ce67dea785495",
+      "classification": "KEEP",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022-REVIEW",
+      "path": "artifacts/review-022/ccpm_IC_20261016_review.csv",
+      "sha256": "f50b7d8ecb925bd0303ba377fbd576f9211d18b76d99585e8dffa6beced49985",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022-REVIEW",
+      "path": "artifacts/review-022/http_check_results.json",
+      "sha256": "9e7485668515b0a8b959f3c07adb0853d428b9f9390830c32530a5f68feab7b2",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022-REVIEW",
+      "path": "artifacts/review-022/probe_cffex_http_check.py",
+      "sha256": "e48b7673e38a4409088938c3db1b149280e96aa7314efb545914b19b422f4f22",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022-REVIEW",
+      "path": "artifacts/review-022/recompute_citic.py",
+      "sha256": "deafda4788ea26cf49c6db145e7fd85fc29622bdf98e1dda688a0d019546670e",
+      "classification": "ARCHIVE",
+      "action": "protected outside this worktree; no cleanup"
+    },
+    {
+      "task": "TASK-022-REVIEW",
+      "path": "docs/reviews/TASK-022_INDEPENDENT_REVIEW.md",
+      "sha256": "84fe69fd4c65accd1e2fc46a878807c62e505d535868ac1dd0c021ab4a5e1ba0",
+      "classification": "KEEP",
+      "action": "protected outside this worktree; no cleanup"
+    }
+  ],
+  "generated_candidates": [
+    {
+      "path": ".pytest_cache/",
+      "classification": "DELETE_CANDIDATE",
+      "basis": "Generated by the baseline pytest run; not source evidence",
+      "action": "no deletion in this task"
+    },
+    {
+      "path": "**/__pycache__/",
+      "classification": "DELETE_CANDIDATE",
+      "basis": "Regenerable bytecode; inspect resolved paths before any future removal",
+      "action": "no deletion in this task"
+    }
+  ],
+  "deletions": [],
+  "limits": "Reference counts are hints, not deletion proof; ignored local paths outside evidence scans are not exhaustively inventoried. No other worktree cleanup."
+}
