@@ -11,8 +11,8 @@ from pathlib import Path
 import streamlit as st
 
 st.set_page_config(page_title="A股量化系统 V1.3 · 行情与项目进度", page_icon="📈", layout="wide")
-workspace = st.sidebar.radio("工作区", ["行情工作台", "项目进度"],
-                             index=1 if st.query_params.get("view") == "progress" else 0)
+workspace = st.sidebar.radio("工作区", ["行情工作台", "交易分析", "项目进度"],
+                             index=2 if st.query_params.get("view") == "progress" else 1 if st.query_params.get("view") == "analysis" else 0)
 if workspace == "项目进度":
     from ai_trade.project_progress.page import render
     render()
@@ -56,8 +56,9 @@ def record_collect_click() -> None:
     st.session_state.collect_click_id = st.session_state.get("collect_click_id", 0) + 1
 
 
-st.title("M1 行情工作台")
-st.caption("查询本地数据不联网 · 重新采集需主动点击 · 图表与表格共用 SQLite 验证数据")
+if workspace == "行情工作台":
+    st.title("M1 行情工作台")
+    st.caption("查询本地数据不联网 · 重新采集需主动点击 · 图表与表格共用 SQLite 验证数据")
 st.warning("仅使用系统临时演示数据库，与生产库隔离；不自动采集、不自动切换数据源。")
 try:
     db, repository, evidence = get_components()
@@ -73,11 +74,26 @@ with st.sidebar:
     st.caption("仅为 Requests 配置解析；实际路由未观测。TLS 证书验证保持开启。")
     st.code(str(db.config.path), language="text")
     st.caption("指定 AI_TRADE_DEMO_ROOT 可在浏览器刷新后继续打开同一个已有临时演示库。未指定时按会话隔离。")
+    with st.expander("打开已有临时演示区"):
+        saved_root = st.text_input("已有演示目录", value="")
+        if st.button("打开已有演示数据"):
+            try:
+                st.session_state.demo_root = str(existing_demo_root(saved_root))
+                for key in ("last_result", "display_request", "display_source", "operation_error", "m2spec"):
+                    st.session_state.pop(key, None)
+                st.rerun()
+            except Exception as exc:
+                st.error(f"演示目录未打开：{type(exc).__name__}: {exc}")
     if st.button("新建隔离演示区", type="secondary"):
         st.session_state.demo_root = tempfile.mkdtemp(prefix="a-share-quant-demo-")
-        for key in ("last_result", "display_request", "display_source", "operation_error"):
+        for key in ("last_result", "display_request", "display_source", "operation_error", "m2spec"):
             st.session_state.pop(key, None)
         st.rerun()
+
+if workspace == "交易分析":
+    from ai_trade.analysis_page import render
+    render(db)
+    st.stop()
 
 with st.form("collect_form"):
     source_choice = st.selectbox("行情数据源", options=list(SOURCES), index=0)
