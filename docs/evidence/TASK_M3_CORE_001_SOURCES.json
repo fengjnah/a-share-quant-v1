@@ -1,0 +1,136 @@
+{
+  "started_at": "2026-10-19T15:53:59.862900+00:00",
+  "akshare": "1.19.1",
+  "requests_per_source_max": 1,
+  "retries": 0,
+  "tls_verification": true,
+  "results": [
+    {
+      "kind": "index",
+      "symbol": "sh000300",
+      "requested_date": null,
+      "status": "OBSERVED",
+      "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+      "data_date": "2026-10-16",
+      "observed_at": "2026-10-19T15:54:06.478989+00:00",
+      "ingested_at": "2026-10-19T15:54:06.596523+00:00",
+      "available_at": null,
+      "authorization": "UNKNOWN",
+      "fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ],
+      "rows": 550,
+      "trace": [
+        {
+          "endpoint": "https://finance.sina.com.cn/realstock/company/sh000300/hisdata/klc_kl.js",
+          "status": 200,
+          "payload_sha256": "1b98db95ed383be5de406d5e7d107edbe0a04231bb4fc4cb21b82a4023dc27ed",
+          "error": null
+        }
+      ],
+      "payload_sha256": null,
+      "calendar": "UNKNOWN",
+      "time_certification": "UNKNOWN",
+      "first_date": "2024-07-09",
+      "diagnostics": {
+        "daily_trend": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "reasons": [
+            "SCOPE_UNSUPPORTED",
+            "CALENDAR_UNKNOWN",
+            "SOURCE_UNVERIFIED",
+            "AUTHORIZATION_UNKNOWN",
+            "TIME_UNCERTIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED"
+          ],
+          "valid": 550,
+          "expected": null
+        },
+        "weekly_structure": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "reasons": [
+            "SCOPE_UNSUPPORTED",
+            "CALENDAR_UNKNOWN",
+            "SOURCE_UNVERIFIED",
+            "AUTHORIZATION_UNKNOWN",
+            "TIME_UNCERTIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED"
+          ],
+          "valid": 116,
+          "expected": null
+        },
+        "wave": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "reasons": [
+            "SCOPE_UNSUPPORTED",
+            "CALENDAR_UNKNOWN",
+            "SOURCE_UNVERIFIED",
+            "AUTHORIZATION_UNKNOWN",
+            "TIME_UNCERTIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED"
+          ],
+          "valid": 550,
+          "expected": null
+        },
+        "price_proxy": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "reasons": [
+            "SCOPE_UNSUPPORTED",
+            "CALENDAR_UNKNOWN",
+            "SOURCE_UNVERIFIED",
+            "AUTHORIZATION_UNKNOWN",
+            "TIME_UNCERTIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED"
+          ],
+          "valid": 550,
+          "expected": null
+        },
+        "fear_greed": {
+          "status": "FACTOR_MISSING",
+          "admission": "L1_OBSERVATION",
+          "calculated": false,
+          "reasons": [
+            "SCOPE_UNSUPPORTED",
+            "CALENDAR_UNKNOWN",
+            "FACTOR_MISSING",
+            "FACTOR_MISSING",
+            "SOURCE_UNVERIFIED",
+            "AUTHORIZATION_UNKNOWN",
+            "TIME_UNCERTIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED"
+          ],
+          "valid": 550,
+          "expected": null
+        }
+      }
+    },
+    {
+      "kind": "breadth",
+      "symbol": "market",
+      "requested_date": null,
+      "status": "ENV_BLOCKED",
+      "error_type": "RuntimeError",
+      "worker_result": "公共数据采集失败：{\"error\": \"ReadTimeout\", \"http_trace\": [{\"endpoint\": \"https://legulegu.com/stockdata/market-activity\", \"status\": null, \"payload_sha256\": null, \"error\": null}]}"
+    },
+    {
+      "kind": "cffex",
+      "symbol": "IF",
+      "requested_date": "2026-10-16",
+      "status": "ENV_BLOCKED",
+      "error_type": "RankingTransportError",
+      "worker_result": "transport failure: SSLError"
+    }
+  ]
+}

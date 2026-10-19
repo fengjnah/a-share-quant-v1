@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M3 diagnostic v1 (candidate pending independent review)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "indicator",
+    "schema_version",
+    "definitions_version",
+    "request",
+    "source",
+    "data_latest_date",
+    "times",
+    "coverage",
+    "values",
+    "calculated",
+    "admission",
+    "status",
+    "reasons",
+    "missing_fields",
+    "data_snapshot_id",
+    "time_verification",
+    "allowed_uses"
+  ],
+  "properties": {
+    "indicator": {
+      "enum": [
+        "daily_trend",
+        "weekly_structure",
+        "wave",
+        "price_proxy",
+        "fear_greed",
+        "market_breadth",
+        "cffex_position",
+        "environment"
+      ]
+    },
+    "schema_version": {
+      "const": "m3-core-diagnostic-v1"
+    },
+    "definitions_version": {
+      "const": "m3-core-rules-v1"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "analysis_date",
+        "as_of",
+        "symbol",
+        "instrument_type",
+        "mode"
+      ],
+      "properties": {
+        "analysis_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instrument_type": {
+          "enum": [
+            "INDEX",
+            "STOCK",
+            "ALL_A",
+            "CFFEX"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "research",
+            "strict_backtest",
+            "paper_trade"
+          ]
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "source_version",
+        "lineage_refs",
+        "verification",
+        "research_authorization",
+        "time_verification",
+        "evidence_kind",
+        "latest_source_date",
+        "endpoint"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lineage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "refs"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "UNKNOWN",
+                "VERIFIED",
+                "UNVERIFIED",
+                "UNAVAILABLE"
+              ]
+            },
+            "refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "research_authorization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "refs"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "UNKNOWN",
+                "VERIFIED",
+                "UNVERIFIED",
+                "UNAVAILABLE"
+              ]
+            },
+            "refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "time_verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "refs"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "UNKNOWN",
+                "VERIFIED",
+                "UNVERIFIED",
+                "UNAVAILABLE"
+              ]
+            },
+            "refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "evidence_kind": {
+          "enum": [
+            "source_observation",
+            "synthetic"
+          ]
+        },
+        "latest_source_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "endpoint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "data_latest_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "times": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_time",
+        "observed_at",
+        "ingested_at",
+        "available_at"
+      ],
+      "properties": {
+        "event_time": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "observed_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "ingested_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "available_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid_samples",
+        "expected_samples",
+        "ratio",
+        "denominator",
+        "denominator_refs",
+        "missing_dates"
+      ],
+      "properties": {
+        "valid_samples": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_samples": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "ratio": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "denominator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "denominator_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "missing_dates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "values": {
+      "type": "object"
+    },
+    "calculated": {
+      "type": "boolean"
+    },
+    "admission": {
+      "enum": [
+        "BLOCKED",
+        "L1_OBSERVATION",
+        "L2_RESEARCH",
+        "L3_STRATEGY"
+      ]
+    },
+    "status": {
+      "enum": [
+        "SOURCE_UNAVAILABLE",
+        "HISTORY_INSUFFICIENT",
+        "FACTOR_MISSING",
+        "STALE",
+        "TIME_UNCERTIFIED",
+        "INVALID_DATA",
+        "EVIDENCE_CONFLICT",
+        "OBSERVATION_ONLY",
+        "RESEARCH_ALLOWED",
+        "STRATEGY_ALLOWED",
+        "BLOCKED"
+      ]
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "detail",
+          "next_action",
+          "blocks"
+        ],
+        "properties": {
+          "code": {
+            "enum": [
+              "SOURCE_UNAVAILABLE",
+              "SOURCE_UNVERIFIED",
+              "AUTHORIZATION_UNKNOWN",
+              "HISTORY_INSUFFICIENT",
+              "FACTOR_MISSING",
+              "STALE",
+              "TIME_UNCERTIFIED",
+              "NOT_VISIBLE_AT_AS_OF",
+              "INVALID_DATA",
+              "CALENDAR_UNKNOWN",
+              "COVERAGE_INCOMPLETE",
+              "UNIVERSE_UNKNOWN",
+              "SCOPE_UNSUPPORTED",
+              "PUBLICATION_UNKNOWN",
+              "SYNTHETIC_NOT_SOURCE_ACCEPTANCE",
+              "EVIDENCE_CONFLICT",
+              "EVIDENCE_MISSING",
+              "SNAPSHOT_MISMATCH",
+              "STRATEGY_EVIDENCE_REQUIRED"
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1
+          },
+          "next_action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "L2",
+                "L3"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "data_snapshot_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "time_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "refs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "UNKNOWN",
+            "VERIFIED",
+            "UNVERIFIED",
+            "UNAVAILABLE"
+          ]
+        },
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "allowed_uses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation",
+        "research",
+        "strategy",
+        "live_trading"
+      ],
+      "properties": {
+        "observation": {
+          "type": "boolean"
+        },
+        "research": {
+          "type": "boolean"
+        },
+        "strategy": {
+          "type": "boolean"
+        },
+        "live_trading": {
+          "const": false
+        }
+      }
+    }
+  }
+}

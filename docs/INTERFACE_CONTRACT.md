@@ -1,5 +1,7 @@
 # 模块接口契约
 
+M3 新增纯计算诊断候选接口见 [M3_CORE_CONTRACT](M3_CORE_CONTRACT.md)，序列化版本 `m3-core-diagnostic-v1`。独立 H 审查通过前保持高风险合并和页面改造准入门禁；不改变下述既有端口和时间语义。
+
 ## 共同约定
 
 所有业务模块通过领域对象和端口交互，不直接调用第三方 SDK 或拼接 SQLite SQL。所有读取入口必须显式接收：`as_of`、市场/标的范围、`mode`（`research`、`strict_backtest` 或 `paper_trade`）和可选 `data_snapshot_id`。所有写入入口必须接收 `run_id`、来源元数据与校验结果。
