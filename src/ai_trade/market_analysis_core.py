@@ -3,10 +3,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import math
+from numbers import Real
 
 import pandas as pd
 
-from ai_trade.data_access.validation import iso_date, timestamp
+from ai_trade.data_access.validation import iso_date, text_field, timestamp
 from ai_trade.market_analysis import WEIGHTS, emotion, fear_greed, member_position, wave_scenarios
 from ai_trade.market_analysis_contract import (
     Admission, CalendarEvidence, Coverage, Diagnostic, Reason, ReasonCode as Code,
@@ -95,11 +96,30 @@ def _prepare(frame, request, source, calendar=None, *, prices=True):
             ctx.add(Code.NOT_VISIBLE, "No input version visible at as_of", "Use an actually visible snapshot or later as_of")
             return ctx
         f = pd.DataFrame(visible).sort_values("trade_date").reset_index(drop=True)
-        if f.trade_date.duplicated().any() or f.source.nunique() != 1 or f.source.iloc[0] != source.source:
-            raise ValueError("Duplicate date or mixed/mismatched source; select one visible version first")
+        if f.trade_date.duplicated().any():
+            raise ValueError("Duplicate date; select one visible version first")
+        if "quality_status" not in f:
+            ctx.missing.add("quality_status")
+            ctx.add(Code.EVIDENCE_MISSING, "quality_status absent for the visible input series",
+                    "Supply the actual per-record quality decision; a receipt cannot imply accepted")
+        for row in f.to_dict("records"):
+            location = f"trade_date={row['trade_date']} symbol={request.symbol}"
+            identities = {"source": source.source}
+            if prices or "symbol" in row:
+                identities["symbol"] = request.symbol
+            for key, expected in identities.items():
+                value = text_field(row[key], f"{key} at {location}")
+                if value != expected:
+                    raise ValueError(f"{key} at {location}: does not match the declared identity")
+            if "quality_status" in row:
+                quality = row["quality_status"]
+                if quality is None or quality is pd.NA or isinstance(quality, float) and math.isnan(quality):
+                    ctx.missing.add("quality_status")
+                    ctx.add(Code.EVIDENCE_MISSING, f"quality_status UNKNOWN at {location}",
+                            "Supply the actual accepted quality decision; never fill it from a receipt")
+                elif not isinstance(quality, str) or quality != "accepted":
+                    raise ValueError(f"quality_status at {location}: explicit accepted required; rejected/isolated/invalid state")
         if prices:
-            if f.symbol.nunique() != 1 or f.symbol.iloc[0] != request.symbol:
-                raise ValueError("Mixed/mismatched instrument identity")
             for row in f.to_dict("records"):
                 for k in ("open", "high", "low", "close"):
                     v = row[k]
@@ -154,7 +174,8 @@ def _finish(indicator, ctx, values, calculated, *, minimum=None, coverage=None):
                 (Code.HISTORY_INSUFFICIENT, Status.HISTORY_INSUFFICIENT), (Code.FACTOR_MISSING, Status.FACTOR_MISSING),
                 (Code.EVIDENCE_CONFLICT, Status.EVIDENCE_CONFLICT), (Code.TIME_UNCERTIFIED, Status.TIME_UNCERTIFIED))
     status = next((s for c, s in priority if any(r.code is c for r in reasons)),
-                  Status.RESEARCH_ALLOWED if research else Status.OBSERVATION_ONLY if has_observation else Status.BLOCKED)
+                  Status.RESEARCH_ALLOWED if research else Status.BLOCKED if admission is Admission.BLOCKED
+                  else Status.OBSERVATION_ONLY if has_observation else Status.BLOCKED)
     return Diagnostic(indicator, request, source, ctx.frame.trade_date.max() if has_observation else None,
                       dict(ctx.times), cov, clean(values), bool(calculated), admission, status,
                       tuple(reasons), tuple(sorted(ctx.missing)))
@@ -282,6 +303,8 @@ def fear_greed_diagnostic(frame, *, request: Request, source: SourceEvidence, ca
         market_request = Request(request.analysis_date, request.as_of, "ALL_A", "ALL_A", request.mode)
         market_diag = breadth_diagnostic(market_frame, request=market_request, source=market_source,
                                          calendar=calendar, universe_receipt=universe_receipt)
+        ctx.reasons.extend(r for r in market_diag.reasons if r.code is not Code.STRATEGY_GATE)
+        ctx.missing.update(market_diag.missing_fields)
         if market_diag.values.get("all_a_scope_verified"):
             market_ctx = _prepare(market_frame, market_request, market_source, calendar, prices=False)
             breadth = market_ctx.frame
@@ -290,12 +313,19 @@ def fear_greed_diagnostic(frame, *, request: Request, source: SourceEvidence, ca
                                   if ctx.times[key] is not None and market_ctx.times[key] is not None else None)
             if "market_amount_cny" in breadth:
                 amounts = breadth.set_index("trade_date").market_amount_cny
-                for amount in amounts.dropna():
-                    if isinstance(amount, bool) or not math.isfinite(amount) or amount < 0:
-                        ctx.add(Code.INVALID_DATA, "Full-A turnover invalid", "Correct real market turnover")
+                for day, amount in amounts.items():
+                    valid = isinstance(amount, Real) and not isinstance(amount, bool)
+                    if valid:
+                        try:
+                            valid = math.isfinite(amount) and amount >= 0
+                        except (OverflowError, TypeError, ValueError):
+                            valid = False
+                    if not valid:
+                        ctx.add(Code.INVALID_DATA,
+                                f"market_amount_cny at trade_date={day} symbol=ALL_A: finite nonnegative real number required; missing/bool/string is invalid",
+                                "Correct this dated source sample; do not coerce, drop, or replace it with zero")
                 f = f.copy()
                 f["amount_cny"] = f.trade_date.map(amounts)
-            ctx.reasons.extend(r for r in market_diag.reasons if r.code is not Code.STRATEGY_GATE)
         else:
             ctx.add(Code.UNIVERSE_UNKNOWN, "Market factors lack a certified all-A denominator", "Do not use index/stock turnover as all-A turnover")
     if any(r.code is Code.INVALID_DATA for r in ctx.reasons):
@@ -321,7 +351,8 @@ def fear_greed_diagnostic(frame, *, request: Request, source: SourceEvidence, ca
 
 
 def cffex_diagnostic(records, *, request: Request, source: SourceEvidence, member: str,
-                     scope, calendar=None, scope_receipt=None, publication_receipt=None):
+                      scope, calendar=None, scope_receipt=None, publication_receipt=None,
+                      quality_status: str | None = None):
     """Single contract/member/scope only; reuse the reviewed revision/time port.
 
     Raw arithmetic can be L1; an uncertified publication/scope/calendar never
@@ -348,6 +379,8 @@ def cffex_diagnostic(records, *, request: Request, source: SourceEvidence, membe
             if record.source_version != source.source_version or record.source_version not in source.lineage_refs:
                 raise ValueError("CFFEX version not bound to source evidence")
             f = pd.DataFrame([{k: getattr(record, k) for k in (*TIME_FIELDS, "trade_date", "source")}])
+            # The ranking record has no quality field. Missing caller quality stays UNKNOWN.
+            f["quality_status"] = pd.Series([quality_status], dtype=object)
             ctx = _prepare(f, request, source, calendar, prices=False)
             if record.evidence_kind == "synthetic" and source.evidence_kind != "synthetic":
                 ctx.add(Code.SYNTHETIC, "Adapter marks synthetic data/calendar", "Never relabel fixture evidence as source acceptance")
