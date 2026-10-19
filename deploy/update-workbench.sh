@@ -29,15 +29,22 @@ previous=$(readlink -f "$CURRENT_LINK")
 [[ $(stat -c %a "$AUTH_CURL_CONFIG") == 600 && $(stat -c %u "$AUTH_CURL_CONFIG") == "$UID" ]] || die 'curl authentication configuration must be private'
 [[ $HTTPS_URL == https://* ]] || die 'A certificate-verified HTTPS URL is required'
 [[ $LOCAL_HEALTH_URL == http://127.0.0.1:*/*/_stcore/health ]] || die 'Local health must use loopback and the configured base path'
-"$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] == (3,12), "Deployment lock is frozen from locally verified Python 3.12; other versions require validation"'
-available=$(awk '/MemAvailable:/{print $2}' /proc/meminfo)
-[[ $available -ge 524288 ]] || die 'Less than 512 MiB available RAM; stop before dependency installation'
+"$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] in {(3,12),(3,14)}, "Only Python 3.12/3.14 deployment environments have been verified"'
 [[ $(df -Pk "$releases" | awk 'NR==2{print $4}') -ge 1048576 ]] || die 'Less than 1 GiB free release space'
 systemctl is-enabled --quiet "$SERVICE" || die 'Existing service must have automatic startup configured'
+systemctl is-active --quiet "$SERVICE" || die 'Start from a working service; investigate a failed service before updating'
 unit=$(systemctl cat "$SERVICE")
 [[ $unit == *"$CURRENT_LINK/.venv/bin/python"* && $unit == *'127.0.0.1'* && $unit == *"AI_TRADE_WORKBENCH_ROOT=$data"* && $unit == *"PYTHONPATH=$CURRENT_LINK/src"* && $unit == *'AI_TRADE_READ_ONLY=1'* ]] || die 'Service paths, loopback binding, persistent store or read-only gate differ'
+memory_max=$(systemctl show "$SERVICE" --property MemoryMax --value)
+[[ $memory_max =~ ^[0-9]+$ && $memory_max -gt 0 && $memory_max -le 251658240 ]] || die 'A maximum 240 MiB service memory limit is required on the shared micro instance'
+[[ $(systemctl show "$SERVICE" --property CPUQuotaPerSecUSec --value) == 200ms ]] || die 'A 20% CPU quota is required to limit display load on t3.micro'
+tls_args=()
+if [[ -n ${TLS_RESOLVE:-} ]]; then
+    [[ $TLS_RESOLVE =~ ^[a-zA-Z0-9._-]+:443:127\.0\.0\.1$ ]] || die 'TLS_RESOLVE must point only to local HTTPS; never bypass certificate checks'
+    tls_args=(--resolve "$TLS_RESOLVE" --noproxy '*')
+fi
 sudo -n nginx -t
-[[ $(curl --silent --show-error --max-time 10 --output /dev/null --write-out '%{http_code}' "$HTTPS_URL/_stcore/health") == 401 ]] || die 'HTTPS route must reject unauthenticated access with 401'
+[[ $(curl "${tls_args[@]}" --silent --show-error --max-time 10 --output /dev/null --write-out '%{http_code}' "$HTTPS_URL/_stcore/health") == 401 ]] || die 'HTTPS route must reject unauthenticated access with 401'
 git -C "$repo" fetch --no-tags origin main
 case $(git -C "$repo" remote get-url origin) in
     https://github.com/fengjnah/a-share-quant-v1.git|git@github.com:fengjnah/a-share-quant-v1.git) ;;
@@ -49,26 +56,11 @@ release="$releases/$sha"
 mkdir "$release"
 git -C "$repo" archive "$sha" | tar -x -C "$release"
 printf '%s\n' "$sha" > "$release/DEPLOYED_SHA"
-"$PYTHON_BIN" -m venv "$release/.venv"
-"$release/.venv/bin/python" -m pip install --requirement "$release/deploy/requirements.lock"
-"$release/.venv/bin/python" -m pip check
-export PYTHONPATH="$release/src"
-(cd "$release" && .venv/bin/python -m pytest -q tests/unit/test_market_analysis.py tests/unit/test_demo_data.py)
-# SQLite contents and raw observation files remain in DATA_DIR; code switching never copies/deletes data.
-inventory() {
-    "$release/.venv/bin/python" - "$data" <<'PY'
-import hashlib,json,pathlib,sqlite3,sys
-p=pathlib.Path(sys.argv[1]); counts={}
-db=p/'workbench.sqlite3'
-if db.exists():
-    with sqlite3.connect(db.as_uri()+'?mode=ro',uri=True) as c:
-        for (name,) in c.execute("select name from sqlite_master where type='table' and name not like 'sqlite_%'"):
-            counts[name]=c.execute('select count(*) from "'+name.replace('"','""')+'"').fetchone()[0]
-print(json.dumps({'counts':counts,'observations':{f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in (p/'m3-observations').glob('*.json')}},sort_keys=True))
-PY
-}
-before=$(inventory)
 switched=0
+stopped=0
+local_healthy() {
+    systemctl is-active --quiet "$SERVICE" && [[ $(curl --silent --show-error --fail --max-time 4 "$LOCAL_HEALTH_URL") == ok ]]
+}
 rollback() {
     status=$?
     trap - EXIT
@@ -79,17 +71,44 @@ rollback() {
             printf 'Rollback link restored, but service restart failed; operator attention required\n' >&2
         fi
         printf 'Deployment failed; previous release link restored: %s; inspect service health\n' "$previous" >&2
+    elif [[ $status != 0 && $stopped == 1 ]]; then
+        sudo -n systemctl restart "$SERVICE" || printf 'Previous service restart failed; operator attention required\n' >&2
+    fi
+    if [[ $status != 0 && $stopped == 1 ]]; then
+        restored=0
+        for attempt in {1..15}; do
+            if local_healthy; then restored=1; break; fi
+            sleep 2
+        done
+        [[ $restored == 1 ]] && printf 'Previous service loopback health restored\n' >&2 || printf 'Rollback health FAILED; operator attention required\n' >&2
     fi
     exit "$status"
 }
 trap rollback EXIT
+# Personal micro instance: briefly stop ONLY this managed service to release RAM during installation.
+# Any failure from here restarts the previous release. Java/Nginx are left running.
+sudo -n systemctl stop "$SERVICE"
+stopped=1
+available=$(awk '/MemAvailable:/{print $2}' /proc/meminfo)
+[[ $available -ge 262144 ]] || die 'Less than 256 MiB available RAM after stopping the managed workbench'
+"$PYTHON_BIN" -m venv --without-pip "$release/.venv"
+# Reuse the existing verified pip as installer; Ubuntu may not ship ensurepip.
+"$previous/.venv/bin/python" -m pip --python "$release/.venv/bin/python" install --no-cache-dir --only-binary=:all: --no-binary=jsonpath --requirement "$release/deploy/requirements.lock"
+"$release/.venv/bin/python" -m pip check
+export PYTHONPATH="$release/src"
+(cd "$release" && .venv/bin/python -m pytest -q tests/unit/test_market_analysis.py tests/unit/test_demo_data.py tests/unit/test_workbench_store.py)
+# Refuse silent migrations; make an online SQLite backup including committed WAL pages.
+store() { "$release/.venv/bin/python" -m ai_trade.workbench_store "$1" "$data"; }
+store check-schema
+store backup
+before=$(store inventory)
 ln -s "$release" "$CURRENT_LINK.next"
 mv -Tf "$CURRENT_LINK.next" "$CURRENT_LINK"
 switched=1
 sudo -n systemctl restart "$SERVICE"
 healthy=0
 for attempt in {1..15}; do
-    if systemctl is-active --quiet "$SERVICE" && [[ $(curl --silent --show-error --fail --max-time 4 "$LOCAL_HEALTH_URL") == ok ]] && [[ $(curl --config "$AUTH_CURL_CONFIG" --silent --show-error --fail --max-time 4 "$HTTPS_URL/_stcore/health") == ok ]]; then
+    if local_healthy && [[ $(curl "${tls_args[@]}" --config "$AUTH_CURL_CONFIG" --silent --show-error --fail --max-time 4 "$HTTPS_URL/_stcore/health") == ok ]]; then
         healthy=1
         break
     fi
@@ -98,7 +117,9 @@ done
 [[ $healthy == 1 ]] || die 'Health check failed; rollback required'
 pid=$(systemctl show "$SERVICE" --property MainPID --value)
 [[ $(readlink -f "/proc/$pid/cwd") == "$release" ]] || die 'Healthy process is running a different release'
-after=$(inventory)
+after=$(store inventory)
 [[ $before == "$after" ]] || die 'Persistent data inventory changed during read-only restart'
 switched=0
-printf 'Deployment healthy: %s; persistent data inventory preserved\n' "$sha"
+stopped=0
+printf 'Deployment healthy: %s; persistent data content preserved\n' "$sha"
+[[ -z ${TLS_RESOLVE:-} ]] || printf 'HTTPS checked on loopback only; public/mobile ingress remains UNVERIFIED\n'
