@@ -11,8 +11,8 @@ from pathlib import Path
 import streamlit as st
 
 st.set_page_config(page_title="A股量化系统 V1.3 · 行情与项目进度", page_icon="📈", layout="wide")
-workspace = st.sidebar.radio("工作区", ["行情工作台", "交易分析", "M3 市场分析", "项目进度"],
-                             index={"progress": 3, "analysis": 1, "market": 2}.get(st.query_params.get("view"), 0))
+workspace = st.sidebar.radio("工作区", ["行情工作台", "交易分析", "M3 市场分析", "M4 每日选股", "项目进度"],
+                             index={"progress": 4, "analysis": 1, "market": 2, "candidates": 3}.get(st.query_params.get("view"), 0))
 if workspace == "项目进度":
     from ai_trade.project_progress.page import render
     render()
@@ -101,6 +101,11 @@ with st.sidebar:
         for key in ("last_result", "display_request", "display_source", "operation_error", "m2spec"):
             st.session_state.pop(key, None)
         st.rerun()
+
+if workspace == "M4 每日选股":
+    from ai_trade.daily_candidates_page import render
+    render(db)
+    st.stop()
 
 if workspace == "M3 市场分析":
     from ai_trade.market_analysis_page import render
