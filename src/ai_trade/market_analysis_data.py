@@ -18,6 +18,11 @@ from ai_trade.market_data.cffex_rankings_models import CffexRankingsRequest
 INDEX_SYMBOLS = {"沪深300": "sh000300", "上证指数": "sh000001"}
 INDEX_SOURCE = "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily"
 BREADTH_SOURCE = "AKShare 1.19.1 / 乐咕乐股 stock_market_activity_legu"
+PUBLIC_ENDPOINTS = {
+    "index": "https://finance.sina.com.cn/realstock/company/{symbol}/hisdata/klc_kl.js",
+    "breadth": "https://legulegu.com/stockdata/market-activity",
+}
+_HTTP_TRACE = []  # One private worker, at most one request. No response bodies/headers.
 
 
 def now() -> str:
@@ -56,7 +61,7 @@ def snapshots(root: Path, *, kind: str, symbol: str, analysis_date: str) -> list
 
 def collect_cffex(root: Path, variety: str, trade_date: str) -> dict:
     request = CffexRankingsRequest("CFFEX", variety, trade_date)
-    client = CffexRankingsClient(timeout=8)
+    client = CffexRankingsClient(timeout=5)
     payload = client.fetch(request)
     format_name, rows = parse(payload, request)
     data = dict(kind="cffex", symbol=variety, trade_date=trade_date, observed_at=now(),
@@ -64,6 +69,7 @@ def collect_cffex(root: Path, variety: str, trade_date: str) -> dict:
                 raw_csv_hex=payload.hex(), format=format_name,
                 contracts=sorted({r.contract for r in rows}), rows=len(rows),
                 available_at=None, status="原始榜单观察；权威CFFEX日历未接入", authorization="对外展示/再分发授权待确认")
+    data["ingested_at"] = now()  # Actual local ingestion, never historical publication.
     save_snapshot(root, data)
     return data
 
@@ -86,13 +92,16 @@ def collect_public(root: Path, kind: str, symbol: str) -> dict:
     if proc.returncode:
         raise RuntimeError("公共数据采集失败："+proc.stdout.strip()[-250:])
     item = json.loads(proc.stdout)
+    item["ingested_at"] = now()
     save_snapshot(root, item)
     return item
 
 
 def price_frame(item: dict) -> pd.DataFrame:
     frame = pd.DataFrame(item["prices"])
-    for name in ("symbol", "source", "observed_at"):
+    for name in ("symbol", "source", "observed_at", "ingested_at", "available_at"):
+        if name not in item:  # Older observations remain UNKNOWN.
+            continue
         frame[name] = item[name]
     return frame
 
@@ -115,16 +124,32 @@ def _worker(kind: str, symbol: str) -> dict:
         raise ValueError("需要项目固定AKShare 1.19.1")
     import akshare as ak
     original = requests.get
+    endpoint = PUBLIC_ENDPOINTS.get(kind, "").format(symbol=symbol)
+    _HTTP_TRACE.clear()
 
     def bounded_get(url, **kwargs):
-        if not url.startswith("https://"):
-            raise ValueError("仅允许HTTPS")
-        kwargs.update(timeout=(5, 8), allow_redirects=False, verify=True)
+        if url != endpoint or _HTTP_TRACE:
+            raise ValueError("仅允许一个已核验端点的一次请求")
+        trace = dict(endpoint=endpoint, status=None, payload_sha256=None, error=None)
+        _HTTP_TRACE.append(trace)
+        kwargs.update(timeout=(5, 8), allow_redirects=False, verify=True, stream=True)
         response = original(url, **kwargs)
-        response.raise_for_status()
-        if response.is_redirect or len(response.content) > 8_000_000:
-            raise ValueError("重定向或响应过大")
-        response.encoding = response.apparent_encoding
+        try:
+            trace["status"] = response.status_code
+            response.raise_for_status()
+            if response.is_redirect:
+                raise ValueError("不允许重定向")
+            content = bytearray()
+            for chunk in response.iter_content(65536):
+                content.extend(chunk)
+                if len(content) > 8_000_000:
+                    raise ValueError("响应过大")
+            response._content = bytes(content)
+            response._content_consumed = True
+            trace["payload_sha256"] = hashlib.sha256(content).hexdigest()
+            response.encoding = response.apparent_encoding
+        finally:
+            response.close()
         return response
 
     with patch.object(requests, "get", bounded_get):
@@ -139,7 +164,7 @@ def _worker(kind: str, symbol: str) -> dict:
             prices = frame[["trade_date", "open", "high", "low", "close"]].to_dict("records")
             return dict(kind="index", symbol=symbol, source=INDEX_SOURCE, observed_at=now(),
                         trade_date=frame.trade_date.iloc[-1], prices=prices, status="真实观察",
-                        available_at=None, authorization="对外展示/再分发授权待确认")
+                        available_at=None, http_trace=list(_HTTP_TRACE), authorization="对外展示/再分发授权待确认")
         if kind == "breadth":
             frame = ak.stock_market_activity_legu()
             if frame.item.duplicated().any():
@@ -154,6 +179,7 @@ def _worker(kind: str, symbol: str) -> dict:
             date.fromisoformat(day)
             return dict(kind="breadth", symbol="market", source=BREADTH_SOURCE, observed_at=now(),
                         trade_date=day, breadth=values, status="真实观察", available_at=None,
+                        http_trace=list(_HTTP_TRACE),
                         authorization="对外展示/再分发授权待确认")
     raise ValueError("不支持的采集")
 
@@ -163,5 +189,5 @@ if __name__ == "__main__":
         print(json.dumps(_worker(sys.argv[1], sys.argv[2]), ensure_ascii=False, allow_nan=False))
     except Exception as exc:
         # Do not expose response bodies, proxies, credentials or exception URLs.
-        print(json.dumps({"error": type(exc).__name__}, ensure_ascii=False))
+        print(json.dumps({"error": type(exc).__name__, "http_trace": _HTTP_TRACE}, ensure_ascii=False))
         sys.exit(1)
