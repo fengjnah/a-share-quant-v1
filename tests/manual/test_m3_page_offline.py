@@ -30,8 +30,9 @@ with patch.object(market_analysis_data, 'collect_cffex', failed):
     app.run(timeout=15)
     assert not app.exception
     assert not calls
-    assert any(m.value == '数据不足' for m in app.metric)
-    assert any('没有已保存榜单' in i.value for i in app.info)
+    assert any(m.value == 'UNKNOWN' for m in app.metric)
+    assert any('SOURCE_UNAVAILABLE' in m.value for m in app.markdown)
+    assert any('Issue #37' in w.value for w in app.warning)
     next(b for b in app.button if b.label == '查询该日真实CFFEX榜单').click().run()
     assert not app.exception and len(calls) == 1
     assert any('接口失败' in e.value for e in app.error)
@@ -51,7 +52,7 @@ print(json.dumps({'calls': len(calls), 'navigation': 3, 'exceptions': len(app.ex
     assert json.loads(result.stdout) == {"calls": 1, "navigation": 3, "exceptions": 0}
 
 
-def test_m3_synthetic_rankings_and_price_charts_use_the_saved_observations():
+def test_m3_raw_rankings_cannot_bypass_core_and_price_proxy_stays_separate():
     script = r'''
 import os,sys,json,tempfile,hashlib,socket
 from pathlib import Path
@@ -79,22 +80,30 @@ with tempfile.TemporaryDirectory(prefix='a-share-quant-demo-') as folder:
             contracts=['IF2610','IF2611','IF2612','IF2703'],raw_csv_hex=payload.hex(),
             payload_sha256=hashlib.sha256(payload).hexdigest(),available_at=None))
     f=prices(200)
+    f['source']='synthetic:offline'
+    f['symbol']='sh000300'
     save_snapshot(root,dict(kind='index',symbol='sh000300',trade_date=f.trade_date.max(),
         observed_at=ASOF,source='synthetic:offline',prices=f.to_dict('records')))
     app=AppTest.from_file('src/ai_trade/demo_app.py')
     app.query_params['view']='market'
     app.run(timeout=15)
     assert not app.exception
+    cf = next(s for s in app.selectbox if s.label == 'CFFEX 本地版本')
+    assert cf.value is None  # Multiple saved versions require a choice.
+    cf.set_value(cf.options[-1]).run()
     next(s for s in app.selectbox if s.label.startswith('合约范围')).set_value('IF2611').run()
     assert not app.exception
-    assert next(m.value for m in app.metric if m.label=='净持仓')=='1,000'
-    assert len(app.get('vega_lite_chart'))>=5
+    assert not any(m.label in ('净持仓','净变化（榜单公布变化之差）') for m in app.metric)
+    assert next(m.value for m in app.metric if m.label=='完整六因子分数')=='UNKNOWN'
+    assert next(m.value for m in app.metric if m.label=='独立价格代理分数')!='UNKNOWN'
+    assert any('CffexRankingsRecord' in str(t.value) for t in app.dataframe)
+    assert len(app.get('vega_lite_chart'))>=2
     app.run()
     assert not app.exception
     assert len(list((root/'m3-observations').glob('*.json')))==3
-print(json.dumps({'charts':'rendered','net':1000,'observations':3}))
+print(json.dumps({'charts':'rendered','net':'BLOCKED','observations':3}))
 '''
     result = subprocess.run([sys.executable, "-c", script], cwd=Path(__file__).resolve().parents[2],
                             capture_output=True, text=True, timeout=60)
     assert result.returncode == 0, result.stderr
-    assert json.loads(result.stdout)["net"] == 1000
+    assert json.loads(result.stdout)["net"] == 'BLOCKED'
