@@ -43,9 +43,17 @@ with tempfile.TemporaryDirectory(prefix='a-share-quant-demo-') as folder:
         assert not app.exception
         assert next(m.value for m in app.metric if m.label=='合格候选')=='0'
         assert any('今日无合格候选' in w.value for w in app.warning)
-        table=app.dataframe[0].value
+        assert next(m.value for m in app.metric if m.label=='新增多头仓位')=='未获准'
+        assert any('市场状态未完成计算' in w.value for w in app.warning)
+        next(s for s in app.selectbox if s.label=='M4 页面').set_value('六阶段选股监控').run(timeout=20)
+        table=next(d.value for d in app.dataframe if '技术研究评分' in d.value.columns)
+        assert table.iloc[0]['技术研究评分']==40 and table.iloc[0]['当前阶段']=='阶段待识别'
+        assert table.iloc[0]['阶段进入日期'] is None and table.iloc[0]['综合评分'] is None
+        next(s for s in app.selectbox if s.label=='M4 页面').set_value('股票详情').run(timeout=20)
+        assert not app.exception
         detail=app.dataframe[-1].value
-        assert table.iloc[0]['研究评分']==40 and table.iloc[0]['收盘价']==detail.close.iloc[-1]==164
+        assert detail.close.iloc[-1]==164
+        assert next(m.value for m in app.metric if m.label=='技术研究评分')=='40'
         assert len(app.get('vega_lite_chart'))==3
         first=app.session_state['m4_batch'].evaluations[0]
         assert not first.research_match
@@ -66,6 +74,19 @@ with tempfile.TemporaryDirectory(prefix='a-share-quant-demo-') as folder:
         assert app.session_state['m4_batch'].evaluations[0].analysis is None
         assert any('数据不足或校验失败' in e.value for e in app.error)
         assert not app.get('vega_lite_chart') and send.call_count==0
+        next(s for s in app.selectbox if s.label=='M4 页面').set_value('指定股票分析').run(timeout=20)
+        next(t for t in app.text_area if t.label=='自选股票（支持多个）').set_value('600000,600001,invalid')
+        next(b for b in app.button if b.label=='分析指定股票').click().run(timeout=20)
+        assert not app.exception
+        watch=app.session_state['m4_watch_batch']
+        assert len(watch.evaluations)==3 and not watch.candidates
+        assert next(r for r in watch.evaluations if r.symbol=='600000.SH').analysis is not None
+        assert next(r for r in watch.evaluations if r.symbol=='600001.SH').analysis is None
+        for name in ['每日精选','风险与持仓监控','每日交易总览']:
+            next(s for s in app.selectbox if s.label=='M4 页面').set_value(name).run(timeout=20)
+            assert not app.exception
+        assert next(m.value for m in app.metric if m.label=='新增多头仓位')=='未获准'
+        assert send.call_count==0
     with db.connection() as c:
         assert c.execute('select count(*) from ingestion_runs').fetchone()[0]==1
 print(json.dumps({'automatic_fetches':0,'candidate_count':0,'mode_difference':True,'shared_snapshot':True}))

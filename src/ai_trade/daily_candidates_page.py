@@ -1,4 +1,4 @@
-"""M4 daily workbench. Tables and details share one bounded analysis snapshot."""
+"""Mobile-first trading workflow over existing M4/M2 results; no new signals."""
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -6,19 +6,21 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 
-from ai_trade.daily_candidates import LIMITATIONS, STRATEGIES, score_rows, table_row
+from ai_trade.daily_candidates import CandidateBatch, LIMITATIONS, STRATEGIES, table_row
 from ai_trade.daily_candidates_data import load_batch, local_coverage
+from ai_trade.daily_candidates_details import render_detail, risk_card
+from ai_trade.daily_candidates_view import VIEWS, STAGES, data_status, load_watch_batch, monitor_row, risk_row, symbols_input
 from ai_trade.demo_data import SOURCES
-from ai_trade.market_state import MARKET_MODES
+from ai_trade.market_state import MARKET_MODES, MarketState
 from ai_trade.storage.db import Database, DatabaseConfig
-from ai_trade.trading_analysis import FORMULAS, risk_reference
+from ai_trade.trading_analysis import risk_reference
 
 
 @st.cache_data(ttl=300, max_entries=16, show_spinner=False)
-def _cached_batch(path, journal_mode, fingerprint, source, analysis_date, as_of, strategy, market_mode, symbol, equity):
+def _cached_batch(path, journal_mode, fingerprint, source, analysis_date, as_of, strategy, market_mode, symbol, equity, watch=False):
     db = Database(DatabaseConfig(Path(path), environment="test", journal_mode=journal_mode))
-    return load_batch(db, source=source, analysis_date=analysis_date, as_of=as_of,
-                      strategy=strategy, market_mode=market_mode, symbol=symbol, equity=equity)
+    spec = dict(source=source, analysis_date=analysis_date, as_of=as_of, strategy=strategy, market_mode=market_mode, equity=equity)
+    return load_watch_batch(db, symbols=symbols_input(symbol), **spec) if watch else load_batch(db, **spec)
 
 
 def _fingerprint(path):
@@ -26,42 +28,176 @@ def _fingerprint(path):
                  for p in (path, Path(str(path)+"-wal")))
 
 
+def _open_detail(code):
+    st.session_state.m4_view = "股票详情"
+    st.session_state.m4_focus = code
+
+
+def _open_watch():
+    st.session_state.m4_view = "指定股票分析"
+
+
+def _details_picker(rows, key):
+    if not rows:
+        st.info("当前没有股票结果；仍可在指定股票分析中输入代码查看缺失原因。")
+        return
+    selected = st.selectbox("选择股票", [r.symbol for r in rows], key=key)
+    st.button("打开股票详情", on_click=_open_detail, args=(selected,), key=key+"-open")
+
+
+def _zero(batch):
+    st.warning("今日无合格候选（0只）。")
+    st.write("市场闸门：", "；".join(batch.market.reasons))
+    st.write("形态筛选：", f"{sum(r.research_match for r in batch.evaluations)}只满足当前模式研究条件；不代表完成六阶段或允许入场。")
+    st.write("数据限制：历史ST/可交易状态、周线完整性、行业/基本面未认证；评分未知不按0补齐。")
+
+
+def _overview(batch, status):
+    if not batch.market.validated:
+        st.warning("市场状态未完成计算；正式开仓许可未提供，不允许新增多头。")
+    else:
+        st.info("显示后端研究市场状态；研究过滤结果不等于真实账户开仓许可。")
+    st.caption("市场来源："+batch.market.source)
+    st.write("判断理由：", "；".join(batch.market.reasons))
+    st.dataframe(pd.DataFrame([{"市场字段": name, "实际结果": "尚未提供正式结果"} for name in
+                  ("市场评分", "全A等权趋势", "上涨/下跌家数", "市场广度", "全市场成交额变化")]),
+                 hide_index=True, use_container_width=True)
+    st.caption("本地最多20只的样本不能代表全A；不把M3未获准的研究分数升级为市场闸门。")
+    st.subheader("交易阶段与重点观察")
+    st.write("低位启动 → 天量换手 → 缩量横盘 → 二次放量 → 突破确认 → MA5持仓")
+    st.info(f"阶段待识别 {len(batch.evaluations)} 只。M2尚未输出S0–S6顺序状态与B点，独立形态仅供观察。")
+    if not batch.candidates:
+        _zero(batch)
+    else:
+        _picks(batch)
+    st.subheader("风险提醒")
+    st.write("1%为单笔账户风险上限；无权益不填金额，无执行条件不填股数。市场闸门关闭仍保留全部观察与止损参考。")
+    _details_picker(batch.evaluations, "m4-home-stock")
+
+
+def _monitor(batch):
+    st.subheader("六阶段选股监控")
+    stage = st.selectbox("交易阶段", ("全部", "阶段待识别")+tuple(x[0]+" "+x[1] for x in STAGES))
+    st.selectbox("行业筛选", ("全部", "未知（历史行业未接入）"))
+    search = st.text_input("搜索股票代码", "").strip().upper()
+    sort = st.selectbox("排序依据", ("技术研究评分降序（综合评分未提供）", "股票代码"))
+    with st.expander("S0–S6能力与下一阶段条件"):
+        st.dataframe(pd.DataFrame([{"阶段": code+" "+name, "计算状态": "后端尚未提供正式阶段", "待满足接口": need}
+                                  for code, name, need in STAGES]), hide_index=True, use_container_width=True)
+    rows = [r for r in batch.evaluations if search in r.symbol]
+    if stage not in ("全部", "阶段待识别"):
+        rows = []
+        st.info("该阶段暂无正式后端输出；不将独立突破、缩量回调或日线趋势推断成阶段。")
+    if sort == "股票代码":
+        rows = sorted(rows, key=lambda r:r.symbol)
+    if rows:
+        st.dataframe(pd.DataFrame([monitor_row(r) for r in rows]), hide_index=True, use_container_width=True)
+    else:
+        st.info("该筛选范围没有已确认阶段股票。")
+    st.caption("量比相对前5条均量，价格单位元；整理区间/进入日期/持续交易日数保持未知，不以20条高低点或行情条数替代。")
+    _details_picker(rows, "m4-monitor-stock")
+
+
+def _picks(batch):
+    st.subheader("每日精选 · 最多5只")
+    if not batch.candidates:
+        _zero(batch)
+        return
+    for i, row in enumerate(batch.candidates, 1):
+        with st.container(border=True):
+            st.write(f"{i}. {row.symbol} · {row.name}")
+            st.write("行业：未知；基本面/板块评分：尚未计算；技术研究评分：", row.score)
+            st.write("交易阶段/B点：尚未提供；入场评估：正式执行约束未提供。")
+            st.write("入选研究条件：", "、".join(k for k,v in row.analysis.summary["conditions"].items() if v is True))
+            st.caption("行情日期："+row.analysis.summary["latest_trade_date"])
+            risk_card(row)
+            st.warning("次日跳空、可交易性、涨跌停、停牌及T+1必须重验；研究名单不保证成交。")
+            st.button("查看 "+row.symbol, on_click=_open_detail, args=(row.symbol,), key="pick-"+row.symbol)
+
+
+def _watch(db, batch, source, equity):
+    st.subheader("指定股票分析")
+    raw = st.text_area("自选股票（支持多个）", placeholder="600000, 600378\n000001", key="m4_watch_input")
+    st.caption("临时会话输入，不创建自选服务；最多20个，仅分析已有本地行情，失败代码和未达门槛股票均保留。")
+    if st.button("分析指定股票", type="primary"):
+        st.session_state.pop("m4_watch_batch", None)
+        try:
+            symbols_input(raw)
+            st.session_state.m4_watch_batch = _cached_batch(str(db.config.path), db.config.journal_mode,
+                _fingerprint(db.config.path), source, batch.analysis_date, datetime.now(timezone.utc).isoformat(),
+                batch.strategy, batch.market_mode, raw, equity, True)
+        except Exception as exc:
+            st.error(f"指定股票未完成：{type(exc).__name__}: {exc}")
+    watch = st.session_state.get("m4_watch_batch")
+    if watch is None:
+        st.info("输入代码后查看每只股票的研究条件与排除原因。")
+        return
+    st.caption(f"指定分析快照 {watch.analysis_date} · {watch.strategy} · {watch.as_of}；不并入自动精选。")
+    for row in watch.evaluations:
+        with st.container(border=True):
+            st.write(row.symbol+" · "+row.name)
+            st.write("市值 / ST / 行业 / 成长性：数据不足，相关筛选未执行；不视为正常或通过。")
+            st.write("技术形态：", "满足当前模式研究条件" if row.research_match else "未满足或数据不足")
+            st.write("未通过原因：", "；".join(row.exclusions))
+    _details_picker(watch.evaluations, "m4-watch-stock")
+
+
+def _risk(batch):
+    st.subheader("风险与持仓监控")
+    st.warning("数据类型：行情派生研究，非真实持仓；当前没有真实账户或模拟成交接口。")
+    st.write("新增多头：未获正式许可；市场状态缺失不解除止损观察，也不把观察股票当作持仓。")
+    if batch.evaluations:
+        st.dataframe(pd.DataFrame([risk_row(r) for r in batch.evaluations]), hide_index=True, use_container_width=True)
+    st.info("MA5位置仅是收盘与均线的比较。连续两个交易日跌破MA5、初始持仓止损及退出/失效事件未由后端提供，不自行计数或制造退出信号。")
+    st.caption("止损距离是当前收盘与当前研究止损之差，不是持仓损益、目标收益或真实账户风险。")
+    _details_picker(batch.evaluations, "m4-risk-stock")
+
+
 def render(db):
-    st.title("M4 每日选股")
-    st.caption("本地真实行情 · 每日最新可用日期 · 最多5只候选 · 研究参考，不自动下单")
-    source_label = st.selectbox("选股行情来源", list(SOURCES), index=1, key="m4_source")
-    source = SOURCES[source_label]
+    st.title("M4 交易监控工作台")
+    st.caption("先看市场许可，再看形态进程与风险 · 本地行情研究，不自动下单")
+    view = st.selectbox("M4 页面", VIEWS, key="m4_view")
     now = datetime.now(timezone.utc).isoformat()
+    today = datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
+    coverage, dates, error = [], [], None
+    with st.expander("筛选与账户设置", expanded=False):
+        source_label = st.selectbox("选股行情来源", list(SOURCES), index=1, key="m4_source")
+        source = SOURCES[source_label]
+        try:
+            coverage, dates = local_coverage(db, source=source, as_of=now)
+        except Exception as exc:
+            error = f"本地股票池读取失败：{type(exc).__name__}: {exc}"
+        with st.form("m4-controls"):
+            analysis_date = st.selectbox("选股分析日期", dates, disabled=not dates,
+                                        help="只列出当前可见的本地行情日期")
+            strategy = st.selectbox("策略模式", STRATEGIES)
+            market_mode = st.selectbox("市场状态过滤模式", MARKET_MODES)
+            pool = st.selectbox("股票池范围", ("本地同源A股（最多20只）", "指定股票"))
+            symbol = st.text_input("指定股票代码", "", placeholder="支持多个代码，以逗号或空格分隔")
+            equity_text = st.text_input("账户权益（元，可留空）", "")
+            st.caption("严格模式=日线趋势且任一M2独立形态，并非穿三线专用模式；趋势确认模式只要求日线趋势。共同门禁不放宽。")
+            submitted = st.form_submit_button("生成每日候选", type="primary")
+        with st.expander("实际执行的筛选与本地覆盖"):
+            st.dataframe(pd.DataFrame(LIMITATIONS, columns=["筛选条件", "执行状态", "依据/限制"]), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(coverage), hide_index=True, use_container_width=True)
+    identity = (str(db.config.path), source, today)
+    equity = None
     try:
-        coverage, dates = local_coverage(db, source=source, as_of=now)
-    except Exception as exc:
-        st.error(f"本地股票池读取失败：{type(exc).__name__}: {exc}")
-        return
-    if not dates:
-        st.info("数据不足：当前来源没有可见的本地行情，今日无合格候选。请在 M1/M2 主动采集真实行情。")
-        return
-    with st.form("m4-controls"):
-        analysis_date = st.selectbox("选股分析日期", dates, help="仅列出本地真实可见行情日期，不把缺失日当休市")
-        left, right = st.columns(2)
-        strategy = left.selectbox("策略模式", STRATEGIES)
-        market_mode = right.selectbox("市场状态过滤模式", MARKET_MODES)
-        pool = st.selectbox("股票池范围", ("本地同源A股（最多20只）", "指定股票"))
-        symbol = st.text_input("指定股票代码", "", placeholder="例如 600000；仅分析已有本地行情")
-        equity_text = st.text_input("账户权益（元，可留空）", "")
-        st.caption("单笔最大风险1%。严格：日线多头＋至少一种M2量价形态；趋势确认：日线多头。所有正式准入门禁保持一致。")
-        submitted = st.form_submit_button("生成每日候选", type="primary")
-    identity = (str(db.config.path), source, datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat())
+        equity = float(equity_text) if equity_text.strip() else None
+        risk_reference(1.0, None, None, equity)
+    except ValueError as exc:
+        if submitted:
+            st.error(str(exc))
+            return
     if submitted or st.session_state.get("m4_identity") != identity:
         st.session_state.pop("m4_batch", None)
+        st.session_state.pop("m4_watch_batch", None)
         try:
-            equity = float(equity_text) if equity_text.strip() else None
-            risk_reference(1.0, None, None, equity)
-            if pool == "指定股票" and not symbol.strip():
-                raise ValueError("指定股票模式必须填写代码")
-            with st.spinner("正在读取本地可见行情并复用 M2 计算……"):
-                batch = _cached_batch(str(db.config.path), db.config.journal_mode, _fingerprint(db.config.path), source,
-                                      analysis_date, now, strategy, market_mode,
-                                      symbol if pool == "指定股票" else "", equity)
+            if pool == "指定股票":
+                symbols_input(symbol)
+            batch = (_cached_batch(str(db.config.path), db.config.journal_mode, _fingerprint(db.config.path), source,
+                        analysis_date, now, strategy, market_mode, symbol, equity, pool == "指定股票") if dates else
+                     CandidateBatch(today, now, strategy, market_mode, MarketState(today), [], ["没有可见本地行情"]))
             st.session_state.m4_batch = batch
             st.session_state.m4_identity = identity
         except Exception as exc:
@@ -71,84 +207,42 @@ def render(db):
     if batch is None:
         st.info("请重新生成每日候选。")
         return
-    st.caption(f"结果快照：{batch.analysis_date} · {batch.strategy} · {batch.market_mode}；系统读取 {batch.as_of}")
-    st.caption("历史日期是按当时价格截止、在当前时点回看；不代表当时已取得行情或已生成信号。修改控制项后点击生成更新快照。")
-    a, b, c = st.columns(3)
-    a.metric("合格候选", len(batch.candidates))
-    b.metric("本次分析股票", len(batch.evaluations))
-    c.metric("市场环境", batch.market.state)
-    st.info(f"市场来源：{batch.market.source}；"+"；".join(batch.market.reasons))
-    if batch.candidates:
-        st.dataframe(pd.DataFrame([table_row(r, i+1) for i, r in enumerate(batch.candidates)]),
-                     hide_index=True, use_container_width=True)
+    if error:
+        st.error(error)
+    status = data_status(batch, today=today)
+    if view == "每日交易总览":
+        a, b, c = st.columns(3)
+        a.metric("市场环境", batch.market.state)
+        b.metric("新增多头仓位", "未获准")
+        c.metric("合格候选", len(batch.candidates))
+    st.caption(f"分析日期 {batch.analysis_date} · 最新行情 {status['latest'] or '未知'} · 数据更新时间 {status['updated'] or '未知'}")
+    st.caption(f"{batch.strategy} · {batch.market_mode} · 来源 {source_label} · 数据状态：{status['state']}")
+    if status["latest"] and status["oldest"] < today:
+        st.warning("数据过期 / 历史回看：行情早于当前上海日期。日历未认证，不据此断言缺失交易日或休市；不会把旧信号当今日入场许可。")
+    if status["synthetic"]:
+        st.warning("离线演示：合成测试数据，不能作为真实行情或真实来源验收。")
+    st.caption(f"读取快照 {batch.as_of}；历史价格截止后在当前时点计算，不回填为当日盘中已知。")
+    if view == "每日交易总览":
+        _overview(batch, status)
+    elif view == "六阶段选股监控":
+        _monitor(batch)
+    elif view == "每日精选":
+        _picks(batch)
+    elif view == "指定股票分析":
+        _watch(db, batch, source, equity)
+    elif view == "风险与持仓监控":
+        _risk(batch)
     else:
-        st.warning("今日无合格候选（0只）。市场或证券状态未知时不放宽条件、不补足数量。")
-    st.subheader("股票池研究评分与排除原因")
-    st.dataframe(pd.DataFrame([table_row(r, i+1) for i, r in enumerate(batch.evaluations)]),
-                 hide_index=True, use_container_width=True)
-    st.caption("研究排名包括未准入股票，不是买入名单。分数相同按代码排序；未知总分排在最后。表格可横向滚动，手机可直接看下方股票详情。")
-    for warning in batch.warnings:
-        st.caption(warning)
-    with st.expander("实际执行的筛选与本地覆盖", expanded=False):
-        st.dataframe(pd.DataFrame(LIMITATIONS, columns=["筛选条件", "执行状态", "依据/限制"]),
-                     hide_index=True, use_container_width=True)
-        st.dataframe(pd.DataFrame(coverage), hide_index=True, use_container_width=True)
-        st.caption("覆盖为当前来源本地观察范围，未认证逐个交易日完整性。代码范围由已有A股适配器验证。")
-    if not batch.evaluations:
-        return
-    selected = st.selectbox("查看股票详情（含被排除股票）", [r.symbol for r in batch.evaluations], key="m4_detail")
-    row = next(r for r in batch.evaluations if r.symbol == selected)
-    st.subheader(f"{row.symbol} · {row.name}")
-    if row.analysis is None:
-        st.error("；".join(row.exclusions))
-        return
-    s, frame = row.analysis.summary, row.analysis.frame
-    st.write(f"分析日期 {s['analysis_date']}；最新行情 {s['latest_trade_date']}；历史 {s['first_trade_date']} 起，共 {s['count']} 条。")
-    st.caption(f"信号生成/最早可用 {s['signal_available_at']}；不得回填至所属日盘中或按当日收盘成交。下一可执行会话未知。")
-    st.write("入选条件：", "、".join(k for k, v in s["conditions"].items() if v is True) or "无")
-    st.write("未满足/未知：", "、".join(k for k, v in s["conditions"].items() if v is not True) or "无")
-    st.write("排除/风险：", "；".join(row.exclusions) or "无")
-    st.write("日线：", s["trend"], "；周样本：", s["weekly_sample_trend"], "（仅研究，正式周线门禁未知）")
-    st.write("研究评分：", "未知" if row.score is None else row.score)
-    st.dataframe(pd.DataFrame(score_rows(row)), hide_index=True, use_container_width=True)
-    last = frame.iloc[-1]
-    previous = frame.iloc[-2] if len(frame) > 1 else None
-    def display(value):
-        return "未知" if value is None or pd.isna(value) else f"{float(value):.4f}"
-    st.write(f"日线依据：收盘 {display(last.close)}；MA5/10/20/60 = "+
-             " / ".join(display(last[f"MA{n}"]) for n in (5, 10, 20, 60))+"；要求依次严格大于。")
-    st.write(f"突破依据：收盘>{display(last['前20条最高价'])}（前20条最高价），量比 {display(last['量比5'])}≥1.5。")
-    st.write(f"回调依据：收盘<{display(previous.close if previous is not None else None)}（前收），最低 {display(last.low)}≤MA20 {display(last.MA20)}≤收盘，量比≤0.7。")
-    st.write(f"穿三线依据：开盘 {display(last.open)} 低于前一日MA5/10/20的全部值，收盘高于其全部值，且收盘>开盘。前一日均线："+
-             " / ".join(display(previous[f"MA{n}"] if previous is not None else None) for n in (5, 10, 20)))
-    st.caption("上述为独立M2形态；二次突破、突破后再回调的先后关联未实现，不作为已满足条件。")
-    st.subheader("历史价格、均线与成交量")
-    chart = frame.set_index("trade_date")
-    if len(frame) >= 2:
-        st.line_chart(chart[["close", "MA5", "MA10", "MA20", "MA60"]])
-        st.bar_chart(chart[["volume_shares"]])
-    else:
-        st.info("真实行情不足2条，不能绘制价格趋势。")
-    if frame.ATR14.notna().any():
-        st.line_chart(chart[["ATR14"]])
-    else:
-        st.info("ATR14数据不足，至少需要15条真实行情。")
-    st.write("最新指标：", s["metrics"])
-    st.subheader("交易计划与1%风险预算")
-    risk = row.risk
-    for label, value in [("参考测算价（所属日收盘）", risk["reference_entry"]),
-                         ("结构止损（前10条最低价）", risk["structure_stop"]),
-                         ("ATR止损（收盘−2×ATR14）", risk["atr_stop"]),
-                         ("最终研究止损", risk["final_stop"]), ("账户权益", risk["equity"]),
-                         ("1%参考风险金额", risk["risk_budget"])]:
-        st.write(label+"：", "未知/未配置" if value is None else round(value, 4))
-    st.caption(risk["stop_reason"])
-    st.info(risk["sizing_reason"])
-    st.write("理论股数 / 仓位：不输出；风险收益比：未知（未定义已验证目标价，不编造收益）。")
-    st.write("参考入场条件：指标可用后，下一已验证可交易会话重新确认趋势、形态、状态与价格；收盘价仅为风险测算基准，不保证成交。")
-    st.write("失效条件：入场时趋势/形态失效、跌破研究止损、市场转弱/证据冲突/数据缺失时，不继续使用该计划。T+1、交易单位、涨跌停、停牌、费用和滑点须先验证。")
-    with st.expander("计算依据与同一快照明细"):
-        st.text(FORMULAS)
-        st.write("实际来源：", s["source"], "；规则：", s["rule_version"])
-        st.write("行情快照摘要：", s["snapshot_sha256"], "；血缘：", s["lineage_refs"])
-        st.dataframe(frame, hide_index=True, use_container_width=True)
+        rows = {r.symbol:r for r in batch.evaluations}
+        watch = st.session_state.get("m4_watch_batch")
+        if watch:
+            rows.update({r.symbol:r for r in watch.evaluations})
+        if not rows:
+            st.info("尚无股票详情。可先进行指定股票分析，缺失代码仍显示失败原因。")
+            st.button("前往指定股票分析", on_click=_open_watch)
+            return
+        options = list(rows)
+        focus = st.session_state.get("m4_focus")
+        selected = st.selectbox("查看股票详情（含被排除股票）", options,
+                                index=options.index(focus) if focus in options else 0, key="m4_detail")
+        render_detail(rows[selected])
