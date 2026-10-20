@@ -1,0 +1,1806 @@
+{
+  "baseline_sha": "94cdd487bfd4633ecc2f002aad014f98dec961a5",
+  "calculation_version": "m3-core-rules-v1",
+  "core_contract_version": "m3-core-diagnostic-v1",
+  "core_review": {
+    "issue": "https://github.com/fengjnah/a-share-quant-v1/issues/37",
+    "review_head": "d60fa8809a248cb4b4a63ed4ee514296645bed2b",
+    "state": "PENDING"
+  },
+  "diagnostics": {
+    "cffex_position": {
+      "admission": "BLOCKED",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": false,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 0
+      },
+      "data_latest_date": null,
+      "data_snapshot_id": "697f5b8dfa678461191e65a10ceb6ddfafcbe86a4bb4abb53cec7f074ed0ec5f",
+      "indicator": "cffex_position",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNAVAILABLE",
+          "detail": "No certified CFFEX record; raw CSV alone is insufficient",
+          "next_action": "Supply reviewed adapter records and CFFEX calendar evidence"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 1; actual 0",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "CFFEX",
+        "mode": "research",
+        "symbol": "IF2611"
+      },
+      "status": "SOURCE_UNAVAILABLE",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": null,
+        "observed_at": null
+      }
+    },
+    "daily_trend": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": true,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 550
+      },
+      "data_latest_date": "2026-10-19",
+      "data_snapshot_id": "1bf1d864eb17cb80a565e25fef43e907dad2ce675627078f09a608e88b39ba03",
+      "indicator": "daily_trend",
+      "missing_fields": [
+        "adjustment_method",
+        "available_at",
+        "event_time",
+        "quality_status"
+      ],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "quality_status absent for the visible input series",
+          "next_action": "Supply the actual per-record quality decision; a receipt cannot imply accepted"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SCOPE_UNSUPPORTED",
+          "detail": "Price adjustment definition is UNKNOWN",
+          "next_action": "Certify a fixed unadjusted price definition"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "TIME_UNCERTIFIED",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00"
+      }
+    },
+    "environment": {
+      "admission": "BLOCKED",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": false,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "required_evidence_classes",
+        "denominator_refs": [
+          "cffex_position",
+          "wave",
+          "fear_greed"
+        ],
+        "expected_samples": 3,
+        "missing_dates": [],
+        "ratio": 0.0,
+        "valid_samples": 0
+      },
+      "data_latest_date": null,
+      "data_snapshot_id": "51d53c0125c88745a045650d9f7ce1bb7d41665dbf7a28cd21286b42d3d3d950",
+      "indicator": "environment",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "cffex_position: missing/unqualified/mismatched evidence",
+          "next_action": "Resolve this component's diagnostic; do not sum proxy scores"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "wave: missing/unqualified/mismatched evidence",
+          "next_action": "Resolve this component's diagnostic; do not sum proxy scores"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "fear_greed: missing/unqualified/mismatched evidence",
+          "next_action": "Resolve this component's diagnostic; do not sum proxy scores"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "TIME_UNCERTIFIED",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": null,
+        "observed_at": null
+      }
+    },
+    "fear_greed": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 550
+      },
+      "data_latest_date": "2026-10-19",
+      "data_snapshot_id": "fe9b6c77d575b3edbbf4fefd28b209baf4b443e9779650be1bd819a93c13ea25",
+      "indicator": "fear_greed",
+      "missing_fields": [
+        "adjustment_method",
+        "available_at",
+        "event_time",
+        "quality_status"
+      ],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "quality_status absent for the visible input series",
+          "next_action": "Supply the actual per-record quality decision; a receipt cannot imply accepted"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SCOPE_UNSUPPORTED",
+          "detail": "Price adjustment definition is UNKNOWN",
+          "next_action": "Certify a fixed unadjusted price definition"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNAVAILABLE",
+          "detail": "No observations supplied",
+          "next_action": "Acquire one explicit source/date with bounded requests"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "UNIVERSE_UNKNOWN",
+          "detail": "Full-A historical membership/complete partition not certified",
+          "next_action": "Supply dated point-in-time universe snapshots, identities and partition evidence"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 1; actual 0",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "UNIVERSE_UNKNOWN",
+          "detail": "Market factors lack a certified all-A denominator",
+          "next_action": "Do not use index/stock turnover as all-A turnover"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "FACTOR_MISSING",
+          "detail": "Missing factors: 上涨占比, 涨停占比, 成交额",
+          "next_action": "Acquire each real factor; no zero-fill or reweighting"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "SOURCE_UNAVAILABLE",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00"
+      }
+    },
+    "market_breadth": {
+      "admission": "BLOCKED",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": false,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 0
+      },
+      "data_latest_date": null,
+      "data_snapshot_id": "e4c0775a42c48f907ad7ba85ce09f7eb417aa9258d0dc82df2493468bfd964ed",
+      "indicator": "market_breadth",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNAVAILABLE",
+          "detail": "No observations supplied",
+          "next_action": "Acquire one explicit source/date with bounded requests"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "UNIVERSE_UNKNOWN",
+          "detail": "Full-A historical membership/complete partition not certified",
+          "next_action": "Supply dated point-in-time universe snapshots, identities and partition evidence"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 1; actual 0",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "ALL_A",
+        "mode": "research",
+        "symbol": "ALL_A"
+      },
+      "status": "SOURCE_UNAVAILABLE",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": null,
+        "observed_at": null
+      }
+    },
+    "price_proxy": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": true,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 550
+      },
+      "data_latest_date": "2026-10-19",
+      "data_snapshot_id": "74f40d4b4d18db97bf6dd11f7e949d998530789cabd29e79b9d0967d3a49a22a",
+      "indicator": "price_proxy",
+      "missing_fields": [
+        "adjustment_method",
+        "available_at",
+        "event_time",
+        "quality_status"
+      ],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "quality_status absent for the visible input series",
+          "next_action": "Supply the actual per-record quality decision; a receipt cannot imply accepted"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SCOPE_UNSUPPORTED",
+          "detail": "Price adjustment definition is UNKNOWN",
+          "next_action": "Certify a fixed unadjusted price definition"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "TIME_UNCERTIFIED",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00"
+      }
+    },
+    "tencent_stock:daily_trend": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 2
+      },
+      "data_latest_date": "2026-10-15",
+      "data_snapshot_id": "293df84f53c1736fec510e73b98ff8e2d33337892cf60a0ff75dd15d01997cf5",
+      "indicator": "daily_trend",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "STALE",
+          "detail": "Requested 2026-10-19; actual visible cutoff 2026-10-15",
+          "next_action": "Acquire the exact requested date; do not relabel an older date"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 60; actual 2",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "STOCK",
+        "mode": "research",
+        "symbol": "600000.SH"
+      },
+      "status": "STALE",
+      "times": {
+        "available_at": "2026-10-20T15:39:36.551522+00:00",
+        "event_time": "2026-10-15T07:00:00.000000+00:00",
+        "ingested_at": "2026-10-20T15:39:36.593966+00:00",
+        "observed_at": "2026-10-20T15:39:36.551522+00:00"
+      }
+    },
+    "tencent_stock:price_proxy": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 2
+      },
+      "data_latest_date": "2026-10-15",
+      "data_snapshot_id": "6693314f54dd62cae0d42fc0f5c2d5a9c8c8f785ef837bb534fc3ca683c2e5d6",
+      "indicator": "price_proxy",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "STALE",
+          "detail": "Requested 2026-10-19; actual visible cutoff 2026-10-15",
+          "next_action": "Acquire the exact requested date; do not relabel an older date"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 41; actual 2",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "STOCK",
+        "mode": "research",
+        "symbol": "600000.SH"
+      },
+      "status": "STALE",
+      "times": {
+        "available_at": "2026-10-20T15:39:36.551522+00:00",
+        "event_time": "2026-10-15T07:00:00.000000+00:00",
+        "ingested_at": "2026-10-20T15:39:36.593966+00:00",
+        "observed_at": "2026-10-20T15:39:36.551522+00:00"
+      }
+    },
+    "tencent_stock:wave": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 2
+      },
+      "data_latest_date": "2026-10-15",
+      "data_snapshot_id": "5d297c358ce6b794479924fcdfdcc3b46af546c41ed0229f1e44334ccbdcfcd9",
+      "indicator": "wave",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "STALE",
+          "detail": "Requested 2026-10-19; actual visible cutoff 2026-10-15",
+          "next_action": "Acquire the exact requested date; do not relabel an older date"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 60; actual 2",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "STOCK",
+        "mode": "research",
+        "symbol": "600000.SH"
+      },
+      "status": "STALE",
+      "times": {
+        "available_at": "2026-10-20T15:39:36.551522+00:00",
+        "event_time": "2026-10-15T07:00:00.000000+00:00",
+        "ingested_at": "2026-10-20T15:39:36.593966+00:00",
+        "observed_at": "2026-10-20T15:39:36.551522+00:00"
+      }
+    },
+    "tencent_stock:weekly_structure": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": false,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 0
+      },
+      "data_latest_date": "2026-10-15",
+      "data_snapshot_id": "6d4d25b9b6daee3ae5ffeaae5610fa2ace9232f300a52e29a2c6867e6721b27b",
+      "indicator": "weekly_structure",
+      "missing_fields": [],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "STALE",
+          "detail": "Requested 2026-10-19; actual visible cutoff 2026-10-15",
+          "next_action": "Acquire the exact requested date; do not relabel an older date"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "HISTORY_INSUFFICIENT",
+          "detail": "Requires 20; actual 0",
+          "next_action": "Acquire sufficient real history and certify the denominator"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "STOCK",
+        "mode": "research",
+        "symbol": "600000.SH"
+      },
+      "status": "STALE",
+      "times": {
+        "available_at": "2026-10-20T15:39:36.551522+00:00",
+        "event_time": "2026-10-15T07:00:00.000000+00:00",
+        "ingested_at": "2026-10-20T15:39:36.593966+00:00",
+        "observed_at": "2026-10-20T15:39:36.551522+00:00"
+      }
+    },
+    "wave": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": true,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 550
+      },
+      "data_latest_date": "2026-10-19",
+      "data_snapshot_id": "c2b3e26a055a38a9411a5ea14c3615c3610528158093f271307f959c7572ae96",
+      "indicator": "wave",
+      "missing_fields": [
+        "adjustment_method",
+        "available_at",
+        "event_time",
+        "quality_status"
+      ],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "quality_status absent for the visible input series",
+          "next_action": "Supply the actual per-record quality decision; a receipt cannot imply accepted"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SCOPE_UNSUPPORTED",
+          "detail": "Price adjustment definition is UNKNOWN",
+          "next_action": "Certify a fixed unadjusted price definition"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "TIME_UNCERTIFIED",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00"
+      }
+    },
+    "weekly_structure": {
+      "admission": "L1_OBSERVATION",
+      "allowed_uses": {
+        "live_trading": false,
+        "observation": true,
+        "research": false,
+        "strategy": false
+      },
+      "calculated": true,
+      "coverage": {
+        "denominator": "UNKNOWN",
+        "denominator_refs": [],
+        "expected_samples": null,
+        "missing_dates": [],
+        "ratio": null,
+        "valid_samples": 117
+      },
+      "data_latest_date": "2026-10-19",
+      "data_snapshot_id": "c306c8c15fec45f8eb8da4cb78139e27de989ef723ac19d982cbcaa3b6835a6e",
+      "indicator": "weekly_structure",
+      "missing_fields": [
+        "adjustment_method",
+        "available_at",
+        "event_time",
+        "quality_status"
+      ],
+      "reasons": [
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "EVIDENCE_MISSING",
+          "detail": "quality_status absent for the visible input series",
+          "next_action": "Supply the actual per-record quality decision; a receipt cannot imply accepted"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SCOPE_UNSUPPORTED",
+          "detail": "Price adjustment definition is UNKNOWN",
+          "next_action": "Certify a fixed unadjusted price definition"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "CALENDAR_UNKNOWN",
+          "detail": "No certified session denominator",
+          "next_action": "Supply a sourced dated calendar query"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "SOURCE_UNVERIFIED",
+          "detail": "Source verification UNKNOWN/unverified",
+          "next_action": "Supply a reviewed source receipt"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "AUTHORIZATION_UNKNOWN",
+          "detail": "Personal research permission is not certified",
+          "next_action": "Verify data terms separately from SDK license"
+        },
+        {
+          "blocks": [
+            "L2",
+            "L3"
+          ],
+          "code": "TIME_UNCERTIFIED",
+          "detail": "Actual event/observation/ingestion/availability not fully certified",
+          "next_action": "Supply real timestamps and time-rule evidence; never backdate them"
+        },
+        {
+          "blocks": [
+            "L3"
+          ],
+          "code": "STRATEGY_EVIDENCE_REQUIRED",
+          "detail": "No independent strategy/execution/out-of-sample approval",
+          "next_action": "Supply matching strategy_admission receipt"
+        }
+      ],
+      "request": {
+        "analysis_date": "2026-10-19",
+        "as_of": "2026-10-20T15:39:40.727243+00:00",
+        "instrument_type": "INDEX",
+        "mode": "research",
+        "symbol": "sh000300"
+      },
+      "status": "TIME_UNCERTIFIED",
+      "times": {
+        "available_at": null,
+        "event_time": null,
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00"
+      }
+    }
+  },
+  "execution": {
+    "enable_live": true,
+    "endpoint_send_limit": 1,
+    "live_http_send_budget": 6,
+    "observation_keys": [
+      "sina_index",
+      "tencent_stock"
+    ],
+    "retries": 0,
+    "worker_deadline_seconds": 45
+  },
+  "request": {
+    "analysis_date": "2026-10-19",
+    "as_of": "2026-10-20T15:39:40.727243+00:00",
+    "mode": "research"
+  },
+  "requirements": {
+    "admission": "Only core Diagnostic admission/reasons/allowed_uses; L3 requires separate independent review/execution/OOS receipt",
+    "coverage": "Independent visible calendar and point-in-time full-A universe denominator; no weekday or response-date denominator",
+    "freshness": "Requested analysis date and actual cutoff; expected latest session requires certified calendar",
+    "historical_status": "Point-in-time security lifecycle/ST/suspension and calendar; no current snapshot backfill",
+    "quality": "Explicit per-record decision, finite scalars/cross-field identities; UNKNOWN is not accepted",
+    "reproduction": "Pinned code/rules, batch, source versions, local evidence digest; snapshot digest is not source authenticity",
+    "semantics_units": "Reviewed field mapping plus source definition/unit evidence; no cross-scope substitutions",
+    "source_authorization": "Separate source, research/storage/automation/display/redistribution evidence; SDK MIT is not data permission",
+    "time": "Actual observed/ingested/event/available timestamps <= as_of; collection is not historical first publication"
+  },
+  "run_id": "pipeline-20261020T153923Z-c55591fd",
+  "schema_version": "m3-pipeline-evidence-v1",
+  "sources": {
+    "all_a_turnover": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "all_a_turnover",
+      "status": "BLOCKED"
+    },
+    "cffex_calendar": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "cffex_calendar",
+      "status": "BLOCKED"
+    },
+    "cffex_rankings": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "error_type": "RankingTransportError",
+      "error_type_chain": "OtherError > SSLError > OtherError > SSLError",
+      "expected_latest_session": "UNKNOWN",
+      "expected_samples": null,
+      "finished_at": "2026-10-20T15:39:40.609732+00:00",
+      "historical_available_at": "UNKNOWN",
+      "http_trace": [
+        {
+          "endpoint": "https://www.cffex.com.cn/sj/ccpm/202610/16/IF_1.csv",
+          "error_type": "SSLError",
+          "finished_at": "2026-10-20T15:39:40.609732+00:00",
+          "http_status": null,
+          "payload_sha256": null,
+          "response_bytes": null,
+          "started_at": "2026-10-20T15:39:40.474546+00:00"
+        }
+      ],
+      "missing_dates": null,
+      "observed_at": null,
+      "parse_status": "NOT RUN",
+      "request": {
+        "exchange": "CFFEX",
+        "trade_date": "2026-10-16",
+        "variety": "IF"
+      },
+      "request_count": 1,
+      "retries": 0,
+      "returned_rows": null,
+      "source_id": "cffex_rankings",
+      "started_at": "2026-10-20T15:39:40.472548+00:00",
+      "status": "FAIL",
+      "tls_verification": true
+    },
+    "cn_a_calendar": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "cn_a_calendar",
+      "status": "BLOCKED"
+    },
+    "delisting": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "delisting",
+      "status": "BLOCKED"
+    },
+    "eastmoney_stock": {
+      "actual_fields": null,
+      "authorization": "UNKNOWN",
+      "batch_id": "pipeline-20261020T153923Z-c55591fd:eastmoney_stock",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "error_type_chain": "SSLError > OtherError > SSLError",
+      "expected_latest_session": "UNKNOWN",
+      "expected_samples": null,
+      "finished_at": "2026-10-20T15:39:31.617757+00:00",
+      "historical_available_at": "UNKNOWN",
+      "http_trace": [
+        {
+          "endpoint": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+          "error_type": "SSLError",
+          "finished_at": "2026-10-20T15:39:31.601669+00:00",
+          "http_status": null,
+          "payload_sha256": null,
+          "response_bytes": null,
+          "started_at": "2026-10-20T15:39:31.389560+00:00"
+        }
+      ],
+      "ingested_at": null,
+      "ingestion_status": "network_error",
+      "inserted_rows": 0,
+      "missing_dates": null,
+      "observed_at": null,
+      "parse_status": "NOT RUN",
+      "read_back_rows": 0,
+      "request": {
+        "adjust": "none",
+        "end_date": "2026-10-15",
+        "start_date": "2026-10-14",
+        "symbol": "600000.SH"
+      },
+      "request_count": 1,
+      "retries": 0,
+      "returned_rows": null,
+      "sdk_frame_sha256": null,
+      "source_id": "eastmoney_stock",
+      "started_at": "2026-10-20T15:39:30.537316+00:00",
+      "status": "FAIL",
+      "tls_verification": true,
+      "validation_status": "NOT RUN"
+    },
+    "fear_greed": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "fear_greed",
+      "status": "BLOCKED"
+    },
+    "historical_st": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "historical_st",
+      "status": "BLOCKED"
+    },
+    "legu_breadth": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "error_type": "SSLError",
+      "error_type_chain": "SSLError > OtherError > SSLError",
+      "expected_latest_session": "UNKNOWN",
+      "expected_samples": null,
+      "finished_at": "2026-10-20T15:39:39.156204+00:00",
+      "historical_available_at": "UNKNOWN",
+      "http_trace": [
+        {
+          "endpoint": "https://legulegu.com/stockdata/market-activity",
+          "error_type": "SSLError",
+          "finished_at": "2026-10-20T15:39:39.154577+00:00",
+          "http_status": null,
+          "payload_sha256": null,
+          "response_bytes": null,
+          "started_at": "2026-10-20T15:39:39.016148+00:00"
+        }
+      ],
+      "missing_dates": null,
+      "observed_at": null,
+      "parse_status": "NOT RUN",
+      "request": {
+        "scope": "current published snapshot"
+      },
+      "request_count": 1,
+      "retries": 0,
+      "returned_rows": null,
+      "source_id": "legu_breadth",
+      "started_at": "2026-10-20T15:39:38.361360+00:00",
+      "status": "FAIL",
+      "tls_verification": true
+    },
+    "security_identity": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "security_identity",
+      "status": "BLOCKED"
+    },
+    "sina_index": {
+      "actual_fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ],
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": "2026-10-19",
+      "data_date_min": "2024-07-10",
+      "expected_latest_session": "UNKNOWN",
+      "expected_samples": null,
+      "finished_at": "2026-10-20T15:39:29.024280+00:00",
+      "historical_available_at": "UNKNOWN",
+      "http_trace": [
+        {
+          "endpoint": "https://finance.sina.com.cn/realstock/company/sh000300/hisdata/klc_kl.js",
+          "error_type": null,
+          "finished_at": "2026-10-20T15:39:27.165867+00:00",
+          "http_status": 200,
+          "payload_sha256": "3a9c0d3e659c43b9c83e5451a87436e327987326af94885e0ed36ea96822f98f",
+          "response_bytes": 100910,
+          "started_at": "2026-10-20T15:39:25.675931+00:00"
+        }
+      ],
+      "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+      "missing_dates": null,
+      "observed_at": "2026-10-20T15:39:29.005654+00:00",
+      "parse_status": "PASS",
+      "request": {
+        "d": "2020_2_4",
+        "retained_rows_max": 550,
+        "symbol": "sh000300"
+      },
+      "request_count": 1,
+      "retries": 0,
+      "returned_rows": 550,
+      "source_id": "sina_index",
+      "started_at": "2026-10-20T15:39:25.008953+00:00",
+      "status": "PASS",
+      "tls_verification": true
+    },
+    "suspension": {
+      "authorization": "UNKNOWN",
+      "certification_status": "BLOCKED",
+      "data_date_max": null,
+      "data_date_min": null,
+      "expected_samples": null,
+      "missing_dates": null,
+      "reason": "no_accepted_source_or_required_evidence",
+      "request_count": 0,
+      "returned_rows": null,
+      "source_id": "suspension",
+      "status": "BLOCKED"
+    },
+    "tencent_stock": {
+      "actual_fields": [
+        "date",
+        "open",
+        "close",
+        "high",
+        "low",
+        "volume",
+        "turnover",
+        "amount"
+      ],
+      "authorization": "UNKNOWN",
+      "batch_id": "pipeline-20261020T153923Z-c55591fd:tencent_stock",
+      "certification_status": "BLOCKED",
+      "data_date_max": "2026-10-15",
+      "data_date_min": "2026-10-14",
+      "error_type_chain": null,
+      "expected_latest_session": "UNKNOWN",
+      "expected_samples": null,
+      "finished_at": "2026-10-20T15:39:36.892277+00:00",
+      "historical_available_at": "UNKNOWN",
+      "http_trace": [
+        {
+          "endpoint": "https://web.ifzq.gtimg.cn/other/klineweb/klineWeb/weekTrends",
+          "error_type": null,
+          "finished_at": "2026-10-20T15:39:35.122222+00:00",
+          "http_status": 200,
+          "payload_sha256": "748d4bb14b3093a902f1eaaf31131821f07942add28a7a40799496b544b6355f",
+          "response_bytes": 33021,
+          "started_at": "2026-10-20T15:39:34.260707+00:00"
+        },
+        {
+          "endpoint": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+          "error_type": null,
+          "finished_at": "2026-10-20T15:39:36.116713+00:00",
+          "http_status": 200,
+          "payload_sha256": "f46629e0e12df82524c8f79925047da0465de9f04b53b7ca7f442437adeecc7e",
+          "response_bytes": 60981,
+          "started_at": "2026-10-20T15:39:35.551254+00:00"
+        }
+      ],
+      "ingested_at": "2026-10-20T15:39:36.593966+00:00",
+      "ingestion_status": "success",
+      "inserted_rows": 2,
+      "missing_dates": null,
+      "observed_at": "2026-10-20T15:39:36.551522+00:00",
+      "parse_status": "PASS",
+      "read_back_rows": 2,
+      "request": {
+        "adjust": "none",
+        "end_date": "2026-10-15",
+        "start_date": "2026-10-14",
+        "symbol": "600000.SH"
+      },
+      "request_count": 2,
+      "retries": 0,
+      "returned_rows": 2,
+      "sdk_frame_sha256": "767897b8471e71aee21610e1ffd370b80b985305a3a93954ad972969fbed13e9",
+      "source_id": "tencent_stock",
+      "started_at": "2026-10-20T15:39:33.265126+00:00",
+      "status": "PASS",
+      "tls_verification": true,
+      "validation_status": "PASS"
+    }
+  },
+  "task_id": "TASK-M3-DATA-PIPELINE-001",
+  "source_inventory": {
+    "sina_index": {
+      "provider": "Sina / AKShare 1.19.1",
+      "interface": "stock_zh_index_daily",
+      "endpoint": "https://finance.sina.com.cn/realstock/company/sh000300/hisdata/klc_kl.js",
+      "fields": {
+        "trade_date": "Shanghai date",
+        "open/high/low/close": "index points"
+      },
+      "history": "SDK history response; local retained sample <=550 completed dates; calendar denominator UNKNOWN"
+    },
+    "eastmoney_stock": {
+      "provider": "Eastmoney / AKShare 1.19.1",
+      "interface": "stock_zh_a_hist",
+      "endpoint": "https://push2his.eastmoney.com/api/qt/stock/kline/get",
+      "fields": {
+        "trade_date": "Shanghai date",
+        "OHLC": "CNY/share",
+        "volume": "shares (SDK lots x100 in adapter)",
+        "amount": "CNY"
+      },
+      "history": "Explicit 600000.SH, 2026-10-14..15, daily, unadjusted; not an identity/history certification"
+    },
+    "tencent_stock": {
+      "provider": "Tencent / AKShare 1.19.1",
+      "interface": "stock_zh_a_hist_tx",
+      "endpoint": "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get",
+      "fields": {
+        "trade_date": "Shanghai date",
+        "OHLC": "CNY/share",
+        "volume": "shares (SDK normalizes)",
+        "amount": "CNY (SDK normalizes)"
+      },
+      "history": "Same explicit two-date sample; SDK start-year probe + one year page, not bounded server date filtering"
+    },
+    "legu_breadth": {
+      "provider": "Legulegu / AKShare 1.19.1",
+      "interface": "stock_market_activity_legu",
+      "endpoint": "https://legulegu.com/stockdata/market-activity",
+      "fields": {
+        "advances/declines/flat/limit_up/limit_down": "security count",
+        "trade_date": "source statistical date"
+      },
+      "history": "Current aggregate snapshot only; no point-in-time universe/partition/market amount"
+    },
+    "cffex_rankings": {
+      "provider": "CFFEX",
+      "interface": "CffexRankingsClient + parse",
+      "endpoint": "https://www.cffex.com.cn/sj/ccpm/202610/16/IF_1.csv",
+      "fields": {
+        "contract/member/member_scope/side/rank": "explicit publication identity",
+        "open_interest/open_interest_change/volume/volume_change": "source contract counts, not A-share units"
+      },
+      "history": "One IF date only; raw observation cannot replace certified calendar/time/version record"
+    },
+    "all_a_turnover": {
+      "provider": "UNKNOWN",
+      "interface": null,
+      "endpoint": null,
+      "fields": {
+        "market_amount_cny": "CNY, full-A scope; finite nonnegative supported numeric scalar"
+      },
+      "history": "No registered full-A historical turnover source; index/stock amount is not a substitute"
+    },
+    "cn_a_calendar": {
+      "provider": "UNKNOWN",
+      "interface": "SQLiteTradingCalendar (storage/query only)",
+      "endpoint": null,
+      "fields": {
+        "exchange/session_date/is_trading_day": "sourced dated boolean, missing != closed"
+      },
+      "history": "SH/SZ/BJ dated versions supported; no accepted live source configured"
+    },
+    "cffex_calendar": {
+      "provider": "UNKNOWN",
+      "interface": "RankingCalendar (port only)",
+      "endpoint": null,
+      "fields": {
+        "exchange/session_date/opens_at/closes_at": "CFFEX aware session window + visible calendar provenance"
+      },
+      "history": "Not provided by existing SH/SZ/BJ SQLite calendar; cannot copy its sessions"
+    },
+    "security_identity": {
+      "provider": "UNKNOWN",
+      "interface": "SQLiteSecurityMaster (storage/query only)",
+      "endpoint": null,
+      "fields": {
+        "instrument_id/symbol/effective_from/effective_to/listing_date": "listing entity, point-in-time intervals"
+      },
+      "history": "No live historical identity provider; sample instrument_id is an observation label only"
+    },
+    "historical_st": {
+      "provider": "UNKNOWN",
+      "interface": null,
+      "endpoint": null,
+      "fields": {
+        "risk_status/effective_interval": "explicit historical ST state; UNKNOWN is not normal"
+      },
+      "history": "Existing master risk_status remains unknown; current name cannot backfill ST"
+    },
+    "suspension": {
+      "provider": "UNKNOWN",
+      "interface": null,
+      "endpoint": null,
+      "fields": {
+        "instrument_id/trade_date/suspended": "dated explicit status; missing bars != suspension"
+      },
+      "history": "No certified daily status source; breadth suspension count also needs universe evidence"
+    },
+    "delisting": {
+      "provider": "UNKNOWN",
+      "interface": "SecurityMaster lifecycle (storage only)",
+      "endpoint": null,
+      "fields": {
+        "delisting_date/available_at": "first non-listed date + actual visible version time"
+      },
+      "history": "No accepted historical lifecycle feed; null delisting date is not proof of continued listing"
+    },
+    "fear_greed": {
+      "provider": "derived",
+      "interface": "market_analysis_core.fear_greed_diagnostic",
+      "endpoint": null,
+      "fields": {
+        "trend/momentum/low_volatility": "price factors",
+        "advancing/limit_ratio": "certified full-A counts",
+        "turnover_factor": "full-A market_amount_cny history"
+      },
+      "history": "Existing six-factor formula only; incomplete factors => null full score, separate price proxy"
+    }
+  },
+  "code_file_sha256": {
+    "src/ai_trade/m3_data_pipeline.py": "7937f29fa35700318bfde14837585758b2af10795be3939a1fe0184af457f91c",
+    "scripts/verify_m3_pipeline.py": "e17736f99080e48dede360db89ccf6e26ae4005b88c57ab5c2137beaf4c96728",
+    "tests/unit/test_m3_data_pipeline.py": "4b03ea921d83f0b0303e454514a14a4e230aaa08d4a00124cb258b8e10eb2a3f"
+  },
+  "evidence_boundary": "Reviewed transport/parse/diagnostic metadata only; no raw prices/CSV/SDK frame; no source authorization, independent H, UI, OOS or production approval.",
+  "actual_http_sends": 6,
+  "structured_feedback": {
+    "task": "TASK-M3-DATA-PIPELINE-001",
+    "implementation": "completed candidate evidence bridge; independent H pending",
+    "real_connectivity": {
+      "pass": [
+        "sina_index",
+        "tencent_stock"
+      ],
+      "fail": [
+        "eastmoney_stock",
+        "legu_breadth",
+        "cffex_rankings"
+      ]
+    },
+    "research_source_acceptance": "BLOCKED",
+    "core_review_issue": 37,
+    "page_task_issue": 38,
+    "progress_credit_added": false
+  }
+}
