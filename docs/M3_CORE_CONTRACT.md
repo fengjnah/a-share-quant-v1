@@ -33,6 +33,16 @@ payload = diagnostics["daily_trend"].to_dict()
 
 UNKNOWN 使用 JSON null 或显式 UNKNOWN 枚举；不以 0、正常、休市、可交易或布尔 True 替代。`Receipt(VERIFIED, refs)` 是受信任调用方的带引用声明，本库只校验结构及一致性，不认证签发者。引用必须指向可审的实际材料；手工构造 VERIFIED 不是来源验收。离线夹具声明不能作为真实验收。`evidence_kind=synthetic` 自动阻断 L2/L3。
 
+### TASK-M3-CORE-001-FIX：身份、质量与成交额校验
+
+所有实际参与的可见记录逐行校验 `source`；价格记录以及显式提供 `symbol` 的市场记录同时逐行校验标的。复用既有 `text_field`：必须为非空字符串、首尾无空白、最多256字符且无控制字符，随后与调用方声明精确匹配。不自动 strip、转换、填充或丢弃。身份格式/一致性错误使用 `INVALID_DATA` 原因及状态、`BLOCKED` 准入，清空值、calculated=false，所有 allowed_uses=false。
+
+`quality_status` 是逐记录的质量决定，与来源/授权/时点 Receipt 独立。全部记录显式为 `accepted` 才能通过质量这一项；quarantined、rejected、其他未知状态字符串、空字符串或非法类型均 INVALID_DATA/BLOCKED。整列缺失或值为 None/NaN 保持 UNKNOWN，记录 `EVIDENCE_MISSING` 和 `missing_fields=quality_status`；research 至多 L1，strict_backtest/paper_trade 阻断。不从已认证来源或 Receipt 默认 accepted。全 A 因子的质量/身份失败原因和缺失字段传递至完整恐贪，不能被包装层隐藏。
+
+CFFEX 既有 `CffexRankingsRecord` 没有质量字段；核心 `cffex_diagnostic(..., quality_status=None)` 新增可选关键字，默认 UNKNOWN，调用方必须提供实际质量决定。即使其他 Receipt 全部通过，质量未知仍无 L2、direction=null。底层 CFFEX 版本链、ReferenceResult、日历和来源认证语义不变。此声明本身也不是外部真实性认证。
+
+完整恐贪输入若提供 `market_amount_cny` 列，则所有参与日期必须是非布尔、有限、非负实数；整数、浮点和真实0合法。None、NaN、空/非法字符串、正负无穷或其他类型均返回带字段/日期/ALL_A标识的 INVALID_DATA/BLOCKED，不隐式转换或丢弃。整列没有提供仍为必要因子缺失，完整 score=null。以上修复不改变公式、序列化外形或已有原因码；JSON Schema 无需新增枚举。旧来源验收记录保留当时的事实，不回写 accepted。
+
 状态：SOURCE_UNAVAILABLE、HISTORY_INSUFFICIENT、FACTOR_MISSING、STALE、TIME_UNCERTIFIED、INVALID_DATA、EVIDENCE_CONFLICT、OBSERVATION_ONLY、RESEARCH_ALLOWED、STRATEGY_ALLOWED、BLOCKED。全部枚举及原因码以 Python 契约为唯一机器定义；JSON Schema 校验其序列化外形。SOURCE_UNAVAILABLE 描述没有输入，接口错误由独立来源验收保留具体 HTTP/TLS/超时分类。
 
 ## 时间、覆盖与阈值

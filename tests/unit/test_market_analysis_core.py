@@ -29,7 +29,7 @@ def source(name="unit:price:v1", **kwargs):
 def prices(n=150):
     days = pd.bdate_range("2026-01-05", periods=n).strftime("%Y-%m-%d")
     return pd.DataFrame([dict(trade_date=d, symbol="sh000300", source="unit:price:v1",
-        open=100+i, high=102+i, low=99+i, close=101+i, adjustment_method="none",
+        open=100+i, high=102+i, low=99+i, close=101+i, adjustment_method="none", quality_status="accepted",
         event_time=d+"T15:00:00+08:00", observed_at=d+"T16:00:00+08:00",
         ingested_at=d+"T16:01:00+08:00", available_at=d+"T16:02:00+08:00") for i, d in enumerate(days)])
 
@@ -44,7 +44,7 @@ def calendar(f):
 
 
 def market(f):
-    m = f[["trade_date", "event_time", "observed_at", "ingested_at", "available_at"]].copy()
+    m = f[["trade_date", "event_time", "observed_at", "ingested_at", "available_at", "quality_status"]].copy()
     m["source"] = "unit:breadth:v1"
     for k, v in dict(advances=60, declines=30, flat=5, limit_up=8, limit_down=2,
                      eligible_count=100, suspended=5, unavailable=0, missing=0).items():
@@ -286,7 +286,8 @@ def test_cffex_requires_publication_scope_and_calendar_before_direction():
     r = replace(r, evidence_kind="source_observation", publication_time="2026-10-16T08:00:00Z")
     src = replace(src, evidence_kind="source_observation")
     params = dict(request=req, source=src, member="甲会员(代客)", scope=MemberScope.AGENT,
-                  calendar=cal, scope_receipt=receipt("scope"), publication_receipt=receipt("publication"))
+                  calendar=cal, scope_receipt=receipt("scope"), publication_receipt=receipt("publication"),
+                  quality_status="accepted")
     assert cffex_diagnostic([r], **params).values["direction"] == "偏多"
     params["calendar"] = None
     assert cffex_diagnostic([r], **params).values["direction"] is None
