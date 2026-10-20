@@ -35,19 +35,21 @@ UNKNOWN 使用 JSON null 或显式 UNKNOWN 枚举；不以 0、正常、休市�
 
 ### TASK-M3-CORE-001-FIX：身份、质量与成交额校验
 
-所有实际参与的可见记录逐行校验 `source`；价格记录以及显式提供 `symbol` 的市场记录同时逐行校验标的。复用既有 `text_field`：必须为非空字符串、首尾无空白、最多256字符且无控制字符，随后与调用方声明精确匹配。不自动 strip、转换、填充或丢弃。身份格式/一致性错误使用 `INVALID_DATA` 原因及状态、`BLOCKED` 准入，清空值、calculated=false，所有 allowed_uses=false。
+所有实际参与的可见记录逐行校验 `source`；价格记录以及显式提供 `symbol` 的市场记录同时逐行校验标的。TASK-M3-CORE-003-FIX 在 M3 局部统一标识规则：必须为非空字符串、首尾无空白、最多256字符，拒绝 C0（U+0000–U+001F）、DEL（U+007F）及 C1（U+0080–U+009F），随后与调用方声明精确匹配。诊断入口对声明的 symbol/source/source_version 和实际参与记录使用同一规则；CFFEX 同时校验请求会员及选中版本的已公布会员/合约标识。声明对象只是输入载体，构造成功不代表准入通过；格式拒绝由公开诊断返回结构化结果。保留共享 `text_field` 及存储调用方行为，不自动 strip、转换、填充或丢弃。身份格式/一致性错误使用 `INVALID_DATA` 原因及状态、`BLOCKED` 准入，清空值、calculated=false，所有 allowed_uses=false。综合诊断传播组件的 INVALID_DATA 并清空整个综合结果，不能以其他合格组件覆盖非法输入。
 
 `quality_status` 是逐记录的质量决定，与来源/授权/时点 Receipt 独立。全部记录显式为 `accepted` 才能通过质量这一项；quarantined、rejected、其他未知状态字符串、空字符串或非法类型均 INVALID_DATA/BLOCKED。整列缺失或值为 None/NaN 保持 UNKNOWN，记录 `EVIDENCE_MISSING` 和 `missing_fields=quality_status`；research 至多 L1，strict_backtest/paper_trade 阻断。不从已认证来源或 Receipt 默认 accepted。全 A 因子的质量/身份失败原因和缺失字段传递至完整恐贪，不能被包装层隐藏。
 
 CFFEX 既有 `CffexRankingsRecord` 没有质量字段；核心 `cffex_diagnostic(..., quality_status=None)` 新增可选关键字，默认 UNKNOWN，调用方必须提供实际质量决定。即使其他 Receipt 全部通过，质量未知仍无 L2、direction=null。底层 CFFEX 版本链、ReferenceResult、日历和来源认证语义不变。此声明本身也不是外部真实性认证。
 
-完整恐贪输入若提供 `market_amount_cny` 列，则所有参与日期必须是非布尔、有限、非负实数；整数、浮点和真实0合法。None、NaN、空/非法字符串、正负无穷或其他类型均返回带字段/日期/ALL_A标识的 INVALID_DATA/BLOCKED，不隐式转换或丢弃。整列没有提供仍为必要因子缺失，完整 score=null。以上修复不改变公式、序列化外形或已有原因码；JSON Schema 无需新增枚举。旧来源验收记录保留当时的事实，不回写 accepted。
+完整恐贪输入若提供 `market_amount_cny` 列，则所有参与日期必须是非布尔、有限、非负数；真实0合法。R2/R3 明确核心数值边界只接受 Python `int`/`float` 及 NumPy `integer`/`floating` 标量，拒绝 Fraction（即使是整数值）、Decimal、复数、布尔、字符串和其他对象。OHLC 与成交额先检查原始标量，再受控转换为有限 float64；OHLC必须大于0，成交额允许0。转换溢出、非零下溢为0及非有限结果均拒绝；计数还须为非负整数，转换范围检查后仍以精确 Python int 保留，不经浮点重写计数。全部检查在 DataFrame 重建之前进行；构帧使用 object 防止未消费列触发隐式推断，再显式设置已验证价格/成交额的float64类型。
+
+None、NaN、空/非法字符串、正负无穷、`10**400` 等超范围输入均返回带字段/日期/标的或ALL_A范围的 INVALID_DATA/BLOCKED，不 coerce、不跳过、不补零、不复用旧结果。宽度计数原有缺失值/缺列仍为 FACTOR_MISSING，整列成交额没有提供仍为必要因子缺失，完整 score=null；存在的成交额列内缺失值仍是非法样本。以上修复不改变公式、序列化外形或已有原因码；JSON Schema 无需新增枚举。旧来源验收记录保留当时的事实，不回写 accepted。
 
 状态：SOURCE_UNAVAILABLE、HISTORY_INSUFFICIENT、FACTOR_MISSING、STALE、TIME_UNCERTIFIED、INVALID_DATA、EVIDENCE_CONFLICT、OBSERVATION_ONLY、RESEARCH_ALLOWED、STRATEGY_ALLOWED、BLOCKED。全部枚举及原因码以 Python 契约为唯一机器定义；JSON Schema 校验其序列化外形。SOURCE_UNAVAILABLE 描述没有输入，接口错误由独立来源验收保留具体 HTTP/TLS/超时分类。
 
 ## 时间、覆盖与阈值
 
-所有时间必须是显式带时区 ISO 时间；规范化 UTC 比较，交易日期用上海日期。只选 trade_date≤analysis_date 且所有已知实际时点≤as_of 的记录；晚采集不能回放到采集前。缺 available_at/ingested_at/event_time 的旧快照保留 UNKNOWN。采集时间不冒充历史首次可得时间，完整日线事件不能晚于观察/入库/可得时点。当前实现要求调用方先选择单来源、单标的、单日唯一的可见版本；重复日期不擅自选最新版。
+所有时间必须是显式带时区 ISO 时间；规范化 UTC 比较，交易日期用上海日期。只选 trade_date≤analysis_date 且所有已知实际时点≤as_of 的记录；晚采集不能回放到采集前。R4 将通过验证的已知时间在计算副本中统一表示为 Asia/Shanghai，再传入旧计算器；同一UTC时刻的合法offset表达得到相同诊断及快照，输入帧和历史记录不修改。聚合时间仍输出规范UTC。缺 available_at/ingested_at/event_time 的旧快照保留 UNKNOWN。采集时间不冒充历史首次可得时间，完整日线事件不能晚于观察/入库/可得时点。当前实现要求调用方先选择单来源、单标的、单日唯一的可见版本；重复日期不擅自选最新版。
 
 L2 日期分母来自**独立可见、已认证、明确范围的 CN_A/CFFEX 日历查询**，逐日对比实际输入，不能用工作日算法或行情日期本身当分母。全部所需日期必须齐备（100% 是“不允许缺项”的工程条件，不是预测可靠性阈值）。新鲜度为请求日必须真实有数据，容忍滞后为 0 个认证交易日；非交易日请求返回实际截止和 STALE，不猜休市。日历缺失时无法判断完整性，只能 L1。
 

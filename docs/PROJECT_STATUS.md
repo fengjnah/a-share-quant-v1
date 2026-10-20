@@ -1,6 +1,14 @@
-# 项目状态与验收边界（2026-10-19）
+# 项目状态与验收边界（2026-10-20）
 
-## 当前基线与进度
+## M3 核心 R1–R4 当前交付状态
+
+2026-10-20 通过 GitHub API 重新核验最新 main 为 `79e715e54c29b274f57914313abcb3b992d43894`。PR [#32](https://github.com/fengjnah/a-share-quant-v1/pull/32) 已合并（head `edff6ed0dc0093f1b531b0f3d52a087212516a2c`，合并 `2e36434a9a5d3ce540a58c04869bcd2e3c17ffd3`）；PR [#34](https://github.com/fengjnah/a-share-quant-v1/pull/34) 已合并（head `01d0878c753371883cc408b83a265f1c5b18a80b`，合并为上述 main）。[Issue #33](https://github.com/fengjnah/a-share-quant-v1/issues/33) 仍开放，旧PR描述中的Draft/open/unmerged不是当前事实；既成合并不替代独立H复核。
+
+独立 TASK-M3-CORE-002-REVIEW 对 `01d0878c753371883cc408b83a265f1c5b18a80b` 结论为 FAIL。[Issue #35](https://github.com/fengjnah/a-share-quant-v1/issues/35) / [TASK-M3-CORE-003-FIX](tasks/TASK-M3-CORE-003-FIX.md) 在独立分支 `codex/m3-core-003-fix` 完成R1–R4开发修复；本地完整离线2834 passed/1 skipped、exit0，新增706个回归实例，依赖检查通过。实际命令、早期失败与修复及交付状态见任务记录。开发自检/CI不构成独立通过，计划 TASK-M3-CORE-004-REVIEW 绑定修复PR最终SHA，独立模型/档位确认前不执行审查；核心代码门禁等待该复核。
+
+M3页面改造、真实全A历史、历史身份、CFFEX日历/发布时间/会员scope/授权、真实L2/L3、样本外及生产门禁继续保持。本修复不认证真实数据、不改造页面、不部署；不调整正式看板权重或把核心校验修复计作策略验收。
+
+## 2026-10-19 进度维护历史基线
 
 GitHub API 本轮确认 main 为 **`5adfacdace69396d88b57b9a7a88b36aa7175c4a`**（PR #25 / M2）；本地 `AI-trade-dev` 在该基线上建立 `codex/project-progress-refresh`，复用现有工作区，不建新 worktree。Git `ls-remote` 本轮连接重置，最新状态来自成功的认证 GitHub API，而非缓存。原仓库 TASK-004 修改未移动或覆盖。
 
