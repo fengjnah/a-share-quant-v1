@@ -86,7 +86,11 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 - 腾讯 SDK 会去重，并在 `day` 缺失时选择 `hfqday/qfqday`；仅凭 SDK DataFrame 无法核验原始响应所选口径或去重前冲突。当前请求明确使用 `adjust=""`，但原始口径证据仍是生产使用阻断项，不能把该候选用于已验收的严格历史研究。
 - TASK-009当时只复用TASK-008历史2行，见[历史集成报告](IMPLEMENTATION_TASK_009.md)；后续M0/M1与M2已有内置浏览器真实样本验收（2行/187行）。此处区分历史任务与后续交付，不将离线夹具、一次Demo成功或代码合并等同生产/长期覆盖验收。最新范围和证据见[项目状态](PROJECT_STATUS.md)。
 
-# TASK-M3：市场分析工作台（2026-10-19）
+# M3 当前页面（TASK-M3-REMODEL-002，2026-10-20）
+
+当前诊断页面的版本选择、八项正式状态、UNKNOWN分母、数值阻断和本地桌面/窄屏复现见 [M3_PAGE_DIAGNOSTICS](M3_PAGE_DIAGNOSTICS.md)。原始CFFEX文件不再绕过正式核心直接展示净仓；完整恐贪与独立价格代理分开。核心独立H Issue #37未执行，不把页面/CI通过视为核心或来源认证；人工决定PR合并，本轮不部署。
+
+# TASK-M3 旧页面历史记录（2026-10-19）
 
 同一 `src/ai_trade/demo_app.py` 的侧栏新增 **M3 市场分析**，直接入口 `/?view=market`。M1、M2 保留。界面最多两列，核心结论靠前，排名/原始数据/计算依据展开查看；在390×844 CSS视口检查布局，尚未完成实际手机HTTPS访问。
 

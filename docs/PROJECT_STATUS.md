@@ -2,11 +2,13 @@
 
 ## M3 核心 R1–R4 当前交付状态
 
-2026-10-20 通过 GitHub API 重新核验最新 main 为 `79e715e54c29b274f57914313abcb3b992d43894`。PR [#32](https://github.com/fengjnah/a-share-quant-v1/pull/32) 已合并（head `edff6ed0dc0093f1b531b0f3d52a087212516a2c`，合并 `2e36434a9a5d3ce540a58c04869bcd2e3c17ffd3`）；PR [#34](https://github.com/fengjnah/a-share-quant-v1/pull/34) 已合并（head `01d0878c753371883cc408b83a265f1c5b18a80b`，合并为上述 main）。[Issue #33](https://github.com/fengjnah/a-share-quant-v1/issues/33) 仍开放，旧PR描述中的Draft/open/unmerged不是当前事实；既成合并不替代独立H复核。
+TASK-M3-REMODEL-002 开始前通过 GitHub API 核验最新 main 为 `94cdd487bfd4633ecc2f002aad014f98dec961a5`。PR [#36](https://github.com/fengjnah/a-share-quant-v1/pull/36) 的 head `d60fa8809a248cb4b4a63ed4ee514296645bed2b` 已按用户决定合并；[Issue #37](https://github.com/fengjnah/a-share-quant-v1/issues/37) 独立 H 复核尚未执行，保持开放。合并、CI、页面验收都不能替代该复核。
+
+CORE-003-FIX 执行时基线为 `79e715e54c29b274f57914313abcb3b992d43894`。PR [#32](https://github.com/fengjnah/a-share-quant-v1/pull/32) 已合并（head `edff6ed0dc0093f1b531b0f3d52a087212516a2c`，合并 `2e36434a9a5d3ce540a58c04869bcd2e3c17ffd3`）；PR [#34](https://github.com/fengjnah/a-share-quant-v1/pull/34) 已合并（head `01d0878c753371883cc408b83a265f1c5b18a80b`，合并为上述旧基线）。[Issue #33](https://github.com/fengjnah/a-share-quant-v1/issues/33) 仍开放，旧PR描述中的Draft/open/unmerged不是当前事实；既成合并不替代独立H复核。
 
 独立 TASK-M3-CORE-002-REVIEW 对 `01d0878c753371883cc408b83a265f1c5b18a80b` 结论为 FAIL。[Issue #35](https://github.com/fengjnah/a-share-quant-v1/issues/35) / [TASK-M3-CORE-003-FIX](tasks/TASK-M3-CORE-003-FIX.md) 在独立分支 `codex/m3-core-003-fix` 完成R1–R4开发修复；本地完整离线2834 passed/1 skipped、exit0，新增706个回归实例，依赖检查通过。实际命令、早期失败与修复及交付状态见任务记录。开发自检/CI不构成独立通过，计划 TASK-M3-CORE-004-REVIEW 绑定修复PR最终SHA，独立模型/档位确认前不执行审查；核心代码门禁等待该复核。
 
-M3页面改造、真实全A历史、历史身份、CFFEX日历/发布时间/会员scope/授权、真实L2/L3、样本外及生产门禁继续保持。本修复不认证真实数据、不改造页面、不部署；不调整正式看板权重或把核心校验修复计作策略验收。
+当前用户明确允许在核心 H 未执行时继续本轮页面集成，覆盖旧 Issue31/接口说明中的页面等待门禁，范围仅限 [TASK-M3-REMODEL-002](tasks/TASK-M3-REMODEL-002.md)。页面消费正式核心诊断，分别显示八项状态、级别、真实截止日期和 UNKNOWN 分母；完整恐贪与价格代理分离，非法或阻断数值不展示。交付与验收边界见 [M3 页面诊断说明](M3_PAGE_DIAGNOSTICS.md)。此例外不解除核心复核、真实全A历史、历史身份、CFFEX日历/发布时间/会员scope/授权、真实L2/L3、样本外及生产门禁，不调整正式看板权重。页面变更本身须绑定最终 SHA 安排独立 H 复核，人工决定合并，不部署。
 
 ## 2026-10-19 进度维护历史基线
 

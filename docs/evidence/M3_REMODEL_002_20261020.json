@@ -1,0 +1,178 @@
+{
+  "task": "TASK-M3-REMODEL-002",
+  "baseline": {
+    "task": "TASK-M3-REMODEL-002",
+    "main_sha": "94cdd487bfd4633ecc2f002aad014f98dec961a5",
+    "tree": "2cbca81231bc2c1896f8a43b193a7a021030aa59",
+    "initial_head": "d60fa8809a248cb4b4a63ed4ee514296645bed2b",
+    "initial_branch": "codex/m3-core-003-fix",
+    "runtime": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "timestamp": "2026-10-20T15:19:28.738Z"
+    },
+    "prs": [
+      {
+        "number": 27,
+        "base_sha": "ba8588a87a9d55c95f20fbac46dca4ea0e74f57e",
+        "head_sha": "26817ae2c0e8ee80827aebc402474b6c2079a44d",
+        "merged": true,
+        "merge_commit_sha": "59ce53999477ad898a2428679f19694b48f03005"
+      },
+      {
+        "number": 28,
+        "base_sha": "59ce53999477ad898a2428679f19694b48f03005",
+        "head_sha": "765ec321d35f70d27b96958f360cc4e417bf6ee4",
+        "merged": true,
+        "merge_commit_sha": "f46347bb492fd8474e38f5fa786a8c81a47c8a6d"
+      },
+      {
+        "number": 32,
+        "base_sha": "f46347bb492fd8474e38f5fa786a8c81a47c8a6d",
+        "head_sha": "edff6ed0dc0093f1b531b0f3d52a087212516a2c",
+        "merged": true,
+        "merge_commit_sha": "2e36434a9a5d3ce540a58c04869bcd2e3c17ffd3"
+      },
+      {
+        "number": 34,
+        "base_sha": "2e36434a9a5d3ce540a58c04869bcd2e3c17ffd3",
+        "head_sha": "01d0878c753371883cc408b83a265f1c5b18a80b",
+        "merged": true,
+        "merge_commit_sha": "79e715e54c29b274f57914313abcb3b992d43894"
+      },
+      {
+        "number": 36,
+        "base_sha": "79e715e54c29b274f57914313abcb3b992d43894",
+        "head_sha": "d60fa8809a248cb4b4a63ed4ee514296645bed2b",
+        "merged": true,
+        "merge_commit_sha": "94cdd487bfd4633ecc2f002aad014f98dec961a5"
+      }
+    ],
+    "issues": [
+      {
+        "number": 30,
+        "state": "open",
+        "updated_at": "2026-10-19T15:23:37Z"
+      },
+      {
+        "number": 31,
+        "state": "open",
+        "updated_at": "2026-10-19T15:24:11Z"
+      },
+      {
+        "number": 35,
+        "state": "open",
+        "updated_at": "2026-10-20T14:29:41Z"
+      },
+      {
+        "number": 37,
+        "state": "open",
+        "updated_at": "2026-10-20T15:08:08Z"
+      }
+    ]
+  },
+  "implementation_sha256": {
+    "src/ai_trade/market_analysis_page.py": "71913b527667d146e6a5ea97e4775ac3a07cea28d8bc010cea04ab9afd393c2e",
+    "src/ai_trade/market_analysis_view.py": "51ecdf5f4c0d11dd931e67a0553dfa8ab5c9adbcffb45b9e6d6bcad08fb65080",
+    "tests/manual/test_m3_page_offline.py": "7fc47ac9e233cc97721118f72c9af39f408951be6fee7b919c3d71662c494127",
+    "tests/manual/test_m3_diagnostic_states.py": "8a9a6c566b4f9012d22ca10ebc292d56459144984dc6804cdc12f871685f17c2",
+    "tests/unit/test_market_analysis_view.py": "76f632a168409e0cc1c0a32fe1f9af7f6f4831748c5406ba08390b2c6577bd94"
+  },
+  "final_commit_binding": "Delivery PR and TASK-M3-REMODEL-003-REVIEW issue; local artifacts/m3-remodel-002/delivery-final.json",
+  "offline": {
+    "tests": 2849,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 2848,
+    "exit": 0,
+    "duration_seconds": 447.12,
+    "log_sha256": "a2bdebbe6fbcd50c24efb6a05c18c03efaa50c80f7f07c62cfad592dd70569c8",
+    "junit_sha256": "2ec39a4e261c83cb8d06b86d503ee5dcd40e7b665f44a096d91b9e2167598879"
+  },
+  "targeted": {
+    "passed": 16,
+    "exit": 0,
+    "duration_seconds": 20.04,
+    "ui_scenarios": 8
+  },
+  "dependencies": {
+    "exit": 0,
+    "output": "No broken requirements found."
+  },
+  "browser": {
+    "backend": "Codex in-app browser",
+    "local_streamlit": true,
+    "desktop": [
+      1280,
+      720
+    ],
+    "narrow": [
+      390,
+      844
+    ],
+    "narrow_document_width": 390,
+    "narrow_main_width": 380,
+    "narrow_main_scroll_width": 380,
+    "narrow_cards_left_right": [
+      16,
+      364
+    ],
+    "cards": 8,
+    "strict_blocked_modules": 8,
+    "strict_charts": 0,
+    "empty_index_charts": 0,
+    "reload_observations_after": 1,
+    "unchanged_saved_observation_sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+    "external_tcp_denied_events": 0,
+    "collection_buttons_disabled": true,
+    "source_certified": false,
+    "screenshot_files": {
+      "desktop-cards.png": {
+        "sha256": "99cf153a5b71914684c6b16ed8f246bdc931652e3f6fe2daffbddcdb6c5e276f",
+        "local_only": true
+      },
+      "desktop-evidence.png": {
+        "sha256": "d85af998138864aa8f39003b92cad5e29da51c18e92548d6e00576c46fa254f0",
+        "local_only": true
+      },
+      "desktop-final.png": {
+        "sha256": "dd823554edcf5ccf2d006a572a1cd1e6019af89b948961263cc6784a0a2df63a",
+        "local_only": true
+      },
+      "desktop-overview.png": {
+        "sha256": "8607658dcb3698bde41169de92c9d2c79503ffec4528cf0af4a23b28c54d0472",
+        "local_only": true
+      },
+      "mobile-empty.png": {
+        "sha256": "1da20c147a0bd89eeb48b7f193f2056015129a5a3ff297bafca61974f5db0541",
+        "local_only": true
+      },
+      "mobile-proxy.png": {
+        "sha256": "7ab83db9a983106523577375684fcb02e720beb7388872b128fdc05ba0bf8ca4",
+        "local_only": true
+      },
+      "mobile-strict-evidence.png": {
+        "sha256": "b09b690f5754c12e9aacdb67aa9756eee280cdffefcdae69e6b10dcb80a79f53",
+        "local_only": true
+      },
+      "mobile-top.png": {
+        "sha256": "4b9b1f5cd99c78a8bb3572952197cf11be53408cfc4540815da4212fe4d9584e",
+        "local_only": true
+      }
+    }
+  },
+  "not_run": [
+    "real_source_collection",
+    "real_source_certification",
+    "physical_mobile_https",
+    "out_of_sample_backtest",
+    "production_admission",
+    "core_independent_H_issue_37",
+    "page_independent_H"
+  ],
+  "live_trading": false,
+  "merged": false,
+  "deployed": false,
+  "implementation_sha256_encoding": "UTF-8 with LF line endings, matching Git index normalization"
+}
