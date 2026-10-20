@@ -3,8 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import math
-from numbers import Real
 
+import numpy as np
 import pandas as pd
 
 from ai_trade.data_access.validation import iso_date, text_field, timestamp
@@ -18,6 +18,51 @@ from ai_trade.market_analysis_contract import (
 MINIMUMS = {"daily_trend": 60, "weekly_structure": 20, "wave": 60,
             "price_proxy": 41, "fear_greed": 41, "market_breadth": 1, "cffex_position": 1}
 TIME_FIELDS = ("event_time", "observed_at", "ingested_at", "available_at")
+BREADTH_COUNTS = ("advances", "declines", "flat", "limit_up", "limit_down",
+                  "eligible_count", "suspended", "unavailable", "missing")
+
+
+def _identity(value, name):
+    """M3 identifiers reject C0, DEL and C1 without changing storage validators."""
+    value = text_field(value, name)
+    if any(127 <= ord(c) <= 159 for c in value):
+        raise ValueError(f"{name}: control characters U+007F–U+009F are invalid")
+    return value
+
+
+def _declared_identities(request, source):
+    location = f"trade_date={request.analysis_date} symbol={request.symbol}"
+    for key, value in (("symbol", request.symbol), ("source", source.source),
+                       ("source_version", source.source_version)):
+        _identity(value, f"declared {key} at {location}")
+
+
+def _missing_number(value):
+    return value is None or value is pd.NA or isinstance(value, (float, np.floating)) and np.isnan(value)
+
+
+def _number(value, name, *, positive=False, count=False):
+    """Normalize only Python/NumPy integer/float scalars to a finite calculator type.
+
+    Counts retain exact integers; prices/amounts use float64. Fraction, Decimal,
+    strings, booleans and complex values are deliberately outside this boundary.
+    """
+    requirement = "nonnegative integer" if count else "positive float64" if positive else "nonnegative float64"
+    try:
+        if isinstance(value, bool) or not isinstance(value, (int, float, np.integer, np.floating)):
+            raise TypeError("unsupported numeric scalar type")
+        normalized = float(value)
+        if (not math.isfinite(normalized) or normalized < 0 or positive and normalized == 0
+                or normalized == 0 and value != 0):
+            raise ValueError("outside finite numeric range")
+        if count:
+            integer = int(value)
+            if value != integer:
+                raise ValueError("fractional count")
+            return integer
+        return normalized
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name}: finite {requirement} required; unsupported type or numeric range") from exc
 
 
 @dataclass
@@ -59,6 +104,7 @@ def _coverage(f, request, calendar, reasons):
 def _prepare(frame, request, source, calendar=None, *, prices=True):
     ctx = _Context(request, source, pd.DataFrame(), Coverage(0, None, "UNKNOWN"))
     try:
+        _declared_identities(request, source)
         if frame is None or frame.empty:
             ctx.add(Code.SOURCE_UNAVAILABLE, "No observations supplied", "Acquire one explicit source/date with bounded requests")
             return ctx
@@ -91,42 +137,56 @@ def _prepare(frame, request, source, calendar=None, *, prices=True):
                 raise ValueError("Ingestion precedes actual observation")
             # Filtering, not relabeling, keeps late acquisitions out of historical replay.
             if all(t <= request.as_of for t in known.values()):
+                # Calculators see the same instant and Shanghai date as validation.
+                # Only the calculation copy changes; input/history timestamps do not.
+                row.update({k: pd.Timestamp(v).tz_convert("Asia/Shanghai").isoformat()
+                            for k, v in known.items()})
                 visible.append(row)
         if not visible:
             ctx.add(Code.NOT_VISIBLE, "No input version visible at as_of", "Use an actually visible snapshot or later as_of")
             return ctx
-        f = pd.DataFrame(visible).sort_values("trade_date").reset_index(drop=True)
-        if f.trade_date.duplicated().any():
-            raise ValueError("Duplicate date; select one visible version first")
         if "quality_status" not in f:
             ctx.missing.add("quality_status")
             ctx.add(Code.EVIDENCE_MISSING, "quality_status absent for the visible input series",
                     "Supply the actual per-record quality decision; a receipt cannot imply accepted")
-        for row in f.to_dict("records"):
+        # Inspect raw scalars before any DataFrame dtype inference can overflow or
+        # turn bools/unsupported Real objects into apparently accepted numbers.
+        for row in visible:
             location = f"trade_date={row['trade_date']} symbol={request.symbol}"
             identities = {"source": source.source}
             if prices or "symbol" in row:
                 identities["symbol"] = request.symbol
             for key, expected in identities.items():
-                value = text_field(row[key], f"{key} at {location}")
+                value = _identity(row[key], f"{key} at {location}")
                 if value != expected:
                     raise ValueError(f"{key} at {location}: does not match the declared identity")
             if "quality_status" in row:
                 quality = row["quality_status"]
-                if quality is None or quality is pd.NA or isinstance(quality, float) and math.isnan(quality):
+                if _missing_number(quality):
                     ctx.missing.add("quality_status")
                     ctx.add(Code.EVIDENCE_MISSING, f"quality_status UNKNOWN at {location}",
                             "Supply the actual accepted quality decision; never fill it from a receipt")
                 elif not isinstance(quality, str) or quality != "accepted":
                     raise ValueError(f"quality_status at {location}: explicit accepted required; rejected/isolated/invalid state")
-        if prices:
-            for row in f.to_dict("records"):
+            if prices:
                 for k in ("open", "high", "low", "close"):
-                    v = row[k]
-                    if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v <= 0:
-                        raise ValueError("Price must be a positive finite number")
+                    row[k] = _number(row[k], f"{k} at {location}", positive=True)
                 if not row["low"] <= min(row["open"], row["close"]) <= max(row["open"], row["close"]) <= row["high"]:
-                    raise ValueError("OHLC relationship invalid")
+                    raise ValueError(f"OHLC relationship invalid at {location}")
+            else:
+                for k in BREADTH_COUNTS:
+                    if k in row and not _missing_number(row[k]):
+                        row[k] = _number(row[k], f"{k} at {location}", count=True)
+                if "market_amount_cny" in row:
+                    row["market_amount_cny"] = _number(row["market_amount_cny"], f"market_amount_cny at {location}")
+        # Object construction also prevents inference on unused, untrusted columns.
+        f = pd.DataFrame(visible, dtype=object).sort_values("trade_date").reset_index(drop=True)
+        for k in (("open", "high", "low", "close") if prices else ("market_amount_cny",)):
+            if k in f:
+                f[k] = f[k].astype("float64")
+        if f.trade_date.duplicated().any():
+            raise ValueError("Duplicate date; select one visible version first")
+        if prices:
             if "adjustment_method" in f and (f.adjustment_method.nunique() != 1 or not f.adjustment_method.eq("none").all()):
                 raise ValueError("This definition accepts only explicit unadjusted prices")
             if "adjustment_method" not in f:
@@ -313,17 +373,6 @@ def fear_greed_diagnostic(frame, *, request: Request, source: SourceEvidence, ca
                                   if ctx.times[key] is not None and market_ctx.times[key] is not None else None)
             if "market_amount_cny" in breadth:
                 amounts = breadth.set_index("trade_date").market_amount_cny
-                for day, amount in amounts.items():
-                    valid = isinstance(amount, Real) and not isinstance(amount, bool)
-                    if valid:
-                        try:
-                            valid = math.isfinite(amount) and amount >= 0
-                        except (OverflowError, TypeError, ValueError):
-                            valid = False
-                    if not valid:
-                        ctx.add(Code.INVALID_DATA,
-                                f"market_amount_cny at trade_date={day} symbol=ALL_A: finite nonnegative real number required; missing/bool/string is invalid",
-                                "Correct this dated source sample; do not coerce, drop, or replace it with zero")
                 f = f.copy()
                 f["amount_cny"] = f.trade_date.map(amounts)
         else:
@@ -367,6 +416,8 @@ def cffex_diagnostic(records, *, request: Request, source: SourceEvidence, membe
               "net": None, "net_change": None, "direction": None, "expiry_month": None,
               "rollover": "UNKNOWN", "contract_scope": [request.symbol], "final_client_position": "UNKNOWN"}
     try:
+        _declared_identities(request, source)
+        _identity(member, f"member at trade_date={request.analysis_date} symbol={request.symbol}")
         if not records:
             ctx.add(Code.SOURCE_UNAVAILABLE, "No certified CFFEX record; raw CSV alone is insufficient", "Supply reviewed adapter records and CFFEX calendar evidence")
         elif request.instrument_type != "CFFEX" or scope not in (MemberScope.AGENT, MemberScope.PROPRIO):
@@ -374,6 +425,11 @@ def cffex_diagnostic(records, *, request: Request, source: SourceEvidence, membe
         else:
             selected = select_visible_version(records, as_of=request.as_of, mode=request.mode)
             record = selected.value
+            for row in record.rows:
+                location = f"trade_date={record.trade_date} symbol={row.contract}"
+                _identity(row.contract, f"symbol at {location}")
+                if row.member:  # Empty unpublished member names retain existing UNKNOWN semantics.
+                    _identity(row.member, f"member at {location}")
             if record.trade_date != request.analysis_date or record.source != source.source:
                 raise ValueError("CFFEX source/date mismatch; a different date cannot stand in for this request")
             if record.source_version != source.source_version or record.source_version not in source.lineage_refs:
@@ -421,9 +477,21 @@ def environment_diagnostic(evidence: dict[str, Diagnostic], *, request: Request)
     source = SourceEvidence("derived:M3:environment", "m3-core-rules-v1", refs,
                             verified, verified, verified)
     ctx = _Context(request, source, pd.DataFrame(), Coverage(0, 3, "required_evidence_classes", required))
+    try:
+        _declared_identities(request, source)
+    except ValueError as exc:
+        ctx.add(Code.INVALID_DATA, str(exc), "Correct the declared identity; no aggregate admission")
     votes, components, eligible = [], {}, []
     for name in required:
         d = evidence.get(name)
+        if d is not None:
+            try:
+                _declared_identities(d.request, d.source)
+            except ValueError as exc:
+                ctx.add(Code.INVALID_DATA, f"{name}: {exc}", "Correct the component identity")
+            for reason in d.reasons:
+                if reason.code is Code.INVALID_DATA:
+                    ctx.add(Code.INVALID_DATA, f"{name}: {reason.detail}", reason.next_action)
         consistent = (d is not None and d.indicator == name and d.request.analysis_date == request.analysis_date
                       and d.request.as_of == request.as_of and d.definitions_version == "m3-core-rules-v1"
                       and (name == "cffex_position" or d.request.symbol == request.symbol))
