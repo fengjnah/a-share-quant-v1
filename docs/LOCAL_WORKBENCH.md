@@ -2,10 +2,10 @@
 
 ## 固定日常工作区
 
-- 代码工作区：F:\\codex-agnes\\AI-trade-dev
+- 代码工作区：F:\codex-agnes\AI-trade-dev
 - 日常分支：main
-- 日常 Python：F:\\codex-agnes\\AI-trade-dev\\.venv\\Scripts\\python.exe
-- 正式研究数据库：F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3
+- 日常 Python：F:\codex-agnes\AI-trade-dev\.venv\Scripts\python.exe
+- 正式研究数据库：F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3
 - 启动脚本：scripts/start_workbench.ps1
 
 日常入口与旧临时 Demo 明确分开。研究库不连接交易账户或 EC2，不代表交易生产数据库。数据库目录在 Git 中忽略；备份和运行日志保存在源码树外。
@@ -17,13 +17,13 @@
 正式数据库已按 TASK-M0-PRODUCTION-DB-001 创建。下面命令仅记录首次初始化流程，不是日常启动命令，也不要对已有数据库重跑。**仅当目标库、同名目录、WAL/SHM/journal、备份及恢复目标均不存在且另有明确授权时才允许；存在即拒绝，不自动迁移或覆盖。** 失败产物保留，不能直接重试覆盖。
 
 ~~~powershell
-Set-Location 'F:\\codex-agnes\\AI-trade-dev'
+Set-Location 'F:\codex-agnes\AI-trade-dev'
 $env:PYTHONPATH = Join-Path (Get-Location) 'src'
-& 'F:\\codex-agnes\\AI-trade-dev\\.venv\\Scripts\\python.exe' -m ai_trade.storage.workbench_cli initialize-new `
-  --root 'F:\\codex-agnes\\AI-trade\\data\\sqlite' `
-  --backup 'F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3' `
-  --restore 'F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3' `
-  --report 'F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\initialization.json'
+& 'F:\codex-agnes\AI-trade-dev\.venv\Scripts\python.exe' -m ai_trade.storage.workbench_cli initialize-new `
+  --root 'F:\codex-agnes\AI-trade\data\sqlite' `
+  --backup 'F:\codex-agnes\AI-trade-local-state\m0-production-db-001\backups\workbench-initial.sqlite3' `
+  --restore 'F:\codex-agnes\AI-trade-local-state\m0-production-db-001\restore-check\workbench.sqlite3' `
+  --report 'F:\codex-agnes\AI-trade-local-state\m0-production-db-001\initialization.json'
 ~~~
 
 该命令两次明确调用 Database.initialize() 验证幂等；不会填充行情或主数据。使用 SQLite Backup API 分别创建新备份、隔离恢复文件；对照 DDL/索引/触发器、七表计数、迁移 checksum、quick_check、foreign_key_check。空库演练只能验证结构恢复；非空版本/时间内容恢复另有隔离合成测试。
@@ -33,11 +33,11 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'src'
 在 PowerShell 中：
 
 ~~~powershell
-Set-Location 'F:\\codex-agnes\\AI-trade-dev'
-.\\scripts\\start_workbench.ps1
+Set-Location 'F:\codex-agnes\AI-trade-dev'
+.\scripts\start_workbench.ps1
 ~~~
 
-默认绑定 127.0.0.1:8524。脚本固定核验工作区路径、main 分支和干净状态，使用 AI-trade-dev\\.venv，设置正式 ROOT/QUANT_DB_PATH、local、DELETE、STRICT_WORKBENCH=1、READ_ONLY=1，并去除该进程的 Demo 根。启动前输出实际 Git SHA、Python/数据库路径，检查实际 SQLite 连接、Schema/checksum、DDL 和完整性；失败即退出，不启动页面、不回退临时库。
+默认绑定 127.0.0.1:8524。脚本固定核验工作区路径、main 分支和干净状态，使用 AI-trade-dev\.venv，设置正式 ROOT/QUANT_DB_PATH、local、DELETE、STRICT_WORKBENCH=1、READ_ONLY=1，并去除该进程的 Demo 根。启动前输出实际 Git SHA、Python/数据库路径，检查实际 SQLite 连接、Schema/checksum、DDL 和完整性；失败即退出，不启动页面、不回退临时库。
 
 浏览器地址：http://127.0.0.1:8524/?view=market。端口占用时可通过 -Port 指定另一个端口。
 
