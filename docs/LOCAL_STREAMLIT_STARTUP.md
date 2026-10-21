@@ -3,24 +3,24 @@
 ## 1. 固定规则
 
 - 仓库：`fengjnah/a-share-quant-v1`
-- 唯一日常工作区：`F:\\codex-agnes\\AI-trade-dev`
+- 唯一日常工作区：`F:\codex-agnes\AI-trade-dev`
 - 唯一允许的运行分支：`main`
 - 启动脚本：`scripts/start_workbench.ps1`
-- Python 环境：`F:\\codex-agnes\\AI-trade-dev\\.venv\\Scripts\\python.exe`
-- 正式 SQLite：`F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3`
+- Python 环境：`F:\codex-agnes\AI-trade-dev\.venv\Scripts\python.exe`
+- 正式 SQLite：`F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3`
 - 默认监听：`127.0.0.1:8524`
 - 浏览器：`http://127.0.0.1:8524/?view=market`
 
-`AI-trade-dev` 是代码工作区；正式 SQLite 保持在已确认的 `AI-trade\\data\\sqlite` 路径。不要把数据库复制进仓库，也不要改用临时 Demo 数据库。
+`AI-trade-dev` 是代码工作区；正式 SQLite 保持在已确认的 `AI-trade\data\sqlite` 路径。不要把数据库复制进仓库，也不要改用临时 Demo 数据库。
 
 ## 2. 当前 PR 与版本管理
 
 本说明及启动脚本的修订首先提交到 [PR #47](https://github.com/fengjnah/a-share-quant-v1/pull/47) 的开发分支 `codex/m0-production-db-001`，待审查、CI 和合并后才进入 `main`。该开发分支只用于交付，不是日常运行分支。
 
-PR 合并前，`AI-trade-dev\\main` 不一定含有启动脚本和正式数据库绑定代码。合并后在本地工作区确认并快进更新：
+PR 合并前，`AI-trade-dev\main` 不一定含有启动脚本和正式数据库绑定代码。合并后在本地工作区确认并快进更新：
 
 ```powershell
-Set-Location 'F:\\codex-agnes\\AI-trade-dev'
+Set-Location 'F:\codex-agnes\AI-trade-dev'
 git status --short
 git branch --show-current
 git pull --ff-only origin main
@@ -34,14 +34,14 @@ git rev-parse HEAD
 在 PowerShell 中：
 
 ```powershell
-Set-Location 'F:\\codex-agnes\\AI-trade-dev'
-.\\scripts\\start_workbench.ps1
+Set-Location 'F:\codex-agnes\AI-trade-dev'
+.\scripts\start_workbench.ps1
 ```
 
 如当前 PowerShell 执行策略阻止脚本，可仅对这次进程使用：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File 'F:\\codex-agnes\\AI-trade-dev\\scripts\\start_workbench.ps1'
+powershell -NoProfile -ExecutionPolicy Bypass -File 'F:\codex-agnes\AI-trade-dev\scripts\start_workbench.ps1'
 ```
 
 启动成功后打开：
@@ -50,16 +50,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File 'F:\\codex-agnes\\AI-trade-d
 http://127.0.0.1:8524/?view=market
 ```
 
-停止服务：回到运行脚本的终端按 `Ctrl+C`。如需临时更换端口，可运行 `.\\scripts\\start_workbench.ps1 -Port 8525`，然后打开 `http://127.0.0.1:8525/?view=market`。
+停止服务：回到运行脚本的终端按 `Ctrl+C`。如需临时更换端口，可运行 `.\scripts\start_workbench.ps1 -Port 8525`，然后打开 `http://127.0.0.1:8525/?view=market`。
 
 ## 4. 脚本强制执行的检查
 
 脚本会在启动前验证：
 
-1. 脚本确实来自 `F:\\codex-agnes\\AI-trade-dev`，不是 Codex worktree 或其他克隆目录。
+1. 脚本确实来自 `F:\codex-agnes\AI-trade-dev`，不是 Codex worktree 或其他克隆目录。
 2. 当前 Git 分支必须是 `main`；不会自动切换分支。
 3. Git 工作区必须干净；如存在未提交或未跟踪文件，脚本停止，避免误运行未经确认的代码。
-4. Python 必须是该工作区的 `.venv\\Scripts\\python.exe`；不存在就停止，不会回退到 `AI-trade-main-demo` 或其他环境。
+4. Python 必须是该工作区的 `.venv\Scripts\python.exe`；不存在就停止，不会回退到 `AI-trade-main-demo` 或其他环境。
 5. 正式数据库文件必须已存在；脚本不会创建、初始化或迁移数据库。
 6. 启动前运行 `ai_trade.storage.workbench_cli diagnose`，核验连接路径、Schema/checksum、DDL 和 SQLite 完整性。
 7. 显式设置正式工作台根目录、`QUANT_DB_PATH`、严格模式和只读模式，移除该进程的 Demo 根变量。
