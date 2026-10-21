@@ -38,6 +38,24 @@ Set-Location 'F:\codex-agnes\AI-trade-dev'
 .\scripts\start_workbench.ps1
 ```
 
+目录路径本身不是启动命令；先用 `Set-Location` 进入目录，再运行上面的 `.ps1`。
+该脚本包含中文，编辑时须保存为 **UTF-8 with BOM**，兼容 Windows PowerShell 5.1；
+无 BOM 的 UTF-8 可能被误读并出现乱码、字符串未结束等解析错误。
+PowerShell 7 可直接读取无 BOM 的 UTF-8；尚未取得编码修复时，可从已安装的 PowerShell 7 执行：
+
+```powershell
+pwsh -NoProfile -File 'F:\codex-agnes\AI-trade-dev\scripts\start_workbench.ps1'
+```
+
+首次使用且 `.venv` 不存在时，先在该工作区创建独立环境并安装项目已声明的依赖：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e '.[demo,test]'
+```
+
+若 8524 已有工作台服务，请继续使用现有页面；不要重复启动或终止不明进程。
+
 如当前 PowerShell 执行策略阻止脚本，可仅对这次进程使用：
 
 ```powershell
