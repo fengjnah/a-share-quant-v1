@@ -24,7 +24,7 @@ Schema账本由`db.initialize`单独创建；v1/v2定义分别见schema.py/refer
 | checksum | TEXT! | 对(version,name,statements)的SHA256；DDL不验证长度 |
 | applied_at | TEXT! | 实际应用时钟，DDL没有四时点格式约束 |
 
-无FK/显式索引；粒度=一次已提交迁移。`Database.initialize()`读写/校验，M1–M4共享启动间接消费；没有行情来源、业务日期或版本修订。账本本身没有immutable触发器，不能误写为七表都受相同触发器保护。P：权限/备份审计保护，不改旧迁移。示意：`{version:1,name:"DEMO_MIGRATION",checksum:H,applied_at:G}`，不是正式账本记录。
+无FK/显式索引；粒度=一次已提交迁移。`Database.initialize()`负责显式创建/写入；最终main的正式M1–M4启动通过inspect_database只读校验，隔离Demo分支仍initialize；没有行情来源、业务日期或版本修订。账本本身没有immutable触发器，不能误写为七表都受相同触发器保护。P：权限/备份审计保护，不改旧迁移。示意：`{version:1,name:"DEMO_MIGRATION",checksum:H,applied_at:G}`，不是正式账本记录。
 
 ### E02 instruments（v1，原样复用）
 

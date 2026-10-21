@@ -139,7 +139,7 @@ def _values(name, d):
 
 def render(db):
     root = db.config.path.parent
-    read_only = os.environ.get('AI_TRADE_READ_ONLY') == '1'
+    read_only = getattr(db.config, 'read_only', False) or os.environ.get('AI_TRADE_READ_ONLY') == '1'
     as_of = archive.now()
     st.markdown(CSS, unsafe_allow_html=True)
     st.title('M3 市场分析')

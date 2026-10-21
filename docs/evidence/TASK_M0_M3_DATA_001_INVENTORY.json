@@ -1,0 +1,4196 @@
+{
+  "task_id": "TASK-M0-M3-DATA-001",
+  "checked_at": "2026-10-20T23:38:41.745929+00:00",
+  "baseline_sha": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+  "model": {
+    "id": "gpt-6.1-sol",
+    "effort": "high",
+    "turn_context": "01a15ba8-8d07-7282-bc61-2e8c21132747",
+    "cost": "UNKNOWN"
+  },
+  "stage": "PHASE_1_COMPLETE_PHASE_3_4_BLOCKED",
+  "formal_windows_db_path": null,
+  "user_reply": "Confirmed existing seven migration tables; did not provide physical Windows SQLite path.",
+  "network_requests_this_task": 0,
+  "existing_database_writes": 0,
+  "source_rights": "UNKNOWN",
+  "scan_scope": {
+    "project_roots": "F:/codex-agnes/AI-trade* (exclude .git/.venv/node_modules caches)",
+    "limitations": "Not a whole-computer/EC2 scan; unconfigured paths and active service environment remain UNKNOWN."
+  },
+  "scan": {
+    "database_candidates": 613,
+    "project_test_db_paths_excluded": 1361,
+    "all_candidate_db_files_unchanged": true,
+    "quick_check_failures": 0,
+    "foreign_key_violations": 0,
+    "calendar_rows": 0,
+    "security_version_rows": 0,
+    "version_row_histogram": {
+      "1": 396,
+      "0": 206,
+      "1217": 1,
+      "2": 6,
+      "187": 1,
+      "6": 1,
+      "4": 1,
+      "2291": 1
+    }
+  },
+  "local_annexes": {
+    "inventory.json": {
+      "path": "artifacts/m0-m3-data-001/inventory.json",
+      "sha256": "92962182a77054c1c4afcfca690160f5556a8c314716c59cb28ea4bc7a463b29",
+      "bytes": 5137399
+    },
+    "readback.json": {
+      "path": "artifacts/m0-m3-data-001/readback.json",
+      "sha256": "116b46d5699173cfe63b2746ea12235fc6e11f5b66681e4c20738a410f274486",
+      "bytes": 34735
+    },
+    "inventory.py": {
+      "path": "artifacts/m0-m3-data-001/inventory.py",
+      "sha256": "23c70ef2bfe8ca6b5b144946bb7e24cca2a62c9182fea2624aa0d3b60e664eda",
+      "bytes": 9652
+    },
+    "readback.py": {
+      "path": "artifacts/m0-m3-data-001/readback.py",
+      "sha256": "cba4888c460ada685ac83e518b4242d46d414344eb78bd1160b4035d794670a9",
+      "bytes": 6047
+    }
+  },
+  "selected_databases": [
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3": {
+          "size": 1454080,
+          "sha256": "20253cec31b7d7ad8fe79bfcf24f8f77eeefe9bad4b86f087943f4fd36ba2cfc"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "delete",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 1217,
+          "ranges": {
+            "event_time": {
+              "min": "2021-10-08T07:00:00.000000+00:00",
+              "max": "2026-10-15T07:00:00.000000+00:00",
+              "non_null": 1217
+            },
+            "available_at": {
+              "min": "2026-10-18T07:51:15.688495+00:00",
+              "max": "2026-10-18T07:51:15.688495+00:00",
+              "non_null": 1217
+            },
+            "ingested_at": {
+              "min": "2026-10-18T07:51:15.824265+00:00",
+              "max": "2026-10-18T07:51:15.824265+00:00",
+              "non_null": 1217
+            }
+          },
+          "source": [
+            {
+              "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+              "rows": 1217
+            }
+          ],
+          "quality_status": [
+            {
+              "quality_status": "accepted",
+              "rows": 1217
+            }
+          ]
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 1217,
+          "ranges": {
+            "trade_date": {
+              "min": "2021-10-08",
+              "max": "2026-10-15",
+              "non_null": 1217
+            }
+          },
+          "adjustment_method": [
+            {
+              "adjustment_method": "none",
+              "rows": 1217
+            }
+          ]
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 1,
+          "ranges": {
+            "recorded_at": {
+              "min": "2026-10-18T07:51:15.901889+00:00",
+              "max": "2026-10-18T07:51:15.901889+00:00",
+              "non_null": 1
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 1,
+          "ranges": {},
+          "symbol": [
+            {
+              "symbol": "600000.SH",
+              "rows": 1
+            }
+          ]
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T07:50:59.445865+00:00",
+              "max": "2026-10-18T07:50:59.449611+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T07:50:59.445865+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T07:50:59.449611+00:00"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "demo-fab1a9b6062641248b5d97ce97a9723f",
+          "recorded_at": "2026-10-18T07:51:15.901889+00:00"
+        }
+      ],
+      "bars_by_source_run": [
+        {
+          "symbol": "600000.SH",
+          "instrument_id": "cn-equity:600000:SH",
+          "adjustment_method": "none",
+          "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+          "run_id": "demo-fab1a9b6062641248b5d97ce97a9723f",
+          "versions": 1217,
+          "dates": 1217,
+          "start": "2021-10-08",
+          "end": "2026-10-15",
+          "source_versions": 1217,
+          "ingested_start": "2026-10-18T07:51:15.824265+00:00",
+          "ingested_end": "2026-10-18T07:51:15.824265+00:00"
+        }
+      ],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3": {
+          "size": 1454080,
+          "sha256": "20253cec31b7d7ad8fe79bfcf24f8f77eeefe9bad4b86f087943f4fd36ba2cfc"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3": {
+          "size": 344064,
+          "sha256": "a5a502ae889e4ad26dee3993f689b22cb6555584b454d751f9514bf1524269ed"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "delete",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 187,
+          "ranges": {
+            "event_time": {
+              "min": "2026-01-05T07:00:00.000000+00:00",
+              "max": "2026-10-15T07:00:00.000000+00:00",
+              "non_null": 187
+            },
+            "available_at": {
+              "min": "2026-10-18T14:50:03.378746+00:00",
+              "max": "2026-10-18T14:50:03.378746+00:00",
+              "non_null": 187
+            },
+            "ingested_at": {
+              "min": "2026-10-18T14:50:03.413500+00:00",
+              "max": "2026-10-18T14:50:03.413500+00:00",
+              "non_null": 187
+            }
+          },
+          "source": [
+            {
+              "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+              "rows": 187
+            }
+          ],
+          "quality_status": [
+            {
+              "quality_status": "accepted",
+              "rows": 187
+            }
+          ]
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 187,
+          "ranges": {
+            "trade_date": {
+              "min": "2026-01-05",
+              "max": "2026-10-15",
+              "non_null": 187
+            }
+          },
+          "adjustment_method": [
+            {
+              "adjustment_method": "none",
+              "rows": 187
+            }
+          ]
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 1,
+          "ranges": {
+            "recorded_at": {
+              "min": "2026-10-18T14:50:03.424922+00:00",
+              "max": "2026-10-18T14:50:03.424922+00:00",
+              "non_null": 1
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 1,
+          "ranges": {},
+          "symbol": [
+            {
+              "symbol": "600000.SH",
+              "rows": 1
+            }
+          ]
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T14:50:01.718281+00:00",
+              "max": "2026-10-18T14:50:01.721291+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T14:50:01.718281+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T14:50:01.721291+00:00"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "m2-tencent-600000-20260101-20261015",
+          "recorded_at": "2026-10-18T14:50:03.424922+00:00"
+        }
+      ],
+      "bars_by_source_run": [
+        {
+          "symbol": "600000.SH",
+          "instrument_id": "cn-equity:600000:SH",
+          "adjustment_method": "none",
+          "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+          "run_id": "m2-tencent-600000-20260101-20261015",
+          "versions": 187,
+          "dates": 187,
+          "start": "2026-01-05",
+          "end": "2026-10-15",
+          "source_versions": 187,
+          "ingested_start": "2026-10-18T14:50:03.413500+00:00",
+          "ingested_end": "2026-10-18T14:50:03.413500+00:00"
+        }
+      ],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3": {
+          "size": 344064,
+          "sha256": "a5a502ae889e4ad26dee3993f689b22cb6555584b454d751f9514bf1524269ed"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-tduod91y\\demo.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-tduod91y\\demo.sqlite3": {
+          "size": 2613248,
+          "sha256": "4152f78c18dfaa9473f76a33809d902c9af7cc73c9fcceedf6848b7c6d949bfb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "delete",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 2291,
+          "ranges": {
+            "event_time": {
+              "min": "2016-10-17T07:00:00.000000+00:00",
+              "max": "2026-10-15T07:00:00.000000+00:00",
+              "non_null": 2291
+            },
+            "available_at": {
+              "min": "2026-10-18T08:48:44.472123+00:00",
+              "max": "2026-10-18T08:48:44.472123+00:00",
+              "non_null": 2291
+            },
+            "ingested_at": {
+              "min": "2026-10-18T08:48:44.710869+00:00",
+              "max": "2026-10-18T08:48:44.710869+00:00",
+              "non_null": 2291
+            }
+          },
+          "source": [
+            {
+              "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+              "rows": 2291
+            }
+          ],
+          "quality_status": [
+            {
+              "quality_status": "accepted",
+              "rows": 2291
+            }
+          ]
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 2291,
+          "ranges": {
+            "trade_date": {
+              "min": "2016-10-17",
+              "max": "2026-10-15",
+              "non_null": 2291
+            }
+          },
+          "adjustment_method": [
+            {
+              "adjustment_method": "none",
+              "rows": 2291
+            }
+          ]
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 1,
+          "ranges": {
+            "recorded_at": {
+              "min": "2026-10-18T08:48:44.845835+00:00",
+              "max": "2026-10-18T08:48:44.845835+00:00",
+              "non_null": 1
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 1,
+          "ranges": {},
+          "symbol": [
+            {
+              "symbol": "600378.SH",
+              "rows": 1
+            }
+          ]
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T08:48:25.456235+00:00",
+              "max": "2026-10-18T08:48:25.460545+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T08:48:25.456235+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T08:48:25.460545+00:00"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "demo-26c7d533818b49a49f97827cc47e8471",
+          "recorded_at": "2026-10-18T08:48:44.845835+00:00"
+        }
+      ],
+      "bars_by_source_run": [
+        {
+          "symbol": "600378.SH",
+          "instrument_id": "cn-equity:600378:SH",
+          "adjustment_method": "none",
+          "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+          "run_id": "demo-26c7d533818b49a49f97827cc47e8471",
+          "versions": 2291,
+          "dates": 2291,
+          "start": "2016-10-17",
+          "end": "2026-10-15",
+          "source_versions": 2291,
+          "ingested_start": "2026-10-18T08:48:44.710869+00:00",
+          "ingested_end": "2026-10-18T08:48:44.710869+00:00"
+        }
+      ],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-tduod91y\\demo.sqlite3": {
+          "size": 2613248,
+          "sha256": "4152f78c18dfaa9473f76a33809d902c9af7cc73c9fcceedf6848b7c6d949bfb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "e4c9ce0507d88a44343fc62ecdf56e7035daac615942265b115ea588d3b7c33d"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 2,
+          "ranges": {
+            "event_time": {
+              "min": "2026-10-14T07:00:00.000000+00:00",
+              "max": "2026-10-15T07:00:00.000000+00:00",
+              "non_null": 2
+            },
+            "available_at": {
+              "min": "2026-10-18T05:31:33.635382+00:00",
+              "max": "2026-10-18T05:31:33.635382+00:00",
+              "non_null": 2
+            },
+            "ingested_at": {
+              "min": "2026-10-18T05:31:33.649694+00:00",
+              "max": "2026-10-18T05:31:33.649694+00:00",
+              "non_null": 2
+            }
+          },
+          "source": [
+            {
+              "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+              "rows": 2
+            }
+          ],
+          "quality_status": [
+            {
+              "quality_status": "accepted",
+              "rows": 2
+            }
+          ]
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 2,
+          "ranges": {
+            "trade_date": {
+              "min": "2026-10-14",
+              "max": "2026-10-15",
+              "non_null": 2
+            }
+          },
+          "adjustment_method": [
+            {
+              "adjustment_method": "none",
+              "rows": 2
+            }
+          ]
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 1,
+          "ranges": {
+            "recorded_at": {
+              "min": "2026-10-18T05:31:33.653692+00:00",
+              "max": "2026-10-18T05:31:33.653692+00:00",
+              "non_null": 1
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 1,
+          "ranges": {},
+          "symbol": [
+            {
+              "symbol": "600000.SH",
+              "rows": 1
+            }
+          ]
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:31:32.080097+00:00",
+              "max": "2026-10-18T05:31:32.082067+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:31:32.080097+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:31:32.082067+00:00"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "task008-ca640f00390844d9904050432405a10c",
+          "recorded_at": "2026-10-18T05:31:33.653692+00:00"
+        }
+      ],
+      "bars_by_source_run": [
+        {
+          "symbol": "600000.SH",
+          "instrument_id": "cn-equity:600000:SH",
+          "adjustment_method": "none",
+          "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+          "run_id": "task008-ca640f00390844d9904050432405a10c",
+          "versions": 2,
+          "dates": 2,
+          "start": "2026-10-14",
+          "end": "2026-10-15",
+          "source_versions": 2,
+          "ingested_start": "2026-10-18T05:31:33.649694+00:00",
+          "ingested_end": "2026-10-18T05:31:33.649694+00:00"
+        }
+      ],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "e4c9ce0507d88a44343fc62ecdf56e7035daac615942265b115ea588d3b7c33d"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-72un4ppq\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "9a500c21213132766d1312bf656c2c95e6f4066983bf4d866a0e24c24530f8be"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": []
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 0,
+          "ranges": {
+            "trade_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "adjustment_method": []
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 0,
+          "ranges": {
+            "recorded_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 0,
+          "ranges": {},
+          "symbol": []
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:29:30.227381+00:00",
+              "max": "2026-10-18T05:29:30.231660+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:29:30.227381+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:29:30.231660+00:00"
+        }
+      ],
+      "runs": [],
+      "bars_by_source_run": [],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "9a500c21213132766d1312bf656c2c95e6f4066983bf4d866a0e24c24530f8be"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-djxg4dhk\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "0d8ce31133a577d9debc723a9fe2aa957a2ad1051de970b86126868017d4d576"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": []
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 0,
+          "ranges": {
+            "trade_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "adjustment_method": []
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 0,
+          "ranges": {
+            "recorded_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 0,
+          "ranges": {},
+          "symbol": []
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:29:44.439958+00:00",
+              "max": "2026-10-18T05:29:44.441994+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:29:44.439958+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:29:44.441994+00:00"
+        }
+      ],
+      "runs": [],
+      "bars_by_source_run": [],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "0d8ce31133a577d9debc723a9fe2aa957a2ad1051de970b86126868017d4d576"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-otnag7ew\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "483631ee6c3ff5270031b6dc6043658b3435e5f92ef8a5f2b3dc2a7538f30a69"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": []
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 0,
+          "ranges": {
+            "trade_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "adjustment_method": []
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 0,
+          "ranges": {
+            "recorded_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 0,
+          "ranges": {},
+          "symbol": []
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:30:22.352371+00:00",
+              "max": "2026-10-18T05:30:22.353547+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:30:22.352371+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:30:22.353547+00:00"
+        }
+      ],
+      "runs": [],
+      "bars_by_source_run": [],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "483631ee6c3ff5270031b6dc6043658b3435e5f92ef8a5f2b3dc2a7538f30a69"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-pwz6_t1q\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "bbad33826a7a63e6dc2968239f9a67b3514e0e2f6fdbb3b8c398ed4533ddfa38"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": []
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 0,
+          "ranges": {
+            "trade_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "adjustment_method": []
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 0,
+          "ranges": {
+            "recorded_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 0,
+          "ranges": {},
+          "symbol": []
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:29:01.360120+00:00",
+              "max": "2026-10-18T05:29:01.362125+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:29:01.360120+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:29:01.362125+00:00"
+        }
+      ],
+      "runs": [],
+      "bars_by_source_run": [],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "bbad33826a7a63e6dc2968239f9a67b3514e0e2f6fdbb3b8c398ed4533ddfa38"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-u5c8qjbt\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3",
+      "before": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "df2f373c72a31158d07c5666cb7069601863942e7d03faead2a25aaede4b0210"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "wal",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": []
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 0,
+          "ranges": {
+            "trade_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "adjustment_method": []
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 0,
+          "ranges": {
+            "recorded_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 0,
+          "ranges": {},
+          "symbol": []
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-18T05:29:12.861154+00:00",
+              "max": "2026-10-18T05:29:12.863148+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-18T05:29:12.861154+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-18T05:29:12.863148+00:00"
+        }
+      ],
+      "runs": [],
+      "bars_by_source_run": [],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3": {
+          "size": 147456,
+          "sha256": "df2f373c72a31158d07c5666cb7069601863942e7d03faead2a25aaede4b0210"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3-wal": {
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\task008-real-vdo9jqvz\\real.sqlite3-shm": {
+          "size": 32768,
+          "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+        }
+      },
+      "files_unchanged": true
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\tencent_stock\\health.sqlite3",
+      "before": {
+        "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\tencent_stock\\health.sqlite3": {
+          "size": 147456,
+          "sha256": "ffe30168e6a1f5fea4839684e5a05342d3a1ae8e3a6c694ce3979dd1c044f8ac"
+        }
+      },
+      "query_only": 1,
+      "journal_mode": "delete",
+      "quick_check": [
+        "ok"
+      ],
+      "foreign_key_violations": 0,
+      "tables": {
+        "calendar_versions": {
+          "columns": [
+            "version_id",
+            "exchange",
+            "session_date",
+            "is_trading_day",
+            "quality_status",
+            "error_reason",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "session_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": []
+        },
+        "daily_bar_versions": {
+          "columns": [
+            "version_id",
+            "bar_id",
+            "source",
+            "source_version",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "amount",
+            "event_time",
+            "available_at",
+            "ingested_at",
+            "factor_version",
+            "quality_status",
+            "supersedes_version",
+            "run_id"
+          ],
+          "rows": 2,
+          "ranges": {
+            "event_time": {
+              "min": "2026-10-14T07:00:00.000000+00:00",
+              "max": "2026-10-15T07:00:00.000000+00:00",
+              "non_null": 2
+            },
+            "available_at": {
+              "min": "2026-10-20T15:39:36.551522+00:00",
+              "max": "2026-10-20T15:39:36.551522+00:00",
+              "non_null": 2
+            },
+            "ingested_at": {
+              "min": "2026-10-20T15:39:36.593966+00:00",
+              "max": "2026-10-20T15:39:36.593966+00:00",
+              "non_null": 2
+            }
+          },
+          "source": [
+            {
+              "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+              "rows": 2
+            }
+          ],
+          "quality_status": [
+            {
+              "quality_status": "accepted",
+              "rows": 2
+            }
+          ]
+        },
+        "daily_bars": {
+          "columns": [
+            "bar_id",
+            "instrument_id",
+            "trade_date",
+            "adjustment_method"
+          ],
+          "rows": 2,
+          "ranges": {
+            "trade_date": {
+              "min": "2026-10-14",
+              "max": "2026-10-15",
+              "non_null": 2
+            }
+          },
+          "adjustment_method": [
+            {
+              "adjustment_method": "none",
+              "rows": 2
+            }
+          ]
+        },
+        "ingestion_runs": {
+          "columns": [
+            "run_id",
+            "recorded_at"
+          ],
+          "rows": 1,
+          "ranges": {
+            "recorded_at": {
+              "min": "2026-10-20T15:39:36.690183+00:00",
+              "max": "2026-10-20T15:39:36.690183+00:00",
+              "non_null": 1
+            }
+          }
+        },
+        "instruments": {
+          "columns": [
+            "instrument_id",
+            "symbol"
+          ],
+          "rows": 1,
+          "ranges": {},
+          "symbol": [
+            {
+              "symbol": "600000.SH",
+              "rows": 1
+            }
+          ]
+        },
+        "schema_migrations": {
+          "columns": [
+            "version",
+            "name",
+            "checksum",
+            "applied_at"
+          ],
+          "rows": 2,
+          "ranges": {
+            "applied_at": {
+              "min": "2026-10-20T15:39:36.598010+00:00",
+              "max": "2026-10-20T15:39:36.600905+00:00",
+              "non_null": 2
+            }
+          }
+        },
+        "security_versions": {
+          "columns": [
+            "version_id",
+            "instrument_id",
+            "symbol",
+            "exchange",
+            "security_type",
+            "quality_status",
+            "listing_date",
+            "delisting_date",
+            "periods_json",
+            "event_time",
+            "available_at",
+            "observed_at",
+            "ingested_at",
+            "source",
+            "record_version",
+            "evidence_kind",
+            "evidence_ref",
+            "supersedes_version",
+            "revision_reason",
+            "run_id"
+          ],
+          "rows": 0,
+          "ranges": {
+            "listing_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "delisting_date": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "event_time": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "available_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "observed_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            },
+            "ingested_at": {
+              "min": null,
+              "max": null,
+              "non_null": 0
+            }
+          },
+          "source": [],
+          "quality_status": [],
+          "evidence_kind": [],
+          "exchange": [],
+          "symbol": []
+        }
+      },
+      "migrations": [
+        {
+          "version": 1,
+          "name": "daily_bar_foundation",
+          "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+          "applied_at": "2026-10-20T15:39:36.598010+00:00"
+        },
+        {
+          "version": 2,
+          "name": "security_master_and_calendar",
+          "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+          "applied_at": "2026-10-20T15:39:36.600905+00:00"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "pipeline-20261020T153923Z-c55591fd:tencent_stock",
+          "recorded_at": "2026-10-20T15:39:36.690183+00:00"
+        }
+      ],
+      "bars_by_source_run": [
+        {
+          "symbol": "600000.SH",
+          "instrument_id": "observation-sample:600000:SH",
+          "adjustment_method": "none",
+          "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+          "run_id": "pipeline-20261020T153923Z-c55591fd:tencent_stock",
+          "versions": 2,
+          "dates": 2,
+          "start": "2026-10-14",
+          "end": "2026-10-15",
+          "source_versions": 2,
+          "ingested_start": "2026-10-20T15:39:36.593966+00:00",
+          "ingested_end": "2026-10-20T15:39:36.593966+00:00"
+        }
+      ],
+      "bar_invalid_counts": {},
+      "duplicate_version_keys": 0,
+      "version_parent_missing": 0,
+      "after": {
+        "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\tencent_stock\\health.sqlite3": {
+          "size": 147456,
+          "sha256": "ffe30168e6a1f5fea4839684e5a05342d3a1ae8e3a6c694ce3979dd1c044f8ac"
+        }
+      },
+      "files_unchanged": true
+    }
+  ],
+  "real_index_observations": [
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\m3-observations\\c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311.json",
+      "sha256": "c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311",
+      "content_address_match": true,
+      "kind": "index",
+      "symbol": "sh000300",
+      "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+      "trade_date": "2026-10-16",
+      "observed_at": "2026-10-18T23:24:26.358544+00:00",
+      "ingested_at": null,
+      "available_at": null,
+      "status": "真实观察",
+      "rows": null,
+      "fields": [
+        "authorization",
+        "available_at",
+        "kind",
+        "observed_at",
+        "prices",
+        "source",
+        "status",
+        "symbol",
+        "trade_date"
+      ],
+      "price_rows": 550,
+      "start": "2024-07-09",
+      "end": "2026-10-16",
+      "price_fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ]
+    },
+    {
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m3-remodel-002-px5_6cou\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+      "sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+      "content_address_match": true,
+      "kind": "index",
+      "symbol": "sh000300",
+      "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+      "trade_date": "2026-10-16",
+      "observed_at": "2026-10-19T15:54:06.478989+00:00",
+      "ingested_at": "2026-10-19T15:54:06.596523+00:00",
+      "available_at": null,
+      "status": "真实观察",
+      "rows": null,
+      "fields": [
+        "authorization",
+        "available_at",
+        "http_trace",
+        "ingested_at",
+        "kind",
+        "observed_at",
+        "prices",
+        "source",
+        "status",
+        "symbol",
+        "trade_date"
+      ],
+      "price_rows": 550,
+      "start": "2024-07-09",
+      "end": "2026-10-16",
+      "price_fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ]
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-001\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+      "sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+      "content_address_match": true,
+      "kind": "index",
+      "symbol": "sh000300",
+      "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+      "trade_date": "2026-10-16",
+      "observed_at": "2026-10-19T15:54:06.478989+00:00",
+      "ingested_at": "2026-10-19T15:54:06.596523+00:00",
+      "available_at": null,
+      "status": "真实观察",
+      "rows": null,
+      "fields": [
+        "authorization",
+        "available_at",
+        "http_trace",
+        "ingested_at",
+        "kind",
+        "observed_at",
+        "prices",
+        "source",
+        "status",
+        "symbol",
+        "trade_date"
+      ],
+      "price_rows": 550,
+      "start": "2024-07-09",
+      "end": "2026-10-16",
+      "price_fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ]
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\sina_index\\m3-observations\\d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7.json",
+      "sha256": "d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7",
+      "content_address_match": true,
+      "kind": "index",
+      "symbol": "sh000300",
+      "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+      "trade_date": "2026-10-19",
+      "observed_at": "2026-10-20T15:39:29.005654+00:00",
+      "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+      "available_at": null,
+      "status": "真实观察",
+      "rows": null,
+      "fields": [
+        "authorization",
+        "available_at",
+        "http_trace",
+        "ingested_at",
+        "kind",
+        "observed_at",
+        "prices",
+        "source",
+        "status",
+        "symbol",
+        "trade_date"
+      ],
+      "price_rows": 550,
+      "start": "2024-07-10",
+      "end": "2026-10-19",
+      "price_fields": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "trade_date"
+      ]
+    }
+  ],
+  "sample_exact_readback": [
+    {
+      "db_path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3",
+      "request": {
+        "adjustment_method": "none",
+        "end_date": "2026-10-15",
+        "instrument_id": "cn-equity:600000:SH",
+        "start_date": "2026-01-01",
+        "symbol": "600000.SH"
+      },
+      "run_id": "m2-tencent-600000-20260101-20261015",
+      "status": "success",
+      "response_sha256": "eeca2fba8f26770a41826f4b1195c43f075d5af177bab63dbf461cab3cb88606",
+      "response_hash_matches": true,
+      "record_count": 187,
+      "inserted_rows_recorded": 187,
+      "existing_port_exact_readback": 187,
+      "early_as_of_blocked": true,
+      "migration_registry_match": true,
+      "http_status_recorded": null,
+      "observed_at": "2026-10-18T14:50:03.378746+00:00",
+      "files_unchanged": true,
+      "source_version_manifest_sha256": "fec8ccc10665120231aa27c4b490101a3b18affa1f837333e8dd443911bae651"
+    },
+    {
+      "db_path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3",
+      "request": {
+        "adjustment_method": "none",
+        "end_date": "2026-10-15",
+        "instrument_id": "cn-equity:600000:SH",
+        "start_date": "2021-10-01",
+        "symbol": "600000.SH"
+      },
+      "run_id": "demo-fab1a9b6062641248b5d97ce97a9723f",
+      "status": "success",
+      "response_sha256": "9270580d0ec63dcf381cad0ce288a6f33dcb822d9f0a25d4f9f05883f4c7acc2",
+      "response_hash_matches": true,
+      "record_count": 1217,
+      "inserted_rows_recorded": 1217,
+      "existing_port_exact_readback": 1217,
+      "early_as_of_blocked": true,
+      "migration_registry_match": true,
+      "http_status_recorded": null,
+      "observed_at": "2026-10-18T07:51:15.688495+00:00",
+      "files_unchanged": true,
+      "source_version_manifest_sha256": "9fd773f7b2c0c538be97539798108e953bdf1cbcb4526b6fb92ba071bbf66108"
+    },
+    {
+      "db_path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-tduod91y\\demo.sqlite3",
+      "request": {
+        "adjustment_method": "none",
+        "end_date": "2026-10-15",
+        "instrument_id": "cn-equity:600378:SH",
+        "start_date": "2016-10-15",
+        "symbol": "600378.SH"
+      },
+      "run_id": "demo-26c7d533818b49a49f97827cc47e8471",
+      "status": "success",
+      "response_sha256": "9440c98bf3b20158e07cc54b75cae88717fe6fc37a3aaaf944458edeae1e7f31",
+      "response_hash_matches": true,
+      "record_count": 2291,
+      "inserted_rows_recorded": 2291,
+      "existing_port_exact_readback": 2291,
+      "early_as_of_blocked": true,
+      "migration_registry_match": true,
+      "http_status_recorded": null,
+      "observed_at": "2026-10-18T08:48:44.472123+00:00",
+      "files_unchanged": true,
+      "source_version_manifest_sha256": "4fdd694fd02b1f2088fe0aa9d5cf85e903b9d0d503b7175daf830f26ef83cb07"
+    }
+  ],
+  "overlap_600000": {
+    "common_dates": 187,
+    "equal_vendor_facts": 187
+  },
+  "local_core_diagnostics": [
+    {
+      "observation_sha256": "c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311",
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\m3-observations\\c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311.json",
+      "diagnostics": {
+        "daily_trend": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "weekly_structure": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 117,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "wave": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "market_breadth": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": null
+        },
+        "fear_greed": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "L1_OBSERVATION",
+          "calculated": false,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "FACTOR_MISSING",
+            "HISTORY_INSUFFICIENT",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": true
+        },
+        "price_proxy": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "cffex_position": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "environment": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": 3,
+            "denominator": "required_evidence_classes",
+            "denominator_refs": [
+              "cffex_position",
+              "wave",
+              "fear_greed"
+            ],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "EVIDENCE_MISSING",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        }
+      }
+    },
+    {
+      "observation_sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+      "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m3-remodel-002-px5_6cou\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+      "diagnostics": {
+        "daily_trend": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "weekly_structure": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 117,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "wave": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "market_breadth": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": null
+        },
+        "fear_greed": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "L1_OBSERVATION",
+          "calculated": false,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "FACTOR_MISSING",
+            "HISTORY_INSUFFICIENT",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": true
+        },
+        "price_proxy": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "cffex_position": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "environment": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": 3,
+            "denominator": "required_evidence_classes",
+            "denominator_refs": [
+              "cffex_position",
+              "wave",
+              "fear_greed"
+            ],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "EVIDENCE_MISSING",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        }
+      }
+    },
+    {
+      "observation_sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+      "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-001\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+      "diagnostics": {
+        "daily_trend": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "weekly_structure": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 117,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "wave": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "market_breadth": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": null
+        },
+        "fear_greed": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "L1_OBSERVATION",
+          "calculated": false,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "FACTOR_MISSING",
+            "HISTORY_INSUFFICIENT",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": true
+        },
+        "price_proxy": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-16",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "cffex_position": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "environment": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": 3,
+            "denominator": "required_evidence_classes",
+            "denominator_refs": [
+              "cffex_position",
+              "wave",
+              "fear_greed"
+            ],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "EVIDENCE_MISSING",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        }
+      }
+    },
+    {
+      "observation_sha256": "d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7",
+      "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\sina_index\\m3-observations\\d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7.json",
+      "diagnostics": {
+        "daily_trend": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-19",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "weekly_structure": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-19",
+          "coverage": {
+            "valid_samples": 117,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "wave": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-19",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "market_breadth": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": null
+        },
+        "fear_greed": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "L1_OBSERVATION",
+          "calculated": false,
+          "latest_date": "2026-10-19",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "FACTOR_MISSING",
+            "HISTORY_INSUFFICIENT",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED",
+            "UNIVERSE_UNKNOWN"
+          ],
+          "complete_score_is_null": true
+        },
+        "price_proxy": {
+          "status": "STALE",
+          "admission": "L1_OBSERVATION",
+          "calculated": true,
+          "latest_date": "2026-10-19",
+          "coverage": {
+            "valid_samples": 550,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": true,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "CALENDAR_UNKNOWN",
+            "EVIDENCE_MISSING",
+            "SCOPE_UNSUPPORTED",
+            "SOURCE_UNVERIFIED",
+            "STALE",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "cffex_position": {
+          "status": "SOURCE_UNAVAILABLE",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": null,
+            "denominator": "UNKNOWN",
+            "denominator_refs": [],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "AUTHORIZATION_UNKNOWN",
+            "HISTORY_INSUFFICIENT",
+            "SOURCE_UNAVAILABLE",
+            "SOURCE_UNVERIFIED",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        },
+        "environment": {
+          "status": "TIME_UNCERTIFIED",
+          "admission": "BLOCKED",
+          "calculated": false,
+          "latest_date": null,
+          "coverage": {
+            "valid_samples": 0,
+            "expected_samples": 3,
+            "denominator": "required_evidence_classes",
+            "denominator_refs": [
+              "cffex_position",
+              "wave",
+              "fear_greed"
+            ],
+            "missing_dates": []
+          },
+          "allowed_uses": {
+            "observation": false,
+            "research": false,
+            "strategy": false,
+            "live_trading": false
+          },
+          "reason_codes": [
+            "EVIDENCE_MISSING",
+            "STRATEGY_EVIDENCE_REQUIRED",
+            "TIME_UNCERTIFIED"
+          ],
+          "complete_score_is_null": null
+        }
+      }
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "python_executable": "F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Scripts\\python.exe",
+    "versions": {
+      "akshare": "1.19.1",
+      "pandas": "3.0.6",
+      "numpy": "2.5.4",
+      "pytest": "8.4.2",
+      "jsonschema": "4.26.0",
+      "streamlit": "1.66.0",
+      "requests": "2.34.2",
+      "urllib3": "2.8.0",
+      "certifi": "2026.7.22"
+    },
+    "ai_trade_path": "F:\\codex-agnes\\AI-trade-m0-m3-data-001\\src\\ai_trade\\__init__.py"
+  },
+  "repo_file_sha256": {
+    "AGENTS.md": "f416797b5153df62dbd23ecaf08bbf0152d7be5fd34ddb0db996835e17967ff3",
+    "docs/MODEL_ROUTING_POLICY.md": "d001488ebfbd6a1ba6de1cfd3d4f92d26ac03bbc1d69ab1a22ffb44d0170e57f",
+    "docs/OPEN_SOURCE_RESEARCH_POLICY.md": "7d04025d2b0c7b51e0c50cac6e3de72773365f634af478587188ed237e71bf95",
+    "docs/DATA_CONTRACT.md": "17ccafcb8d51c0d514b2cbaf2af1c021217435178520e92e16e3600e635eb90d",
+    "docs/INTERFACE_CONTRACT.md": "043700b0dec2f56aec335ef8877043ace7bfc7f378b890170872ed2ffcc6bc71",
+    "docs/M3_CORE_CONTRACT.md": "3d279617bc7ea4d0c80b605721f351dad1d142e9f0e643ed42031c4b31507f11",
+    "src/ai_trade/storage/schema.py": "f4c49920a19f46e04e7b649779fc8e9dabac4a4f1b4e2b924910603f2216de33",
+    "src/ai_trade/storage/reference_schema.py": "e1e125e83c8a9c5885070613bf4c97be2010fc73b48f1fa386a362884d6d57a6",
+    "src/ai_trade/demo_app.py": "6f912d945c1c02550a19b984c6fb3e96af4df2815f65afbab6e406f56338cb46",
+    "src/ai_trade/demo_data.py": "d31c5a20c483b7050a13c69f8105c192e829d087b21101d89440d9303a50f443",
+    "src/ai_trade/market_analysis_data.py": "d26da3fb107cb626223a978b5b22da6f2e9deae140bebc2324364559b2b7aae6",
+    "src/ai_trade/market_analysis_page.py": "8db9f5bea6c1573ea78bf68a5c1b08214f60100f971a732b6bb9b8a693333cfe",
+    "src/ai_trade/market_analysis_view.py": "b089f83a57793dad69a20da952a3ce76a466005e62b4cac70c783d795e9c2044",
+    "src/ai_trade/data_access/repository.py": "aa5f437f79159915ca5ef86bac4743a064edb04a331e761d8cc6a1e8eab980d1",
+    "src/ai_trade/market_data/tx_adapter.py": "d72d6c9f616db921199a1a88ecc07c60402cd82d0e4c00fdf5f785e826787e12"
+  },
+  "read_sdk_files": {
+    "F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Lib\\site-packages\\akshare\\stock_feature\\stock_hist_tx.py": "aa9199665d356ba3a054297004e349d3926fa83026abfd2d50c4b7f832226d84",
+    "F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Lib\\site-packages\\akshare\\index\\index_stock_zh.py": "fc217076e71ce6a4a70f8344de0f4c0332b4b4cfa77a71e2ca3bc8a428e39d0a",
+    "F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Lib\\site-packages\\akshare\\stock_feature\\stock_market_legu.py": "ea07f4f3ac82c1cf2febf93f23b20d34ea5a3f45f44e82f888e667af0c25323e",
+    "F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Lib\\site-packages\\akshare-1.19.1.dist-info\\licenses\\LICENSE": "d1c84fbaccd5fdbc75cd12ab9a05f4f791d89ee266569bc976c8b0befafc2d65"
+  },
+  "verification": {
+    "existing_real_sample_readback": "PASS",
+    "new_live_requests": "NOT RUN",
+    "formal_store_write": "BLOCKED",
+    "full_offline": {
+      "status": "PASS",
+      "command": "python -m pytest -q -p no:cacheprovider --basetemp=artifacts/m0-m3-data-001/full-tmp --junitxml=artifacts/m0-m3-data-001/full.xml",
+      "exit_code": 0,
+      "passed": 2871,
+      "skipped": 1,
+      "seconds": 337.54,
+      "code_baseline": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+      "business_and_test_changes": false,
+      "xml_sha256": "b94e86ec168cc31123d9ed9b4ae5c6089ca4c19190e17dc5badf32c5db9b86af"
+    },
+    "pip_check": "PASS",
+    "browser_ui": "NOT RUN",
+    "out_of_sample": "NOT RUN",
+    "production_ec2": "NOT TOUCHED"
+  },
+  "review": {
+    "core_issue_37": "PENDING",
+    "this_task_independent_h": "PENDING_NOT_CREATED"
+  },
+  "structured_feedback": {
+    "phase1": "COMPLETE",
+    "formal_storage": "UNKNOWN",
+    "data_collection": "BLOCKED",
+    "research_admission": "BLOCKED",
+    "metrics_credit": 0
+  },
+  "main_ci_metadata": {
+    "run_id": 39515585717,
+    "head_sha": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+    "status": "completed",
+    "conclusion": "success",
+    "full_job_log_read": false
+  }
+}

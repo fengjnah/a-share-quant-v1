@@ -1,13 +1,13 @@
 # M0—M5持久化矩阵、来源状态与实施路线
 
-基线main `c4b682d12c7c8dc42f75e717b855238f635ce05b`，证据分类F/E/P/U见[总设计](DATA_PERSISTENCE_ARCHITECTURE.md)。F描述源码路径，E为固定旧验收，不是本轮开库/请求。所有拟议仓储/表均P。
+最终基线main `603715b08b40dfa33ff75987bd21f5d193f7e5a1`，初始审计基线c4；新增正式工作台源码差异已只读核验。证据分类F/E/P/U见[总设计](DATA_PERSISTENCE_ARCHITECTURE.md)。F描述源码路径，E为固定旧验收，不是本轮开库/请求。所有拟议仓储/表均P。
 
 ## 1. 当前模块与真实出口
 
 | 模块 | 现有生产者/写入 | 现有读取/消费者 | 持久化结论与缺口 |
 | --- | --- | --- | --- |
 | M0 | DailyHistoryIngestor.collect→EvidenceStore request/response/result；SQLiteMarketDataRepository.write_many；独立SecurityMaster/TradingCalendar.write_many | get_bar/get/resolve/get_day/trading_days | 股票事实及参考端口真实实现；失败采集/质量/来源登记缺正式SQL模型；health ScratchWriter写临时库，不是正式库 |
-| M1 | 显式按钮可采集；共享入口initialize | demo_data.read_bars→严格get_bar；UI图/表共用frame | 读取已保存股票，无M1结果仓储需求；AI_TRADE_READ_ONLY只关采集，不保证零写初始化 |
+| M1 | Demo显式按钮可采集/initialize；正式入口workbench_config→inspect_database，无正式初始化 | demo_data.read_bars→严格get_bar；正式配置mode=ro/require_existing，UI图/表共用frame | 读取已保存股票，无M1结果仓储需求；正式只读已接线，不回退Demo；当前真实行情仍需有源验收 |
 | M2 | analyze纯计算；显式采集沿M0 | analysis_page从SQLite读行情；summary/frame/risk供页面，session状态保留 | 无单股分析/评分/止损正式结果持久化；已有规则m2-research-v1不重写 |
 | M3输入 | collect_public/collect_cffex→save_snapshot写内容寻址m3-observations JSON | 页面catalogue/from_snapshots；股票支路read_bars | 指数/宽度/CSV可保存观察文件；不是SQL研究模型/正式排名仓储；read root决定实际可见文件 |
 | M3结果 | 页面Diagnostic仅内存；显式verify_m3_pipeline.run保存完整pipeline-bundle.json与summary.json | 页面不读此bundle；脱敏download删values | 有脚本结果文件出口，无正式运行/快照Repository和历史查询；下载/哈希不能当完整保存 |
@@ -15,7 +15,7 @@
 | M5 | 无正式回测/订单/账户引擎或页 | 无 | 未实现，项目进度页不是回测；本设计只有待实现账本/指标模型 |
 | EC2 | 代码Git archive/release/current；独立DATA_DIR | 现有应用查询云端本地库/文件 | 没有PC结果自动发布/同步；旧部署证明当时空库，不证明当前状态，本轮不连AWS |
 
-七表真实消费者细分：账本由共享启动使用；instruments/daily_bars/versions供M1/M2/M4及M3股票支路；ingestion_runs是写入与版本血缘；security_versions被M4 resolve消费，M3未接；calendar_versions独立端口存在，M3/M4未调用。表存在、代码引用、有写入口、已存真实行、被当前页面消费是五个不同断言，不能合并。
+七表真实消费者细分：账本由正式启动inspect或Demo initialize校验；instruments/daily_bars/versions供M1/M2/M4及M3股票支路；ingestion_runs是写入与版本血缘；security_versions被M4 resolve消费，M3未接；calendar_versions独立端口存在，M3/M4未调用。表存在、代码引用、有写入口、已存真实行、被当前页面消费是五个不同断言，不能合并。
 
 源码核对入口：`storage/schema.py` v1/v2；`data_access/repository.py:39,93`；`security_master/repository.py:46,67,77`；`trading_calendar/repository.py:48,51,66,95`；`market_data/ingestor.py:84`；`market_analysis_data.py:32,45,62,84`；`market_analysis_view.py:115,151,170,216`；`m3_data_pipeline.py:127,170`；`daily_candidates_data.py:15,33`；`demo_app.py:get_components`。上述行号属于固定main，正文相对链接供当前文件阅读；固定审计详细SQL/测试索引见PR46@b217546。
 
@@ -45,7 +45,7 @@
 
 | ID / 优先级 | 范围与依赖 | 验收条件 | 风险/并行边界 |
 | --- | --- | --- | --- |
-| D0 / P0 | 正式库绝对路径/归属/备份批准；复用PR45，不重扫全部盘 | UI、M0采集、CLI同库身份与配置优先级明确；只读打开与迁移入口分离；未批准不初始化 | 生产/DB边界H；可与纯契约设计并行，物理实施前置 |
+| D0 / P0 | 复用最新main已合并PR47的正式路径/只读接线与备份CLI，不重做已完成建库；迁移前再核验当前绑定 | 已有配置路径F:/codex-agnes/AI-trade/data/sqlite/workbench.sqlite3；核验当时UI/M0/CLI同库身份、现存数据/备份与迁移授权，不把旧报告当当前读库 | 生产/DB边界H；初步绑定已有E5，真实数据及迁移许可未完成；可与纯设计并行 |
 | D1 / P0 | 本设计独立H批准后实现公共来源/质量/版本目录v3；依赖D0 | 七表零重建、旧checksum不变；失败attempt/缺时点/收据撤销可追；复用Repository负例通过 | 迁移/真实性H；与来源授权资料核验并行，不与另一迁移者改同一registry |
 | D2 / P0 | 指数与全A最小可验证输入v4；依赖D1和对应来源许可 | 少量明确日期/标的；真实指数/当日池/宽度/额/日历各有单位/版本/时点；缺项如实BLOCKED，禁止全A大回补 | 时间/分母H；可分来源适配并行，共享字段冻结，串行合并迁移 |
 | D3 / P0 | M3 analysis_runs/snapshots持久化v5；依赖D1/D2契约、核心独立H状态披露 | 完整8模块to_dict+因子输入/输出保存，重开后按run还原，固定SHA和输入重放；未认证仍BLOCKED | 结果/未来函数H；可先用明确SYNTHETIC离线夹具开发，不冒充真实验收；核心review未通过不解准入 |
@@ -79,4 +79,4 @@ D3逻辑实现可在D2真实源验收前用隔离合成夹具完成保存/重放
 
 ## 4. 设计提交后的待确认项
 
-正式库路径与容量/备份负责人；源存储/自动化/展示/再分发许可；真实CN_A/CFFEX日历与历史池；所有缺失event/available/observed/ingested证据；M3核心独立H；已审核收据签发信任根；M4顺序状态机/执行约束；M5撮合/会计/样本外规范；发布目标/字段隐私白名单与viewer协议。未知项阻断相应实施/准入，不阻断本次关系/字段/迁移设计交付。
+实施当时正式库实连路径/容量/当前备份负责人（已报告路径不再写UNKNOWN）；源存储/自动化/展示/再分发许可；真实CN_A/CFFEX日历与历史池；所有缺失event/available/observed/ingested证据；M3核心独立H；已审核收据签发信任根；M4顺序状态机/执行约束；M5撮合/会计/样本外规范；发布目标/字段隐私白名单与viewer协议。未知项阻断相应实施/准入，不阻断本次关系/字段/迁移设计交付。

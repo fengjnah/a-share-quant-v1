@@ -1,6 +1,6 @@
 # SQLite迁移、备份、兼容与失败恢复方案（不执行）
 
-TASK-DATA-ARCHITECTURE-001。**这里只定义未来实施步骤，没有SQL脚本、迁移注册、数据库初始化或备份操作。** 表字段/约束见[字典](DATA_DICTIONARY.md)。正式Windows库绝对路径、归属、备份位置和操作者尚未批准，任何物理实施保持BLOCKED；设计和Draft审查可以继续。
+TASK-DATA-ARCHITECTURE-001。**这里只定义未来实施步骤，没有SQL脚本、迁移注册、数据库初始化或备份操作。** 表字段/约束见[字典](DATA_DICTIONARY.md)。最终main已报告正式Windows库`F:/codex-agnes/AI-trade/data/sqlite/workbench.sqlite3`及其创建授权/备份；本任务未查其当前状态。未来迁移仍须重新确认路径身份、当时数据/备份和独立迁移授权，不能把已有建库授权当v3–v8实施许可。设计和Draft审查继续。
 
 ## 1. 不可变基线
 
@@ -34,7 +34,7 @@ TASK-DATA-ARCHITECTURE-001。**这里只定义未来实施步骤，没有SQL脚�
 ### 已有v1/v2库
 
 1. 使用不触发initialize的只读检查器识别路径、文件身份、Schema/DDL/checksum、sidecar、引用完整性和数据计数；不把采集脚本参数当UI配置。v1先按原v2升级，再追加已批准前缀。
-2. 明确停止/冻结所有写者与会自动initialize的UI/CLI；只禁采集按钮不够。计划停机和回滚窗口必须包括Windows进程、后台任务、共享root。先备份，再获得迁移写锁；锁/磁盘不足就失败退出，不能关闭完整性约束。
+2. 明确停止/冻结所有写者、旧Demo初始化入口及可能持有读事务的正式UI/CLI。新main正式只读入口已不初始化，但仍须管理迁移窗口的读锁；旧Demo的按钮禁用不等于只读。计划停机和回滚窗口必须包括Windows进程、后台任务、共享root。先备份，再获得迁移写锁；锁/磁盘不足就失败退出，不能关闭完整性约束。
 3. 在一个明确事务内执行新增DDL、完整性检查和迁移账本；维持原`BEGIN IMMEDIATE`/rollback语义，不在其中切journal或foreign_keys。SQLite允许单写者；并发写/SQLITE_BUSY有界等待后阻断，不无限重试。[SQLite事务说明](https://www.sqlite.org/lang_transaction.html)
 4. 提交前检查新对象/索引/触发器、FK、原v1/v2指纹和已保存旧数据哈希不变；提交后以新版只读查询及模块烟测核验，才恢复经批准写者。
 
@@ -70,11 +70,11 @@ TASK-DATA-ARCHITECTURE-001。**这里只定义未来实施步骤，没有SQL脚�
 
 ## 6. 旧代码兼容：明确“不兼容自动启动”
 
-main的`Database.initialize()`第107–109行检查`len(applied)>len(migrations)`并拒绝newer schema。故即使只新增表，旧v2应用仍不能启动升级后的v3库。不能关闭该校验、伪造账本长度或修改v1/v2 checksum作为兼容方案。
+最终main的`Database.initialize()`仍检查`len(applied)>len(migrations)`；正式workbench的`inspect_database()`则要求迁移元组与MIGRATIONS完全相同，且完整物理DDL与expected_objects完全一致。正式read_only/require_existing连接禁止initialize。故即使只新增表，现有v2应用也不能打开升级后v3库，新增未知表同样被拒绝。不能关闭校验、伪造账本长度或修改v1/v2 checksum作为兼容方案。
 
 正式升级前须先交付且审查：
 
-1. 新版迁移执行入口与业务只读打开入口分离；后者显式URI mode=ro/query_only，不执行initialize或journal改变；识别受支持Schema能力范围，不认识则明确拒绝。这是后续实现，不是当前已经有的功能。
+1. **复用已合并**Database read_only/require_existing、workbench_config和现有备份/隔离恢复CLI，不重新造连接或备份框架。现有initialize-new仅创建新目标，不能拿它升级已有库。后续新增经批准的维护升级入口，以及按已安装迁移前缀核验的能力版本检查；保持严格checksum/DDL而非接受任意表。受支持Schema范围/维护升级目前未实现；只读与迁移分离本身已实现，不再列成从零开发。
 2. 运行配置绑定数据库身份/绝对路径和能力版本；新代码只读取已安装模块；旧应用如必须继续运行，保持配套v2快照/原环境只读展示或消费独立JSON，不能同时偷偷写另一库构成双主。
 3. 回滚准备成对代码+数据库版本，而非仅切代码symlink。EC2新结果viewer只读协议JSON，不升级云端现有v2库；其代码与本地事实Schema生命周期可独立。
 
