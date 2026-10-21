@@ -1,0 +1,4971 @@
+{
+  "task": "TASK-M3-READONLY-TRACE-001",
+  "baseline_sha": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+  "baseline_tree": "df7280c74a3468b41e1ca08c3e1d7bb87bca2a92",
+  "generated_at": "2026-10-21T22:38:04.631592+08:00",
+  "model": {
+    "id": "gpt-6.1-sol",
+    "effort": "high",
+    "runtime_timestamp": "2026-10-21T14:30:43.682Z",
+    "risk": "H",
+    "budget_minutes": 90,
+    "cost": "UNKNOWN"
+  },
+  "method": "stdlib text/AST plus git object reads only; no project imports/database connection/application/test/market/AWS execution",
+  "source_manifest": {
+    "deploy/deploy.env.example": {
+      "git_blob": "e3f96fe72b639f873dfbcb87e0162fc78f375355",
+      "sha256_git_bytes": "149510905dae788aef09009432e8dda9831799a7ec71a63c158f8d47987d5d20"
+    },
+    "deploy/nginx-location.conf.example": {
+      "git_blob": "9745e573d771a6df6e0edc210290855ff4307daa",
+      "sha256_git_bytes": "e75bcab574e7d6f4f46240fa0555dc190230e98b8500afcd5c720bc18633ea6a"
+    },
+    "deploy/requirements.lock": {
+      "git_blob": "b9212440911bbec8a52629ec5a526b5f605cc35d",
+      "sha256_git_bytes": "62e4677bd1cbadf767bc587062a0b50fab936d3d322bb10301f8f63b908d4fd4"
+    },
+    "deploy/update-workbench.sh": {
+      "git_blob": "483d0f694757d8eef1248112faa9f5640cd971d6",
+      "sha256_git_bytes": "00b04d7043e4a3c52cbe4f337b51a694f471d3a38f5b2c77c4e0c141b0a2205b"
+    },
+    "deploy/workbench.service.example": {
+      "git_blob": "ced3e71402089b251dbfd61ae4d2820c2c0ea474",
+      "sha256_git_bytes": "aa70cd67bdfd2119913338559dbf5acd429ee3ea653e94afcd4f706eea383a70"
+    },
+    "scripts/verify_m3_pipeline.py": {
+      "git_blob": "d7a4addc3c24f3e2c54dfd96db8828cfcfdaabde",
+      "sha256_git_bytes": "e17736f99080e48dede360db89ccf6e26ae4005b88c57ab5c2137beaf4c96728"
+    },
+    "scripts/verify_m3_sources.py": {
+      "git_blob": "a87bddf09674892cfc83f047d3da1beb7ed04c9f",
+      "sha256_git_bytes": "de5a781b1fd9c93367c21a580307675fd89332c530ce1dbe2800edb5a15d8493"
+    },
+    "src/ai_trade/__init__.py": {
+      "git_blob": "e6e881128729f3b8f3de085796596140f76364d6",
+      "sha256_git_bytes": "8940b98133368560cb0a0c297327d72625d59a3a176de95156d4d4038b9cf6a5"
+    },
+    "src/ai_trade/analysis_page.py": {
+      "git_blob": "25aacb3226e5290a79ddf0722f982474556508c1",
+      "sha256_git_bytes": "bb59b4fa199a52d3e1a79e8a6112ead1ef92f0f6c67054645bf31c5c60d9e723"
+    },
+    "src/ai_trade/daily_candidates.py": {
+      "git_blob": "90300e2bbee221addee54c29c16d122356491d4c",
+      "sha256_git_bytes": "7e0457d65419db080f7af6a84e39307451e7657e40e97b183832d36a8a042594"
+    },
+    "src/ai_trade/daily_candidates_data.py": {
+      "git_blob": "7afbe8e7ede68541111374edb6aef6bdd24cb270",
+      "sha256_git_bytes": "4b5924e8d2eeed4f604214d9e2aa129f66f6e67be34a525f7327585aec8a8733"
+    },
+    "src/ai_trade/daily_candidates_details.py": {
+      "git_blob": "0203061d5303ec22a0525963bf13747408454cd0",
+      "sha256_git_bytes": "cf32dcdf28938e5957dec218ec0d3a725cc59012299767e55b2dece4c3a26c9c"
+    },
+    "src/ai_trade/daily_candidates_page.py": {
+      "git_blob": "fc574049f23a26b59c827303a7c0f8681a2ed468",
+      "sha256_git_bytes": "fbfcf0f073e755b3e4defdd581f1ed42d21b1d91fcb55510573d3bbb10779dfa"
+    },
+    "src/ai_trade/daily_candidates_view.py": {
+      "git_blob": "c9bf97ac2e5065aaf7abf909195291192542420e",
+      "sha256_git_bytes": "217803110ef680229ee233600efeff643931cce3ea665815ba4ff820d13da098"
+    },
+    "src/ai_trade/data_access/__init__.py": {
+      "git_blob": "7d2a1430671dc4764427073bb94651ec35c5367a",
+      "sha256_git_bytes": "7499022910b5c9959e7019296159b9eff4278c2888c23d1ef014272b66299f4e"
+    },
+    "src/ai_trade/data_access/models.py": {
+      "git_blob": "d56dff06cbc8c0b7203a0a96a67e4a248f55c83a",
+      "sha256_git_bytes": "3c6fb6c77e0d201286b28cab71e03adec3a08ef7b28514bfc9db34df3f2fd3b9"
+    },
+    "src/ai_trade/data_access/repository.py": {
+      "git_blob": "9c7b540609e3b288c11837522fe2bfefda3003d9",
+      "sha256_git_bytes": "f116aa9b819beb08654770e5524a3d302a9c5e5a7ee0c96f11992f8280f93e0e"
+    },
+    "src/ai_trade/data_access/validation.py": {
+      "git_blob": "54c90f3aab9eb843ea09db766d9cdb1799706007",
+      "sha256_git_bytes": "fc9cd3f9c6edf12c9806cf2247bb33f47f0bfbe6df43038ef9f645f62fb6d45a"
+    },
+    "src/ai_trade/demo_app.py": {
+      "git_blob": "6391770e41db01d003041097aca8550dac40746a",
+      "sha256_git_bytes": "f972d6e2c038401d3bbb4a293c83c2c0d10ae6746ce3cce471f2e1543113e8f7"
+    },
+    "src/ai_trade/demo_data.py": {
+      "git_blob": "eca266e8c56e6ba7b50b75a1cbd083d6332f683b",
+      "sha256_git_bytes": "0509334a85311a2c11aae7a84e8d2d0a40b33ba24ad411ca923b5964f0318f44"
+    },
+    "src/ai_trade/m3_data_pipeline.py": {
+      "git_blob": "1fc31f23e0e801515c2a5d3bb15eec48c51c55a7",
+      "sha256_git_bytes": "7937f29fa35700318bfde14837585758b2af10795be3939a1fe0184af457f91c"
+    },
+    "src/ai_trade/market_analysis.py": {
+      "git_blob": "eba06a782a713d7b62e70960977283e0e8e60dd7",
+      "sha256_git_bytes": "7d1b3858e6fa2a30e13e7904d85ed1676bca982e57e04258686fe176263c9cb0"
+    },
+    "src/ai_trade/market_analysis_contract.py": {
+      "git_blob": "f5871e311d2d38e7eed39c11c28a681164358c75",
+      "sha256_git_bytes": "dd9bbb5ea0774259f94ca3111bfb1e8fd7cc06a5a1e22da761de2e34d8de35b1"
+    },
+    "src/ai_trade/market_analysis_core.py": {
+      "git_blob": "0110aadbf899e2a72a9069f88b8888694d1dd9cb",
+      "sha256_git_bytes": "44b4d4a8c2c7f7c544c1f2ef72f0e59a00746731a0f7cab4b57fd8eb3c5e4cbd"
+    },
+    "src/ai_trade/market_analysis_data.py": {
+      "git_blob": "460c8e8608c103c9e1e120a87aead33e4bf8c4fe",
+      "sha256_git_bytes": "d20e05beca0165dfd3ce26fdc2fd2a61bab9e2b60e530c678537922545bce0cf"
+    },
+    "src/ai_trade/market_analysis_page.py": {
+      "git_blob": "ab4441d1c35e62c0b52cb9df13a933a25e2baa95",
+      "sha256_git_bytes": "71913b527667d146e6a5ea97e4775ac3a07cea28d8bc010cea04ab9afd393c2e"
+    },
+    "src/ai_trade/market_analysis_view.py": {
+      "git_blob": "0a70153b90480b5654082e7ca524eb08a1842a15",
+      "sha256_git_bytes": "51ecdf5f4c0d11dd931e67a0553dfa8ab5c9adbcffb45b9e6d6bcad08fb65080"
+    },
+    "src/ai_trade/market_data/__init__.py": {
+      "git_blob": "c048ac05c4aab0b455db4a81fa33de9351e89bf7",
+      "sha256_git_bytes": "5dc0f9801eee6137c013d63d5067cecca7a8a46a2e2e764e254c9aa5b635021c"
+    },
+    "src/ai_trade/market_data/akshare_adapter.py": {
+      "git_blob": "36f6e8dd771db0b273fc92aaf5843771b3b4a342",
+      "sha256_git_bytes": "77f07641387e1d1f624bccaaf23eeb133007834c957dafec670b3b058fce6da2"
+    },
+    "src/ai_trade/market_data/cffex_rankings.py": {
+      "git_blob": "c73900e4cbbdfc79bc7771cadac4f861f692048c",
+      "sha256_git_bytes": "e6970f9b3363c4fdc7077d1d62b0b95f76dde894d308aab36ee4a45546b91f9a"
+    },
+    "src/ai_trade/market_data/cffex_rankings_models.py": {
+      "git_blob": "4216bb2388d5ac00badc1416f6c097fcb3939780",
+      "sha256_git_bytes": "5131b674d56d2697c86e94a70353106b636ccc8f09f8e1f8f7464062b48cb869"
+    },
+    "src/ai_trade/market_data/cffex_rankings_time.py": {
+      "git_blob": "fd26a8ff1e46e608621a20dba1714f387bcd040e",
+      "sha256_git_bytes": "0b257780d0b0011c9b3739f90e0cb5d7183a43399b840e8873550a5139758b48"
+    },
+    "src/ai_trade/market_data/cffex_rankings_versions.py": {
+      "git_blob": "ca894d7600181c79aa0fdeb84fe264c13d01b24c",
+      "sha256_git_bytes": "8b3a85bff7878ea4de2312d6c204d5a7fd02369e565cd3eac38e9135e3fb56fb"
+    },
+    "src/ai_trade/market_data/evidence.py": {
+      "git_blob": "328e828bc42ee825868c6169dbf2bdc992df48cd",
+      "sha256_git_bytes": "c05c0c39e482be0bb0f171283f6baadd2a210cbd3fd4ea4fd44cf33db1158ca4"
+    },
+    "src/ai_trade/market_data/health_cli.py": {
+      "git_blob": "61861f714d6e9285c6bf4fc3b7daad0df849b3bc",
+      "sha256_git_bytes": "97f849da93a2247ced7c3dfaa83d71fa6eb3573c4476066a3e8d615b6e8a52da"
+    },
+    "src/ai_trade/market_data/health_models.py": {
+      "git_blob": "9fcdd7c8a7c83aa7167d46d29d085b5e110f7b0a",
+      "sha256_git_bytes": "e007ebbc722e03717e3307f750ddc5e63ee3b9cb601d2290629e5e996df31b35"
+    },
+    "src/ai_trade/market_data/health_schedule.py": {
+      "git_blob": "6b027835260a717a2e4c917eb9d2c19bc4e2ba88",
+      "sha256_git_bytes": "ac8482548d0b6f35309e4bedaeb8485b105e645845b57870ab9ddf9350c83724"
+    },
+    "src/ai_trade/market_data/health_service.py": {
+      "git_blob": "e726fc2947591e8bfefdce12dbcda5d33bd4a617",
+      "sha256_git_bytes": "c7f38066f22ddec7c24b4965f93df60f2954910bd13893dd1a34eaa1224dea3b"
+    },
+    "src/ai_trade/market_data/health_transport.py": {
+      "git_blob": "9978e762a073489a19fcaafa9f34dbf3611a5423",
+      "sha256_git_bytes": "d92294c236a181c5f64ee56bdf370913658e838344357de31ce6c3219df84bc8"
+    },
+    "src/ai_trade/market_data/ingestor.py": {
+      "git_blob": "c4441584d0d8fe55b9ac6e24aa5d9d037ca9e53f",
+      "sha256_git_bytes": "e3b8b0d2360507c7a0e7380f8762d385786b2e6eccacc7a7e1d26ea07987716f"
+    },
+    "src/ai_trade/market_data/models.py": {
+      "git_blob": "6f44a13014e3f53ca60b71bfab05f873f5635e5a",
+      "sha256_git_bytes": "8659864f450cdef1bfafc6bc965aa10723ae8ed259532636fcac5bb49614da40"
+    },
+    "src/ai_trade/market_data/tx_adapter.py": {
+      "git_blob": "52576c51c9f2df10baf148be37981bec685532a1",
+      "sha256_git_bytes": "3e172d46d9a3e83a449ad639965e61c788a6b21a95c42496676217421489b972"
+    },
+    "src/ai_trade/market_state.py": {
+      "git_blob": "dd9315e6936de79cb008a94d6e8d7e6788be516f",
+      "sha256_git_bytes": "e83d79675919601b80cf0fbf41638e338ea9da6f412872e5b19633ac3138aa2c"
+    },
+    "src/ai_trade/project_progress/__init__.py": {
+      "git_blob": "bc5849407f586dbc47085afadec96ae8fb346547",
+      "sha256_git_bytes": "29278f55ff523d5c1af48650d9c9cb985425f62e613ae345116d0ed1905dd5c0"
+    },
+    "src/ai_trade/project_progress/__main__.py": {
+      "git_blob": "c2183cfb160530d7f4cf83cebbbcbfeec934204d",
+      "sha256_git_bytes": "4cb51144aaa9f533ca74ede13b6ea4817f1af4b24736e75033a493c53216be12"
+    },
+    "src/ai_trade/project_progress/app.py": {
+      "git_blob": "d1a85588bef836ad78d6c85b03b1c1ba4a4decd4",
+      "sha256_git_bytes": "f085777414e3efa46b03918499661b2dd27e40f8d057fad408af46c5ba72a376"
+    },
+    "src/ai_trade/project_progress/core.py": {
+      "git_blob": "aa3d34d9cb78a64437098cc05f0664d10edb2bb5",
+      "sha256_git_bytes": "ac0b3ab2e3c7e3d4bb7a355dc7da8a990672bea326bff4109241b2799ec28457"
+    },
+    "src/ai_trade/project_progress/page.py": {
+      "git_blob": "896ab806cf0006a7f3c3d1461b8e23020413941d",
+      "sha256_git_bytes": "b4a1eee892b453f3f7e0c43398fa58dbc1ad08ec549aeef0a3cb68db1710dc03"
+    },
+    "src/ai_trade/project_progress/render.py": {
+      "git_blob": "314446840a760ee985d0e4eb7130a622836fb427",
+      "sha256_git_bytes": "a9917e3d3c87c4237146da5c9b275709f712bea491d4b4b5f3ac477a2354c8a6"
+    },
+    "src/ai_trade/project_progress/views.py": {
+      "git_blob": "3a63058a7a409737cbf9c20c6b4122cac16bab6b",
+      "sha256_git_bytes": "6c00f6d7f574cf1d437057494cf44bc5d92fc6c295198546b6e9dea3c19a9116"
+    },
+    "src/ai_trade/reference_data/__init__.py": {
+      "git_blob": "2ce64746de3400a12a56f4e924e5a9c750e96c29",
+      "sha256_git_bytes": "472ecdecb868b8fd087297d6a36f92184ac1109e7ecd69745986a9f418642363"
+    },
+    "src/ai_trade/reference_data/models.py": {
+      "git_blob": "6a43ade64f86deb2a30bc10e68b5bd3c394a6dd7",
+      "sha256_git_bytes": "278a6c64a0bbcd85ff8e72290084f03fde565b557e445b116218e7f397930d72"
+    },
+    "src/ai_trade/reference_data/repository_support.py": {
+      "git_blob": "5d1aa57a8489ac4df64650c85d2d1a37b9d56708",
+      "sha256_git_bytes": "05e461968fefd6a0522a24997bb062a52d54ab23db26040f961bf5c70576363e"
+    },
+    "src/ai_trade/reference_data/validation.py": {
+      "git_blob": "1b13daccb61c3a725c8375d09a0224c25f14f6d6",
+      "sha256_git_bytes": "ce76c50eb544d3546c5a03c05a22162a4b4a44c8fafa4e63e6c7e07759c60873"
+    },
+    "src/ai_trade/security_master/__init__.py": {
+      "git_blob": "9a8c217bf08735569424cc30829e70ecd44a1f87",
+      "sha256_git_bytes": "7cfe4b4e0b9226e3ca083d68b9198c25d788f02fd17f5a0a22985ed2178ecb01"
+    },
+    "src/ai_trade/security_master/repository.py": {
+      "git_blob": "f7bef5e27efeee74ef0267578072e36129e52a74",
+      "sha256_git_bytes": "a0c5bfa1146bf6753a6801956a28e49b23a9a203c48d9e45b9cbfd9cc7bb174a"
+    },
+    "src/ai_trade/storage/__init__.py": {
+      "git_blob": "c8fd89ba1cf9f30aac8fbdc4487b602ec30219af",
+      "sha256_git_bytes": "fec242df9a04b22aaaace4b4e3b4fa2d3358b82b1cf6676eecf6d1883b1b6368"
+    },
+    "src/ai_trade/storage/__main__.py": {
+      "git_blob": "0716a809e9b84dc300ea9e5a6edc41de017d936d",
+      "sha256_git_bytes": "aa041522295feeff389ebc6e3e38803a217e6ad481f4d19c80546742d30c5e94"
+    },
+    "src/ai_trade/storage/db.py": {
+      "git_blob": "af334b3ecae1fabd264bd13fadbcfbdb6f304950",
+      "sha256_git_bytes": "8f74cba439d0a5163efb735436386baa53df6649c55c3612c9ab873e8e970435"
+    },
+    "src/ai_trade/storage/reference_schema.py": {
+      "git_blob": "58ea085f41bf099dc9bc4a19663d86206872e9d4",
+      "sha256_git_bytes": "2d62135c4b2c802eb802f7a612fe2151e8779a082851970490d3459c2a8e5099"
+    },
+    "src/ai_trade/storage/schema.py": {
+      "git_blob": "2554e131542066ddff75fc724761053562acdf97",
+      "sha256_git_bytes": "05de837b5657dde9184d310146e00f69994589ce607acd3438bd6c40091fe30b"
+    },
+    "src/ai_trade/trading_analysis.py": {
+      "git_blob": "7f7b9e585b2e2892a103c852e8ac0c6fa31cd358",
+      "sha256_git_bytes": "dd4cd19a91502441937bd885d22b24d91e6a6c1dae7079094624ada4afcb87bd"
+    },
+    "src/ai_trade/trading_calendar/__init__.py": {
+      "git_blob": "820b4b6a7a727446c54fc3d3bf15032b6c531f55",
+      "sha256_git_bytes": "7c0f7548077e49749f5736d6c72d1c74384b878043cd06c6e5624b8e25afca4a"
+    },
+    "src/ai_trade/trading_calendar/repository.py": {
+      "git_blob": "97787cf3809f462b0caddab8cd5ff8bc3d87ecaf",
+      "sha256_git_bytes": "b8188890e4a27ad8bdad59076e1eb41196e55efe74507ebfe7ecd428dba50b9d"
+    }
+  },
+  "table_literal_references": {
+    "schema_migrations": [
+      {
+        "path": "src/ai_trade/storage/db.py",
+        "line": 102,
+        "scope": "Database.initialize",
+        "text": "if \"schema_migrations\" not in tables:"
+      },
+      {
+        "path": "src/ai_trade/storage/db.py",
+        "line": 106,
+        "scope": "Database.initialize",
+        "text": "applied = list(conn.execute(\"SELECT * FROM schema_migrations ORDER BY version\"))"
+      },
+      {
+        "path": "src/ai_trade/storage/db.py",
+        "line": 116,
+        "scope": "Database.initialize",
+        "text": "conn.execute(\"INSERT INTO schema_migrations VALUES (?, ?, ?, ?)\", ("
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 26,
+        "scope": "<module>",
+        "text": "CREATE TABLE schema_migrations ("
+      }
+    ],
+    "instruments": [
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 77,
+        "scope": "render",
+        "text": "FROM daily_bars b JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 133,
+        "scope": "render",
+        "text": "symbols=[r[0] for r in conn.execute(\"\"\"SELECT DISTINCT i.symbol FROM instruments i"
+      },
+      {
+        "path": "src/ai_trade/daily_candidates_data.py",
+        "line": 22,
+        "scope": "local_coverage",
+        "text": "JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 59,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "\"SELECT symbol FROM instruments WHERE instrument_id=?\", (bar.instrument_id,)"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 62,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "conn.execute(\"INSERT INTO instruments VALUES (?, ?)\", (bar.instrument_id, bar.symbol))"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 112,
+        "scope": "SQLiteMarketDataRepository.get_bar",
+        "text": "JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/demo_data.py",
+        "line": 92,
+        "scope": "read_bars",
+        "text": "FROM daily_bars b JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/security_master/repository.py",
+        "line": 34,
+        "scope": "SQLiteSecurityMaster._insert",
+        "text": "anchor = conn.execute(\"SELECT symbol FROM instruments WHERE instrument_id=?\", (record.instrument_id,)).fetchone()"
+      },
+      {
+        "path": "src/ai_trade/security_master/repository.py",
+        "line": 36,
+        "scope": "SQLiteSecurityMaster._insert",
+        "text": "conn.execute(\"INSERT INTO instruments VALUES (?,?)\", (record.instrument_id, record.symbol))"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 42,
+        "scope": "reference_statements",
+        "text": "FOREIGN KEY (instrument_id,symbol) REFERENCES instruments(instrument_id,symbol),"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 35,
+        "scope": "<module>",
+        "text": "\"\"\"CREATE TABLE instruments ("
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 48,
+        "scope": "<module>",
+        "text": "instrument_id TEXT NOT NULL REFERENCES instruments(instrument_id),"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 101,
+        "scope": "<module>",
+        "text": "\"CREATE INDEX idx_instruments_symbol ON instruments(symbol)\","
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 126,
+        "scope": "<module>",
+        "text": "for table in (\"instruments\", \"ingestion_runs\", \"daily_bars\", \"daily_bar_versions\")"
+      }
+    ],
+    "ingestion_runs": [
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 48,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "if conn.execute(\"SELECT 1 FROM ingestion_runs WHERE run_id=?\", (run_id,)).fetchone():"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 50,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "conn.execute(\"INSERT INTO ingestion_runs VALUES (?, ?)\", ("
+      },
+      {
+        "path": "src/ai_trade/reference_data/repository_support.py",
+        "line": 23,
+        "scope": "write_batch",
+        "text": "if conn.execute(\"SELECT 1 FROM ingestion_runs WHERE run_id=?\", (run_id,)).fetchone():"
+      },
+      {
+        "path": "src/ai_trade/reference_data/repository_support.py",
+        "line": 25,
+        "scope": "write_batch",
+        "text": "conn.execute(\"INSERT INTO ingestion_runs VALUES (?,?)\", ("
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 20,
+        "scope": "reference_statements",
+        "text": "run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 42,
+        "scope": "<module>",
+        "text": "\"\"\"CREATE TABLE ingestion_runs ("
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 82,
+        "scope": "<module>",
+        "text": "run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 126,
+        "scope": "<module>",
+        "text": "for table in (\"instruments\", \"ingestion_runs\", \"daily_bars\", \"daily_bar_versions\")"
+      }
+    ],
+    "daily_bars": [
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 77,
+        "scope": "render",
+        "text": "FROM daily_bars b JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 134,
+        "scope": "render",
+        "text": "JOIN daily_bars b ON b.instrument_id=i.instrument_id JOIN daily_bar_versions v ON v.bar_id=b.bar_id"
+      },
+      {
+        "path": "src/ai_trade/daily_candidates_data.py",
+        "line": 21,
+        "scope": "local_coverage",
+        "text": "FROM daily_bars b JOIN daily_bar_versions v ON b.bar_id=v.bar_id"
+      },
+      {
+        "path": "src/ai_trade/daily_candidates_data.py",
+        "line": 26,
+        "scope": "local_coverage",
+        "text": "dates = conn.execute(\"\"\"SELECT DISTINCT b.trade_date FROM daily_bars b"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 65,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "conn.execute(\"\"\"INSERT INTO daily_bars (instrument_id, trade_date, adjustment_method)"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 68,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "bar_id = conn.execute(\"\"\"SELECT bar_id FROM daily_bars"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 111,
+        "scope": "SQLiteMarketDataRepository.get_bar",
+        "text": "b.adjustment_method, v.* FROM daily_bars b"
+      },
+      {
+        "path": "src/ai_trade/demo_data.py",
+        "line": 92,
+        "scope": "read_bars",
+        "text": "FROM daily_bars b JOIN instruments i ON i.instrument_id=b.instrument_id"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 46,
+        "scope": "<module>",
+        "text": "\"\"\"CREATE TABLE daily_bars ("
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 67,
+        "scope": "<module>",
+        "text": "bar_id INTEGER NOT NULL REFERENCES daily_bars(bar_id),"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 100,
+        "scope": "<module>",
+        "text": "\"CREATE INDEX idx_bars_date ON daily_bars(trade_date, instrument_id)\","
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 105,
+        "scope": "<module>",
+        "text": "SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 109,
+        "scope": "<module>",
+        "text": "SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 126,
+        "scope": "<module>",
+        "text": "for table in (\"instruments\", \"ingestion_runs\", \"daily_bars\", \"daily_bar_versions\")"
+      }
+    ],
+    "daily_bar_versions": [
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 78,
+        "scope": "render",
+        "text": "JOIN daily_bar_versions v ON v.bar_id=b.bar_id WHERE v.source=?"
+      },
+      {
+        "path": "src/ai_trade/analysis_page.py",
+        "line": 134,
+        "scope": "render",
+        "text": "JOIN daily_bars b ON b.instrument_id=i.instrument_id JOIN daily_bar_versions v ON v.bar_id=b.bar_id"
+      },
+      {
+        "path": "src/ai_trade/daily_candidates_data.py",
+        "line": 21,
+        "scope": "local_coverage",
+        "text": "FROM daily_bars b JOIN daily_bar_versions v ON b.bar_id=v.bar_id"
+      },
+      {
+        "path": "src/ai_trade/daily_candidates_data.py",
+        "line": 27,
+        "scope": "local_coverage",
+        "text": "JOIN daily_bar_versions v ON b.bar_id=v.bar_id WHERE v.source=?"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 71,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "if conn.execute(\"\"\"SELECT 1 FROM daily_bar_versions"
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 77,
+        "scope": "SQLiteMarketDataRepository.write_many",
+        "text": "conn.execute(\"\"\"INSERT INTO daily_bar_versions ("
+      },
+      {
+        "path": "src/ai_trade/data_access/repository.py",
+        "line": 113,
+        "scope": "SQLiteMarketDataRepository.get_bar",
+        "text": "JOIN daily_bar_versions v ON v.bar_id=b.bar_id"
+      },
+      {
+        "path": "src/ai_trade/demo_data.py",
+        "line": 93,
+        "scope": "read_bars",
+        "text": "JOIN daily_bar_versions v ON v.bar_id=b.bar_id"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 65,
+        "scope": "<module>",
+        "text": "\"\"\"CREATE TABLE daily_bar_versions ("
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 89,
+        "scope": "<module>",
+        "text": "REFERENCES daily_bar_versions(bar_id, source, source_version)"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 96,
+        "scope": "<module>",
+        "text": "ON daily_bar_versions(bar_id, source) WHERE supersedes_version IS NULL\"\"\","
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 98,
+        "scope": "<module>",
+        "text": "ON daily_bar_versions(bar_id, source, available_at, ingested_at)\"\"\","
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 99,
+        "scope": "<module>",
+        "text": "\"CREATE INDEX idx_version_run ON daily_bar_versions(run_id)\","
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 102,
+        "scope": "<module>",
+        "text": "\"\"\"CREATE TRIGGER validate_bar_version BEFORE INSERT ON daily_bar_versions"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 113,
+        "scope": "<module>",
+        "text": "SELECT 1 FROM daily_bar_versions p"
+      },
+      {
+        "path": "src/ai_trade/storage/schema.py",
+        "line": 126,
+        "scope": "<module>",
+        "text": "for table in (\"instruments\", \"ingestion_runs\", \"daily_bars\", \"daily_bar_versions\")"
+      }
+    ],
+    "security_versions": [
+      {
+        "path": "src/ai_trade/security_master/repository.py",
+        "line": 43,
+        "scope": "SQLiteSecurityMaster._insert",
+        "text": "insert_row(conn, \"security_versions\", dict(instrument_id=record.instrument_id,"
+      },
+      {
+        "path": "src/ai_trade/security_master/repository.py",
+        "line": 72,
+        "scope": "SQLiteSecurityMaster.get",
+        "text": "row = conn.execute(\"\"\"SELECT * FROM security_versions WHERE instrument_id=?"
+      },
+      {
+        "path": "src/ai_trade/security_master/repository.py",
+        "line": 85,
+        "scope": "SQLiteSecurityMaster.resolve",
+        "text": "FROM security_versions WHERE symbol=? AND available_at<=? AND ingested_at<=?"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 26,
+        "scope": "reference_statements",
+        "text": "security = f\"\"\"CREATE TABLE security_versions ("
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 45,
+        "scope": "reference_statements",
+        "text": "FOREIGN KEY (instrument_id,supersedes_version) REFERENCES security_versions(instrument_id,record_version)"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 67,
+        "scope": "reference_statements",
+        "text": "for table, keys in ((\"security_versions\", (\"instrument_id\",)),"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 91,
+        "scope": "reference_statements",
+        "text": "\"CREATE INDEX security_symbol_lifetime ON security_versions(symbol,listing_date,delisting_date)\","
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 92,
+        "scope": "reference_statements",
+        "text": "f\"\"\"CREATE TRIGGER security_periods BEFORE INSERT ON security_versions BEGIN"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 117,
+        "scope": "reference_statements",
+        "text": "\"\"\"CREATE TRIGGER security_code_lifetime BEFORE INSERT ON security_versions BEGIN"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 119,
+        "scope": "reference_statements",
+        "text": "SELECT 1 FROM security_versions p"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 124,
+        "scope": "reference_statements",
+        "text": "SELECT 1 FROM security_versions successor"
+      }
+    ],
+    "calendar_versions": [
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 47,
+        "scope": "reference_statements",
+        "text": "calendar = f\"\"\"CREATE TABLE calendar_versions ("
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 61,
+        "scope": "reference_statements",
+        "text": "REFERENCES calendar_versions(exchange,session_date,record_version)"
+      },
+      {
+        "path": "src/ai_trade/storage/reference_schema.py",
+        "line": 68,
+        "scope": "reference_statements",
+        "text": "(\"calendar_versions\", (\"exchange\", \"session_date\"))):"
+      },
+      {
+        "path": "src/ai_trade/trading_calendar/repository.py",
+        "line": 45,
+        "scope": "SQLiteTradingCalendar._insert",
+        "text": "insert_row(conn, \"calendar_versions\", dict(exchange=record.exchange, session_date=record.session_date,"
+      },
+      {
+        "path": "src/ai_trade/trading_calendar/repository.py",
+        "line": 56,
+        "scope": "SQLiteTradingCalendar.get_day",
+        "text": "row = conn.execute(\"\"\"SELECT * FROM calendar_versions WHERE exchange=? AND session_date=?"
+      },
+      {
+        "path": "src/ai_trade/trading_calendar/repository.py",
+        "line": 78,
+        "scope": "SQLiteTradingCalendar.trading_days",
+        "text": "FROM calendar_versions WHERE exchange=? AND session_date BETWEEN ? AND ?"
+      }
+    ]
+  },
+  "symbols": {
+    "scripts/verify_m3_pipeline.py": [
+      {
+        "name": "now",
+        "line": 43,
+        "end": 44
+      },
+      {
+        "name": "write_json",
+        "line": 47,
+        "end": 51
+      },
+      {
+        "name": "checked_root",
+        "line": 54,
+        "end": 58
+      },
+      {
+        "name": "targets",
+        "line": 61,
+        "end": 65
+      },
+      {
+        "name": "capture_http",
+        "line": 69,
+        "end": 130
+      },
+      {
+        "name": "capture_http.save_event",
+        "line": 81,
+        "end": 83
+      },
+      {
+        "name": "capture_http.send",
+        "line": 85,
+        "end": 124
+      },
+      {
+        "name": "stock_observation",
+        "line": 133,
+        "end": 160
+      },
+      {
+        "name": "worker",
+        "line": 163,
+        "end": 209
+      },
+      {
+        "name": "run",
+        "line": 212,
+        "end": 249
+      },
+      {
+        "name": "main",
+        "line": 252,
+        "end": 264
+      }
+    ],
+    "scripts/verify_m3_sources.py": [
+      {
+        "name": "main",
+        "line": 20,
+        "end": 70
+      }
+    ],
+    "src/ai_trade/analysis_page.py": [
+      {
+        "name": "_clicked",
+        "line": 21,
+        "end": 22
+      },
+      {
+        "name": "render",
+        "line": 25,
+        "end": 156
+      }
+    ],
+    "src/ai_trade/daily_candidates.py": [
+      {
+        "name": "Evaluation",
+        "line": 23,
+        "end": 37
+      },
+      {
+        "name": "Evaluation.eligible",
+        "line": 32,
+        "end": 33
+      },
+      {
+        "name": "Evaluation.score",
+        "line": 36,
+        "end": 37
+      },
+      {
+        "name": "CandidateBatch",
+        "line": 41,
+        "end": 52
+      },
+      {
+        "name": "CandidateBatch.candidates",
+        "line": 51,
+        "end": 52
+      },
+      {
+        "name": "evaluate",
+        "line": 55,
+        "end": 76
+      },
+      {
+        "name": "sort_evaluations",
+        "line": 79,
+        "end": 80
+      },
+      {
+        "name": "score_rows",
+        "line": 83,
+        "end": 91
+      },
+      {
+        "name": "table_row",
+        "line": 94,
+        "end": 107
+      }
+    ],
+    "src/ai_trade/daily_candidates_data.py": [
+      {
+        "name": "local_coverage",
+        "line": 15,
+        "end": 30
+      },
+      {
+        "name": "load_batch",
+        "line": 33,
+        "end": 68
+      }
+    ],
+    "src/ai_trade/daily_candidates_page.py": [
+      {
+        "name": "_cached_batch",
+        "line": 20,
+        "end": 23
+      },
+      {
+        "name": "_fingerprint",
+        "line": 26,
+        "end": 28
+      },
+      {
+        "name": "_open_detail",
+        "line": 31,
+        "end": 33
+      },
+      {
+        "name": "_open_watch",
+        "line": 36,
+        "end": 37
+      },
+      {
+        "name": "_details_picker",
+        "line": 40,
+        "end": 45
+      },
+      {
+        "name": "_zero",
+        "line": 48,
+        "end": 52
+      },
+      {
+        "name": "_overview",
+        "line": 55,
+        "end": 75
+      },
+      {
+        "name": "_monitor",
+        "line": 78,
+        "end": 98
+      },
+      {
+        "name": "_picks",
+        "line": 101,
+        "end": 115
+      },
+      {
+        "name": "_watch",
+        "line": 118,
+        "end": 142
+      },
+      {
+        "name": "_risk",
+        "line": 145,
+        "end": 153
+      },
+      {
+        "name": "render",
+        "line": 156,
+        "end": 248
+      }
+    ],
+    "src/ai_trade/data_access/repository.py": [
+      {
+        "name": "MarketDataRepository",
+        "line": 24,
+        "end": 30
+      },
+      {
+        "name": "MarketDataRepository.write_many",
+        "line": 27,
+        "end": 27
+      },
+      {
+        "name": "MarketDataRepository.get_bar",
+        "line": 29,
+        "end": 30
+      },
+      {
+        "name": "SQLiteMarketDataRepository",
+        "line": 33,
+        "end": 132
+      },
+      {
+        "name": "SQLiteMarketDataRepository.__init__",
+        "line": 36,
+        "end": 37
+      },
+      {
+        "name": "SQLiteMarketDataRepository.write_many",
+        "line": 39,
+        "end": 91
+      },
+      {
+        "name": "SQLiteMarketDataRepository.get_bar",
+        "line": 93,
+        "end": 132
+      }
+    ],
+    "src/ai_trade/demo_app.py": [
+      {
+        "name": "get_demo_root",
+        "line": 33,
+        "end": 39
+      },
+      {
+        "name": "get_components",
+        "line": 42,
+        "end": 48
+      },
+      {
+        "name": "proxy_configuration_label",
+        "line": 51,
+        "end": 56
+      },
+      {
+        "name": "record_collect_click",
+        "line": 59,
+        "end": 60
+      }
+    ],
+    "src/ai_trade/demo_data.py": [
+      {
+        "name": "make_request",
+        "line": 32,
+        "end": 45
+      },
+      {
+        "name": "existing_demo_root",
+        "line": 48,
+        "end": 62
+      },
+      {
+        "name": "persistent_workbench_root",
+        "line": 65,
+        "end": 79
+      },
+      {
+        "name": "read_bars",
+        "line": 82,
+        "end": 114
+      },
+      {
+        "name": "verify_written",
+        "line": 117,
+        "end": 127
+      },
+      {
+        "name": "chart_data",
+        "line": 130,
+        "end": 133
+      }
+    ],
+    "src/ai_trade/m3_data_pipeline.py": [
+      {
+        "name": "inventory",
+        "line": 91,
+        "end": 92
+      },
+      {
+        "name": "_source",
+        "line": 95,
+        "end": 100
+      },
+      {
+        "name": "_stock_frame",
+        "line": 103,
+        "end": 111
+      },
+      {
+        "name": "_index_frame",
+        "line": 114,
+        "end": 124
+      },
+      {
+        "name": "build_bundle",
+        "line": 127,
+        "end": 167
+      },
+      {
+        "name": "public_summary",
+        "line": 170,
+        "end": 178
+      }
+    ],
+    "src/ai_trade/market_analysis.py": [
+      {
+        "name": "visible_prices",
+        "line": 29,
+        "end": 52
+      },
+      {
+        "name": "member_position",
+        "line": 55,
+        "end": 81
+      },
+      {
+        "name": "contract_label",
+        "line": 84,
+        "end": 85
+      },
+      {
+        "name": "wave_scenarios",
+        "line": 88,
+        "end": 147
+      },
+      {
+        "name": "past_percentile",
+        "line": 150,
+        "end": 157
+      },
+      {
+        "name": "past_percentile.rank",
+        "line": 151,
+        "end": 156
+      },
+      {
+        "name": "fear_greed",
+        "line": 160,
+        "end": 194
+      },
+      {
+        "name": "emotion",
+        "line": 197,
+        "end": 200
+      },
+      {
+        "name": "extreme_outcomes",
+        "line": 203,
+        "end": 215
+      },
+      {
+        "name": "environment",
+        "line": 218,
+        "end": 224
+      }
+    ],
+    "src/ai_trade/market_analysis_contract.py": [
+      {
+        "name": "Verification",
+        "line": 22,
+        "end": 26
+      },
+      {
+        "name": "Admission",
+        "line": 29,
+        "end": 33
+      },
+      {
+        "name": "Status",
+        "line": 36,
+        "end": 47
+      },
+      {
+        "name": "ReasonCode",
+        "line": 50,
+        "end": 69
+      },
+      {
+        "name": "Receipt",
+        "line": 73,
+        "end": 84
+      },
+      {
+        "name": "Receipt.__post_init__",
+        "line": 77,
+        "end": 80
+      },
+      {
+        "name": "Receipt.verified",
+        "line": 83,
+        "end": 84
+      },
+      {
+        "name": "SourceEvidence",
+        "line": 88,
+        "end": 107
+      },
+      {
+        "name": "SourceEvidence.__post_init__",
+        "line": 99,
+        "end": 107
+      },
+      {
+        "name": "CalendarEvidence",
+        "line": 111,
+        "end": 128
+      },
+      {
+        "name": "CalendarEvidence.__post_init__",
+        "line": 121,
+        "end": 128
+      },
+      {
+        "name": "Request",
+        "line": 132,
+        "end": 150
+      },
+      {
+        "name": "Request.__post_init__",
+        "line": 139,
+        "end": 150
+      },
+      {
+        "name": "Coverage",
+        "line": 154,
+        "end": 171
+      },
+      {
+        "name": "Coverage.__post_init__",
+        "line": 161,
+        "end": 167
+      },
+      {
+        "name": "Coverage.ratio",
+        "line": 170,
+        "end": 171
+      },
+      {
+        "name": "Reason",
+        "line": 175,
+        "end": 179
+      },
+      {
+        "name": "Diagnostic",
+        "line": 183,
+        "end": 216
+      },
+      {
+        "name": "Diagnostic.data_snapshot_id",
+        "line": 200,
+        "end": 203
+      },
+      {
+        "name": "Diagnostic.to_dict",
+        "line": 205,
+        "end": 216
+      },
+      {
+        "name": "clean",
+        "line": 219,
+        "end": 231
+      },
+      {
+        "name": "strategy_admission",
+        "line": 234,
+        "end": 258
+      }
+    ],
+    "src/ai_trade/market_analysis_core.py": [
+      {
+        "name": "_identity",
+        "line": 25,
+        "end": 30
+      },
+      {
+        "name": "_declared_identities",
+        "line": 33,
+        "end": 37
+      },
+      {
+        "name": "_missing_number",
+        "line": 40,
+        "end": 41
+      },
+      {
+        "name": "_number",
+        "line": 44,
+        "end": 65
+      },
+      {
+        "name": "_Context",
+        "line": 69,
+        "end": 79
+      },
+      {
+        "name": "_Context.add",
+        "line": 78,
+        "end": 79
+      },
+      {
+        "name": "_coverage",
+        "line": 82,
+        "end": 101
+      },
+      {
+        "name": "_prepare",
+        "line": 104,
+        "end": 206
+      },
+      {
+        "name": "_finish",
+        "line": 209,
+        "end": 241
+      },
+      {
+        "name": "price_diagnostics",
+        "line": 244,
+        "end": 298
+      },
+      {
+        "name": "breadth_diagnostic",
+        "line": 301,
+        "end": 350
+      },
+      {
+        "name": "fear_greed_diagnostic",
+        "line": 353,
+        "end": 399
+      },
+      {
+        "name": "cffex_diagnostic",
+        "line": 402,
+        "end": 464
+      },
+      {
+        "name": "environment_diagnostic",
+        "line": 467,
+        "end": 529
+      }
+    ],
+    "src/ai_trade/market_analysis_data.py": [
+      {
+        "name": "now",
+        "line": 28,
+        "end": 29
+      },
+      {
+        "name": "save_snapshot",
+        "line": 32,
+        "end": 42
+      },
+      {
+        "name": "snapshots",
+        "line": 45,
+        "end": 59
+      },
+      {
+        "name": "collect_cffex",
+        "line": 62,
+        "end": 74
+      },
+      {
+        "name": "ranking_rows",
+        "line": 77,
+        "end": 81
+      },
+      {
+        "name": "collect_public",
+        "line": 84,
+        "end": 97
+      },
+      {
+        "name": "price_frame",
+        "line": 100,
+        "end": 106
+      },
+      {
+        "name": "breadth_frame",
+        "line": 109,
+        "end": 115
+      },
+      {
+        "name": "_worker",
+        "line": 118,
+        "end": 184
+      },
+      {
+        "name": "_worker.bounded_get",
+        "line": 130,
+        "end": 153
+      }
+    ],
+    "src/ai_trade/market_analysis_view.py": [
+      {
+        "name": "safe_text",
+        "line": 52,
+        "end": 66
+      },
+      {
+        "name": "safe_text.public_url",
+        "line": 58,
+        "end": 63
+      },
+      {
+        "name": "LocalInput",
+        "line": 70,
+        "end": 74
+      },
+      {
+        "name": "unavailable",
+        "line": 77,
+        "end": 79
+      },
+      {
+        "name": "catalogue",
+        "line": 82,
+        "end": 87
+      },
+      {
+        "name": "snapshot_ref",
+        "line": 90,
+        "end": 94
+      },
+      {
+        "name": "snapshot_label",
+        "line": 97,
+        "end": 98
+      },
+      {
+        "name": "_facts",
+        "line": 101,
+        "end": 112
+      },
+      {
+        "name": "from_snapshots",
+        "line": 115,
+        "end": 148
+      },
+      {
+        "name": "from_stock_frame",
+        "line": 151,
+        "end": 157
+      },
+      {
+        "name": "input_error",
+        "line": 160,
+        "end": 167
+      },
+      {
+        "name": "diagnostic_bundle",
+        "line": 170,
+        "end": 189
+      },
+      {
+        "name": "displayable",
+        "line": 192,
+        "end": 194
+      },
+      {
+        "name": "coverage_text",
+        "line": 197,
+        "end": 200
+      },
+      {
+        "name": "overview_html",
+        "line": 203,
+        "end": 213
+      },
+      {
+        "name": "evidence_payload",
+        "line": 216,
+        "end": 228
+      },
+      {
+        "name": "evidence_payload.scrub",
+        "line": 224,
+        "end": 227
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings_versions.py": [
+      {
+        "name": "_key",
+        "line": 19,
+        "end": 20
+      },
+      {
+        "name": "_check",
+        "line": 23,
+        "end": 99
+      },
+      {
+        "name": "compare_revision",
+        "line": 102,
+        "end": 123
+      },
+      {
+        "name": "assert_visible",
+        "line": 126,
+        "end": 135
+      },
+      {
+        "name": "select_visible_version",
+        "line": 138,
+        "end": 176
+      },
+      {
+        "name": "net_positions_at",
+        "line": 179,
+        "end": 190
+      }
+    ],
+    "src/ai_trade/market_data/evidence.py": [
+      {
+        "name": "EvidenceStore",
+        "line": 16,
+        "end": 75
+      },
+      {
+        "name": "EvidenceStore.__init__",
+        "line": 23,
+        "end": 24
+      },
+      {
+        "name": "EvidenceStore._write",
+        "line": 27,
+        "end": 31
+      },
+      {
+        "name": "EvidenceStore.begin",
+        "line": 33,
+        "end": 47
+      },
+      {
+        "name": "EvidenceStore._json",
+        "line": 50,
+        "end": 51
+      },
+      {
+        "name": "EvidenceStore.response",
+        "line": 53,
+        "end": 66
+      },
+      {
+        "name": "EvidenceStore.finish",
+        "line": 68,
+        "end": 75
+      }
+    ],
+    "src/ai_trade/market_data/health_service.py": [
+      {
+        "name": "HealthSource",
+        "line": 25,
+        "end": 32
+      },
+      {
+        "name": "_ObservedClient",
+        "line": 45,
+        "end": 64
+      },
+      {
+        "name": "_ObservedClient.__init__",
+        "line": 46,
+        "end": 50
+      },
+      {
+        "name": "_ObservedClient.__getattr__",
+        "line": 52,
+        "end": 53
+      },
+      {
+        "name": "_ObservedClient.fetch",
+        "line": 55,
+        "end": 64
+      },
+      {
+        "name": "_ScratchWriter",
+        "line": 67,
+        "end": 85
+      },
+      {
+        "name": "_ScratchWriter.__init__",
+        "line": 70,
+        "end": 75
+      },
+      {
+        "name": "_ScratchWriter.write_many",
+        "line": 77,
+        "end": 85
+      },
+      {
+        "name": "HealthService",
+        "line": 88,
+        "end": 263
+      },
+      {
+        "name": "HealthService.__init__",
+        "line": 89,
+        "end": 92
+      },
+      {
+        "name": "HealthService.check",
+        "line": 94,
+        "end": 263
+      },
+      {
+        "name": "HealthService.check.finish",
+        "line": 107,
+        "end": 109
+      }
+    ],
+    "src/ai_trade/market_data/ingestor.py": [
+      {
+        "name": "utc_now",
+        "line": 24,
+        "end": 25
+      },
+      {
+        "name": "_transport_type_chain",
+        "line": 36,
+        "end": 46
+      },
+      {
+        "name": "DailyHistoryIngestor",
+        "line": 49,
+        "end": 170
+      },
+      {
+        "name": "DailyHistoryIngestor.__init__",
+        "line": 56,
+        "end": 73
+      },
+      {
+        "name": "DailyHistoryIngestor._now",
+        "line": 75,
+        "end": 82
+      },
+      {
+        "name": "DailyHistoryIngestor.collect",
+        "line": 84,
+        "end": 170
+      }
+    ],
+    "src/ai_trade/market_state.py": [
+      {
+        "name": "MarketState",
+        "line": 15,
+        "end": 33
+      },
+      {
+        "name": "MarketState.allows",
+        "line": 23,
+        "end": 33
+      }
+    ],
+    "src/ai_trade/reference_data/repository_support.py": [
+      {
+        "name": "write_batch",
+        "line": 18,
+        "end": 39
+      },
+      {
+        "name": "insert_row",
+        "line": 42,
+        "end": 48
+      },
+      {
+        "name": "meta_from_row",
+        "line": 51,
+        "end": 52
+      },
+      {
+        "name": "envelope",
+        "line": 55,
+        "end": 76
+      },
+      {
+        "name": "envelope.encode",
+        "line": 70,
+        "end": 73
+      }
+    ],
+    "src/ai_trade/security_master/repository.py": [
+      {
+        "name": "SecurityMaster",
+        "line": 20,
+        "end": 25
+      },
+      {
+        "name": "SecurityMaster.write_many",
+        "line": 21,
+        "end": 21
+      },
+      {
+        "name": "SecurityMaster.get",
+        "line": 23,
+        "end": 23
+      },
+      {
+        "name": "SecurityMaster.resolve",
+        "line": 25,
+        "end": 25
+      },
+      {
+        "name": "SQLiteSecurityMaster",
+        "line": 28,
+        "end": 90
+      },
+      {
+        "name": "SQLiteSecurityMaster.__init__",
+        "line": 29,
+        "end": 30
+      },
+      {
+        "name": "SQLiteSecurityMaster._insert",
+        "line": 33,
+        "end": 44
+      },
+      {
+        "name": "SQLiteSecurityMaster.write_many",
+        "line": 46,
+        "end": 47
+      },
+      {
+        "name": "SQLiteSecurityMaster._result",
+        "line": 50,
+        "end": 65
+      },
+      {
+        "name": "SQLiteSecurityMaster.get",
+        "line": 67,
+        "end": 75
+      },
+      {
+        "name": "SQLiteSecurityMaster.resolve",
+        "line": 77,
+        "end": 90
+      }
+    ],
+    "src/ai_trade/storage/db.py": [
+      {
+        "name": "DatabaseConfig",
+        "line": 16,
+        "end": 46
+      },
+      {
+        "name": "DatabaseConfig.__post_init__",
+        "line": 24,
+        "end": 33
+      },
+      {
+        "name": "DatabaseConfig.from_env",
+        "line": 36,
+        "end": 46
+      },
+      {
+        "name": "Database",
+        "line": 49,
+        "end": 120
+      },
+      {
+        "name": "Database.__init__",
+        "line": 52,
+        "end": 53
+      },
+      {
+        "name": "Database.connection",
+        "line": 56,
+        "end": 75
+      },
+      {
+        "name": "Database.transaction",
+        "line": 78,
+        "end": 87
+      },
+      {
+        "name": "Database.initialize",
+        "line": 89,
+        "end": 120
+      }
+    ],
+    "src/ai_trade/storage/reference_schema.py": [
+      {
+        "name": "_date",
+        "line": 4,
+        "end": 6
+      },
+      {
+        "name": "reference_statements",
+        "line": 9,
+        "end": 131
+      }
+    ],
+    "src/ai_trade/storage/schema.py": [
+      {
+        "name": "Migration",
+        "line": 11,
+        "end": 22
+      },
+      {
+        "name": "Migration.checksum",
+        "line": 19,
+        "end": 22
+      }
+    ],
+    "src/ai_trade/trading_calendar/repository.py": [
+      {
+        "name": "TradingCalendar",
+        "line": 18,
+        "end": 27
+      },
+      {
+        "name": "TradingCalendar.write_many",
+        "line": 19,
+        "end": 19
+      },
+      {
+        "name": "TradingCalendar.get_day",
+        "line": 21,
+        "end": 21
+      },
+      {
+        "name": "TradingCalendar.trading_days",
+        "line": 23,
+        "end": 24
+      },
+      {
+        "name": "TradingCalendar.previous_known_trading_day",
+        "line": 26,
+        "end": 27
+      },
+      {
+        "name": "_day",
+        "line": 30,
+        "end": 33
+      },
+      {
+        "name": "SQLiteTradingCalendar",
+        "line": 36,
+        "end": 111
+      },
+      {
+        "name": "SQLiteTradingCalendar.__init__",
+        "line": 37,
+        "end": 38
+      },
+      {
+        "name": "SQLiteTradingCalendar._insert",
+        "line": 41,
+        "end": 46
+      },
+      {
+        "name": "SQLiteTradingCalendar.write_many",
+        "line": 48,
+        "end": 49
+      },
+      {
+        "name": "SQLiteTradingCalendar.get_day",
+        "line": 51,
+        "end": 64
+      },
+      {
+        "name": "SQLiteTradingCalendar.trading_days",
+        "line": 66,
+        "end": 93
+      },
+      {
+        "name": "SQLiteTradingCalendar.previous_known_trading_day",
+        "line": 95,
+        "end": 111
+      }
+    ],
+    "src/ai_trade/market_analysis_page.py": [
+      {
+        "name": "_collect",
+        "line": 31,
+        "end": 37
+      },
+      {
+        "name": "_feedback",
+        "line": 40,
+        "end": 43
+      },
+      {
+        "name": "_choose",
+        "line": 46,
+        "end": 51
+      },
+      {
+        "name": "_details",
+        "line": 54,
+        "end": 86
+      },
+      {
+        "name": "_values",
+        "line": 89,
+        "end": 137
+      },
+      {
+        "name": "render",
+        "line": 140,
+        "end": 232
+      }
+    ]
+  },
+  "imports": {
+    "scripts/verify_m3_pipeline.py": [
+      {
+        "line": 6,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "contextlib",
+        "names": [
+          "contextmanager"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "urllib.parse",
+        "names": [
+          "urlsplit"
+        ]
+      },
+      {
+        "line": 22,
+        "module": "urllib3.util.retry",
+        "names": [
+          "Retry"
+        ]
+      },
+      {
+        "line": 24,
+        "module": "ai_trade.m3_data_pipeline",
+        "names": [
+          "build_bundle",
+          "inventory",
+          "public_summary"
+        ]
+      },
+      {
+        "line": 25,
+        "module": "ai_trade.market_analysis_data",
+        "names": [
+          "_worker",
+          "collect_cffex",
+          "save_snapshot"
+        ]
+      },
+      {
+        "line": 26,
+        "module": "ai_trade.market_data.evidence",
+        "names": [
+          "EvidenceStore"
+        ]
+      },
+      {
+        "line": 27,
+        "module": "ai_trade.market_data.health_service",
+        "names": [
+          "SOURCES",
+          "_ObservedClient",
+          "_ScratchWriter"
+        ]
+      },
+      {
+        "line": 28,
+        "module": "ai_trade.market_data.health_transport",
+        "names": [
+          "BudgetBlocked",
+          "HealthTransport"
+        ]
+      },
+      {
+        "line": 29,
+        "module": "ai_trade.market_data.ingestor",
+        "names": [
+          "DailyHistoryIngestor",
+          "_transport_type_chain"
+        ]
+      },
+      {
+        "line": 30,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "DailyHistoryRequest",
+          "IngestionStatus"
+        ]
+      }
+    ],
+    "scripts/verify_m3_sources.py": [
+      {
+        "line": 7,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.market_analysis_data",
+        "names": [
+          "collect_cffex",
+          "collect_public",
+          "price_frame"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "Request",
+          "SourceEvidence"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.market_analysis_core",
+        "names": [
+          "fear_greed_diagnostic",
+          "price_diagnostics"
+        ]
+      }
+    ],
+    "src/ai_trade/analysis_page.py": [
+      {
+        "line": 2,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "datetime",
+        "names": [
+          "date",
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.demo_data",
+        "names": [
+          "SOURCES",
+          "make_request",
+          "read_bars",
+          "verify_written"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.market_data.akshare_adapter",
+        "names": [
+          "AkshareDailyClient"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.market_data.tx_adapter",
+        "names": [
+          "TxDailyClient"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.market_data.ingestor",
+        "names": [
+          "DailyHistoryIngestor"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.market_data.evidence",
+        "names": [
+          "EvidenceStore"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "DailyHistoryRequest"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.data_access.repository",
+        "names": [
+          "SQLiteMarketDataRepository"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.trading_analysis",
+        "names": [
+          "FORMULAS",
+          "analyze",
+          "candidate_row"
+        ]
+      },
+      {
+        "line": 51,
+        "module": "ai_trade.trading_analysis",
+        "names": [
+          "risk_reference"
+        ]
+      }
+    ],
+    "src/ai_trade/daily_candidates.py": [
+      {
+        "line": 2,
+        "module": "dataclasses",
+        "names": [
+          "dataclass",
+          "field"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "ai_trade.market_state",
+        "names": [
+          "MarketState",
+          "MARKET_MODES"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "ai_trade.trading_analysis",
+        "names": [
+          "Analysis",
+          "WEIGHTS"
+        ]
+      }
+    ],
+    "src/ai_trade/daily_candidates_data.py": [
+      {
+        "line": 2,
+        "module": "datetime",
+        "names": [
+          "date",
+          "timedelta"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date",
+          "timestamp"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "ai_trade.daily_candidates",
+        "names": [
+          "CandidateBatch",
+          "Evaluation",
+          "evaluate",
+          "sort_evaluations"
+        ]
+      },
+      {
+        "line": 6,
+        "module": "ai_trade.demo_data",
+        "names": [
+          "make_request",
+          "read_bars"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "ai_trade.market_state",
+        "names": [
+          "MarketState"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "ai_trade.security_master.repository",
+        "names": [
+          "SQLiteSecurityMaster"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "ai_trade.trading_analysis",
+        "names": [
+          "analyze"
+        ]
+      }
+    ],
+    "src/ai_trade/daily_candidates_page.py": [
+      {
+        "line": 2,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 3,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "zoneinfo",
+        "names": [
+          "ZoneInfo"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "ai_trade.daily_candidates",
+        "names": [
+          "CandidateBatch",
+          "LIMITATIONS",
+          "STRATEGIES",
+          "table_row"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.daily_candidates_data",
+        "names": [
+          "load_batch",
+          "local_coverage"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.daily_candidates_details",
+        "names": [
+          "render_detail",
+          "risk_card"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.daily_candidates_view",
+        "names": [
+          "VIEWS",
+          "STAGES",
+          "data_status",
+          "load_watch_batch",
+          "monitor_row",
+          "risk_row",
+          "symbols_input"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.demo_data",
+        "names": [
+          "SOURCES"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.market_state",
+        "names": [
+          "MARKET_MODES",
+          "MarketState"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database",
+          "DatabaseConfig"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.trading_analysis",
+        "names": [
+          "risk_reference"
+        ]
+      }
+    ],
+    "src/ai_trade/data_access/repository.py": [
+      {
+        "line": 10,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "typing",
+        "names": [
+          "Iterable",
+          "Protocol"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "DailyBar",
+          "DataUnavailableError",
+          "DuplicateRecordError",
+          "IntegrityError",
+          "ReadResult",
+          "ValidationError",
+          "WriteResult"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "ADJUSTMENTS",
+          "MODES",
+          "iso_date",
+          "text_field",
+          "timestamp",
+          "validate_bar"
+        ]
+      },
+      {
+        "line": 21,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      }
+    ],
+    "src/ai_trade/demo_app.py": [
+      {
+        "line": 2,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "datetime",
+        "names": [
+          "date",
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 23,
+        "module": "ai_trade.data_access.repository",
+        "names": [
+          "SQLiteMarketDataRepository"
+        ]
+      },
+      {
+        "line": 24,
+        "module": "ai_trade.demo_data",
+        "names": [
+          "SOURCES",
+          "chart_data",
+          "existing_demo_root",
+          "persistent_workbench_root",
+          "make_request",
+          "read_bars",
+          "verify_written"
+        ]
+      },
+      {
+        "line": 25,
+        "module": "ai_trade.market_data.akshare_adapter",
+        "names": [
+          "AkshareDailyClient"
+        ]
+      },
+      {
+        "line": 26,
+        "module": "ai_trade.market_data.tx_adapter",
+        "names": [
+          "TxDailyClient"
+        ]
+      },
+      {
+        "line": 27,
+        "module": "ai_trade.market_data.evidence",
+        "names": [
+          "EvidenceStore"
+        ]
+      },
+      {
+        "line": 28,
+        "module": "ai_trade.market_data.ingestor",
+        "names": [
+          "DailyHistoryIngestor"
+        ]
+      },
+      {
+        "line": 29,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "DailyHistoryRequest",
+          "EvidenceWriteError"
+        ]
+      },
+      {
+        "line": 30,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database",
+          "DatabaseConfig"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.project_progress.page",
+        "names": [
+          "render"
+        ]
+      },
+      {
+        "line": 106,
+        "module": "ai_trade.daily_candidates_page",
+        "names": [
+          "render"
+        ]
+      },
+      {
+        "line": 111,
+        "module": "ai_trade.market_analysis_page",
+        "names": [
+          "render"
+        ]
+      },
+      {
+        "line": 116,
+        "module": "ai_trade.analysis_page",
+        "names": [
+          "render"
+        ]
+      }
+    ],
+    "src/ai_trade/demo_data.py": [
+      {
+        "line": 3,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "datetime",
+        "names": [
+          "date",
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "DailyBar",
+          "IntegrityError"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.data_access.repository",
+        "names": [
+          "SQLiteMarketDataRepository"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "timestamp",
+          "validate_bar"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.market_data.akshare_adapter",
+        "names": [
+          "ADAPTER_VERSION",
+          "REVIEWED_SDK_VERSION",
+          "validate_request"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "DailyHistoryRequest"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.market_data.tx_adapter",
+        "names": [
+          "ADAPTER_VERSION"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      }
+    ],
+    "src/ai_trade/m3_data_pipeline.py": [
+      {
+        "line": 7,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "copy",
+        "names": [
+          "deepcopy"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "CALCULATION_VERSION",
+          "CONTRACT_VERSION",
+          "Request",
+          "SourceEvidence"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.market_analysis_core",
+        "names": [
+          "breadth_diagnostic",
+          "cffex_diagnostic",
+          "environment_diagnostic",
+          "fear_greed_diagnostic",
+          "price_diagnostics"
+        ]
+      },
+      {
+        "line": 20,
+        "module": "ai_trade.market_analysis_data",
+        "names": [
+          "INDEX_SOURCE",
+          "BREADTH_SOURCE"
+        ]
+      },
+      {
+        "line": 21,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "MemberScope"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis.py": [
+      {
+        "line": 2,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "datetime",
+        "names": [
+          "date"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "MemberScope",
+          "RankingSide"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis_contract.py": [
+      {
+        "line": 6,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "dataclasses",
+        "names": [
+          "asdict",
+          "dataclass",
+          "field"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "enum",
+        "names": [
+          "Enum"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "typing",
+        "names": [
+          "Any"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date",
+          "timestamp"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis_core.py": [
+      {
+        "line": 2,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "dataclasses",
+        "names": [
+          "dataclass",
+          "field"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date",
+          "text_field",
+          "timestamp"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.market_analysis",
+        "names": [
+          "WEIGHTS",
+          "emotion",
+          "fear_greed",
+          "member_position",
+          "wave_scenarios"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "Admission",
+          "CalendarEvidence",
+          "Coverage",
+          "Diagnostic",
+          "Reason",
+          "ReasonCode",
+          "Request",
+          "SourceEvidence",
+          "Status",
+          "clean"
+        ]
+      },
+      {
+        "line": 410,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "CffexRankingsError",
+          "MemberScope",
+          "RankingDataUnavailableError"
+        ]
+      },
+      {
+        "line": 413,
+        "module": "ai_trade.market_data.cffex_rankings_versions",
+        "names": [
+          "net_positions_at",
+          "select_visible_version"
+        ]
+      },
+      {
+        "line": 473,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "Receipt",
+          "Verification"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis_data.py": [
+      {
+        "line": 2,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.market_data.cffex_rankings",
+        "names": [
+          "CffexRankingsClient",
+          "parse"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "CffexRankingsRequest"
+        ]
+      },
+      {
+        "line": 120,
+        "module": "unittest.mock",
+        "names": [
+          "patch"
+        ]
+      },
+      {
+        "line": 178,
+        "module": "datetime",
+        "names": [
+          "date"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis_view.py": [
+      {
+        "line": 6,
+        "module": "__future__",
+        "names": [
+          "annotations"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "dataclasses",
+        "names": [
+          "dataclass",
+          "field",
+          "replace"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "html",
+        "names": [
+          "escape"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "urllib.parse",
+        "names": [
+          "urlsplit",
+          "urlunsplit"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade",
+        "names": [
+          "market_analysis_core"
+        ]
+      },
+      {
+        "line": 19,
+        "module": "ai_trade",
+        "names": [
+          "market_analysis_data"
+        ]
+      },
+      {
+        "line": 20,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "Admission",
+          "Diagnostic",
+          "Reason",
+          "ReasonCode",
+          "Request",
+          "SourceEvidence",
+          "Status"
+        ]
+      },
+      {
+        "line": 23,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "MemberScope"
+        ]
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings_versions.py": [
+      {
+        "line": 11,
+        "module": "ai_trade.reference_data.models",
+        "names": [
+          "ReferenceResult"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "cffex_rankings_models",
+        "names": [
+          "CffexRankingsRecord",
+          "CffexRankingsRequest",
+          "RankingDataUnavailableError",
+          "RankingVersionError",
+          "RankingRow",
+          "RankingSide",
+          "MemberScope"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "cffex_rankings_time",
+        "names": [
+          "aware",
+          "iso",
+          "LOCAL"
+        ]
+      },
+      {
+        "line": 185,
+        "module": "dataclasses",
+        "names": [
+          "replace"
+        ]
+      },
+      {
+        "line": 186,
+        "module": "cffex_rankings",
+        "names": [
+          "net_positions"
+        ]
+      }
+    ],
+    "src/ai_trade/market_data/evidence.py": [
+      {
+        "line": 6,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "typing",
+        "names": [
+          "Any"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "DuplicateRecordError"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "text_field"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "EvidenceWriteError"
+        ]
+      }
+    ],
+    "src/ai_trade/market_data/health_service.py": [
+      {
+        "line": 3,
+        "module": "dataclasses",
+        "names": [
+          "dataclass"
+        ]
+      },
+      {
+        "line": 4,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone",
+          "date"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "typing",
+        "names": [
+          "Callable"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.data_access.repository",
+        "names": [
+          "SQLiteMarketDataRepository"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.market_data.akshare_adapter",
+        "names": [
+          "AkshareDailyClient",
+          "_market_date",
+          "validate_request"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.market_data.evidence",
+        "names": [
+          "EvidenceStore"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.market_data.health_models",
+        "names": [
+          "CalendarExpectation",
+          "CheckType",
+          "HealthResult",
+          "HealthStatus"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.market_data.health_transport",
+        "names": [
+          "BudgetBlocked",
+          "HealthTransport"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.market_data.ingestor",
+        "names": [
+          "DailyHistoryIngestor",
+          "_transport_type_chain"
+        ]
+      },
+      {
+        "line": 19,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "DailyHistoryRequest",
+          "IngestionStatus"
+        ]
+      },
+      {
+        "line": 20,
+        "module": "ai_trade.market_data.tx_adapter",
+        "names": [
+          "TxDailyClient"
+        ]
+      },
+      {
+        "line": 21,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database",
+          "DatabaseConfig"
+        ]
+      }
+    ],
+    "src/ai_trade/market_data/ingestor.py": [
+      {
+        "line": 4,
+        "module": "dataclasses",
+        "names": [
+          "asdict",
+          "replace"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 6,
+        "module": "json",
+        "names": [
+          "JSONDecodeError"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "typing",
+        "names": [
+          "Callable"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "requests.exceptions",
+        "names": [
+          "HTTPError",
+          "RequestException",
+          "JSONDecodeError"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "DuplicateRecordError",
+          "IntegrityError",
+          "ValidationError"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "text_field",
+          "timestamp",
+          "validate_bar"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.market_data.akshare_adapter",
+        "names": [
+          "ADAPTER_VERSION",
+          "DailyHistoryClient",
+          "check_frame",
+          "map_frame",
+          "validate_request"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.market_data.evidence",
+        "names": [
+          "EvidenceStore"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.market_data.models",
+        "names": [
+          "BarWriter",
+          "DailyHistoryRequest",
+          "EvidenceWriteError",
+          "IngestionResult",
+          "IngestionStatus",
+          "SourceResponseError",
+          "SourceSchemaError"
+        ]
+      }
+    ],
+    "src/ai_trade/market_state.py": [
+      {
+        "line": 6,
+        "module": "dataclasses",
+        "names": [
+          "dataclass"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date",
+          "timestamp"
+        ]
+      }
+    ],
+    "src/ai_trade/reference_data/repository_support.py": [
+      {
+        "line": 6,
+        "module": "dataclasses",
+        "names": [
+          "asdict",
+          "is_dataclass"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "typing",
+        "names": [
+          "Callable",
+          "Iterable",
+          "TypeVar"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "DuplicateRecordError",
+          "IntegrityError",
+          "ValidationError",
+          "WriteResult"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "text_field"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.reference_data.models",
+        "names": [
+          "Provenance",
+          "ReferenceResult"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      }
+    ],
+    "src/ai_trade/security_master/repository.py": [
+      {
+        "line": 6,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "typing",
+        "names": [
+          "Iterable",
+          "Protocol"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "IntegrityError",
+          "ValidationError",
+          "WriteResult"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date",
+          "text_field"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.reference_data",
+        "names": [
+          "validation"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.reference_data.models",
+        "names": [
+          "ReferenceResult",
+          "SecurityAtDate",
+          "SecurityDataMissingError",
+          "SecurityNotActiveError",
+          "SecurityPeriod",
+          "SecuritySnapshot"
+        ]
+      },
+      {
+        "line": 16,
+        "module": "ai_trade.reference_data.repository_support",
+        "names": [
+          "envelope",
+          "insert_row",
+          "meta_from_row",
+          "write_batch"
+        ]
+      },
+      {
+        "line": 17,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      }
+    ],
+    "src/ai_trade/storage/db.py": [
+      {
+        "line": 5,
+        "module": "contextlib",
+        "names": [
+          "contextmanager"
+        ]
+      },
+      {
+        "line": 6,
+        "module": "dataclasses",
+        "names": [
+          "dataclass"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "datetime",
+        "names": [
+          "datetime",
+          "timezone"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "pathlib",
+        "names": [
+          "Path"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "typing",
+        "names": [
+          "Iterator",
+          "Mapping"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "IntegrityError"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.storage.schema",
+        "names": [
+          "LEDGER_SQL",
+          "MIGRATIONS",
+          "Migration"
+        ]
+      }
+    ],
+    "src/ai_trade/storage/reference_schema.py": [],
+    "src/ai_trade/storage/schema.py": [
+      {
+        "line": 5,
+        "module": "dataclasses",
+        "names": [
+          "dataclass"
+        ]
+      },
+      {
+        "line": 7,
+        "module": "ai_trade.storage.reference_schema",
+        "names": [
+          "reference_statements"
+        ]
+      }
+    ],
+    "src/ai_trade/trading_calendar/repository.py": [
+      {
+        "line": 4,
+        "module": "dataclasses",
+        "names": [
+          "asdict"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "datetime",
+        "names": [
+          "date",
+          "timedelta"
+        ]
+      },
+      {
+        "line": 6,
+        "module": "typing",
+        "names": [
+          "Iterable",
+          "Protocol"
+        ]
+      },
+      {
+        "line": 8,
+        "module": "ai_trade.data_access.models",
+        "names": [
+          "ValidationError",
+          "WriteResult"
+        ]
+      },
+      {
+        "line": 9,
+        "module": "ai_trade.data_access.validation",
+        "names": [
+          "iso_date"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade.reference_data",
+        "names": [
+          "validation"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.reference_data.models",
+        "names": [
+          "CalendarDataMissingError",
+          "CalendarDay",
+          "CalendarSourceError",
+          "NoKnownTradingDayError",
+          "ReferenceResult"
+        ]
+      },
+      {
+        "line": 14,
+        "module": "ai_trade.reference_data.repository_support",
+        "names": [
+          "envelope",
+          "insert_row",
+          "meta_from_row",
+          "write_batch"
+        ]
+      },
+      {
+        "line": 15,
+        "module": "ai_trade.storage.db",
+        "names": [
+          "Database"
+        ]
+      }
+    ],
+    "src/ai_trade/market_analysis_page.py": [
+      {
+        "line": 2,
+        "module": "datetime",
+        "names": [
+          "date",
+          "datetime",
+          "timedelta"
+        ]
+      },
+      {
+        "line": 5,
+        "module": "zoneinfo",
+        "names": [
+          "ZoneInfo"
+        ]
+      },
+      {
+        "line": 10,
+        "module": "ai_trade",
+        "names": [
+          "market_analysis_data"
+        ]
+      },
+      {
+        "line": 11,
+        "module": "ai_trade.demo_data",
+        "names": [
+          "SOURCES",
+          "make_request",
+          "read_bars"
+        ]
+      },
+      {
+        "line": 12,
+        "module": "ai_trade.market_analysis_contract",
+        "names": [
+          "Request",
+          "SourceEvidence"
+        ]
+      },
+      {
+        "line": 13,
+        "module": "ai_trade.market_analysis_view",
+        "names": [
+          "MODULES",
+          "REASON_LABELS",
+          "STATUS_LABELS",
+          "catalogue",
+          "coverage_text",
+          "diagnostic_bundle",
+          "displayable",
+          "evidence_payload",
+          "from_snapshots",
+          "from_stock_frame",
+          "overview_html",
+          "safe_text",
+          "snapshot_label",
+          "snapshot_ref",
+          "unavailable"
+        ]
+      },
+      {
+        "line": 18,
+        "module": "ai_trade.market_data.cffex_rankings_models",
+        "names": [
+          "MemberScope"
+        ]
+      }
+    ]
+  },
+  "persistence_reference_lines": [
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 25,
+      "scope": "<module>",
+      "text": "from ai_trade.market_analysis_data import _worker as public_worker, collect_cffex, save_snapshot"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 49,
+      "scope": "write_json",
+      "text": "with Path(path).open(\"x\", encoding=\"utf-8\") as stream:"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 50,
+      "scope": "write_json",
+      "text": "json.dump(value, stream, ensure_ascii=False, sort_keys=True, allow_nan=False, indent=2)"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 82,
+      "scope": "capture_http.save_event",
+      "text": "with (root / \"http-events.jsonl\").open(\"a\", encoding=\"utf-8\") as stream:"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 83,
+      "scope": "capture_http.save_event",
+      "text": "stream.write(json.dumps(row, sort_keys=True) + \"\\n\")"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 186,
+      "scope": "worker",
+      "text": "save_snapshot(root, observation)"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "line": 247,
+      "scope": "run",
+      "text": "print(json.dumps(dict(run_id=run_id, evidence_directory=str(root),"
+    },
+    {
+      "path": "src/ai_trade/m3_data_pipeline.py",
+      "line": 98,
+      "scope": "_source",
+      "text": "digest = hashlib.sha256(json.dumps(item, sort_keys=True, allow_nan=False).encode()).hexdigest()"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_contract.py",
+      "line": 203,
+      "scope": "Diagnostic.data_snapshot_id",
+      "text": "return hashlib.sha256(json.dumps(payload, sort_keys=True, allow_nan=False).encode()).hexdigest()"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 32,
+      "scope": "save_snapshot",
+      "text": "def save_snapshot(root: Path, data: dict) -> Path:"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 36,
+      "scope": "save_snapshot",
+      "text": "payload = json.dumps(data, ensure_ascii=False, sort_keys=True, allow_nan=False).encode(\"utf-8\")"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 40,
+      "scope": "save_snapshot",
+      "text": "temporary.write_bytes(payload)"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 73,
+      "scope": "collect_cffex",
+      "text": "save_snapshot(root, data)"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 96,
+      "scope": "collect_public",
+      "text": "save_snapshot(root, item)"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 189,
+      "scope": "<module>",
+      "text": "print(json.dumps(_worker(sys.argv[1], sys.argv[2]), ensure_ascii=False, allow_nan=False))"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "line": 192,
+      "scope": "<module>",
+      "text": "print(json.dumps({\"error\": type(exc).__name__, \"http_trace\": _HTTP_TRACE}, ensure_ascii=False))"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 35,
+      "scope": "_collect",
+      "text": "st.session_state[key] = (True, f\"采集已保存：数据日 {safe_text(item.get('trade_date'))}；观察 {safe_text(item.get('observed_at'))}。保存不代表研究准入，请显式选择版本。\")"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 37,
+      "scope": "_collect",
+      "text": "st.session_state[key] = (False, f'接口失败/超时/格式校验未通过（{type(exc).__name__}），未生成替代数据。下方仅为先前本地保存版本。')"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 41,
+      "scope": "_feedback",
+      "text": "if key in st.session_state:"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 42,
+      "scope": "_feedback",
+      "text": "ok, message = st.session_state[key]"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 84,
+      "scope": "_details",
+      "text": "st.download_button('下载脱敏诊断 · ' + MODULES[name],"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "line": 85,
+      "scope": "_details",
+      "text": "json.dumps(payload, ensure_ascii=False, allow_nan=False, indent=2),"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_view.py",
+      "line": 94,
+      "scope": "snapshot_ref",
+      "text": "return 'observation-sha256:' + hashlib.sha256(json.dumps(data, sort_keys=True, allow_nan=False).encode()).hexdigest()"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_view.py",
+      "line": 141,
+      "scope": "from_snapshots",
+      "text": "version = refs[0] if len(refs) == 1 else 'selection-sha256:' + hashlib.sha256(json.dumps(refs).encode()).hexdigest()"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_view.py",
+      "line": 156,
+      "scope": "from_stock_frame",
+      "text": "version = 'query-sha256:' + hashlib.sha256(json.dumps([request.as_of, request.symbol, refs]).encode()).hexdigest()"
+    }
+  ],
+  "test_definitions_not_executed": {
+    "tests/manual/test_daily_candidates_offline.py": [
+      {
+        "name": "test_m4_snapshot_budget_modes_and_missing_symbol_without_network",
+        "line": 11,
+        "end": 96
+      }
+    ],
+    "tests/manual/test_m3_diagnostic_states.py": [
+      {
+        "name": "test_m3_core_state_matrix_keeps_unknowns_and_hides_blocked_values",
+        "line": 7,
+        "end": 72
+      }
+    ],
+    "tests/manual/test_m3_page_offline.py": [
+      {
+        "name": "test_m3_empty_failure_read_only_and_m1_m2_navigation",
+        "line": 8,
+        "end": 52
+      },
+      {
+        "name": "test_m3_raw_rankings_cannot_bypass_core_and_price_proxy_stays_separate",
+        "line": 55,
+        "end": 109
+      }
+    ],
+    "tests/unit/test_daily_candidates.py": [
+      {
+        "name": "test_modes_differ_on_trend_without_relaxing_shared_data_gates",
+        "line": 37,
+        "end": 50
+      },
+      {
+        "name": "test_market_gate_controls_output",
+        "line": 56,
+        "end": 62
+      },
+      {
+        "name": "test_unverified_future_or_wrong_date_market_never_passes",
+        "line": 67,
+        "end": 69
+      },
+      {
+        "name": "test_order_and_max_five_follow_scores_with_stable_ties",
+        "line": 72,
+        "end": 82
+      },
+      {
+        "name": "test_local_missing_status_empty_candidate_and_shared_detail",
+        "line": 95,
+        "end": 112
+      },
+      {
+        "name": "test_insufficient_and_unknown_security_never_create_candidates",
+        "line": 115,
+        "end": 123
+      },
+      {
+        "name": "test_future_rows_do_not_change_historical_ranking_or_details",
+        "line": 126,
+        "end": 132
+      },
+      {
+        "name": "test_history_anomalies_never_reach_selector",
+        "line": 136,
+        "end": 142
+      }
+    ],
+    "tests/unit/test_daily_candidates_view.py": [
+      {
+        "name": "test_stages_and_exit_records_are_never_inferred_from_real_indicators",
+        "line": 15,
+        "end": 28
+      },
+      {
+        "name": "test_synthetic_status_never_claims_true_source_and_stale_timestamp_survives",
+        "line": 31,
+        "end": 42
+      },
+      {
+        "name": "test_only_existing_m2_event_names_dates_and_timestamps_are_exposed",
+        "line": 45,
+        "end": 54
+      },
+      {
+        "name": "test_watch_codes_support_multiple_separators_and_bound_the_work",
+        "line": 57,
+        "end": 60
+      }
+    ],
+    "tests/unit/test_db.py": [
+      {
+        "name": "test_first_initialization_and_ledger",
+        "line": 15,
+        "end": 27
+      },
+      {
+        "name": "test_repeated_initialization_preserves_data",
+        "line": 30,
+        "end": 36
+      },
+      {
+        "name": "test_connection_closed_on_both_paths",
+        "line": 40,
+        "end": 52
+      },
+      {
+        "name": "test_transaction_commit_and_exception_rollback",
+        "line": 55,
+        "end": 63
+      },
+      {
+        "name": "test_interrupt_rolls_back_and_closes",
+        "line": 66,
+        "end": 74
+      },
+      {
+        "name": "test_foreign_keys_enforced",
+        "line": 77,
+        "end": 81
+      },
+      {
+        "name": "test_second_migration_is_repeatable",
+        "line": 84,
+        "end": 91
+      },
+      {
+        "name": "test_failed_migration_rolls_back_ddl_and_version",
+        "line": 94,
+        "end": 102
+      },
+      {
+        "name": "test_first_migration_failure_is_atomic",
+        "line": 105,
+        "end": 111
+      },
+      {
+        "name": "test_checksum_drift_rejected",
+        "line": 114,
+        "end": 117
+      },
+      {
+        "name": "test_future_schema_rejected",
+        "line": 120,
+        "end": 123
+      },
+      {
+        "name": "test_history_gap_rejected",
+        "line": 126,
+        "end": 130
+      },
+      {
+        "name": "test_registry_gap_rejected",
+        "line": 133,
+        "end": 135
+      },
+      {
+        "name": "test_unversioned_database_not_adopted",
+        "line": 138,
+        "end": 145
+      },
+      {
+        "name": "test_delete_journal_option",
+        "line": 148,
+        "end": 152
+      },
+      {
+        "name": "test_config_environments_are_explicit",
+        "line": 155,
+        "end": 164
+      },
+      {
+        "name": "test_invalid_configuration_rejected",
+        "line": 171,
+        "end": 173
+      },
+      {
+        "name": "test_blank_env_path_rejected",
+        "line": 176,
+        "end": 178
+      },
+      {
+        "name": "test_test_databases_are_isolated",
+        "line": 181,
+        "end": 189
+      },
+      {
+        "name": "test_initialization_cli_from_another_directory",
+        "line": 192,
+        "end": 201
+      },
+      {
+        "name": "test_audit_data_is_append_only",
+        "line": 206,
+        "end": 211
+      },
+      {
+        "name": "test_replace_cannot_bypass_immutable_history",
+        "line": 214,
+        "end": 220
+      }
+    ],
+    "tests/unit/test_demo_data.py": [
+      {
+        "name": "test_request_uses_existing_adapter_validation",
+        "line": 19,
+        "end": 21
+      },
+      {
+        "name": "test_invalid_inputs_never_reach_storage_or_vendor",
+        "line": 30,
+        "end": 32
+      },
+      {
+        "name": "test_filtered_read_and_both_charts_use_same_validated_values",
+        "line": 35,
+        "end": 53
+      },
+      {
+        "name": "test_empty_read_does_not_create_a_run",
+        "line": 56,
+        "end": 60
+      },
+      {
+        "name": "test_future_or_quarantined_values_are_not_displayed",
+        "line": 63,
+        "end": 74
+      },
+      {
+        "name": "test_readback_must_match_all_fields",
+        "line": 77,
+        "end": 81
+      },
+      {
+        "name": "test_reopen_only_existing_temp_demo_database",
+        "line": 84,
+        "end": 93
+      }
+    ],
+    "tests/unit/test_m3_data_pipeline.py": [
+      {
+        "name": "test_empty_sources_are_separate_blocked_core_diagnostics",
+        "line": 41,
+        "end": 46
+      },
+      {
+        "name": "test_transport_success_does_not_issue_receipts_or_hide_unknown_quality",
+        "line": 50,
+        "end": 59
+      },
+      {
+        "name": "test_legacy_observation_does_not_gain_ingestion_or_event_time",
+        "line": 62,
+        "end": 66
+      },
+      {
+        "name": "test_late_acquisition_cannot_replay_old_history",
+        "line": 69,
+        "end": 72
+      },
+      {
+        "name": "test_bad_records_propagate_without_selection_or_partial_calculation",
+        "line": 76,
+        "end": 88
+      },
+      {
+        "name": "test_partial_breadth_and_stock_amount_cannot_make_full_score",
+        "line": 91,
+        "end": 103
+      },
+      {
+        "name": "test_raw_cffex_csv_is_not_converted_into_a_certified_ranking_version",
+        "line": 106,
+        "end": 110
+      },
+      {
+        "name": "test_publishable_summary_drops_all_input_and_numeric_output_values",
+        "line": 113,
+        "end": 119
+      },
+      {
+        "name": "test_default_run_never_constructs_a_client_or_starts_network_worker",
+        "line": 122,
+        "end": 130
+      },
+      {
+        "name": "test_worker_requires_enable_before_directory_or_client",
+        "line": 133,
+        "end": 136
+      },
+      {
+        "name": "test_output_cannot_target_a_production_path",
+        "line": 139,
+        "end": 142
+      },
+      {
+        "name": "test_transport_budget_blocks_before_real_send_and_restores_patch",
+        "line": 146,
+        "end": 166
+      },
+      {
+        "name": "test_response_size_failure_keeps_observed_http_status",
+        "line": 169,
+        "end": 179
+      }
+    ],
+    "tests/unit/test_market_analysis.py": [
+      {
+        "name": "test_net_and_published_change_are_same_member_contract_scope",
+        "line": 40,
+        "end": 43
+      },
+      {
+        "name": "test_true_zero_is_separate_from_unknown",
+        "line": 47,
+        "end": 48
+      },
+      {
+        "name": "test_other_scope_contract_member_and_absent_side_are_never_combined",
+        "line": 51,
+        "end": 60
+      },
+      {
+        "name": "test_duplicate_ranking_refused",
+        "line": 63,
+        "end": 65
+      },
+      {
+        "name": "test_wave_cutoff_and_confirmation_use_only_already_available_prices",
+        "line": 68,
+        "end": 79
+      },
+      {
+        "name": "test_week_sample_excludes_current_week",
+        "line": 82,
+        "end": 85
+      },
+      {
+        "name": "test_insufficient_history_never_fabricates_score",
+        "line": 89,
+        "end": 92
+      },
+      {
+        "name": "test_past_percentile_excludes_current_and_future_samples",
+        "line": 95,
+        "end": 100
+      },
+      {
+        "name": "test_factor_formula_complete_score_and_missing_breadth",
+        "line": 103,
+        "end": 118
+      },
+      {
+        "name": "test_fear_greed_future_append_does_not_rewrite_history",
+        "line": 121,
+        "end": 125
+      },
+      {
+        "name": "test_breadth_wrong_date_or_invisible_is_not_backfilled",
+        "line": 128,
+        "end": 137
+      },
+      {
+        "name": "test_combined_evidence_can_conflict_or_be_insufficient",
+        "line": 147,
+        "end": 148
+      },
+      {
+        "name": "test_archive_preserves_observations_and_refuses_tampering",
+        "line": 151,
+        "end": 158
+      },
+      {
+        "name": "test_persistent_store_rejects_relative_and_temporary_demo_paths",
+        "line": 161,
+        "end": 165
+      }
+    ],
+    "tests/unit/test_market_analysis_core.py": [
+      {
+        "name": "test_contract_unknown_zero_json_and_snapshot_identity",
+        "line": 68,
+        "end": 88
+      },
+      {
+        "name": "test_daily_exact_minimum",
+        "line": 92,
+        "end": 96
+      },
+      {
+        "name": "test_weekly_closed_minimum_ohlc",
+        "line": 100,
+        "end": 107
+      },
+      {
+        "name": "test_partial_first_week_is_excluded",
+        "line": 110,
+        "end": 117
+      },
+      {
+        "name": "test_missing_calendar_session_stale_and_no_fake_denominator",
+        "line": 120,
+        "end": 131
+      },
+      {
+        "name": "test_late_capture_does_not_enter_historical_as_of",
+        "line": 135,
+        "end": 144
+      },
+      {
+        "name": "test_invalid_input_fail_closed",
+        "line": 148,
+        "end": 159
+      },
+      {
+        "name": "test_no_data_and_uncertified_historical_time_modes",
+        "line": 162,
+        "end": 172
+      },
+      {
+        "name": "test_right_confirmation_and_prefix_replay",
+        "line": 175,
+        "end": 187
+      },
+      {
+        "name": "test_breadth_denominator_partition_and_dated_universe",
+        "line": 190,
+        "end": 204
+      },
+      {
+        "name": "test_breadth_missing_bad_or_future_universe_never_qualifies",
+        "line": 208,
+        "end": 218
+      },
+      {
+        "name": "test_full_six_factors_and_proxy_separate_and_exact_formula",
+        "line": 221,
+        "end": 234
+      },
+      {
+        "name": "test_any_missing_market_factor_nulls_full_score",
+        "line": 238,
+        "end": 242
+      },
+      {
+        "name": "test_percentile_excludes_current_and_future",
+        "line": 245,
+        "end": 253
+      },
+      {
+        "name": "test_cffex_arithmetic_scope_contract_zero_unknown_and_expiry",
+        "line": 265,
+        "end": 279
+      },
+      {
+        "name": "test_cffex_requires_publication_scope_and_calendar_before_direction",
+        "line": 282,
+        "end": 295
+      },
+      {
+        "name": "test_environment_conflict_missing_and_snapshot_mismatch",
+        "line": 298,
+        "end": 314
+      },
+      {
+        "name": "test_l3_needs_sha_data_and_independent_execution_review_receipt",
+        "line": 317,
+        "end": 331
+      },
+      {
+        "name": "test_synthetic_or_unknown_authorization_cannot_reach_research",
+        "line": 334,
+        "end": 339
+      },
+      {
+        "name": "test_public_worker_bounds_and_tls",
+        "line": 343,
+        "end": 374
+      },
+      {
+        "name": "test_old_snapshots_do_not_acquire_fabricated_ingestion_time",
+        "line": 377,
+        "end": 380
+      }
+    ],
+    "tests/unit/test_market_analysis_core_boundaries.py": [
+      {
+        "name": "test_review_regressions",
+        "line": 80,
+        "end": 97
+      },
+      {
+        "name": "test_matching_invalid_declaration_and_records_cannot_gain_admission",
+        "line": 106,
+        "end": 121
+      },
+      {
+        "name": "test_cffex_matching_control_character_identities_are_structured",
+        "line": 126,
+        "end": 128
+      },
+      {
+        "name": "test_record_only_controls_are_checked_at_every_position",
+        "line": 133,
+        "end": 143
+      },
+      {
+        "name": "test_unsupported_or_overflowing_scalars_are_contextual",
+        "line": 149,
+        "end": 155
+      },
+      {
+        "name": "test_supported_numeric_scalars_have_full_chain_controls",
+        "line": 161,
+        "end": 176
+      },
+      {
+        "name": "test_equivalent_offsets_have_identical_diagnostics_and_preserve_inputs",
+        "line": 182,
+        "end": 198
+      },
+      {
+        "name": "test_invalid_cffex_component_clears_environment_values",
+        "line": 202,
+        "end": 209
+      },
+      {
+        "name": "test_invalid_numeric_components_cannot_open_environment",
+        "line": 215,
+        "end": 223
+      },
+      {
+        "name": "test_numpy_missing_quality_retains_unknown_semantics",
+        "line": 228,
+        "end": 234
+      },
+      {
+        "name": "test_offset_normalization_does_not_admit_a_future_acquisition",
+        "line": 239,
+        "end": 251
+      }
+    ],
+    "tests/unit/test_market_analysis_core_validation.py": [
+      {
+        "name": "test_review_counterexamples_fail_closed",
+        "line": 69,
+        "end": 80
+      },
+      {
+        "name": "test_every_visible_identity_is_checked",
+        "line": 88,
+        "end": 93
+      },
+      {
+        "name": "test_explicit_quality_rejection_cannot_be_overridden_by_receipts",
+        "line": 100,
+        "end": 106
+      },
+      {
+        "name": "test_missing_quality_remains_unknown",
+        "line": 113,
+        "end": 122
+      },
+      {
+        "name": "test_absent_quality_column_is_not_accepted",
+        "line": 127,
+        "end": 133
+      },
+      {
+        "name": "test_turnover_bad_sample_is_structured_not_an_exception",
+        "line": 139,
+        "end": 144
+      },
+      {
+        "name": "test_accepted_control_still_qualifies",
+        "line": 149,
+        "end": 155
+      },
+      {
+        "name": "test_real_zero_and_finite_numeric_turnover_survive",
+        "line": 160,
+        "end": 165
+      },
+      {
+        "name": "test_cffex_quality_gate",
+        "line": 179,
+        "end": 180
+      },
+      {
+        "name": "test_cffex_missing_quality_is_not_certified_by_receipts",
+        "line": 184,
+        "end": 189
+      },
+      {
+        "name": "test_cffex_explicit_accepted_control",
+        "line": 193,
+        "end": 196
+      },
+      {
+        "name": "test_rejected_component_never_opens_environment_or_l3",
+        "line": 199,
+        "end": 206
+      }
+    ],
+    "tests/unit/test_market_analysis_view.py": [
+      {
+        "name": "test_formal_family_mapping_and_unknown_denominator",
+        "line": 24,
+        "end": 37
+      },
+      {
+        "name": "test_real_core_scenario_mapping_does_not_upgrade",
+        "line": 46,
+        "end": 74
+      },
+      {
+        "name": "test_conflict_is_preserved_and_blocked_payload_never_displayable",
+        "line": 77,
+        "end": 86
+      },
+      {
+        "name": "test_archive_mapping_preserves_row_identity_time_and_unknown_receipts",
+        "line": 95,
+        "end": 111
+      },
+      {
+        "name": "test_breadth_does_not_overwrite_dates_or_deduplicate_versions",
+        "line": 114,
+        "end": 122
+      },
+      {
+        "name": "test_stock_never_fabricates_observation_from_ingestion",
+        "line": 125,
+        "end": 129
+      },
+      {
+        "name": "test_metadata_is_sanitized_and_raw_payload_omitted",
+        "line": 132,
+        "end": 142
+      }
+    ],
+    "tests/unit/test_market_data_repository.py": [
+      {
+        "name": "test_normal_batch_and_portable_read",
+        "line": 26,
+        "end": 36
+      },
+      {
+        "name": "test_same_version_duplicate_never_overwrites",
+        "line": 40,
+        "end": 45
+      },
+      {
+        "name": "test_duplicate_run_rejected",
+        "line": 48,
+        "end": 52
+      },
+      {
+        "name": "test_duplicate_within_same_batch_rolls_back",
+        "line": 55,
+        "end": 58
+      },
+      {
+        "name": "test_late_invalid_record_rolls_back_entire_batch",
+        "line": 61,
+        "end": 64
+      },
+      {
+        "name": "test_late_conflict_preserves_existing_rows_only",
+        "line": 67,
+        "end": 72
+      },
+      {
+        "name": "test_generator_failure_rolls_back",
+        "line": 75,
+        "end": 81
+      },
+      {
+        "name": "test_missing_run_id_rejected",
+        "line": 85,
+        "end": 88
+      },
+      {
+        "name": "test_empty_batch_rejected",
+        "line": 91,
+        "end": 94
+      },
+      {
+        "name": "test_strict_read_waits_for_both_timestamps",
+        "line": 101,
+        "end": 105
+      },
+      {
+        "name": "test_available_after_ingestion_still_limits_read",
+        "line": 108,
+        "end": 113
+      },
+      {
+        "name": "test_revision_is_append_only_and_not_backfilled",
+        "line": 116,
+        "end": 127
+      },
+      {
+        "name": "test_sources_are_separate_and_never_automatically_selected",
+        "line": 130,
+        "end": 137
+      },
+      {
+        "name": "test_adjustment_methods_have_distinct_logical_objects",
+        "line": 140,
+        "end": 147
+      },
+      {
+        "name": "test_symbol_reuse_does_not_merge_listing_entities",
+        "line": 150,
+        "end": 155
+      },
+      {
+        "name": "test_instrument_symbol_conflict_rejected",
+        "line": 158,
+        "end": 162
+      },
+      {
+        "name": "test_invalid_revision_chain_rejected",
+        "line": 174,
+        "end": 179
+      },
+      {
+        "name": "test_revision_cannot_fork",
+        "line": 182,
+        "end": 189
+      },
+      {
+        "name": "test_quarantined_revision_blocks_strict_instead_of_reviving_old",
+        "line": 193,
+        "end": 201
+      },
+      {
+        "name": "test_research_still_refuses_future_records",
+        "line": 204,
+        "end": 207
+      },
+      {
+        "name": "test_read_requires_explicit_valid_query",
+        "line": 214,
+        "end": 217
+      },
+      {
+        "name": "test_sql_constraints_defend_against_repository_bypass",
+        "line": 225,
+        "end": 238
+      },
+      {
+        "name": "test_sql_logical_key_is_unique",
+        "line": 241,
+        "end": 246
+      }
+    ],
+    "tests/unit/test_reference_data.py": [
+      {
+        "name": "test_v1_upgrade_preserves_daily_data_and_released_checksum",
+        "line": 75,
+        "end": 86
+      },
+      {
+        "name": "test_v2_failure_rolls_back_tables_and_ledger",
+        "line": 90,
+        "end": 104
+      },
+      {
+        "name": "test_master_read_metadata_and_repeat_initialization",
+        "line": 107,
+        "end": 117
+      },
+      {
+        "name": "test_exchange_and_code_formats",
+        "line": 121,
+        "end": 124
+      },
+      {
+        "name": "test_invalid_master_rejected_without_rows",
+        "line": 141,
+        "end": 145
+      },
+      {
+        "name": "test_listing_and_delisting_half_open_boundaries",
+        "line": 150,
+        "end": 157
+      },
+      {
+        "name": "test_name_change_and_historical_revision_do_not_backfill",
+        "line": 160,
+        "end": 171
+      },
+      {
+        "name": "test_unknown_effective_period_and_risk_stay_unknown",
+        "line": 174,
+        "end": 179
+      },
+      {
+        "name": "test_both_cutoffs_and_timezone_required",
+        "line": 183,
+        "end": 190
+      },
+      {
+        "name": "test_master_duplicate_never_overwrites",
+        "line": 194,
+        "end": 200
+      },
+      {
+        "name": "test_master_conflict_and_backdated_revision_rejected",
+        "line": 209,
+        "end": 214
+      },
+      {
+        "name": "test_canonical_source_change_requires_explicit_revision_and_cannot_fork",
+        "line": 217,
+        "end": 224
+      },
+      {
+        "name": "test_existing_bar_anchor_reused_and_symbol_change_not_silent",
+        "line": 227,
+        "end": 233
+      },
+      {
+        "name": "test_code_reuse_requires_nonoverlapping_lifetimes",
+        "line": 236,
+        "end": 247
+      },
+      {
+        "name": "test_code_reuse_checks_historical_visibility_not_only_current_head",
+        "line": 250,
+        "end": 263
+      },
+      {
+        "name": "test_open_closed_missing_source_error_are_distinct",
+        "line": 266,
+        "end": 276
+      },
+      {
+        "name": "test_calendar_range_and_previous_known_are_bounded_and_explicit",
+        "line": 279,
+        "end": 288
+      },
+      {
+        "name": "test_partial_ranges_never_hide_missing_or_errors",
+        "line": 291,
+        "end": 304
+      },
+      {
+        "name": "test_all_closed_is_not_same_as_missing",
+        "line": 307,
+        "end": 315
+      },
+      {
+        "name": "test_calendar_revisions_future_announcements_and_error_do_not_revive_old",
+        "line": 318,
+        "end": 333
+      },
+      {
+        "name": "test_calendar_exchange_isolation",
+        "line": 337,
+        "end": 342
+      },
+      {
+        "name": "test_calendar_invalid_fact_rejected",
+        "line": 351,
+        "end": 354
+      },
+      {
+        "name": "test_metadata_is_explicit_and_not_fabricated",
+        "line": 363,
+        "end": 366
+      },
+      {
+        "name": "test_batch_validation_duplicate_and_generator_failure_roll_back_all",
+        "line": 370,
+        "end": 385
+      },
+      {
+        "name": "test_new_tables_are_append_only",
+        "line": 390,
+        "end": 401
+      },
+      {
+        "name": "test_sql_master_integrity_without_repository_validation",
+        "line": 405,
+        "end": 428
+      },
+      {
+        "name": "test_database_integrity_and_run_id_shared_across_datasets",
+        "line": 431,
+        "end": 439
+      },
+      {
+        "name": "test_previous_with_no_usable_day_preserves_failure_kind",
+        "line": 443,
+        "end": 448
+      },
+      {
+        "name": "test_sql_calendar_constraints",
+        "line": 452,
+        "end": 469
+      },
+      {
+        "name": "test_calendar_duplicate_conflicting_root_and_fork_are_not_overwritten",
+        "line": 472,
+        "end": 484
+      },
+      {
+        "name": "test_invalid_range_query_is_explicit",
+        "line": 491,
+        "end": 494
+      },
+      {
+        "name": "test_calendar_first_observation_waits_for_ingestion",
+        "line": 497,
+        "end": 501
+      },
+      {
+        "name": "test_reference_suite_inherits_default_network_block",
+        "line": 504,
+        "end": 506
+      }
+    ],
+    "tests/unit/test_cffex_rankings.py": [
+      {
+        "name": "test_url_month_day_keyed",
+        "line": 90,
+        "end": 91
+      },
+      {
+        "name": "test_url_rejects_bad_variety_at_ingest",
+        "line": 93,
+        "end": 98
+      },
+      {
+        "name": "test_parses_all_four_varieties",
+        "line": 103,
+        "end": 108
+      },
+      {
+        "name": "test_rank_completeness_per_contract",
+        "line": 110,
+        "end": 115
+      },
+      {
+        "name": "test_member_scope_detection",
+        "line": 117,
+        "end": 123
+      },
+      {
+        "name": "test_missing_side_is_unknown_not_zero",
+        "line": 125,
+        "end": 142
+      },
+      {
+        "name": "test_net_is_none_when_side_missing",
+        "line": 146,
+        "end": 156
+      },
+      {
+        "name": "test_net_known_when_both_sides_known",
+        "line": 158,
+        "end": 167
+      },
+      {
+        "name": "test_refuses_unknown_or_combined_scope",
+        "line": 169,
+        "end": 176
+      },
+      {
+        "name": "test_available_at_floors_to_next_session",
+        "line": 180,
+        "end": 186
+      },
+      {
+        "name": "test_known_publication_time_advances_available_at",
+        "line": 188,
+        "end": 196
+      },
+      {
+        "name": "test_ingested_before_observed_rejected",
+        "line": 198,
+        "end": 202
+      },
+      {
+        "name": "test_2019_category_format",
+        "line": 206,
+        "end": 215
+      },
+      {
+        "name": "test_2010_first_day",
+        "line": 217,
+        "end": 222
+      },
+      {
+        "name": "test_404_page_is_response_not_data",
+        "line": 226,
+        "end": 230
+      },
+      {
+        "name": "test_home_fallback_is_response_not_data",
+        "line": 232,
+        "end": 236
+      },
+      {
+        "name": "test_empty_body",
+        "line": 238,
+        "end": 241
+      },
+      {
+        "name": "test_malformed_named_csv_fails_explicitly",
+        "line": 243,
+        "end": 246
+      },
+      {
+        "name": "test_date_mismatch_rejected",
+        "line": 248,
+        "end": 251
+      },
+      {
+        "name": "test_variety_mismatch_rejected",
+        "line": 253,
+        "end": 255
+      },
+      {
+        "name": "test_success_returns_record",
+        "line": 267,
+        "end": 274
+      },
+      {
+        "name": "test_404_known_closed_requires_calendar",
+        "line": 276,
+        "end": 288
+      },
+      {
+        "name": "test_home_fallback_is_response_error_not_success",
+        "line": 290,
+        "end": 296
+      }
+    ],
+    "tests/unit/test_cffex_high_assurance.py": [
+      {
+        "name": "test_all_request_paths",
+        "line": 22,
+        "end": 23
+      },
+      {
+        "name": "test_invalid_request_never_reaches_transport",
+        "line": 27,
+        "end": 31
+      },
+      {
+        "name": "test_named_rejects_structural_corruption",
+        "line": 37,
+        "end": 56
+      },
+      {
+        "name": "test_mixed_rejects_same_corruption",
+        "line": 61,
+        "end": 72
+      },
+      {
+        "name": "test_utf8_bom_quoted_member_and_separate_volume",
+        "line": 75,
+        "end": 83
+      },
+      {
+        "name": "test_zero_missing_and_scope_nets_are_distinct",
+        "line": 86,
+        "end": 101
+      },
+      {
+        "name": "test_weekend_and_late_acquisition",
+        "line": 108,
+        "end": 112
+      },
+      {
+        "name": "test_synthetic_holiday_range_and_first_session",
+        "line": 115,
+        "end": 118
+      },
+      {
+        "name": "test_missing_calendar_fails_closed",
+        "line": 122,
+        "end": 134
+      },
+      {
+        "name": "test_no_invented_or_future_publication",
+        "line": 138,
+        "end": 139
+      },
+      {
+        "name": "test_actual_read_and_net_gate",
+        "line": 142,
+        "end": 150
+      },
+      {
+        "name": "test_revision_read_preserves_old_cutoff_and_evidence",
+        "line": 161,
+        "end": 168
+      },
+      {
+        "name": "test_duplicate_is_not_durable_registration",
+        "line": 171,
+        "end": 177
+      },
+      {
+        "name": "test_revision_conflicts_fail_closed",
+        "line": 181,
+        "end": 192
+      },
+      {
+        "name": "test_http_single_get_no_redirect_no_retry",
+        "line": 206,
+        "end": 213
+      },
+      {
+        "name": "test_transport_chain_retained_credentials_not_reported",
+        "line": 216,
+        "end": 224
+      },
+      {
+        "name": "test_transport_body_bounds_and_resource_release",
+        "line": 228,
+        "end": 236
+      },
+      {
+        "name": "test_timeout_bounded",
+        "line": 240,
+        "end": 241
+      },
+      {
+        "name": "test_404_requires_independent_calendar",
+        "line": 246,
+        "end": 249
+      },
+      {
+        "name": "test_200_body_failure_is_not_valid_empty_data",
+        "line": 254,
+        "end": 257
+      },
+      {
+        "name": "test_sqlite_contract_remains_existing_schema_only",
+        "line": 260,
+        "end": 265
+      },
+      {
+        "name": "test_read_gate_revalidates_caller_constructed_record",
+        "line": 269,
+        "end": 280
+      },
+      {
+        "name": "test_unknown_calendar_times_are_calendar_errors_and_no_run_no_request",
+        "line": 283,
+        "end": 290
+      },
+      {
+        "name": "test_derived_read_selects_the_visible_revision_not_the_latest_payload",
+        "line": 293,
+        "end": 300
+      },
+      {
+        "name": "test_scope_tampering_and_self_revision_are_rejected_by_read",
+        "line": 303,
+        "end": 308
+      },
+      {
+        "name": "test_declared_mixed_section_cannot_silently_disappear",
+        "line": 312,
+        "end": 319
+      }
+    ]
+  },
+  "external_evidence": {
+    "docs/M0_DB_PATH_CONFIRM_REPORT.md": {
+      "commit": "5ed318f023194c6f0f9767168957f7b3a1b56fb5",
+      "git_blob": "e455b2e650dfbbbef5a78d71d670162da1940523",
+      "sha256": "cf6183f0b65262d10bd765df603b7d96a3ddf4dfbe3e444009baf96afad8a680",
+      "status": "PR45 unmerged, historical evidence only; not re-observed"
+    },
+    "docs/evidence/TASK_M0_DB_PATH_CONFIRM_001.json": {
+      "commit": "5ed318f023194c6f0f9767168957f7b3a1b56fb5",
+      "git_blob": "cf4e17056dddfdea79c0f6c43a794b304cfbdc3c",
+      "sha256": "a4277b18b53597f470d2f192726d3d2f2221ae4517f0742c1826fe0b519b3356",
+      "status": "PR45 unmerged, historical evidence only; not re-observed"
+    }
+  },
+  "limitations": [
+    "Literal and AST inventory require manual interpretation of dynamic SQL/helper/dispatch, not a runtime coverage claim",
+    "Historical database/HTTP/test counts are cited evidence, not newly executed results",
+    "No new production or database status measurement",
+    "Schema uniqueness checks and runtime call tracing were read, not executed"
+  ],
+  "existing_pipeline_file_read_only": {
+    "schema_version": "m3-pipeline-evidence-v1",
+    "run_id": "pipeline-20261020T153923Z-c55591fd",
+    "baseline_sha": "94cdd487bfd4633ecc2f002aad014f98dec961a5",
+    "core_contract_version": "m3-core-diagnostic-v1",
+    "calculation_version": "m3-core-rules-v1",
+    "request": {
+      "analysis_date": "2026-10-19",
+      "as_of": "2026-10-20T15:39:40.727243+00:00",
+      "mode": "research"
+    },
+    "core_review": {
+      "issue": "https://github.com/fengjnah/a-share-quant-v1/issues/37",
+      "review_head": "d60fa8809a248cb4b4a63ed4ee514296645bed2b",
+      "state": "PENDING"
+    },
+    "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\pipeline-bundle.json",
+    "sha256": "e4de80a6e6041dda389bf4e5a8a014881481e3c438a7561102ae648598aa2589",
+    "diagnostics": {
+      "cffex_position": {
+        "status": "SOURCE_UNAVAILABLE",
+        "admission": "BLOCKED",
+        "data_latest_date": null,
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "daily_trend": {
+        "status": "TIME_UNCERTIFIED",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-19",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "environment": {
+        "status": "TIME_UNCERTIFIED",
+        "admission": "BLOCKED",
+        "data_latest_date": null,
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "fear_greed": {
+        "status": "SOURCE_UNAVAILABLE",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-19",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "market_breadth": {
+        "status": "SOURCE_UNAVAILABLE",
+        "admission": "BLOCKED",
+        "data_latest_date": null,
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "price_proxy": {
+        "status": "TIME_UNCERTIFIED",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-19",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "tencent_stock:daily_trend": {
+        "status": "STALE",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-15",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "tencent_stock:price_proxy": {
+        "status": "STALE",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-15",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "tencent_stock:wave": {
+        "status": "STALE",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-15",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "tencent_stock:weekly_structure": {
+        "status": "STALE",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-15",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "wave": {
+        "status": "TIME_UNCERTIFIED",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-19",
+        "has_values_key": true,
+        "has_generated_at": false
+      },
+      "weekly_structure": {
+        "status": "TIME_UNCERTIFIED",
+        "admission": "L1_OBSERVATION",
+        "data_latest_date": "2026-10-19",
+        "has_values_key": true,
+        "has_generated_at": false
+      }
+    }
+  },
+  "static_validation": {
+    "source_references_checked": 41,
+    "line_anchors_checked": 37,
+    "literal_reference_counts": {
+      "schema_migrations": 4,
+      "instruments": 14,
+      "ingestion_runs": 8,
+      "daily_bars": 14,
+      "daily_bar_versions": 16,
+      "security_versions": 11,
+      "calendar_versions": 6
+    },
+    "assertions": "PASS; AST/text consistency only, not executed business behavior",
+    "json": "PASS",
+    "database_connections": 0,
+    "project_imports": 0,
+    "tests_executed": 0,
+    "market_requests": 0,
+    "aws_requests": 0,
+    "environment_mutations": 0
+  }
+}
