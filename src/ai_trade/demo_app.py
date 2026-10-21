@@ -31,6 +31,8 @@ from ai_trade.storage.db import Database, DatabaseConfig
 
 
 def get_demo_root() -> Path:
+    if os.environ.get("AI_TRADE_STRICT_WORKBENCH") == "1" and not os.environ.get("AI_TRADE_WORKBENCH_ROOT"):
+        raise ValueError("正式工作台未配置 AI_TRADE_WORKBENCH_ROOT；停止，不回退临时库")
     if os.environ.get("AI_TRADE_WORKBENCH_ROOT"):
         return persistent_workbench_root(os.environ["AI_TRADE_WORKBENCH_ROOT"])
     if "demo_root" not in st.session_state:
@@ -42,9 +44,13 @@ def get_demo_root() -> Path:
 def get_components():
     root = get_demo_root()
     persistent = bool(os.environ.get("AI_TRADE_WORKBENCH_ROOT"))
-    db = Database(DatabaseConfig(root / ("workbench.sqlite3" if persistent else "demo.sqlite3"),
-                                 environment="local" if persistent else "test", journal_mode="DELETE"))
-    db.initialize()
+    if persistent:
+        from ai_trade.storage.workbench import workbench_config, inspect_database
+        db = Database(workbench_config())
+        inspect_database(db)
+    else:
+        db = Database(DatabaseConfig(root / "demo.sqlite3", environment="test", journal_mode="DELETE"))
+        db.initialize()
     return db, SQLiteMarketDataRepository(db), EvidenceStore(root / "evidence")
 
 
@@ -63,15 +69,16 @@ def record_collect_click() -> None:
 if workspace == "行情工作台":
     st.title("M1 行情工作台")
     st.caption("查询本地数据不联网 · 重新采集需主动点击 · 图表与表格共用 SQLite 验证数据")
-read_only = os.environ.get("AI_TRADE_READ_ONLY") == "1"
+read_only = os.environ.get("AI_TRADE_READ_ONLY", "1" if os.environ.get("AI_TRADE_WORKBENCH_ROOT") else "0") == "1"
 st.warning("使用独立持久研究工作台，与交易生产库隔离。" if os.environ.get("AI_TRADE_WORKBENCH_ROOT") else
            "仅使用系统临时演示数据库，与生产库隔离；不自动采集、不自动切换数据源。")
 if read_only:
-    st.info("当前为只读部署：数据授权与受保护HTTPS入口核验完成前，不启用在线采集。")
+    st.info("当前禁止在线采集；正式工作台同时使用 SQLite mode=ro。Demo 的按钮禁用不等于数据库只读。")
 try:
     db, repository, evidence = get_components()
 except Exception as exc:
-    st.error(f"演示数据库初始化失败：{type(exc).__name__}: {exc}")
+    operation = "正式数据库打开/校验失败" if os.environ.get("AI_TRADE_WORKBENCH_ROOT") or os.environ.get("AI_TRADE_STRICT_WORKBENCH") == "1" else "演示数据库初始化失败"
+    st.error(f"{operation}，已停止：{type(exc).__name__}: {exc}")
     st.stop()
 
 with st.sidebar:
@@ -81,10 +88,16 @@ with st.sidebar:
         st.write(f"{name}代理配置（推断）：" + proxy_configuration_label(f"https://{host}/"))
     st.caption("仅为 Requests 配置解析；实际路由未观测。TLS 证书验证保持开启。")
     st.code(str(db.config.path), language="text")
+    if os.environ.get("AI_TRADE_WORKBENCH_ROOT"):
+        from ai_trade.storage.workbench import inspect_database
+        with st.expander("正式研究库连接诊断"):
+            diagnosis = inspect_database(db)
+            st.json({k: diagnosis[k] for k in ("path", "connected_path", "schema_version", "read_only",
+                    "query_only", "counts", "latest_trade_date", "quick_check", "foreign_key_check")})
     release_file = Path.cwd() / "DEPLOYED_SHA"
     if release_file.is_file():
         st.caption("部署提交：" + release_file.read_text(encoding="utf-8").strip())
-    st.caption("AI_TRADE_WORKBENCH_ROOT 指向仓库外专用持久研究目录；更新代码与重启均保留数据。" if os.environ.get("AI_TRADE_WORKBENCH_ROOT") else
+    st.caption("AI_TRADE_WORKBENCH_ROOT 绑定专用持久研究目录；普通刷新不初始化、不迁移。" if os.environ.get("AI_TRADE_WORKBENCH_ROOT") else
                "指定 AI_TRADE_DEMO_ROOT 可在浏览器刷新后继续打开同一个已有临时演示库。未指定时按会话隔离。")
     with st.expander("打开已有临时演示区"):
         saved_root = st.text_input("已有演示目录", value="")

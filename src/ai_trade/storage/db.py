@@ -20,6 +20,8 @@ class DatabaseConfig:
     environment: str = "local"
     journal_mode: str = "WAL"
     busy_timeout_ms: int = 5000
+    read_only: bool = False
+    require_existing: bool = False
 
     def __post_init__(self) -> None:
         if not str(self.path).strip() or str(self.path) == ":memory:":
@@ -31,11 +33,16 @@ class DatabaseConfig:
             raise ValueError("journal_mode must be WAL or DELETE")
         if type(self.busy_timeout_ms) is not int or not 0 <= self.busy_timeout_ms <= 2**31 - 1:
             raise ValueError("busy_timeout_ms must be a nonnegative 32-bit integer")
+        if type(self.read_only) is not bool or type(self.require_existing) is not bool:
+            raise ValueError("connection flags must be boolean")
 
     @classmethod
     def from_env(cls, environ: Mapping[str, str] | None = None) -> "DatabaseConfig":
         """Read shell variables; never implicitly load a .env file."""
         env = os.environ if environ is None else environ
+        if "AI_TRADE_WORKBENCH_ROOT" in env or env.get("AI_TRADE_STRICT_WORKBENCH") == "1":
+            from ai_trade.storage.workbench import workbench_config
+            return workbench_config(env)
         environment = env.get("QUANT_DB_ENV", "local")
         path = env.get("QUANT_DB_PATH")
         if environment in ("production", "test") and not path:
@@ -59,17 +66,25 @@ class Database:
         WAL is supported for local disks. Network shares are not certified;
         configure DELETE explicitly if WAL is unavailable and test the filesystem.
         """
-        conn = sqlite3.connect(self.config.path, isolation_level=None,
+        strict = self.config.read_only or self.config.require_existing
+        target = (self.config.path.as_uri() + ("?mode=ro" if self.config.read_only else "?mode=rw")
+                  if strict else str(self.config.path))
+        conn = sqlite3.connect(target, uri=strict, isolation_level=None,
                                timeout=self.config.busy_timeout_ms / 1000)
         try:
             conn.row_factory = sqlite3.Row
             conn.execute("PRAGMA foreign_keys = ON")
             conn.execute("PRAGMA recursive_triggers = ON")
             conn.execute(f"PRAGMA busy_timeout = {self.config.busy_timeout_ms}")
-            mode = conn.execute(f"PRAGMA journal_mode = {self.config.journal_mode}").fetchone()[0]
+            # Existing stores are never switched to another journal mode by a read/refresh.
+            pragma = "PRAGMA journal_mode" if strict else f"PRAGMA journal_mode = {self.config.journal_mode}"
+            mode = conn.execute(pragma).fetchone()[0]
             if mode.upper() != self.config.journal_mode:
                 raise IntegrityError("SQLite refused configured journal mode")
-            conn.execute("PRAGMA synchronous = FULL")
+            if self.config.read_only:
+                conn.execute("PRAGMA query_only = ON")
+            else:
+                conn.execute("PRAGMA synchronous = FULL")
             yield conn
         finally:
             conn.close()
@@ -77,6 +92,8 @@ class Database:
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
         """Commit a successful batch and roll back even on interruption."""
+        if self.config.read_only:
+            raise IntegrityError("read-only database: writes and migrations are disabled")
         with self.connection() as conn:
             conn.execute("BEGIN IMMEDIATE")
             try:
@@ -92,6 +109,8 @@ class Database:
         Each SQL statement is executed separately: executescript() would commit
         implicitly and could leave a half-applied migration after failure.
         """
+        if self.config.read_only or self.config.require_existing:
+            raise IntegrityError("existing workbench requires an explicit maintenance operation")
         if [m.version for m in migrations] != list(range(1, len(migrations) + 1)):
             raise IntegrityError("migration registry must be contiguous from version 1")
         self.config.path.parent.mkdir(parents=True, exist_ok=True)
