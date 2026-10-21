@@ -1,0 +1,4133 @@
+{
+  "task_id": "TASK-M0-PRODUCTION-DB-001",
+  "checked_at": "2026-10-21T14:47:17.734019+00:00",
+  "baseline_sha": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+  "implementation_sha": "4bcda30a8921c144185e4b7091f45df710b644ec",
+  "model": {
+    "id": "gpt-6.1-sol",
+    "reasoning": "high",
+    "evidence": "human confirmation in current task",
+    "risk": "H"
+  },
+  "formal_database": {
+    "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+    "connected_path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+    "schema_version": 2,
+    "migrations": [
+      {
+        "version": 1,
+        "name": "daily_bar_foundation",
+        "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+        "applied_at": "2026-10-21T14:43:53.601589+00:00"
+      },
+      {
+        "version": 2,
+        "name": "security_master_and_calendar",
+        "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+        "applied_at": "2026-10-21T14:43:53.603654+00:00"
+      }
+    ],
+    "quick_check": [
+      "ok"
+    ],
+    "foreign_key_check": [],
+    "read_only": true,
+    "require_existing": true,
+    "journal_mode": "delete",
+    "query_only": 1,
+    "foreign_keys_enabled": 1,
+    "recursive_triggers": 1,
+    "counts": {
+      "calendar_versions": 0,
+      "daily_bar_versions": 0,
+      "daily_bars": 0,
+      "ingestion_runs": 0,
+      "instruments": 0,
+      "schema_migrations": 2,
+      "security_versions": 0
+    },
+    "structure": {
+      "calendar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "session_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "is_trading_day",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "error_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "calendar_versions",
+            "from": "exchange",
+            "to": "exchange",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "calendar_versions",
+            "from": "session_date",
+            "to": "session_date",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "calendar_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "calendar_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "calendar_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "calendar_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_calendar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_calendar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "source_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "open",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "high",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "low",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "close",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "volume",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "amount",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "factor_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "daily_bar_versions",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "daily_bar_versions",
+            "from": "source",
+            "to": "source",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "daily_bar_versions",
+            "from": "supersedes_version",
+            "to": "source_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "daily_bars",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_version_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "idx_bar_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "idx_one_version_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_daily_bar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_daily_bar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bars": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "adjustment_method",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_bars_date",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_daily_bars_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "ingestion_runs": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "recorded_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "sqlite_autoindex_ingestion_runs_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "instruments": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_instruments_symbol",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_instruments_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_instruments_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "schema_migrations": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "name",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "checksum",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "applied_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": []
+      },
+      "security_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "security_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "listing_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "delisting_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "periods_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 17,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 18,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 19,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "security_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 1,
+            "table": "instruments",
+            "from": "symbol",
+            "to": "symbol",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "security_symbol_lifetime",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "security_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "security_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "security_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_security_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_security_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      }
+    },
+    "objects": [
+      [
+        "index",
+        "calendar_versions_root",
+        "calendar_versions",
+        "CREATE UNIQUE INDEX calendar_versions_root ON calendar_versions(exchange,session_date) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "calendar_versions_run",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_run ON calendar_versions(run_id)"
+      ],
+      [
+        "index",
+        "calendar_versions_visibility",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_visibility ON calendar_versions(exchange,session_date,available_at,ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bar_visibility",
+        "daily_bar_versions",
+        "CREATE INDEX idx_bar_visibility\n        ON daily_bar_versions(bar_id, source, available_at, ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bars_date",
+        "daily_bars",
+        "CREATE INDEX idx_bars_date ON daily_bars(trade_date, instrument_id)"
+      ],
+      [
+        "index",
+        "idx_instruments_symbol",
+        "instruments",
+        "CREATE INDEX idx_instruments_symbol ON instruments(symbol)"
+      ],
+      [
+        "index",
+        "idx_one_version_root",
+        "daily_bar_versions",
+        "CREATE UNIQUE INDEX idx_one_version_root\n        ON daily_bar_versions(bar_id, source) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "idx_version_run",
+        "daily_bar_versions",
+        "CREATE INDEX idx_version_run ON daily_bar_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_symbol_lifetime",
+        "security_versions",
+        "CREATE INDEX security_symbol_lifetime ON security_versions(symbol,listing_date,delisting_date)"
+      ],
+      [
+        "index",
+        "security_versions_root",
+        "security_versions",
+        "CREATE UNIQUE INDEX security_versions_root ON security_versions(instrument_id) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "security_versions_run",
+        "security_versions",
+        "CREATE INDEX security_versions_run ON security_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_versions_visibility",
+        "security_versions",
+        "CREATE INDEX security_versions_visibility ON security_versions(instrument_id,available_at,ingested_at)"
+      ],
+      [
+        "table",
+        "calendar_versions",
+        "calendar_versions",
+        "CREATE TABLE calendar_versions (\n        version_id INTEGER PRIMARY KEY,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ')),\n        session_date TEXT NOT NULL CHECK (session_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(session_date, '+0 days') IS NOT NULL AND date(session_date, '+0 days') = session_date),\n        is_trading_day INTEGER,\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','source_error')),\n        error_reason TEXT,\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK ((quality_status='accepted' AND is_trading_day IS NOT NULL AND is_trading_day IN (0,1)\n                AND error_reason IS NULL) OR (quality_status='source_error' AND is_trading_day IS NULL\n                AND error_reason IS NOT NULL AND length(trim(error_reason))>0)),\n        UNIQUE (exchange,session_date,record_version),\n        UNIQUE (exchange,session_date,supersedes_version),\n        FOREIGN KEY (exchange,session_date,supersedes_version)\n            REFERENCES calendar_versions(exchange,session_date,record_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bar_versions",
+        "daily_bar_versions",
+        "CREATE TABLE daily_bar_versions (\n        version_id INTEGER PRIMARY KEY,\n        bar_id INTEGER NOT NULL REFERENCES daily_bars(bar_id),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        source_version TEXT NOT NULL CHECK (length(trim(source_version)) > 0),\n        open REAL NOT NULL CHECK (typeof(open) IN ('real','integer') AND open > 0 AND open <= 1.7976931348623157e308),\n        high REAL NOT NULL CHECK (typeof(high) IN ('real','integer') AND high > 0 AND high <= 1.7976931348623157e308),\n        low REAL NOT NULL CHECK (typeof(low) IN ('real','integer') AND low > 0 AND low <= 1.7976931348623157e308),\n        close REAL NOT NULL CHECK (typeof(close) IN ('real','integer') AND close > 0 AND close <= 1.7976931348623157e308),\n        volume INTEGER NOT NULL CHECK (typeof(volume) = 'integer' AND volume >= 0),\n        amount REAL NOT NULL CHECK (typeof(amount) IN ('real','integer') AND amount >= 0 AND amount <= 1.7976931348623157e308),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\n        available_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\n        ingested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        factor_version TEXT CHECK (factor_version IS NULL OR length(trim(factor_version)) > 0),\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','quarantined')),\n        supersedes_version TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (low <= open AND open <= high AND low <= close AND close <= high),\n        CHECK (event_time <= available_at AND event_time <= ingested_at),\n        CHECK (supersedes_version IS NULL OR supersedes_version <> source_version),\n        UNIQUE (bar_id, source, source_version),\n        UNIQUE (bar_id, source, supersedes_version),\n        FOREIGN KEY (bar_id, source, supersedes_version)\n            REFERENCES daily_bar_versions(bar_id, source, source_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bars",
+        "daily_bars",
+        "CREATE TABLE daily_bars (\n        bar_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL REFERENCES instruments(instrument_id),\n        trade_date TEXT NOT NULL CHECK (\n            trade_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'\n            AND date(trade_date, '+0 days') IS NOT NULL\n            AND date(trade_date, '+0 days') = trade_date),\n        adjustment_method TEXT NOT NULL CHECK (adjustment_method IN ('none', 'qfq', 'hfq')),\n        UNIQUE (instrument_id, trade_date, adjustment_method)\n    )"
+      ],
+      [
+        "table",
+        "ingestion_runs",
+        "ingestion_runs",
+        "CREATE TABLE ingestion_runs (\n        run_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(run_id)) > 0),\n        recorded_at TEXT NOT NULL\n    )"
+      ],
+      [
+        "table",
+        "instruments",
+        "instruments",
+        "CREATE TABLE instruments (\n        instrument_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(instrument_id)) > 0),\n        symbol TEXT NOT NULL CHECK (\n            length(symbol) = 9 AND substr(symbol, 1, 6) NOT GLOB '*[^0-9]*'\n            AND substr(symbol, 7) IN ('.SH', '.SZ', '.BJ')),\n        UNIQUE (instrument_id, symbol)\n    )"
+      ],
+      [
+        "table",
+        "schema_migrations",
+        "schema_migrations",
+        "CREATE TABLE schema_migrations (\n    version INTEGER PRIMARY KEY CHECK (version > 0),\n    name TEXT NOT NULL,\n    checksum TEXT NOT NULL,\n    applied_at TEXT NOT NULL\n)"
+      ],
+      [
+        "table",
+        "security_versions",
+        "security_versions",
+        "CREATE TABLE security_versions (\n        version_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL,\n        symbol TEXT NOT NULL,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ') AND substr(symbol,8)=exchange),\n        security_type TEXT NOT NULL CHECK (security_type='A_SHARE'),\n        quality_status TEXT NOT NULL CHECK (quality_status='accepted'),\n        listing_date TEXT NOT NULL CHECK (listing_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(listing_date, '+0 days') IS NOT NULL AND date(listing_date, '+0 days') = listing_date),\n        delisting_date TEXT CHECK (delisting_date IS NULL OR (delisting_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(delisting_date, '+0 days') IS NOT NULL AND date(delisting_date, '+0 days') = delisting_date)),\n        periods_json TEXT NOT NULL CHECK (json_valid(periods_json)),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK (delisting_date IS NULL OR listing_date < delisting_date),\n        CHECK (instrument_id <> symbol AND instrument_id <> substr(symbol,1,6)),\n        CHECK (NOT (length(instrument_id)=6 AND instrument_id NOT GLOB '*[^0-9]*')),\n        CHECK (NOT (length(instrument_id)=9 AND substr(instrument_id,1,6) NOT GLOB '*[^0-9]*'\n                    AND substr(instrument_id,7) IN ('.SH','.SZ','.BJ'))),\n        FOREIGN KEY (instrument_id,symbol) REFERENCES instruments(instrument_id,symbol),\n        UNIQUE (instrument_id,record_version),\n        UNIQUE (instrument_id,supersedes_version),\n        FOREIGN KEY (instrument_id,supersedes_version) REFERENCES security_versions(instrument_id,record_version)\n    )"
+      ],
+      [
+        "trigger",
+        "calendar_versions_revision",
+        "calendar_versions",
+        "CREATE TRIGGER calendar_versions_revision BEFORE INSERT ON calendar_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM calendar_versions p WHERE p.exchange=NEW.exchange AND p.session_date=NEW.session_date AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_delete",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_delete\n                BEFORE DELETE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_update",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_update\n                BEFORE UPDATE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_delete",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_delete\n        BEFORE DELETE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_update",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_update\n        BEFORE UPDATE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_delete",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_delete\n        BEFORE DELETE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_update",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_update\n        BEFORE UPDATE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_delete",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_delete\n        BEFORE DELETE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_update",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_update\n        BEFORE UPDATE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_delete",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_delete\n        BEFORE DELETE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_update",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_update\n        BEFORE UPDATE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_delete",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_delete\n                BEFORE DELETE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_update",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_update\n                BEFORE UPDATE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "security_code_lifetime",
+        "security_versions",
+        "CREATE TRIGGER security_code_lifetime BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM security_versions p\n                WHERE p.symbol=NEW.symbol AND p.instrument_id<>NEW.instrument_id\n                  AND (p.delisting_date IS NULL OR NEW.listing_date<p.delisting_date)\n                  AND (NEW.delisting_date IS NULL OR p.listing_date<NEW.delisting_date)\n                  AND NOT EXISTS (\n                    SELECT 1 FROM security_versions successor\n                    WHERE successor.instrument_id=p.instrument_id AND successor.supersedes_version=p.record_version\n                      AND max(successor.available_at,successor.ingested_at)<=max(NEW.available_at,NEW.ingested_at)\n                  )\n            ) THEN RAISE(ABORT,'code reuse conflicts in business and visibility time') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_periods",
+        "security_versions",
+        "CREATE TRIGGER security_periods BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN NOT json_valid(NEW.periods_json)\n                THEN RAISE(ABORT,'invalid timeline JSON') END;\n            SELECT CASE WHEN json_type(NEW.periods_json) IS NOT 'array'\n                OR json_array_length(NEW.periods_json) NOT BETWEEN 1 AND 256\n                THEN RAISE(ABORT,'timeline requires 1..256 periods') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p WHERE p.type IS NOT 'object'\n                OR (SELECT count(*) FROM json_each(p.value))<>3\n                OR json_type(p.value,'$.effective_from') IS NOT 'text'\n                OR NOT (json_extract(p.value,'$.effective_from') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_from'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_from'), '+0 days') = json_extract(p.value,'$.effective_from'))\n                OR json_type(p.value,'$.name') IS NOT 'text'\n                OR length(trim(json_extract(p.value,'$.name'))) NOT BETWEEN 1 AND 256\n                OR json_type(p.value,'$.effective_to') IS NULL\n                OR json_type(p.value,'$.effective_to') NOT IN ('null','text')\n                OR (json_extract(p.value,'$.effective_to') IS NOT NULL AND (NOT (json_extract(p.value,'$.effective_to') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_to'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_to'), '+0 days') = json_extract(p.value,'$.effective_to')) OR json_extract(p.value,'$.effective_to')<=json_extract(p.value,'$.effective_from')))\n                OR json_extract(p.value,'$.effective_from')<NEW.listing_date\n                OR (NEW.delisting_date IS NOT NULL AND (json_extract(p.value,'$.effective_to') IS NULL OR json_extract(p.value,'$.effective_to')>NEW.delisting_date))\n            ) THEN RAISE(ABORT,'invalid period or lifetime boundary') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p JOIN json_each(NEW.periods_json) q ON p.key<q.key\n                WHERE json_extract(p.value,'$.effective_to') IS NULL OR\n                      json_extract(p.value,'$.effective_to')>json_extract(q.value,'$.effective_from')\n            ) THEN RAISE(ABORT,'timeline periods overlap or are unsorted') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_versions_revision",
+        "security_versions",
+        "CREATE TRIGGER security_versions_revision BEFORE INSERT ON security_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM security_versions p WHERE p.instrument_id=NEW.instrument_id AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "validate_bar_version",
+        "daily_bar_versions",
+        "CREATE TRIGGER validate_bar_version BEFORE INSERT ON daily_bar_versions\n        BEGIN\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) = 'none' AND NEW.factor_version IS NOT NULL\n                THEN RAISE(ABORT, 'unadjusted bar cannot have factor_version') END;\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) IN ('qfq','hfq') AND NEW.factor_version IS NULL\n                THEN RAISE(ABORT, 'adjusted bar requires factor_version') END;\n            SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                SELECT 1 FROM daily_bar_versions p\n                WHERE p.bar_id = NEW.bar_id AND p.source = NEW.source\n                    AND p.source_version = NEW.supersedes_version\n                    AND (NEW.available_at < p.available_at OR NEW.ingested_at < p.ingested_at\n                        OR max(NEW.available_at, NEW.ingested_at) <= max(p.available_at, p.ingested_at))\n            ) THEN RAISE(ABORT, 'revision visibility must advance without backdating') END;\n        END"
+      ]
+    ],
+    "latest_trade_date": null
+  },
+  "owner": "DESKTOP-M3HG690/iyoyi",
+  "initialization_before": {
+    "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+        "exists": false
+      }
+    ],
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-journal",
+        "exists": false
+      }
+    ],
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-journal",
+        "exists": false
+      }
+    ]
+  },
+  "initialization_after": {
+    "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+        "exists": true,
+        "bytes": 147456,
+        "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+        "exists": false
+      }
+    ],
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3",
+        "exists": true,
+        "bytes": 147456,
+        "sha256": "8c08c5e587a760f62d79ec00f3537bb1d6db3067895af64b54e3b00840f5b514"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3-journal",
+        "exists": false
+      }
+    ],
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3",
+        "exists": true,
+        "bytes": 147456,
+        "sha256": "8c08c5e587a760f62d79ec00f3537bb1d6db3067895af64b54e3b00840f5b514"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-wal",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-shm",
+        "exists": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3-journal",
+        "exists": false
+      }
+    ]
+  },
+  "idempotence": true,
+  "backup": {
+    "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3",
+    "connected_path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\backups\\workbench-initial.sqlite3",
+    "schema_version": 2,
+    "migrations": [
+      {
+        "version": 1,
+        "name": "daily_bar_foundation",
+        "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+        "applied_at": "2026-10-21T14:43:53.601589+00:00"
+      },
+      {
+        "version": 2,
+        "name": "security_master_and_calendar",
+        "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+        "applied_at": "2026-10-21T14:43:53.603654+00:00"
+      }
+    ],
+    "quick_check": [
+      "ok"
+    ],
+    "foreign_key_check": [],
+    "read_only": true,
+    "require_existing": false,
+    "journal_mode": "delete",
+    "query_only": 1,
+    "foreign_keys_enabled": 1,
+    "recursive_triggers": 1,
+    "counts": {
+      "calendar_versions": 0,
+      "daily_bar_versions": 0,
+      "daily_bars": 0,
+      "ingestion_runs": 0,
+      "instruments": 0,
+      "schema_migrations": 2,
+      "security_versions": 0
+    },
+    "structure": {
+      "calendar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "session_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "is_trading_day",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "error_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "calendar_versions",
+            "from": "exchange",
+            "to": "exchange",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "calendar_versions",
+            "from": "session_date",
+            "to": "session_date",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "calendar_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "calendar_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "calendar_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "calendar_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_calendar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_calendar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "source_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "open",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "high",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "low",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "close",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "volume",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "amount",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "factor_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "daily_bar_versions",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "daily_bar_versions",
+            "from": "source",
+            "to": "source",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "daily_bar_versions",
+            "from": "supersedes_version",
+            "to": "source_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "daily_bars",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_version_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "idx_bar_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "idx_one_version_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_daily_bar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_daily_bar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bars": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "adjustment_method",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_bars_date",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_daily_bars_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "ingestion_runs": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "recorded_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "sqlite_autoindex_ingestion_runs_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "instruments": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_instruments_symbol",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_instruments_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_instruments_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "schema_migrations": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "name",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "checksum",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "applied_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": []
+      },
+      "security_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "security_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "listing_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "delisting_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "periods_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 17,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 18,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 19,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "security_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 1,
+            "table": "instruments",
+            "from": "symbol",
+            "to": "symbol",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "security_symbol_lifetime",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "security_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "security_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "security_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_security_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_security_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      }
+    },
+    "objects": [
+      [
+        "index",
+        "calendar_versions_root",
+        "calendar_versions",
+        "CREATE UNIQUE INDEX calendar_versions_root ON calendar_versions(exchange,session_date) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "calendar_versions_run",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_run ON calendar_versions(run_id)"
+      ],
+      [
+        "index",
+        "calendar_versions_visibility",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_visibility ON calendar_versions(exchange,session_date,available_at,ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bar_visibility",
+        "daily_bar_versions",
+        "CREATE INDEX idx_bar_visibility\n        ON daily_bar_versions(bar_id, source, available_at, ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bars_date",
+        "daily_bars",
+        "CREATE INDEX idx_bars_date ON daily_bars(trade_date, instrument_id)"
+      ],
+      [
+        "index",
+        "idx_instruments_symbol",
+        "instruments",
+        "CREATE INDEX idx_instruments_symbol ON instruments(symbol)"
+      ],
+      [
+        "index",
+        "idx_one_version_root",
+        "daily_bar_versions",
+        "CREATE UNIQUE INDEX idx_one_version_root\n        ON daily_bar_versions(bar_id, source) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "idx_version_run",
+        "daily_bar_versions",
+        "CREATE INDEX idx_version_run ON daily_bar_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_symbol_lifetime",
+        "security_versions",
+        "CREATE INDEX security_symbol_lifetime ON security_versions(symbol,listing_date,delisting_date)"
+      ],
+      [
+        "index",
+        "security_versions_root",
+        "security_versions",
+        "CREATE UNIQUE INDEX security_versions_root ON security_versions(instrument_id) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "security_versions_run",
+        "security_versions",
+        "CREATE INDEX security_versions_run ON security_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_versions_visibility",
+        "security_versions",
+        "CREATE INDEX security_versions_visibility ON security_versions(instrument_id,available_at,ingested_at)"
+      ],
+      [
+        "table",
+        "calendar_versions",
+        "calendar_versions",
+        "CREATE TABLE calendar_versions (\n        version_id INTEGER PRIMARY KEY,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ')),\n        session_date TEXT NOT NULL CHECK (session_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(session_date, '+0 days') IS NOT NULL AND date(session_date, '+0 days') = session_date),\n        is_trading_day INTEGER,\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','source_error')),\n        error_reason TEXT,\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK ((quality_status='accepted' AND is_trading_day IS NOT NULL AND is_trading_day IN (0,1)\n                AND error_reason IS NULL) OR (quality_status='source_error' AND is_trading_day IS NULL\n                AND error_reason IS NOT NULL AND length(trim(error_reason))>0)),\n        UNIQUE (exchange,session_date,record_version),\n        UNIQUE (exchange,session_date,supersedes_version),\n        FOREIGN KEY (exchange,session_date,supersedes_version)\n            REFERENCES calendar_versions(exchange,session_date,record_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bar_versions",
+        "daily_bar_versions",
+        "CREATE TABLE daily_bar_versions (\n        version_id INTEGER PRIMARY KEY,\n        bar_id INTEGER NOT NULL REFERENCES daily_bars(bar_id),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        source_version TEXT NOT NULL CHECK (length(trim(source_version)) > 0),\n        open REAL NOT NULL CHECK (typeof(open) IN ('real','integer') AND open > 0 AND open <= 1.7976931348623157e308),\n        high REAL NOT NULL CHECK (typeof(high) IN ('real','integer') AND high > 0 AND high <= 1.7976931348623157e308),\n        low REAL NOT NULL CHECK (typeof(low) IN ('real','integer') AND low > 0 AND low <= 1.7976931348623157e308),\n        close REAL NOT NULL CHECK (typeof(close) IN ('real','integer') AND close > 0 AND close <= 1.7976931348623157e308),\n        volume INTEGER NOT NULL CHECK (typeof(volume) = 'integer' AND volume >= 0),\n        amount REAL NOT NULL CHECK (typeof(amount) IN ('real','integer') AND amount >= 0 AND amount <= 1.7976931348623157e308),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\n        available_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\n        ingested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        factor_version TEXT CHECK (factor_version IS NULL OR length(trim(factor_version)) > 0),\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','quarantined')),\n        supersedes_version TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (low <= open AND open <= high AND low <= close AND close <= high),\n        CHECK (event_time <= available_at AND event_time <= ingested_at),\n        CHECK (supersedes_version IS NULL OR supersedes_version <> source_version),\n        UNIQUE (bar_id, source, source_version),\n        UNIQUE (bar_id, source, supersedes_version),\n        FOREIGN KEY (bar_id, source, supersedes_version)\n            REFERENCES daily_bar_versions(bar_id, source, source_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bars",
+        "daily_bars",
+        "CREATE TABLE daily_bars (\n        bar_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL REFERENCES instruments(instrument_id),\n        trade_date TEXT NOT NULL CHECK (\n            trade_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'\n            AND date(trade_date, '+0 days') IS NOT NULL\n            AND date(trade_date, '+0 days') = trade_date),\n        adjustment_method TEXT NOT NULL CHECK (adjustment_method IN ('none', 'qfq', 'hfq')),\n        UNIQUE (instrument_id, trade_date, adjustment_method)\n    )"
+      ],
+      [
+        "table",
+        "ingestion_runs",
+        "ingestion_runs",
+        "CREATE TABLE ingestion_runs (\n        run_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(run_id)) > 0),\n        recorded_at TEXT NOT NULL\n    )"
+      ],
+      [
+        "table",
+        "instruments",
+        "instruments",
+        "CREATE TABLE instruments (\n        instrument_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(instrument_id)) > 0),\n        symbol TEXT NOT NULL CHECK (\n            length(symbol) = 9 AND substr(symbol, 1, 6) NOT GLOB '*[^0-9]*'\n            AND substr(symbol, 7) IN ('.SH', '.SZ', '.BJ')),\n        UNIQUE (instrument_id, symbol)\n    )"
+      ],
+      [
+        "table",
+        "schema_migrations",
+        "schema_migrations",
+        "CREATE TABLE schema_migrations (\n    version INTEGER PRIMARY KEY CHECK (version > 0),\n    name TEXT NOT NULL,\n    checksum TEXT NOT NULL,\n    applied_at TEXT NOT NULL\n)"
+      ],
+      [
+        "table",
+        "security_versions",
+        "security_versions",
+        "CREATE TABLE security_versions (\n        version_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL,\n        symbol TEXT NOT NULL,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ') AND substr(symbol,8)=exchange),\n        security_type TEXT NOT NULL CHECK (security_type='A_SHARE'),\n        quality_status TEXT NOT NULL CHECK (quality_status='accepted'),\n        listing_date TEXT NOT NULL CHECK (listing_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(listing_date, '+0 days') IS NOT NULL AND date(listing_date, '+0 days') = listing_date),\n        delisting_date TEXT CHECK (delisting_date IS NULL OR (delisting_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(delisting_date, '+0 days') IS NOT NULL AND date(delisting_date, '+0 days') = delisting_date)),\n        periods_json TEXT NOT NULL CHECK (json_valid(periods_json)),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK (delisting_date IS NULL OR listing_date < delisting_date),\n        CHECK (instrument_id <> symbol AND instrument_id <> substr(symbol,1,6)),\n        CHECK (NOT (length(instrument_id)=6 AND instrument_id NOT GLOB '*[^0-9]*')),\n        CHECK (NOT (length(instrument_id)=9 AND substr(instrument_id,1,6) NOT GLOB '*[^0-9]*'\n                    AND substr(instrument_id,7) IN ('.SH','.SZ','.BJ'))),\n        FOREIGN KEY (instrument_id,symbol) REFERENCES instruments(instrument_id,symbol),\n        UNIQUE (instrument_id,record_version),\n        UNIQUE (instrument_id,supersedes_version),\n        FOREIGN KEY (instrument_id,supersedes_version) REFERENCES security_versions(instrument_id,record_version)\n    )"
+      ],
+      [
+        "trigger",
+        "calendar_versions_revision",
+        "calendar_versions",
+        "CREATE TRIGGER calendar_versions_revision BEFORE INSERT ON calendar_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM calendar_versions p WHERE p.exchange=NEW.exchange AND p.session_date=NEW.session_date AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_delete",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_delete\n                BEFORE DELETE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_update",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_update\n                BEFORE UPDATE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_delete",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_delete\n        BEFORE DELETE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_update",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_update\n        BEFORE UPDATE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_delete",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_delete\n        BEFORE DELETE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_update",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_update\n        BEFORE UPDATE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_delete",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_delete\n        BEFORE DELETE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_update",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_update\n        BEFORE UPDATE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_delete",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_delete\n        BEFORE DELETE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_update",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_update\n        BEFORE UPDATE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_delete",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_delete\n                BEFORE DELETE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_update",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_update\n                BEFORE UPDATE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "security_code_lifetime",
+        "security_versions",
+        "CREATE TRIGGER security_code_lifetime BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM security_versions p\n                WHERE p.symbol=NEW.symbol AND p.instrument_id<>NEW.instrument_id\n                  AND (p.delisting_date IS NULL OR NEW.listing_date<p.delisting_date)\n                  AND (NEW.delisting_date IS NULL OR p.listing_date<NEW.delisting_date)\n                  AND NOT EXISTS (\n                    SELECT 1 FROM security_versions successor\n                    WHERE successor.instrument_id=p.instrument_id AND successor.supersedes_version=p.record_version\n                      AND max(successor.available_at,successor.ingested_at)<=max(NEW.available_at,NEW.ingested_at)\n                  )\n            ) THEN RAISE(ABORT,'code reuse conflicts in business and visibility time') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_periods",
+        "security_versions",
+        "CREATE TRIGGER security_periods BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN NOT json_valid(NEW.periods_json)\n                THEN RAISE(ABORT,'invalid timeline JSON') END;\n            SELECT CASE WHEN json_type(NEW.periods_json) IS NOT 'array'\n                OR json_array_length(NEW.periods_json) NOT BETWEEN 1 AND 256\n                THEN RAISE(ABORT,'timeline requires 1..256 periods') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p WHERE p.type IS NOT 'object'\n                OR (SELECT count(*) FROM json_each(p.value))<>3\n                OR json_type(p.value,'$.effective_from') IS NOT 'text'\n                OR NOT (json_extract(p.value,'$.effective_from') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_from'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_from'), '+0 days') = json_extract(p.value,'$.effective_from'))\n                OR json_type(p.value,'$.name') IS NOT 'text'\n                OR length(trim(json_extract(p.value,'$.name'))) NOT BETWEEN 1 AND 256\n                OR json_type(p.value,'$.effective_to') IS NULL\n                OR json_type(p.value,'$.effective_to') NOT IN ('null','text')\n                OR (json_extract(p.value,'$.effective_to') IS NOT NULL AND (NOT (json_extract(p.value,'$.effective_to') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_to'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_to'), '+0 days') = json_extract(p.value,'$.effective_to')) OR json_extract(p.value,'$.effective_to')<=json_extract(p.value,'$.effective_from')))\n                OR json_extract(p.value,'$.effective_from')<NEW.listing_date\n                OR (NEW.delisting_date IS NOT NULL AND (json_extract(p.value,'$.effective_to') IS NULL OR json_extract(p.value,'$.effective_to')>NEW.delisting_date))\n            ) THEN RAISE(ABORT,'invalid period or lifetime boundary') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p JOIN json_each(NEW.periods_json) q ON p.key<q.key\n                WHERE json_extract(p.value,'$.effective_to') IS NULL OR\n                      json_extract(p.value,'$.effective_to')>json_extract(q.value,'$.effective_from')\n            ) THEN RAISE(ABORT,'timeline periods overlap or are unsorted') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_versions_revision",
+        "security_versions",
+        "CREATE TRIGGER security_versions_revision BEFORE INSERT ON security_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM security_versions p WHERE p.instrument_id=NEW.instrument_id AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "validate_bar_version",
+        "daily_bar_versions",
+        "CREATE TRIGGER validate_bar_version BEFORE INSERT ON daily_bar_versions\n        BEGIN\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) = 'none' AND NEW.factor_version IS NOT NULL\n                THEN RAISE(ABORT, 'unadjusted bar cannot have factor_version') END;\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) IN ('qfq','hfq') AND NEW.factor_version IS NULL\n                THEN RAISE(ABORT, 'adjusted bar requires factor_version') END;\n            SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                SELECT 1 FROM daily_bar_versions p\n                WHERE p.bar_id = NEW.bar_id AND p.source = NEW.source\n                    AND p.source_version = NEW.supersedes_version\n                    AND (NEW.available_at < p.available_at OR NEW.ingested_at < p.ingested_at\n                        OR max(NEW.available_at, NEW.ingested_at) <= max(p.available_at, p.ingested_at))\n            ) THEN RAISE(ABORT, 'revision visibility must advance without backdating') END;\n        END"
+      ]
+    ],
+    "latest_trade_date": null
+  },
+  "isolated_restore": {
+    "path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3",
+    "connected_path": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\restore-check\\workbench.sqlite3",
+    "schema_version": 2,
+    "migrations": [
+      {
+        "version": 1,
+        "name": "daily_bar_foundation",
+        "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+        "applied_at": "2026-10-21T14:43:53.601589+00:00"
+      },
+      {
+        "version": 2,
+        "name": "security_master_and_calendar",
+        "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+        "applied_at": "2026-10-21T14:43:53.603654+00:00"
+      }
+    ],
+    "quick_check": [
+      "ok"
+    ],
+    "foreign_key_check": [],
+    "read_only": true,
+    "require_existing": false,
+    "journal_mode": "delete",
+    "query_only": 1,
+    "foreign_keys_enabled": 1,
+    "recursive_triggers": 1,
+    "counts": {
+      "calendar_versions": 0,
+      "daily_bar_versions": 0,
+      "daily_bars": 0,
+      "ingestion_runs": 0,
+      "instruments": 0,
+      "schema_migrations": 2,
+      "security_versions": 0
+    },
+    "structure": {
+      "calendar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "session_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "is_trading_day",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "error_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "calendar_versions",
+            "from": "exchange",
+            "to": "exchange",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "calendar_versions",
+            "from": "session_date",
+            "to": "session_date",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "calendar_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "calendar_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "calendar_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "calendar_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_calendar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_calendar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "source_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "open",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "high",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "low",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "close",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "volume",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "amount",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "factor_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "daily_bar_versions",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "daily_bar_versions",
+            "from": "source",
+            "to": "source",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "daily_bar_versions",
+            "from": "supersedes_version",
+            "to": "source_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "daily_bars",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_version_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "idx_bar_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "idx_one_version_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_daily_bar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_daily_bar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "daily_bars": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "adjustment_method",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_bars_date",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_daily_bars_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      },
+      "ingestion_runs": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "recorded_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "sqlite_autoindex_ingestion_runs_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "instruments": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_instruments_symbol",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_instruments_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_instruments_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "schema_migrations": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "name",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "checksum",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "applied_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": []
+      },
+      "security_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "security_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "listing_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "delisting_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "periods_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 17,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 18,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 19,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "security_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 1,
+            "table": "instruments",
+            "from": "symbol",
+            "to": "symbol",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "security_symbol_lifetime",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "security_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "security_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "security_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_security_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_security_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          }
+        ]
+      }
+    },
+    "objects": [
+      [
+        "index",
+        "calendar_versions_root",
+        "calendar_versions",
+        "CREATE UNIQUE INDEX calendar_versions_root ON calendar_versions(exchange,session_date) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "calendar_versions_run",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_run ON calendar_versions(run_id)"
+      ],
+      [
+        "index",
+        "calendar_versions_visibility",
+        "calendar_versions",
+        "CREATE INDEX calendar_versions_visibility ON calendar_versions(exchange,session_date,available_at,ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bar_visibility",
+        "daily_bar_versions",
+        "CREATE INDEX idx_bar_visibility\n        ON daily_bar_versions(bar_id, source, available_at, ingested_at)"
+      ],
+      [
+        "index",
+        "idx_bars_date",
+        "daily_bars",
+        "CREATE INDEX idx_bars_date ON daily_bars(trade_date, instrument_id)"
+      ],
+      [
+        "index",
+        "idx_instruments_symbol",
+        "instruments",
+        "CREATE INDEX idx_instruments_symbol ON instruments(symbol)"
+      ],
+      [
+        "index",
+        "idx_one_version_root",
+        "daily_bar_versions",
+        "CREATE UNIQUE INDEX idx_one_version_root\n        ON daily_bar_versions(bar_id, source) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "idx_version_run",
+        "daily_bar_versions",
+        "CREATE INDEX idx_version_run ON daily_bar_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_symbol_lifetime",
+        "security_versions",
+        "CREATE INDEX security_symbol_lifetime ON security_versions(symbol,listing_date,delisting_date)"
+      ],
+      [
+        "index",
+        "security_versions_root",
+        "security_versions",
+        "CREATE UNIQUE INDEX security_versions_root ON security_versions(instrument_id) WHERE supersedes_version IS NULL"
+      ],
+      [
+        "index",
+        "security_versions_run",
+        "security_versions",
+        "CREATE INDEX security_versions_run ON security_versions(run_id)"
+      ],
+      [
+        "index",
+        "security_versions_visibility",
+        "security_versions",
+        "CREATE INDEX security_versions_visibility ON security_versions(instrument_id,available_at,ingested_at)"
+      ],
+      [
+        "table",
+        "calendar_versions",
+        "calendar_versions",
+        "CREATE TABLE calendar_versions (\n        version_id INTEGER PRIMARY KEY,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ')),\n        session_date TEXT NOT NULL CHECK (session_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(session_date, '+0 days') IS NOT NULL AND date(session_date, '+0 days') = session_date),\n        is_trading_day INTEGER,\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','source_error')),\n        error_reason TEXT,\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK ((quality_status='accepted' AND is_trading_day IS NOT NULL AND is_trading_day IN (0,1)\n                AND error_reason IS NULL) OR (quality_status='source_error' AND is_trading_day IS NULL\n                AND error_reason IS NOT NULL AND length(trim(error_reason))>0)),\n        UNIQUE (exchange,session_date,record_version),\n        UNIQUE (exchange,session_date,supersedes_version),\n        FOREIGN KEY (exchange,session_date,supersedes_version)\n            REFERENCES calendar_versions(exchange,session_date,record_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bar_versions",
+        "daily_bar_versions",
+        "CREATE TABLE daily_bar_versions (\n        version_id INTEGER PRIMARY KEY,\n        bar_id INTEGER NOT NULL REFERENCES daily_bars(bar_id),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        source_version TEXT NOT NULL CHECK (length(trim(source_version)) > 0),\n        open REAL NOT NULL CHECK (typeof(open) IN ('real','integer') AND open > 0 AND open <= 1.7976931348623157e308),\n        high REAL NOT NULL CHECK (typeof(high) IN ('real','integer') AND high > 0 AND high <= 1.7976931348623157e308),\n        low REAL NOT NULL CHECK (typeof(low) IN ('real','integer') AND low > 0 AND low <= 1.7976931348623157e308),\n        close REAL NOT NULL CHECK (typeof(close) IN ('real','integer') AND close > 0 AND close <= 1.7976931348623157e308),\n        volume INTEGER NOT NULL CHECK (typeof(volume) = 'integer' AND volume >= 0),\n        amount REAL NOT NULL CHECK (typeof(amount) IN ('real','integer') AND amount >= 0 AND amount <= 1.7976931348623157e308),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\n        available_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\n        ingested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        factor_version TEXT CHECK (factor_version IS NULL OR length(trim(factor_version)) > 0),\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','quarantined')),\n        supersedes_version TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (low <= open AND open <= high AND low <= close AND close <= high),\n        CHECK (event_time <= available_at AND event_time <= ingested_at),\n        CHECK (supersedes_version IS NULL OR supersedes_version <> source_version),\n        UNIQUE (bar_id, source, source_version),\n        UNIQUE (bar_id, source, supersedes_version),\n        FOREIGN KEY (bar_id, source, supersedes_version)\n            REFERENCES daily_bar_versions(bar_id, source, source_version)\n    )"
+      ],
+      [
+        "table",
+        "daily_bars",
+        "daily_bars",
+        "CREATE TABLE daily_bars (\n        bar_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL REFERENCES instruments(instrument_id),\n        trade_date TEXT NOT NULL CHECK (\n            trade_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'\n            AND date(trade_date, '+0 days') IS NOT NULL\n            AND date(trade_date, '+0 days') = trade_date),\n        adjustment_method TEXT NOT NULL CHECK (adjustment_method IN ('none', 'qfq', 'hfq')),\n        UNIQUE (instrument_id, trade_date, adjustment_method)\n    )"
+      ],
+      [
+        "table",
+        "ingestion_runs",
+        "ingestion_runs",
+        "CREATE TABLE ingestion_runs (\n        run_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(run_id)) > 0),\n        recorded_at TEXT NOT NULL\n    )"
+      ],
+      [
+        "table",
+        "instruments",
+        "instruments",
+        "CREATE TABLE instruments (\n        instrument_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(instrument_id)) > 0),\n        symbol TEXT NOT NULL CHECK (\n            length(symbol) = 9 AND substr(symbol, 1, 6) NOT GLOB '*[^0-9]*'\n            AND substr(symbol, 7) IN ('.SH', '.SZ', '.BJ')),\n        UNIQUE (instrument_id, symbol)\n    )"
+      ],
+      [
+        "table",
+        "schema_migrations",
+        "schema_migrations",
+        "CREATE TABLE schema_migrations (\n    version INTEGER PRIMARY KEY CHECK (version > 0),\n    name TEXT NOT NULL,\n    checksum TEXT NOT NULL,\n    applied_at TEXT NOT NULL\n)"
+      ],
+      [
+        "table",
+        "security_versions",
+        "security_versions",
+        "CREATE TABLE security_versions (\n        version_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL,\n        symbol TEXT NOT NULL,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ') AND substr(symbol,8)=exchange),\n        security_type TEXT NOT NULL CHECK (security_type='A_SHARE'),\n        quality_status TEXT NOT NULL CHECK (quality_status='accepted'),\n        listing_date TEXT NOT NULL CHECK (listing_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(listing_date, '+0 days') IS NOT NULL AND date(listing_date, '+0 days') = listing_date),\n        delisting_date TEXT CHECK (delisting_date IS NULL OR (delisting_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(delisting_date, '+0 days') IS NOT NULL AND date(delisting_date, '+0 days') = delisting_date)),\n        periods_json TEXT NOT NULL CHECK (json_valid(periods_json)),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK (delisting_date IS NULL OR listing_date < delisting_date),\n        CHECK (instrument_id <> symbol AND instrument_id <> substr(symbol,1,6)),\n        CHECK (NOT (length(instrument_id)=6 AND instrument_id NOT GLOB '*[^0-9]*')),\n        CHECK (NOT (length(instrument_id)=9 AND substr(instrument_id,1,6) NOT GLOB '*[^0-9]*'\n                    AND substr(instrument_id,7) IN ('.SH','.SZ','.BJ'))),\n        FOREIGN KEY (instrument_id,symbol) REFERENCES instruments(instrument_id,symbol),\n        UNIQUE (instrument_id,record_version),\n        UNIQUE (instrument_id,supersedes_version),\n        FOREIGN KEY (instrument_id,supersedes_version) REFERENCES security_versions(instrument_id,record_version)\n    )"
+      ],
+      [
+        "trigger",
+        "calendar_versions_revision",
+        "calendar_versions",
+        "CREATE TRIGGER calendar_versions_revision BEFORE INSERT ON calendar_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM calendar_versions p WHERE p.exchange=NEW.exchange AND p.session_date=NEW.session_date AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_delete",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_delete\n                BEFORE DELETE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_calendar_versions_update",
+        "calendar_versions",
+        "CREATE TRIGGER immutable_calendar_versions_update\n                BEFORE UPDATE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_delete",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_delete\n        BEFORE DELETE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bar_versions_update",
+        "daily_bar_versions",
+        "CREATE TRIGGER immutable_daily_bar_versions_update\n        BEFORE UPDATE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_delete",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_delete\n        BEFORE DELETE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_daily_bars_update",
+        "daily_bars",
+        "CREATE TRIGGER immutable_daily_bars_update\n        BEFORE UPDATE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_delete",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_delete\n        BEFORE DELETE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_ingestion_runs_update",
+        "ingestion_runs",
+        "CREATE TRIGGER immutable_ingestion_runs_update\n        BEFORE UPDATE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_delete",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_delete\n        BEFORE DELETE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_instruments_update",
+        "instruments",
+        "CREATE TRIGGER immutable_instruments_update\n        BEFORE UPDATE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_delete",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_delete\n                BEFORE DELETE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "immutable_security_versions_update",
+        "security_versions",
+        "CREATE TRIGGER immutable_security_versions_update\n                BEFORE UPDATE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      ],
+      [
+        "trigger",
+        "security_code_lifetime",
+        "security_versions",
+        "CREATE TRIGGER security_code_lifetime BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM security_versions p\n                WHERE p.symbol=NEW.symbol AND p.instrument_id<>NEW.instrument_id\n                  AND (p.delisting_date IS NULL OR NEW.listing_date<p.delisting_date)\n                  AND (NEW.delisting_date IS NULL OR p.listing_date<NEW.delisting_date)\n                  AND NOT EXISTS (\n                    SELECT 1 FROM security_versions successor\n                    WHERE successor.instrument_id=p.instrument_id AND successor.supersedes_version=p.record_version\n                      AND max(successor.available_at,successor.ingested_at)<=max(NEW.available_at,NEW.ingested_at)\n                  )\n            ) THEN RAISE(ABORT,'code reuse conflicts in business and visibility time') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_periods",
+        "security_versions",
+        "CREATE TRIGGER security_periods BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN NOT json_valid(NEW.periods_json)\n                THEN RAISE(ABORT,'invalid timeline JSON') END;\n            SELECT CASE WHEN json_type(NEW.periods_json) IS NOT 'array'\n                OR json_array_length(NEW.periods_json) NOT BETWEEN 1 AND 256\n                THEN RAISE(ABORT,'timeline requires 1..256 periods') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p WHERE p.type IS NOT 'object'\n                OR (SELECT count(*) FROM json_each(p.value))<>3\n                OR json_type(p.value,'$.effective_from') IS NOT 'text'\n                OR NOT (json_extract(p.value,'$.effective_from') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_from'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_from'), '+0 days') = json_extract(p.value,'$.effective_from'))\n                OR json_type(p.value,'$.name') IS NOT 'text'\n                OR length(trim(json_extract(p.value,'$.name'))) NOT BETWEEN 1 AND 256\n                OR json_type(p.value,'$.effective_to') IS NULL\n                OR json_type(p.value,'$.effective_to') NOT IN ('null','text')\n                OR (json_extract(p.value,'$.effective_to') IS NOT NULL AND (NOT (json_extract(p.value,'$.effective_to') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_to'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_to'), '+0 days') = json_extract(p.value,'$.effective_to')) OR json_extract(p.value,'$.effective_to')<=json_extract(p.value,'$.effective_from')))\n                OR json_extract(p.value,'$.effective_from')<NEW.listing_date\n                OR (NEW.delisting_date IS NOT NULL AND (json_extract(p.value,'$.effective_to') IS NULL OR json_extract(p.value,'$.effective_to')>NEW.delisting_date))\n            ) THEN RAISE(ABORT,'invalid period or lifetime boundary') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p JOIN json_each(NEW.periods_json) q ON p.key<q.key\n                WHERE json_extract(p.value,'$.effective_to') IS NULL OR\n                      json_extract(p.value,'$.effective_to')>json_extract(q.value,'$.effective_from')\n            ) THEN RAISE(ABORT,'timeline periods overlap or are unsorted') END;\n        END"
+      ],
+      [
+        "trigger",
+        "security_versions_revision",
+        "security_versions",
+        "CREATE TRIGGER security_versions_revision BEFORE INSERT ON security_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM security_versions p WHERE p.instrument_id=NEW.instrument_id AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      ],
+      [
+        "trigger",
+        "validate_bar_version",
+        "daily_bar_versions",
+        "CREATE TRIGGER validate_bar_version BEFORE INSERT ON daily_bar_versions\n        BEGIN\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) = 'none' AND NEW.factor_version IS NOT NULL\n                THEN RAISE(ABORT, 'unadjusted bar cannot have factor_version') END;\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) IN ('qfq','hfq') AND NEW.factor_version IS NULL\n                THEN RAISE(ABORT, 'adjusted bar requires factor_version') END;\n            SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                SELECT 1 FROM daily_bar_versions p\n                WHERE p.bar_id = NEW.bar_id AND p.source = NEW.source\n                    AND p.source_version = NEW.supersedes_version\n                    AND (NEW.available_at < p.available_at OR NEW.ingested_at < p.ingested_at\n                        OR max(NEW.available_at, NEW.ingested_at) <= max(p.available_at, p.ingested_at))\n            ) THEN RAISE(ABORT, 'revision visibility must advance without backdating') END;\n        END"
+      ]
+    ],
+    "latest_trade_date": null
+  },
+  "backup_comparison": "DDL, migrations/checksums, table counts, integrity equal; file SHA need not equal source",
+  "runtime": {
+    "url": "http://127.0.0.1:8524/?view=market",
+    "listener_pid": 17620,
+    "listen": "127.0.0.1:8524",
+    "startup_script": "scripts/start_workbench.ps1",
+    "startup_log": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\streamlit.log",
+    "startup_code_sha": "4bcda30a8921c144185e4b7091f45df710b644ec",
+    "startup_read_only": true,
+    "startup_query_only": 1,
+    "processes": [
+      {
+        "ProcessId": 7212,
+        "ParentProcessId": 2936,
+        "Name": "python.exe",
+        "CommandLine": "\"F:\\codex-agnes\\AI-trade-main-demo\\.venv\\Scripts\\python.exe\" -m streamlit run C:\\Users\\iyoyi\\.codex\\worktrees\\m0-production-db-001\\AI-trade\\src\\ai_trade\\demo_app.py --server.address 127.0.0.1 --server.port 8524 --server.headless true --browser.gatherUsageStats false"
+      },
+      {
+        "ProcessId": 17620,
+        "ParentProcessId": 7212,
+        "Name": "python.exe",
+        "CommandLine": "\"C:\\Users\\iyoyi\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe\" -m streamlit run C:\\Users\\iyoyi\\.codex\\worktrees\\m0-production-db-001\\AI-trade\\src\\ai_trade\\demo_app.py --server.address 127.0.0.1 --server.port 8524 --server.headless true --browser.gatherUsageStats false"
+      }
+    ],
+    "actual_browser": "ENV_BLOCKED",
+    "human_browser_confirmation": {
+      "status": "USER_CONFIRMED",
+      "answer": "确认没有问题",
+      "scope": "8524 M3 sidebar formal path, schema 2, business table counts 0",
+      "evidence": "human response to explicit verification question in current task",
+      "limitation": "Not an agent screenshot or automated browser acceptance"
+    },
+    "browser_error": "Browser URL policy gate did not grant authority; no workaround attempted",
+    "limitation": "Actual SQLite connection verified by startup diagnostic; isolated AppTest M1-M4 passed. Real browser rendering is not verified."
+  },
+  "legacy": {
+    "scope": "613 databases from prior PR44 manifest; not global scan",
+    "database_count": 613,
+    "files_rechecked": 627,
+    "all_old_files_unchanged": true,
+    "samples": [
+      {
+        "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3",
+        "sha256": "20253cec31b7d7ad8fe79bfcf24f8f77eeefe9bad4b86f087943f4fd36ba2cfc",
+        "counts": {
+          "schema_migrations": 2,
+          "instruments": 1,
+          "ingestion_runs": 1,
+          "daily_bars": 1217,
+          "daily_bar_versions": 1217,
+          "security_versions": 0,
+          "calendar_versions": 0
+        },
+        "batches": [
+          {
+            "symbol": "600000.SH",
+            "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+            "run_id": "demo-fab1a9b6062641248b5d97ce97a9723f",
+            "quality_status": "accepted",
+            "version_count": 1217,
+            "first_date": "2021-10-08",
+            "last_date": "2026-10-15",
+            "available_at": "2026-10-18T07:51:15.688495+00:00",
+            "ingested_at": "2026-10-18T07:51:15.824265+00:00"
+          }
+        ],
+        "migrations": [
+          [
+            1,
+            "daily_bar_foundation",
+            "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+            "2026-10-18T07:50:59.445865+00:00"
+          ],
+          [
+            2,
+            "security_master_and_calendar",
+            "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+            "2026-10-18T07:50:59.449611+00:00"
+          ]
+        ],
+        "versions_manifest": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\legacy-preview.json",
+        "authorization": "UNKNOWN",
+        "migrated": false
+      },
+      {
+        "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3",
+        "sha256": "a5a502ae889e4ad26dee3993f689b22cb6555584b454d751f9514bf1524269ed",
+        "counts": {
+          "schema_migrations": 2,
+          "instruments": 1,
+          "ingestion_runs": 1,
+          "daily_bars": 187,
+          "daily_bar_versions": 187,
+          "security_versions": 0,
+          "calendar_versions": 0
+        },
+        "batches": [
+          {
+            "symbol": "600000.SH",
+            "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+            "run_id": "m2-tencent-600000-20260101-20261015",
+            "quality_status": "accepted",
+            "version_count": 187,
+            "first_date": "2026-01-05",
+            "last_date": "2026-10-15",
+            "available_at": "2026-10-18T14:50:03.378746+00:00",
+            "ingested_at": "2026-10-18T14:50:03.413500+00:00"
+          }
+        ],
+        "migrations": [
+          [
+            1,
+            "daily_bar_foundation",
+            "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+            "2026-10-18T14:50:01.718281+00:00"
+          ],
+          [
+            2,
+            "security_master_and_calendar",
+            "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+            "2026-10-18T14:50:01.721291+00:00"
+          ]
+        ],
+        "versions_manifest": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\legacy-preview.json",
+        "authorization": "UNKNOWN",
+        "migrated": false
+      },
+      {
+        "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-tduod91y\\demo.sqlite3",
+        "sha256": "4152f78c18dfaa9473f76a33809d902c9af7cc73c9fcceedf6848b7c6d949bfb",
+        "counts": {
+          "schema_migrations": 2,
+          "instruments": 1,
+          "ingestion_runs": 1,
+          "daily_bars": 2291,
+          "daily_bar_versions": 2291,
+          "security_versions": 0,
+          "calendar_versions": 0
+        },
+        "batches": [
+          {
+            "symbol": "600378.SH",
+            "source": "akshare-tencent:akshare.stock_zh_a_hist_tx:task-008-v1+sdk-1.19.1",
+            "run_id": "demo-26c7d533818b49a49f97827cc47e8471",
+            "quality_status": "accepted",
+            "version_count": 2291,
+            "first_date": "2016-10-17",
+            "last_date": "2026-10-15",
+            "available_at": "2026-10-18T08:48:44.472123+00:00",
+            "ingested_at": "2026-10-18T08:48:44.710869+00:00"
+          }
+        ],
+        "migrations": [
+          [
+            1,
+            "daily_bar_foundation",
+            "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+            "2026-10-18T08:48:25.456235+00:00"
+          ],
+          [
+            2,
+            "security_master_and_calendar",
+            "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+            "2026-10-18T08:48:25.460545+00:00"
+          ]
+        ],
+        "versions_manifest": "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\legacy-preview.json",
+        "authorization": "UNKNOWN",
+        "migrated": false
+      }
+    ],
+    "observations": [
+      {
+        "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\m3-observations\\c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311.json",
+        "sha256": "c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-18T23:24:26.358544+00:00",
+        "ingested_at": null,
+        "available_at": null,
+        "status": "真实观察",
+        "rows": null,
+        "price_rows": 550,
+        "start": "2024-07-09",
+        "end": "2026-10-16",
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "c5d0dab6ea9ea9a329d18dc4e6d1122fbf30cb22b104d5243e80cd55ceeb3311"
+      },
+      {
+        "path": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m3-remodel-002-px5_6cou\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+        "sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T15:54:06.478989+00:00",
+        "ingested_at": "2026-10-19T15:54:06.596523+00:00",
+        "available_at": null,
+        "status": "真实观察",
+        "rows": null,
+        "price_rows": 550,
+        "start": "2024-07-09",
+        "end": "2026-10-16",
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-001\\m3-observations\\c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849.json",
+        "sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T15:54:06.478989+00:00",
+        "ingested_at": "2026-10-19T15:54:06.596523+00:00",
+        "available_at": null,
+        "status": "真实观察",
+        "rows": null,
+        "price_rows": 550,
+        "start": "2024-07-09",
+        "end": "2026-10-16",
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "c7b5534441830c8d8a6e7e0b8ef0e1722b93e2b38a51f20ee0bf7c072170a849"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-002-review\\pytest-tmp\\test_archive_preserves_observa0\\m3-observations\\8cfda6ed10855f207fc15e84538ce0850b251d6654fbabaf16be8eb892e94030.json",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "content_address_match": false,
+        "kind": null,
+        "symbol": null,
+        "source": null,
+        "trade_date": null,
+        "observed_at": null,
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-002-review\\pytest-tmp\\test_archive_preserves_observa0\\m3-observations\\d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73.json",
+        "sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": null,
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T00:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-002-review\\pytest-utf8-tmp\\test_archive_preserves_observa0\\m3-observations\\8cfda6ed10855f207fc15e84538ce0850b251d6654fbabaf16be8eb892e94030.json",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "content_address_match": false,
+        "kind": null,
+        "symbol": null,
+        "source": null,
+        "trade_date": null,
+        "observed_at": null,
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-002-review\\pytest-utf8-tmp\\test_archive_preserves_observa0\\m3-observations\\d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73.json",
+        "sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": null,
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T00:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-003-fix\\full-offline-tmp\\test_archive_preserves_observa0\\m3-observations\\8cfda6ed10855f207fc15e84538ce0850b251d6654fbabaf16be8eb892e94030.json",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "content_address_match": false,
+        "kind": null,
+        "symbol": null,
+        "source": null,
+        "trade_date": null,
+        "observed_at": null,
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-core-003-fix\\full-offline-tmp\\test_archive_preserves_observa0\\m3-observations\\d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73.json",
+        "sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": null,
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T00:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-remodel-002\\pytest-temp-final\\test_archive_mapping_preserves0\\m3-observations\\bad.json",
+        "error_type": "TypeError",
+        "exists": true,
+        "unchanged_from_previous": null,
+        "current_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-remodel-002\\pytest-temp-final\\test_archive_mapping_preserves0\\m3-observations\\d718dc6a1a2304f5dfdec5a9e2b4542b2eda7d4eb8be5c62fb48fc6412c0a48b.json",
+        "sha256": "d718dc6a1a2304f5dfdec5a9e2b4542b2eda7d4eb8be5c62fb48fc6412c0a48b",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": "unit:price:v1",
+        "trade_date": "2026-07-31",
+        "observed_at": "2026-10-19T12:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "price_rows": 150,
+        "start": "2026-01-05",
+        "end": "2026-07-31",
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d718dc6a1a2304f5dfdec5a9e2b4542b2eda7d4eb8be5c62fb48fc6412c0a48b"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-remodel-002\\pytest-temp-final\\test_archive_preserves_observa0\\m3-observations\\8cfda6ed10855f207fc15e84538ce0850b251d6654fbabaf16be8eb892e94030.json",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "content_address_match": false,
+        "kind": null,
+        "symbol": null,
+        "source": null,
+        "trade_date": null,
+        "observed_at": null,
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\artifacts\\m3-remodel-002\\pytest-temp-final\\test_archive_preserves_observa0\\m3-observations\\d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73.json",
+        "sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": null,
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T00:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\full-tmp\\test_archive_preserves_observa0\\m3-observations\\8cfda6ed10855f207fc15e84538ce0850b251d6654fbabaf16be8eb892e94030.json",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "content_address_match": false,
+        "kind": null,
+        "symbol": null,
+        "source": null,
+        "trade_date": null,
+        "observed_at": null,
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\full-tmp\\test_archive_preserves_observa0\\m3-observations\\d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73.json",
+        "sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": null,
+        "trade_date": "2026-10-16",
+        "observed_at": "2026-10-19T00:00:00Z",
+        "ingested_at": null,
+        "available_at": null,
+        "status": null,
+        "rows": null,
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d3735f5af3e6ca97f18cac3dcb0a3f06b346699a00726a1728611221e89a5b73"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\sina_index\\m3-observations\\d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7.json",
+        "sha256": "d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7",
+        "content_address_match": true,
+        "kind": "index",
+        "symbol": "sh000300",
+        "source": "AKShare 1.19.1 / 新浪财经 stock_zh_index_daily",
+        "trade_date": "2026-10-19",
+        "observed_at": "2026-10-20T15:39:29.005654+00:00",
+        "ingested_at": "2026-10-20T15:39:29.005654+00:00",
+        "available_at": null,
+        "status": "真实观察",
+        "rows": null,
+        "price_rows": 550,
+        "start": "2024-07-10",
+        "end": "2026-10-19",
+        "exists": true,
+        "unchanged_from_previous": true,
+        "current_sha256": "d9ff77ca95d4f758c26f2da80ab40b73969581e5ef229b2c419315f9e89bfbf7"
+      }
+    ],
+    "cross_sample": {
+      "smaller_source": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-m2-q_hbvuaj\\demo.sqlite3",
+      "larger_source": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3",
+      "overlapping_logical_dates": 187,
+      "different_price_volume_amount_or_factor": 0,
+      "different_quality": 0,
+      "different_batch_or_system_times": 187,
+      "merge_authorized": false
+    },
+    "preview_before_initialization": {
+      "source": "C:\\Users\\iyoyi\\AppData\\Local\\Temp\\a-share-quant-demo-5gu28e3m\\demo.sqlite3",
+      "target": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+      "target_exists": false,
+      "source_versions": 1217,
+      "target_versions": 0,
+      "candidate_new_versions": 1217,
+      "identical_existing_versions": 0,
+      "conflicting_existing_versions": 0,
+      "source_duplicate_version_keys": 0,
+      "migration_executed": false,
+      "authorization": "UNKNOWN",
+      "admission": "BLOCKED",
+      "conditions": [
+        "source/storage/research license",
+        "historical availability evidence",
+        "identity/calendar",
+        "quality review",
+        "approved auditable/deduplicated/recoverable migration task"
+      ]
+    },
+    "target_after_initialization_versions": 0
+  },
+  "verification": {
+    "offline": {
+      "status": "PASS",
+      "passed": 2890,
+      "skipped": 1,
+      "seconds": 267.7,
+      "exit_code": 0,
+      "skip_reason": "explicitly disabled live AKShare integration"
+    },
+    "initial_full": {
+      "passed": 2888,
+      "failed": 2,
+      "skipped": 1,
+      "seconds": 286.69,
+      "exit_code": 1,
+      "failure": "UI caller config lacked read_only; Demo error text compatibility",
+      "repair": "legacy caller-compatible getattr and retained Demo initialization wording; no existing tests changed"
+    },
+    "compatibility": {
+      "status": "PASS",
+      "passed": 22,
+      "seconds": 20.94,
+      "exit_code": 0
+    },
+    "dependencies": "PASS: No broken requirements found",
+    "real_market_network": "NOT_RUN; requests 0",
+    "real_browser": "ENV_BLOCKED",
+    "human_browser": "USER_CONFIRMED: formal path/schema2/empty business tables",
+    "isolated_streamlit": "PASS",
+    "out_of_sample": "NOT_RUN",
+    "independent_H": "PENDING"
+  },
+  "source_files_sha256": {
+    "scripts/preview_legacy_data.py": "8834112895cc919d437c4886b7272141f33402b3e9f97b5640b813c62a59a832",
+    "scripts/start_workbench.ps1": "79331cd3369a8ce33ee15a63764842efc6d6dfa2a737bb4108094ada021153fe",
+    "src/ai_trade/analysis_page.py": "500bad9e5e25e06049f24ce1aac29f7fb596c2ae5cddaa2b7e534c8a34c1c3eb",
+    "src/ai_trade/demo_app.py": "f66f54f28ce12b2aca59609262480e753882bfc0990d36d96dad772e1db9ff10",
+    "src/ai_trade/demo_data.py": "53bfec2a24e4107538192aeed01b567ed3fb7b2158d65bacb083aa4da7cd9fb6",
+    "src/ai_trade/market_analysis_page.py": "948725498f37b5c2fecc51c2527785f568d2300dd74d344b00da29806ec0b8a4",
+    "src/ai_trade/storage/db.py": "e670c4c594d995aee557636ae60926a5204b93407c9bd08337123f6a40f5873b",
+    "src/ai_trade/storage/workbench.py": "27de92778ceb0d18580c161a5bd042b070f743ce0aa2282a4871af490ea38592",
+    "src/ai_trade/storage/workbench_cli.py": "5aeb174bbe117c9adb6ecaa6509c3d73c4369f27fb0782976876044130558de7",
+    "tests/manual/test_workbench_offline.py": "823fc850e17d26948d106a28917bb1775e535bc62cda2f3eeae802f36e8a7874",
+    "tests/unit/test_workbench_storage.py": "f1ea2be7dcc128d103f92d4457fa08019f3a117682caf3b9721701fab51cf1d4"
+  },
+  "artifacts": {
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\initialization.json": {
+      "bytes": 144342,
+      "sha256": "68a903ae4720049a7e499707d1c25754f286665e518f09ab8c9e66566b67069a"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\legacy-preview.json": {
+      "bytes": 3693942,
+      "sha256": "9d796f3312473d6f952d08c323f95d32db5b73aeadc3bad5a274fd379593d4e0"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\process.json": {
+      "bytes": 834,
+      "sha256": "32eac8456275ad681b523682f1af8c1eb63d0234a9c964eca1d2af5c85507bc2"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\full.log": {
+      "bytes": 19260,
+      "sha256": "d3a4077c5409fa25cf85cecdf26671f357810961c11fc44f784733e7ba0652c6"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\full.xml": {
+      "bytes": 549911,
+      "sha256": "06d75da358c302b58997167f980340ebe570ffe095fb2432dd834362f3ff9c89"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\full-final.log": {
+      "bytes": 3659,
+      "sha256": "837ca66e3c219638b8a31976f404dc3c501bf618fc1c5b8231f8066b10c50bda"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\full-final.xml": {
+      "bytes": 527502,
+      "sha256": "7aff09b62fc9a0203423ebbc116c6248999155b3b43717c1f4d6e9d56cb885ae"
+    },
+    "F:\\codex-agnes\\AI-trade-local-state\\m0-production-db-001\\logs\\compatibility.log": {
+      "bytes": 102,
+      "sha256": "8d448e899558905ff6f6b1c11feeac75ae60a12d0b79eecce43d83bb1196fbdf"
+    }
+  },
+  "structured_feedback": {
+    "implementation": "draft for independent H; no merge/deploy",
+    "stage_acceptance": false,
+    "data_chain_complete": false,
+    "source_certification": false,
+    "next": [
+      "TASK-M0-PRODUCTION-DB-001-REVIEW",
+      "legacy license/time/migration review",
+      "M3 storage design and ordered migration"
+    ]
+  }
+}
