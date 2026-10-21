@@ -1,128 +1,88 @@
-# Streamlit 正式工作台一键启动说明
+# Windows 本地 Streamlit 正式工作台一键启动
 
-## 1. 当前版本与代码来源
+## 1. 固定规则
 
-- GitHub 仓库：`fengjnah/a-share-quant-v1`
-- 当前实现分支：`codex/m0-production-db-001`
-- 交付 PR：[#47](https://github.com/fengjnah/a-share-quant-v1/pull/47)
-- 本次交付记录的实现提交：`4bcda30a8921c144185e4b7091f45df710b644ec`
-- PR 记录的最终 head：`fd140b048444d11f54229bfdac6c36d573da8666`
-- PR 状态：Draft、尚未合并。合并前，`main` 分支不保证包含这些文件。
+- 仓库：`fengjnah/a-share-quant-v1`
+- 唯一日常工作区：`F:\\codex-agnes\\AI-trade-dev`
+- 唯一允许的运行分支：`main`
+- 启动脚本：`scripts/start_workbench.ps1`
+- Python 环境：`F:\\codex-agnes\\AI-trade-dev\\.venv\\Scripts\\python.exe`
+- 正式 SQLite：`F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3`
+- 默认监听：`127.0.0.1:8524`
+- 浏览器：`http://127.0.0.1:8524/?view=market`
 
-请以 GitHub PR 页面显示的最新 head SHA 为准；若 PR 有后续提交，上述 SHA 仅代表当前文档编写时记录的版本。
+`AI-trade-dev` 是代码工作区；正式 SQLite 保持在已确认的 `AI-trade\\data\\sqlite` 路径。不要把数据库复制进仓库，也不要改用临时 Demo 数据库。
 
-## 2. 文件放置位置
+## 2. 当前 PR 与版本管理
 
-以下路径均相对于仓库根目录：
+本说明及启动脚本的修订首先提交到 [PR #47](https://github.com/fengjnah/a-share-quant-v1/pull/47) 的开发分支 `codex/m0-production-db-001`，待审查、CI 和合并后才进入 `main`。该开发分支只用于交付，不是日常运行分支。
 
-- 一键启动脚本：`scripts/start_workbench.ps1`
-- 日常使用指南：`docs/LOCAL_WORKBENCH.md`
-- 本文档：`docs/LOCAL_STREAMLIT_STARTUP.md`
-- Streamlit 应用入口：`src/ai_trade/demo_app.py`
-- 数据库诊断 CLI：`src/ai_trade/storage/workbench_cli.py`
-
-Codex 本次任务记录中的工作树路径为：
-
-`C:\Users\iyoyi\.codex\worktrees\m0-production-db-001\AI-trade`
-
-如果该工作树在当前电脑上不存在，请使用你本地克隆仓库的实际根目录；不要把另一个 worktree 的路径直接当成本机路径。
-
-## 3. 当前正式数据库和 Python 环境
-
-启动脚本默认绑定：
-
-- SQLite 正式研究库：`F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3`
-- Python 解释器：`F:\codex-agnes\AI-trade-main-demo\.venv\Scripts\python.exe`
-- 本地监听地址：`127.0.0.1`
-- 默认端口：`8524`
-- 浏览器地址：`http://127.0.0.1:8524/?view=market`
-
-这些路径是脚本中的当前默认值，不是自动探测出来的通用路径。如果项目移动、虚拟环境重建或数据库位置变更，应显式传入参数或经代码审查更新脚本；不能让脚本悄悄回退到 Demo 数据库。
-
-## 4. 一键启动步骤
-
-### 推荐方式：PowerShell
-
-先进入包含 `scripts` 目录的仓库根目录，然后运行：
+PR 合并前，`AI-trade-dev\\main` 不一定含有启动脚本和正式数据库绑定代码。合并后在本地工作区确认并快进更新：
 
 ```powershell
-.\scripts\start_workbench.ps1
+Set-Location 'F:\\codex-agnes\\AI-trade-dev'
+git status --short
+git branch --show-current
+git pull --ff-only origin main
+git rev-parse HEAD
 ```
 
-若 PowerShell 的执行策略阻止本地脚本，可只对当前启动进程使用：
+只有在工作区干净、当前分支为 `main` 时才执行更新。若 `git status --short` 有输出，先检查并自行保存修改；不要用 reset、clean、强制切换或覆盖操作处理。
+
+## 3. 一键启动
+
+在 PowerShell 中：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start_workbench.ps1
+Set-Location 'F:\\codex-agnes\\AI-trade-dev'
+.\\scripts\\start_workbench.ps1
 ```
 
-这不会永久修改系统执行策略。不要通过关闭 Windows 安全机制解决路径或权限问题。
+如当前 PowerShell 执行策略阻止脚本，可仅对这次进程使用：
 
-启动成功后，在浏览器打开：
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File 'F:\\codex-agnes\\AI-trade-dev\\scripts\\start_workbench.ps1'
+```
+
+启动成功后打开：
 
 ```text
 http://127.0.0.1:8524/?view=market
 ```
 
-结束服务时回到运行脚本的终端，按 `Ctrl+C`。
+停止服务：回到运行脚本的终端按 `Ctrl+C`。如需临时更换端口，可运行 `.\\scripts\\start_workbench.ps1 -Port 8525`，然后打开 `http://127.0.0.1:8525/?view=market`。
 
-### 可选：显式指定路径和端口
+## 4. 脚本强制执行的检查
 
-```powershell
-.\scripts\start_workbench.ps1 `
-  -Python 'F:\codex-agnes\AI-trade-main-demo\.venv\Scripts\python.exe' `
-  -Root 'F:\codex-agnes\AI-trade\data\sqlite' `
-  -Port 8524
-```
+脚本会在启动前验证：
 
-端口被占用时，可以临时改为例如 `8525`，然后访问 `http://127.0.0.1:8525/?view=market`。
+1. 脚本确实来自 `F:\\codex-agnes\\AI-trade-dev`，不是 Codex worktree 或其他克隆目录。
+2. 当前 Git 分支必须是 `main`；不会自动切换分支。
+3. Git 工作区必须干净；如存在未提交或未跟踪文件，脚本停止，避免误运行未经确认的代码。
+4. Python 必须是该工作区的 `.venv\\Scripts\\python.exe`；不存在就停止，不会回退到 `AI-trade-main-demo` 或其他环境。
+5. 正式数据库文件必须已存在；脚本不会创建、初始化或迁移数据库。
+6. 启动前运行 `ai_trade.storage.workbench_cli diagnose`，核验连接路径、Schema/checksum、DDL 和 SQLite 完整性。
+7. 显式设置正式工作台根目录、`QUANT_DB_PATH`、严格模式和只读模式，移除该进程的 Demo 根变量。
+8. 只有诊断成功才启动 Streamlit；失败则停止，不会回退到 Demo。
 
-## 5. 启动脚本做什么
+启动时终端会输出工作区、分支、提交 SHA、Python 路径和数据库路径，方便记录实际运行版本。
 
-脚本会在启动 Streamlit 前：
+## 5. 故障处理
 
-1. 设置当前进程的 `PYTHONPATH`、UTF-8 和正式工作台配置。
-2. 将 `QUANT_DB_PATH` 明确绑定到指定根目录下的 `workbench.sqlite3`。
-3. 设置 `AI_TRADE_STRICT_WORKBENCH=1` 和 `AI_TRADE_READ_ONLY=1`。
-4. 移除当前进程中的 `AI_TRADE_DEMO_ROOT`，防止正式入口意外读临时 Demo。
-5. 调用 `ai_trade.storage.workbench_cli diagnose`，核验真实连接路径、Schema/checksum、DDL 和 SQLite 完整性。
-6. 只有诊断成功才启动 Streamlit；失败则停止，不创建替代数据库、不自动初始化、不回退 Demo。
+- **提示分支不是 main**：停止；不要在脚本中自动切换。确认 PR 已合并，再更新干净的本地 `main`。
+- **提示工作区不干净**：运行 `git status --short` 检查。先备份或提交自己的修改，不能让脚本自动清理。
+- **找不到 Python**：在 `AI-trade-dev` 工作区按项目依赖说明建立/修复 `.venv`；不要更换为其他目录的解释器。
+- **正式数据库不存在**：停止并核实正式路径；不要创建替代库。
+- **Schema、checksum、DDL 或完整性检查失败**：保留错误信息，交由独立任务处理；不要删除数据库、备份或 SQLite 侧车文件后重试。
+- **端口被占用**：使用另一个端口，不要终止不明进程。
+- **页面没有行情**：正式数据库初始化报告显示业务表为空。页面可打开不代表真实行情已采集；不能用 Demo 行情填充显示。
+- **M3 数据不足**：七张基础表并不包含所有指数、市场宽度、情绪和 CFFEX 研究输入。空缺应如实显示，不能将结构验收当作 M3 数据闭环验收。
 
-默认工作台是只读的。这个脚本不负责行情采集、历史样本迁移或数据库初始化。
+## 6. 重要边界
 
-## 6. 确认当前运行的代码版本
+- 该脚本只启动本地只读工作台，不采集行情、不迁移历史样本、不写入数据库、不部署 AWS。
+- 不提交 `workbench.sqlite3`、备份、运行日志或原始行情。
+- PR #47 的既有离线测试和数据库初始化证据不等于本次脚本修订已在你的 PC 上执行验收。
+- 自动浏览器验收曾被安全策略阻断，不得描述为自动 UI 验收通过。
 
-在仓库根目录执行：
-
-```powershell
-git branch --show-current
-git rev-parse HEAD
-git status --short
-```
-
-预期分支在 PR 未合并时为 `codex/m0-production-db-001`。记录 `git rev-parse HEAD` 的输出，用于确认实际运行版本；如果工作区有未提交改动，`git status --short` 会显示出来。
-
-PR 合并后，若希望改为运行 main，应先确认 PR 已合并，再执行：
-
-```powershell
-git switch main
-git pull --ff-only
-git rev-parse HEAD
-```
-
-只有确认 main 已包含 `scripts/start_workbench.ps1` 和相关数据库代码后再启动。不要在 PR 未合并时假定 main 已包含该功能；也不要在存在未提交修改时直接切换分支或覆盖工作区。
-
-## 7. 故障处理与安全边界
-
-- **找不到 Python**：确认默认虚拟环境路径是否存在；必要时通过 `-Python` 指定有效解释器。
-- **数据库不存在**：停止并确认正式数据库路径。日常启动脚本不会自动创建空库。
-- **Schema、checksum、DDL 或完整性检查失败**：停止启动，保存错误输出，交由独立任务调查；不要删除数据库、侧车文件或备份后重试。
-- **端口被占用**：使用另一个端口启动，避免终止不明进程。
-- **页面没有行情**：当前正式库已报告为 Schema v2、业务表为空。数据库结构和只读连接验收通过不代表已经采集行情；页面没有真实行情时，不应以 Demo 数据冒充。
-- **页面的 M3 非股票研究输入**：现有观察数据仍有独立来源/目录边界；七张表并不等于所有 M3 输入都已入库。不要把页面可打开误判为 M0→M3 真实数据闭环完成。
-- **不要提交到 Git**：`workbench.sqlite3`、备份、日志和原始行情属于本地状态，不应提交进仓库。
-
-## 8. 验收记录的边界
-
-PR #47 的报告记录了离线测试、SQLite 结构/完整性、备份与隔离恢复等结果，并说明自动浏览器核验被安全策略阻断。因此，不应把这些记录表述为自动浏览器 UI 验收通过。启动脚本的实际运行结果应以本机终端输出和页面实际连接诊断为准。
-
-更多数据库初始化与架构说明见 [LOCAL_WORKBENCH.md](LOCAL_WORKBENCH.md) 和 [M0_PRODUCTION_DB_REPORT.md](M0_PRODUCTION_DB_REPORT.md)。
+数据库初始化及架构详情见 [LOCAL_WORKBENCH.md](LOCAL_WORKBENCH.md) 和 [M0_PRODUCTION_DB_REPORT.md](M0_PRODUCTION_DB_REPORT.md)。
