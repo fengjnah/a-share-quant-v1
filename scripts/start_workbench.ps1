@@ -17,7 +17,7 @@ if (-not (Test-Path -LiteralPath $ExpectedWorkspace -PathType Container)) {
     throw "固定工作区不存在：$ExpectedWorkspace"
 }
 
-$codeRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot)).TrimEnd('\')
+$codeRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot)).TrimEnd([char]'\')
 $expectedRoot = [System.IO.Path]::GetFullPath($ExpectedWorkspace).TrimEnd('\')
 if (-not [string]::Equals($codeRoot, $expectedRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "启动脚本必须来自固定工作区 $ExpectedWorkspace；实际位置：$codeRoot"
