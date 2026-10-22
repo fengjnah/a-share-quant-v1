@@ -5,6 +5,7 @@ import json
 from dataclasses import dataclass
 
 from ai_trade.storage.reference_schema import reference_statements
+from ai_trade.storage.m3_schema import provenance_statements, market_statements, analysis_statements
 
 
 @dataclass(frozen=True)
@@ -130,4 +131,7 @@ _APPEND_ONLY = tuple(
 MIGRATIONS = (
     Migration(1, "daily_bar_foundation", _IDENTITY + _VERSIONS + _APPEND_ONLY),
     Migration(2, "security_master_and_calendar", reference_statements(_TIME_CHECK)),
+    Migration(3, "provenance_and_version_catalog", provenance_statements()),
+    Migration(4, "minimal_m3_market_inputs", market_statements()),
+    Migration(5, "m3_analysis_persistence", analysis_statements()),
 )

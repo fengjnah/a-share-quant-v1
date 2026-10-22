@@ -1,6 +1,6 @@
 # TASK-M3-CORE-DATA-MODEL-001：现状核验与最小实施方案
 
-状态：**阶段1只读核验完成；Schema/字段/关系方案待批准；未开始迁移或Repository实施。** 审计日期2026-10-22（Asia/Shanghai）。本文件与[24表字段契约](../architecture/M3_CORE_DATA_MODEL_DICTIONARY.md)、[机器证据](../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json)、[任务记录](../tasks/TASK-M3-CORE-DATA-MODEL-001.md)一起供审查。
+状态：**本文件保留阶段1只读核验和提交时尚待批准的方案；用户随后已批准24表最小方案。实施检查点现因G10阻断，未完成验收。** 审计日期2026-10-22（Asia/Shanghai）。后续状态以[实施及阻断记录](../architecture/M3_CORE_DATA_MODEL_IMPLEMENTATION.md)为准。本文件与[24表字段契约](../architecture/M3_CORE_DATA_MODEL_DICTIONARY.md)、[机器证据](../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json)、[任务记录](../tasks/TASK-M3-CORE-DATA-MODEL-001.md)一起供审查。
 
 ## 1. 基线、权限与证据类型
 

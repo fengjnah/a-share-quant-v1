@@ -258,8 +258,9 @@ def test_200_body_failure_is_not_valid_empty_data(body,expected):
 
 
 def test_sqlite_contract_remains_existing_schema_only(database):
+    from ai_trade.storage.schema import MIGRATIONS
     with database.connection() as conn:
-        assert conn.execute('SELECT max(version) FROM schema_migrations').fetchone()[0]==2
+        assert conn.execute('SELECT max(version) FROM schema_migrations').fetchone()[0]==len(MIGRATIONS)
         assert conn.execute('PRAGMA foreign_keys').fetchone()[0]==1
         assert conn.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
         assert conn.execute("SELECT count(*) FROM sqlite_master WHERE name='futures_rankings'").fetchone()[0]==0

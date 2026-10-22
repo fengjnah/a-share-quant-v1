@@ -1,6 +1,6 @@
-# M3 核心最小模型字段契约（待批准）
+# M3 核心最小模型字段契约（最小范围已批准；实施验收阻断）
 
-TASK-M3-CORE-DATA-MODEL-001。以下24节逐字复用 main `04e530871e2c8b4889c60027ac8d1ec4275009a2` 的 DATA_DICTIONARY；不修改其字段、NULL、键、索引或粒度。复制是本任务的可审查字段范围，不是SQL或实施批准。全部示例仍为SYNTHETIC，不导入正式库。
+TASK-M3-CORE-DATA-MODEL-001。以下24节逐字复用 main `04e530871e2c8b4889c60027ac8d1ec4275009a2` 的 DATA_DICTIONARY；不修改其字段、NULL、键、索引或粒度。用户已批准此24表实施范围，独立H和实施验收仍未完成；详见[实施及阻断记录](M3_CORE_DATA_MODEL_IMPLEMENTATION.md)。全部示例仍为SYNTHETIC，不导入正式库。
 
 类型、全局不可变/四时点/哈希/JSON规则完整继承 [原字典第0节](DATA_DICTIONARY.md#0-记法与所有候选表适用的规则)。跨表与实施边界见[方案](../audits/TASK-M3-CORE-DATA-MODEL-001.md)。字典片段hash见[机器证据](../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json)。
 
