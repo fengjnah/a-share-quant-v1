@@ -1,6 +1,6 @@
 # A股量化交易系统 V1.3
 
-Windows 日常研究入口见 [正式 SQLite 工作台](docs/LOCAL_WORKBENCH.md)：使用 `scripts/start_workbench.ps1` 严格绑定已初始化的 `workbench.sqlite3`，默认 SQLite 只读；不回退临时 Demo、不自动采集或迁移。初始化与数据链路验收分别记录。
+Windows 日常研究入口见 [正式 SQLite 工作台](docs/LOCAL_WORKBENCH.md)：使用 `scripts/start_workbench.ps1` 严格绑定已初始化的 `workbench.sqlite3`，默认 SQLite 只读；不回退临时 Demo、不自动采集或迁移。新路径方案由 `AI_TRADE_DATA_ROOT/sqlite/workbench.sqlite3` 派生；[目录迁移任务](docs/audits/TASK-M0-DATA-DIRECTORY-RELOCATION-001.md) 尚待独立审查和正式切换，不能把代码改造当成数据库已迁移。初始化与数据链路验收分别记录。
 
 面向 A 股日频、周频研究的量化分析系统，目标是建立可追溯的数据历史，支持市场状态判断、选股、择时、风险控制与公平对照回测，并在本地生成每日精选 3–5 只股票和指定标的分析的静态日报，供手机浏览。
 

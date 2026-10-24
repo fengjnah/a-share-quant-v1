@@ -1,5 +1,6 @@
 ﻿param(
-    [int]$Port = 8524
+    [int]$Port = 8524,
+    [string]$DataRoot
 )
 
 $ErrorActionPreference = 'Stop'
@@ -9,8 +10,19 @@ $ExpectedWorkspace = 'F:\codex-agnes\AI-trade-dev'
 $ExpectedBranch = 'main'
 $Python = Join-Path $ExpectedWorkspace '.venv\Scripts\python.exe'
 
-# This is the previously confirmed formal research DB, not a path relative to the repo.
-$Root = 'F:\codex-agnes\AI-trade\data\sqlite'
+# An explicit independent data root; no checkout-relative or old-path fallback.
+if (-not $PSBoundParameters.ContainsKey('DataRoot')) {
+    if (Test-Path Env:AI_TRADE_DATA_ROOT) {
+        $DataRoot = $env:AI_TRADE_DATA_ROOT
+    } else {
+        $DataRoot = 'F:\codex-agnes\AI-trade-data'
+    }
+}
+if ([string]::IsNullOrWhiteSpace($DataRoot) -or $DataRoot -notmatch '^(?:[A-Za-z]:[\\/]|\\\\[^\\]+\\[^\\]+)') {
+    throw 'AI_TRADE_DATA_ROOT 必须是明确的绝对数据目录；不会回退旧数据库。'
+}
+$DataRoot = [System.IO.Path]::GetFullPath($DataRoot).TrimEnd([char]'\')
+$Root = Join-Path $DataRoot 'sqlite'
 $DatabasePath = Join-Path $Root 'workbench.sqlite3'
 
 if (-not (Test-Path -LiteralPath $ExpectedWorkspace -PathType Container)) {
@@ -46,9 +58,26 @@ if (-not (Test-Path -LiteralPath $DatabasePath -PathType Leaf)) {
     throw "正式数据库不存在：$DatabasePath。日常启动不会创建或初始化数据库，也不会回退到 Demo。"
 }
 
+# Inherited aliases are assertions, never competing sources of the DB path.
+$ExpectedPaths = @{
+    AI_TRADE_DATA_ROOT = $DataRoot
+    AI_TRADE_WORKBENCH_ROOT = $Root
+    QUANT_DB_PATH = $DatabasePath
+}
+foreach ($Name in $ExpectedPaths.Keys) {
+    if (Test-Path "Env:$Name") {
+        $Actual = [Environment]::GetEnvironmentVariable($Name, 'Process')
+        if ([string]::IsNullOrWhiteSpace($Actual) -or $Actual -notmatch '^(?:[A-Za-z]:[\\/]|\\\\[^\\]+\\[^\\]+)' -or
+            -not [string]::Equals([IO.Path]::GetFullPath($Actual).TrimEnd([char]'\'), $ExpectedPaths[$Name], [StringComparison]::OrdinalIgnoreCase)) {
+            throw "$Name 与独立数据根不一致。请检查配置或打开新 PowerShell；不会静默选择旧库。"
+        }
+    }
+}
+
 $env:PYTHONPATH = Join-Path $codeRoot 'src'
 $env:PYTHONUTF8 = '1'
 $env:PYTHONIOENCODING = 'utf-8'
+$env:AI_TRADE_DATA_ROOT = $DataRoot
 $env:AI_TRADE_WORKBENCH_ROOT = $Root
 $env:QUANT_DB_PATH = $DatabasePath
 $env:QUANT_DB_ENV = 'local'

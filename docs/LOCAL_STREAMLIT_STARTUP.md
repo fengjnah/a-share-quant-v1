@@ -7,17 +7,18 @@
 - 唯一允许的运行分支：`main`
 - 启动脚本：`scripts/start_workbench.ps1`
 - Python 环境：`F:\codex-agnes\AI-trade-dev\.venv\Scripts\python.exe`
-- 正式 SQLite：`F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3`
+- 新入口数据根：`AI_TRADE_DATA_ROOT=F:\codex-agnes\AI-trade-data`
+- 切换后正式 SQLite：`F:\codex-agnes\AI-trade-data\sqlite\workbench.sqlite3`
 - 默认监听：`127.0.0.1:8524`
 - 浏览器：`http://127.0.0.1:8524/?view=market`
 
-`AI-trade-dev` 是代码工作区；正式 SQLite 保持在已确认的 `AI-trade\data\sqlite` 路径。不要把数据库复制进仓库，也不要改用临时 Demo 数据库。
+`AI-trade-dev` 是代码工作区，数据根在Git仓库之外。**目录迁移仍待独立H/人工合并/停写与正式迁移验收，当前旧库仍在AI-trade\data\sqlite，8524未切换。** 见[迁移记录](audits/TASK-M0-DATA-DIRECTORY-RELOCATION-001.md)。不能仅设置新变量后创建空库冒充迁移，不能删除旧库。
 
 ## 2. 当前 PR 与版本管理
 
-本说明及启动脚本的修订首先提交到 [PR #47](https://github.com/fengjnah/a-share-quant-v1/pull/47) 的开发分支 `codex/m0-production-db-001`，待审查、CI 和合并后才进入 `main`。该开发分支只用于交付，不是日常运行分支。
+旧路径接线已随 [PR #47](https://github.com/fengjnah/a-share-quant-v1/pull/47) 合并；本期独立目录修订使用 `codex/m0-data-directory-relocation-001` 交付Draft PR，独立H和人工合并前不进入main。开发分支只用于交付，不是日常运行分支。
 
-PR 合并前，`AI-trade-dev\main` 不一定含有启动脚本和正式数据库绑定代码。合并后在本地工作区确认并快进更新：
+本期PR合并前，`AI-trade-dev\main` 仍使用已合并的旧路径脚本。审查/人工合并后，先记录并停止已确认的旧服务和全部读写者，再于维护窗口确认本地工作区并快进更新；不要让运行服务在文件监视器下自动混用新代码与旧配置：
 
 ```powershell
 Set-Location 'F:\codex-agnes\AI-trade-dev'
@@ -82,6 +83,8 @@ http://127.0.0.1:8524/?view=market
 6. 启动前运行 `ai_trade.storage.workbench_cli diagnose`，核验连接路径、Schema/checksum、DDL 和 SQLite 完整性。
 7. 显式设置正式工作台根目录、`QUANT_DB_PATH`、严格模式和只读模式，移除该进程的 Demo 根变量。
 8. 只有诊断成功才启动 Streamlit；失败则停止，不会回退到 Demo。
+
+路径改造审查并合并、正式迁移完成后，脚本默认数据根为 `F:\codex-agnes\AI-trade-data`；可用AI_TRADE_DATA_ROOT或-DataRoot显式指定。继承的AI_TRADE_WORKBENCH_ROOT/QUANT_DB_PATH必须分别等于该根/sqlite和该根/sqlite/workbench.sqlite3，否则停止，建议使用新PowerShell窗口。该选择不依赖worktree或cwd，不自动扫描数据库，也不修改系统/用户环境。
 
 启动时终端会输出工作区、分支、提交 SHA、Python 路径和数据库路径，方便记录实际运行版本。
 

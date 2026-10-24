@@ -40,7 +40,8 @@ class DatabaseConfig:
     def from_env(cls, environ: Mapping[str, str] | None = None) -> "DatabaseConfig":
         """Read shell variables; never implicitly load a .env file."""
         env = os.environ if environ is None else environ
-        if "AI_TRADE_WORKBENCH_ROOT" in env or env.get("AI_TRADE_STRICT_WORKBENCH") == "1":
+        if ("AI_TRADE_DATA_ROOT" in env or "AI_TRADE_WORKBENCH_ROOT" in env
+                or env.get("AI_TRADE_STRICT_WORKBENCH") == "1"):
             from ai_trade.storage.workbench import workbench_config
             return workbench_config(env)
         environment = env.get("QUANT_DB_ENV", "local")
