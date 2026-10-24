@@ -1,4 +1,7 @@
-# Exact versions from the locally verified Python 3.12 environment; Linux install not yet verified.
+# Verified on Windows Python 3.12 and Ubuntu x86_64 Python 3.14.4.
+# AKShare has additional Linux-only transitive dependencies.
+akracer==0.0.14; sys_platform == 'linux'
+py-mini-racer==0.6.0; sys_platform == 'linux'
 akshare==1.19.1
 altair==6.3.0
 anyio==4.15.1
@@ -28,6 +31,7 @@ narwhals==2.27.1
 numpy==2.5.4
 openpyxl==3.1.5
 packaging==26.3
+pip==26.2.1
 pandas==3.0.6
 pillow==12.3.0
 pluggy==1.7.0
