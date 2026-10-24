@@ -1,27 +1,22 @@
-from __future__ import annotations
+"""Invalidated collector-001 declarations, retained explicitly as UNKNOWN.
 
-# Reviewed M0 CFFEX session facts, 2026-10 window. Each entry is a dated
-# declaration, never a weekday algorithm; closed days carry an explicit
-# reason and no invented times. Local calendar evidence only.
+No bundled date is independently certified. A ranking payload or filesystem
+mtime cannot establish an exchange calendar or publication time. The collector
+must consume explicit frozen calendar versions instead of writing these rows.
+"""
 
-CFFEX_SESSION_FACTS: tuple[dict, ...] = (
-    dict(market_key='CFFEX', session_date='2026-10-16', is_trading_day=1, opens_at='2026-10-16T09:30:00+08:00', closes_at='2026-10-16T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-19', is_trading_day=1, opens_at='2026-10-19T09:30:00+08:00', closes_at='2026-10-19T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-20', is_trading_day=1, opens_at='2026-10-20T09:30:00+08:00', closes_at='2026-10-20T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-21', is_trading_day=1, opens_at='2026-10-21T09:30:00+08:00', closes_at='2026-10-21T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-22', is_trading_day=1, opens_at='2026-10-22T09:30:00+08:00', closes_at='2026-10-22T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-23', is_trading_day=1, opens_at='2026-10-23T09:30:00+08:00', closes_at='2026-10-23T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day, acceptance sample.'),
-    dict(market_key='CFFEX', session_date='2026-10-24', is_trading_day=1, opens_at='2026-10-24T09:30:00+08:00', closes_at='2026-10-24T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-25', is_trading_day=1, opens_at='2026-10-25T09:30:00+08:00', closes_at='2026-10-25T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-26', is_trading_day=1, opens_at='2026-10-26T09:30:00+08:00', closes_at='2026-10-26T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-27', is_trading_day=1, opens_at='2026-10-27T09:30:00+08:00', closes_at='2026-10-27T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-28', is_trading_day=1, opens_at='2026-10-28T09:30:00+08:00', closes_at='2026-10-28T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-31', is_trading_day=1, opens_at='2026-10-31T09:30:00+08:00', closes_at='2026-10-31T15:00:00+08:00', error_reason=None, evidence='TASK-M3-COLLECTOR-001: CFFEX 2026-10 ranking CSV present (artifacts/collector-001); trading day.'),
-    dict(market_key='CFFEX', session_date='2026-10-29', is_trading_day=0, opens_at=None, closes_at=None, error_reason=None, evidence='TASK-M3-COLLECTOR-001: 2026-10-29 (Fri) outside reviewed open-session evidence; recorded closed without invented times.'),
-    dict(market_key='CFFEX', session_date='2026-10-30', is_trading_day=0, opens_at=None, closes_at=None, error_reason=None, evidence='TASK-M3-COLLECTOR-001: 2026-10-30 (Sat) weekend day, no CFFEX session; recorded closed without invented times.'),
+_AFFECTED_DATES = (
+    '2026-10-16', '2026-10-19', '2026-10-20', '2026-10-21', '2026-10-22',
+    '2026-10-23', '2026-10-24', '2026-10-25', '2026-10-26', '2026-10-27',
+    '2026-10-28', '2026-10-29', '2026-10-30', '2026-10-31',
 )
+CFFEX_SESSION_FACTS = tuple(dict(
+    market_key='CFFEX', session_date=day, is_trading_day=None,
+    opens_at=None, closes_at=None, error_reason='CALENDAR_UNCERTIFIED',
+    evidence=None,
+) for day in _AFFECTED_DATES)
 
 
 def cffex_session_days() -> tuple[dict, ...]:
-    """Return the reviewed session facts, in date order, for storage."""
-    return CFFEX_SESSION_FACTS
+    """Return defensive copies of the unknown declarations, never certified facts."""
+    return tuple(dict(day) for day in CFFEX_SESSION_FACTS)
