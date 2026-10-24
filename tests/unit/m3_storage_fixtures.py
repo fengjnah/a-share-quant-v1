@@ -62,7 +62,7 @@ def index(r,n=1):
 
 
 def scope(sources=None,required=None):
-    return dict(schema_version='m3-scope-v1',market='ALL_A',symbols=['TEST_INDEX','IF'],
+    return dict(schema_version='m3-scope-v1',market='ALL_A',symbols=['TEST_INDEX','IF2611'],
                 required_roles=required or ['price_row'],source_bindings=sources or {'price_row':['synthetic:index_bar']})
 
 
@@ -92,7 +92,7 @@ def compute(frozen,parameters):
     diagnostics=price_diagnostics(frame,request=req,source=source_evidence)
     diagnostics['fear_greed']=fear_greed_diagnostic(frame,request=req,source=source_evidence)
     diagnostics['market_breadth']=breadth_diagnostic(pd.DataFrame(),request=Request(p['analysis_date'],p['as_of'],'ALL_A','ALL_A',p['mode']),source=source_evidence)
-    diagnostics['cffex_position']=cffex_diagnostic([],request=Request(p['analysis_date'],p['as_of'],'IF','CFFEX',p['mode']),source=source_evidence,member='fixture',scope=MemberScope.AGENT,contract='IF2611')
+    diagnostics['cffex_position']=cffex_diagnostic([],request=Request(p['analysis_date'],p['as_of'],'IF2611','CFFEX',p['mode']),source=source_evidence,member='fixture',scope=MemberScope.AGENT)
     diagnostics['environment']=environment_diagnostic(diagnostics,request=req)
     factors=()
     if not frame.empty:
