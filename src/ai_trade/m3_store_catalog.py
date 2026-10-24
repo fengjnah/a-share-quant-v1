@@ -219,7 +219,7 @@ class CatalogRepository:
             bound.append((child_table,dict(child,**{key:version['data_version_id']})))
         return version,row,bound
 
-    def _write(self, prepared, batch, *, returned_rows=None, validate=None, finalize=None):
+    def _write(self, prepared, batch, *, returned_rows=None, validate=None, finalize=None, failure_evidence_id=None):
         self.require(4)
         if not prepared: raise ValueError('empty input batch')
         try:
@@ -257,7 +257,7 @@ class CatalogRepository:
             try:
                 with self.database.connection() as c:
                     exists=c.execute('SELECT 1 FROM ingestion_attempts WHERE attempt_id=?',(batch.attempt_id,)).fetchone()
-                if not exists: self.record_attempt(batch,outcome='FAILED',error_code=type(exc).__name__,returned_rows=returned_rows)
+                if not exists: self.record_attempt(batch,outcome='FAILED',error_code=type(exc).__name__,returned_rows=returned_rows,evidence_id=failure_evidence_id)
             except (ValueError,sqlite3.Error) as audit_error:
                 raise ValueError(f'data write rejected; failure audit also failed: {type(audit_error).__name__}') from exc
             raise
