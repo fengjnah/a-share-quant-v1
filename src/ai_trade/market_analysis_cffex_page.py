@@ -1,8 +1,9 @@
 """CFFEX member-holdings module for the existing M3 page.
 
-Reads real, stored CFFEX reports from the isolated test SQLite database and
-renders them with explicit error states; never falls back to mock data.
+Reads stored CFFEX reports from the workbench's explicit read-only connection.
+Standalone test use still requires explicit test settings; no mock fallback.
 """
+from dataclasses import replace
 from pathlib import Path
 
 import pandas as pd
@@ -42,19 +43,27 @@ def _report_state(db, variety, trade_date, evidence_root):
     return report, None
 
 
-def render_cffex_holdings():
+def render_cffex_holdings(db=None):
     """Render the CFFEX member-holdings module; call from the M3 page."""
     st.subheader("CFFEX Member Holdings (IF / IH / IC / IM)")
     st.caption("Data is exchange-published Top-N member seat holdings; "
                "it is not final-client or own-account position, and not a trading signal.")
 
-    db, evidence_root, db_error = _open_test_db()
-    if db_error:
-        st.error(db_error)
-        return
-
-    st.info(f"Connected to test database: {db.config.path}")
-    st.caption("This is an isolated test database; production workbench.sqlite3 is never read or written here.")
+    if db is None:
+        db, evidence_root, db_error = _open_test_db()
+        if db_error:
+            st.error(db_error)
+            return
+        st.info(f"Connected to test database: {db.config.path}")
+        st.caption("Standalone isolated test database; not formal workbench data.")
+    else:
+        from ai_trade.storage.db import Database
+        # Reopen with actual SQLite mode=ro even if a caller supplied a writable
+        # handle. Do not initialize, migrate or consult test database settings.
+        db = Database(replace(db.config, read_only=True, require_existing=True))
+        evidence_root = Path(db.config.path).parent / 'evidence'
+        st.info(f"Connected to workbench database: {db.config.path}")
+        st.caption("只读工作台已保存数据；不联网采集。原始 Top-N 展示不解除来源认证或研究准入门禁。")
 
     variety = st.selectbox("Variety", ["IF", "IH", "IC", "IM"],
                           help="CFFEX stock index futures varieties")
@@ -62,17 +71,24 @@ def render_cffex_holdings():
 
     report, error = _report_state(db, variety, trade_date, evidence_root)
     if error:
-        st.error(error)
+        if error.startswith('No stored CFFEX report for '):
+            st.info(error)
+        else:
+            st.error(error)
         return
 
     st.metric("Stored rows", report["row_count"])
     st.metric("Version", report["version_id"][:16])
     st.caption(
+        f"Trade date: {report['trade_date']}  |  "
+        f"Quality status (storage): {report['quality_status']}  |  "
+        f"Evidence kind: {report['evidence_kind']}  |  "
         f"Ingested at: {report['ingested_at']}  |  "
         f"Available at: {report['available_at']}  |  "
         f"Source: {report['source']}\n"
         f"Payload SHA-256: {report['payload_sha256']}  |  "
         f"Contracts: {', '.join(report['contracts'])}")
+    st.caption("Storage quality is not source/publication/scope certification; M3 core admission remains unchanged.")
     if report.get("warnings"):
         st.warning("; ".join(report["warnings"]))
 

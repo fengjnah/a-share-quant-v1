@@ -52,6 +52,7 @@ def cffex_report(db: Database, variety: str, trade_date: str,
     root = evidence_root or Path(db.config.path).parent
     repo = MarketInputRepository(db, root)
     record = repo.get_cffex(vid)
+    version, _, _ = repo.get_version(vid)
     return {
         "variety": variety,
         "trade_date": trade_date,
@@ -61,6 +62,8 @@ def cffex_report(db: Database, variety: str, trade_date: str,
         "format": record.rank_format,
         "payload_sha256": record.payload_sha256,
         "source": record.source,
+        "quality_status": version['quality_status'],
+        "evidence_kind": version['evidence_kind'],
         "ingested_at": record.ingested_at,
         "available_at": record.available_at,
         "event_time": record.event_time,
