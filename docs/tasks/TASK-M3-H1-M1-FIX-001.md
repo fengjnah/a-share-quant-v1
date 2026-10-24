@@ -30,3 +30,5 @@
 验收包括用途矩阵/结果消费者/冻结与可得边界；CFFEX 失败、空响应、部分成功、不同批次、重试、事务回滚及真实零/缺会员区别。默认不做真实网络、UI 或样本外回测。
 
 交付独立 Draft PR（base main），不合并。独立 H 计划：`TASK-M3-H1-M1-FIX-001-REVIEW`（待用户指派独立会话/唯一执行配置），绑定最终修复 SHA，覆盖 H1/M1 端到端和兼容性；实施自检不构成该审查。M3 业务保持 `PENDING_INDEPENDENT_REVIEW`，其他五项失败及来源认证/发布门禁保留。
+
+实际交付：[Draft PR #57](https://github.com/fengjnah/a-share-quant-v1/pull/57)；测试、CI 额外阻断及证据路径见[结果报告](../../TASK-M3-H1-M1-FIX-001-RESULT.md)。修复代码 SHA `46be463c198cc3065a6271bb464b85dab2f43c4b`，本地相关 210 项通过，完整套件仍 FAIL；最终文档提交不改 src/tests，整体验收和 M3 业务继续等待独立审查。
