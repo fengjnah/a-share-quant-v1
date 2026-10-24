@@ -150,14 +150,35 @@ def test_cffex_named_zero_quantities_and_frozen_calendar_roundtrip(database,tmp_
 
 @pytest.mark.parametrize('kind',['mixed','blank'])
 def test_unrepresentable_cffex_remains_evidence_and_blocked_attempt(database,tmp_path,kind):
-    payload=legacy(DAY,'IF2611') if kind=='mixed' else named(contracts=['IF2611']).decode('gbk').replace('甲会员(代客)','').encode('gbk')
-    r=repo(database,tmp_path); ids,payload,record,p,b=report(r,payload)
-    assert r.save_cffex(payload,record,p,batch=b,calendar_version_ids=ids) is None
-    assert r.evidence_bytes(p.evidence_id)==payload
-    with database.connection() as c:
-        assert c.execute('SELECT count(*) FROM cffex_report_versions').fetchone()[0]==0
-        assert c.execute('SELECT outcome FROM ingestion_attempts WHERE attempt_id=?',(b.attempt_id,)).fetchone()[0]=='BLOCKED'
-        assert c.execute('SELECT 1 FROM ingestion_runs WHERE run_id=?',(b.run_id,)).fetchone() is None
+    if kind=='blank':
+        # H-gate T2: blank member with numeric quantity is invalid input that the
+        # parser rejects with RankingValidationError. The raw evidence is saved
+        # before build_record is called; no typed report or run is created.
+        payload=named(contracts=['IF2611']).decode('gbk').replace('甲会员(代客)','').encode('gbk')
+        r=repo(database,tmp_path)
+        ids=sessions(r)
+        sid=source(r,'cffex_report',CffexRankingsClient().source_label())
+        b=batch(sid,'report')
+        ev=r.put_evidence(payload,evidence_kind='synthetic',media_type='text/csv',captured_at=A)
+        from ai_trade.market_data.cffex_rankings_models import RankingValidationError
+        with pytest.raises(RankingValidationError):
+            build_record(CffexRankingsRequest('CFFEX','IF',DAY),payload,run_id=b.run_id,
+                         observed_at=A,ingested_at=I,calendar=r.ranking_calendar(ids),evidence_kind='synthetic')
+        assert r.evidence_bytes(ev)==payload
+        with database.connection() as c:
+            assert c.execute('SELECT count(*) FROM cffex_report_versions').fetchone()[0]==0
+            assert c.execute('SELECT 1 FROM ingestion_runs WHERE run_id=?',(b.run_id,)).fetchone() is None
+    else:
+        # kind=='mixed': legacy format is parseable but not the approved named
+        # subset, so save_cffex correctly records a BLOCKED attempt.
+        payload=legacy(DAY,'IF2611')
+        r=repo(database,tmp_path); ids,payload,record,p,b=report(r,payload)
+        assert r.save_cffex(payload,record,p,batch=b,calendar_version_ids=ids) is None
+        assert r.evidence_bytes(p.evidence_id)==payload
+        with database.connection() as c:
+            assert c.execute('SELECT count(*) FROM cffex_report_versions').fetchone()[0]==0
+            assert c.execute('SELECT outcome FROM ingestion_attempts WHERE attempt_id=?',(b.attempt_id,)).fetchone()[0]=='BLOCKED'
+            assert c.execute('SELECT 1 FROM ingestion_runs WHERE run_id=?',(b.run_id,)).fetchone() is None
 
 
 def test_missing_cffex_calendar_never_weekday_fallback(database,tmp_path):
