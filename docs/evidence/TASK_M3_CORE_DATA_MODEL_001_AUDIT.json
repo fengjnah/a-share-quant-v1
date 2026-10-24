@@ -1,0 +1,5528 @@
+{
+  "task": "TASK-M3-CORE-DATA-MODEL-001",
+  "phase": "READ_ONLY_AUDIT_AND_PROPOSAL",
+  "base_sha": "04e530871e2c8b4889c60027ac8d1ec4275009a2",
+  "observed_at_utc": "2026-10-21T23:16:13.801546+00:00",
+  "observed_at_shanghai": "2026-10-22T07:16:13.801546+08:00",
+  "database_before": [
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+      "exists": true,
+      "bytes": 147456,
+      "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64"
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+      "exists": false
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+      "exists": false
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+      "exists": false
+    }
+  ],
+  "database_after": [
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+      "exists": true,
+      "bytes": 147456,
+      "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64"
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+      "exists": false
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+      "exists": false
+    },
+    {
+      "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+      "exists": false
+    }
+  ],
+  "database": {
+    "opened_uri": "file:///F:/codex-agnes/AI-trade/data/sqlite/workbench.sqlite3?mode=ro",
+    "sqlite_version": "3.53.1",
+    "query_only": 1,
+    "journal_mode": "delete",
+    "database_list": [
+      {
+        "seq": 0,
+        "name": "main",
+        "file": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3"
+      }
+    ],
+    "quick_check": [
+      "ok"
+    ],
+    "foreign_key_check": [],
+    "ledger": [
+      {
+        "version": 1,
+        "name": "daily_bar_foundation",
+        "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+        "applied_at": "2026-10-21T14:43:53.601589+00:00"
+      },
+      {
+        "version": 2,
+        "name": "security_master_and_calendar",
+        "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+        "applied_at": "2026-10-21T14:43:53.603654+00:00"
+      }
+    ],
+    "counts": {
+      "calendar_versions": 0,
+      "daily_bar_versions": 0,
+      "daily_bars": 0,
+      "ingestion_runs": 0,
+      "instruments": 0,
+      "schema_migrations": 2,
+      "security_versions": 0
+    },
+    "structure": {
+      "calendar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "session_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "is_trading_day",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "error_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "calendar_versions",
+            "from": "exchange",
+            "to": "exchange",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "calendar_versions",
+            "from": "session_date",
+            "to": "session_date",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "calendar_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "calendar_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 16,
+                "name": "run_id"
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "name": "calendar_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "exchange"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "session_date"
+              },
+              {
+                "seqno": 2,
+                "cid": 7,
+                "name": "available_at"
+              },
+              {
+                "seqno": 3,
+                "cid": 9,
+                "name": "ingested_at"
+              }
+            ]
+          },
+          {
+            "seq": 2,
+            "name": "calendar_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "exchange"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "session_date"
+              }
+            ]
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_calendar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "exchange"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "session_date"
+              },
+              {
+                "seqno": 2,
+                "cid": 14,
+                "name": "supersedes_version"
+              }
+            ]
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_calendar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "exchange"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "session_date"
+              },
+              {
+                "seqno": 2,
+                "cid": 11,
+                "name": "record_version"
+              }
+            ]
+          }
+        ]
+      },
+      "daily_bar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "source_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "open",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "high",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "low",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "close",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "volume",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "amount",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "factor_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "daily_bar_versions",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "daily_bar_versions",
+            "from": "source",
+            "to": "source",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 2,
+            "table": "daily_bar_versions",
+            "from": "supersedes_version",
+            "to": "source_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "daily_bars",
+            "from": "bar_id",
+            "to": "bar_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_version_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 16,
+                "name": "run_id"
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "name": "idx_bar_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "bar_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "source"
+              },
+              {
+                "seqno": 2,
+                "cid": 11,
+                "name": "available_at"
+              },
+              {
+                "seqno": 3,
+                "cid": 12,
+                "name": "ingested_at"
+              }
+            ]
+          },
+          {
+            "seq": 2,
+            "name": "idx_one_version_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "bar_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "source"
+              }
+            ]
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_daily_bar_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "bar_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "source"
+              },
+              {
+                "seqno": 2,
+                "cid": 15,
+                "name": "supersedes_version"
+              }
+            ]
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_daily_bar_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "bar_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "source"
+              },
+              {
+                "seqno": 2,
+                "cid": 3,
+                "name": "source_version"
+              }
+            ]
+          }
+        ]
+      },
+      "daily_bars": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "bar_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "adjustment_method",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_bars_date",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 2,
+                "name": "trade_date"
+              },
+              {
+                "seqno": 1,
+                "cid": 1,
+                "name": "instrument_id"
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_daily_bars_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "instrument_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 2,
+                "name": "trade_date"
+              },
+              {
+                "seqno": 2,
+                "cid": 3,
+                "name": "adjustment_method"
+              }
+            ]
+          }
+        ]
+      },
+      "ingestion_runs": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "recorded_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "sqlite_autoindex_ingestion_runs_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 0,
+                "name": "run_id"
+              }
+            ]
+          }
+        ]
+      },
+      "instruments": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "idx_instruments_symbol",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "symbol"
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_instruments_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 0,
+                "name": "instrument_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 1,
+                "name": "symbol"
+              }
+            ]
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_instruments_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 0,
+                "name": "instrument_id"
+              }
+            ]
+          }
+        ]
+      },
+      "schema_migrations": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "name",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "checksum",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "applied_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": []
+      },
+      "security_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "symbol",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "security_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "listing_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "delisting_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "periods_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "source",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "evidence_ref",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 17,
+            "name": "supersedes_version",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 18,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 19,
+            "name": "run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "security_versions",
+            "from": "supersedes_version",
+            "to": "record_version",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 1,
+            "table": "instruments",
+            "from": "symbol",
+            "to": "symbol",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "security_symbol_lifetime",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 2,
+                "name": "symbol"
+              },
+              {
+                "seqno": 1,
+                "cid": 6,
+                "name": "listing_date"
+              },
+              {
+                "seqno": 2,
+                "cid": 7,
+                "name": "delisting_date"
+              }
+            ]
+          },
+          {
+            "seq": 1,
+            "name": "security_versions_run",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 19,
+                "name": "run_id"
+              }
+            ]
+          },
+          {
+            "seq": 2,
+            "name": "security_versions_visibility",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "instrument_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 10,
+                "name": "available_at"
+              },
+              {
+                "seqno": 2,
+                "cid": 12,
+                "name": "ingested_at"
+              }
+            ]
+          },
+          {
+            "seq": 3,
+            "name": "security_versions_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "instrument_id"
+              }
+            ]
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_security_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "instrument_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 17,
+                "name": "supersedes_version"
+              }
+            ]
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_security_versions_1",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0,
+            "columns": [
+              {
+                "seqno": 0,
+                "cid": 1,
+                "name": "instrument_id"
+              },
+              {
+                "seqno": 1,
+                "cid": 14,
+                "name": "record_version"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "objects": [
+      {
+        "type": "index",
+        "name": "calendar_versions_root",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE UNIQUE INDEX calendar_versions_root ON calendar_versions(exchange,session_date) WHERE supersedes_version IS NULL"
+      },
+      {
+        "type": "index",
+        "name": "calendar_versions_run",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE INDEX calendar_versions_run ON calendar_versions(run_id)"
+      },
+      {
+        "type": "index",
+        "name": "calendar_versions_visibility",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE INDEX calendar_versions_visibility ON calendar_versions(exchange,session_date,available_at,ingested_at)"
+      },
+      {
+        "type": "index",
+        "name": "idx_bar_visibility",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE INDEX idx_bar_visibility\n        ON daily_bar_versions(bar_id, source, available_at, ingested_at)"
+      },
+      {
+        "type": "index",
+        "name": "idx_bars_date",
+        "tbl_name": "daily_bars",
+        "sql": "CREATE INDEX idx_bars_date ON daily_bars(trade_date, instrument_id)"
+      },
+      {
+        "type": "index",
+        "name": "idx_instruments_symbol",
+        "tbl_name": "instruments",
+        "sql": "CREATE INDEX idx_instruments_symbol ON instruments(symbol)"
+      },
+      {
+        "type": "index",
+        "name": "idx_one_version_root",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE UNIQUE INDEX idx_one_version_root\n        ON daily_bar_versions(bar_id, source) WHERE supersedes_version IS NULL"
+      },
+      {
+        "type": "index",
+        "name": "idx_version_run",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE INDEX idx_version_run ON daily_bar_versions(run_id)"
+      },
+      {
+        "type": "index",
+        "name": "security_symbol_lifetime",
+        "tbl_name": "security_versions",
+        "sql": "CREATE INDEX security_symbol_lifetime ON security_versions(symbol,listing_date,delisting_date)"
+      },
+      {
+        "type": "index",
+        "name": "security_versions_root",
+        "tbl_name": "security_versions",
+        "sql": "CREATE UNIQUE INDEX security_versions_root ON security_versions(instrument_id) WHERE supersedes_version IS NULL"
+      },
+      {
+        "type": "index",
+        "name": "security_versions_run",
+        "tbl_name": "security_versions",
+        "sql": "CREATE INDEX security_versions_run ON security_versions(run_id)"
+      },
+      {
+        "type": "index",
+        "name": "security_versions_visibility",
+        "tbl_name": "security_versions",
+        "sql": "CREATE INDEX security_versions_visibility ON security_versions(instrument_id,available_at,ingested_at)"
+      },
+      {
+        "type": "table",
+        "name": "calendar_versions",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE TABLE calendar_versions (\n        version_id INTEGER PRIMARY KEY,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ')),\n        session_date TEXT NOT NULL CHECK (session_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(session_date, '+0 days') IS NOT NULL AND date(session_date, '+0 days') = session_date),\n        is_trading_day INTEGER,\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','source_error')),\n        error_reason TEXT,\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK ((quality_status='accepted' AND is_trading_day IS NOT NULL AND is_trading_day IN (0,1)\n                AND error_reason IS NULL) OR (quality_status='source_error' AND is_trading_day IS NULL\n                AND error_reason IS NOT NULL AND length(trim(error_reason))>0)),\n        UNIQUE (exchange,session_date,record_version),\n        UNIQUE (exchange,session_date,supersedes_version),\n        FOREIGN KEY (exchange,session_date,supersedes_version)\n            REFERENCES calendar_versions(exchange,session_date,record_version)\n    )"
+      },
+      {
+        "type": "table",
+        "name": "daily_bar_versions",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE TABLE daily_bar_versions (\n        version_id INTEGER PRIMARY KEY,\n        bar_id INTEGER NOT NULL REFERENCES daily_bars(bar_id),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        source_version TEXT NOT NULL CHECK (length(trim(source_version)) > 0),\n        open REAL NOT NULL CHECK (typeof(open) IN ('real','integer') AND open > 0 AND open <= 1.7976931348623157e308),\n        high REAL NOT NULL CHECK (typeof(high) IN ('real','integer') AND high > 0 AND high <= 1.7976931348623157e308),\n        low REAL NOT NULL CHECK (typeof(low) IN ('real','integer') AND low > 0 AND low <= 1.7976931348623157e308),\n        close REAL NOT NULL CHECK (typeof(close) IN ('real','integer') AND close > 0 AND close <= 1.7976931348623157e308),\n        volume INTEGER NOT NULL CHECK (typeof(volume) = 'integer' AND volume >= 0),\n        amount REAL NOT NULL CHECK (typeof(amount) IN ('real','integer') AND amount >= 0 AND amount <= 1.7976931348623157e308),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\n        available_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\n        ingested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        factor_version TEXT CHECK (factor_version IS NULL OR length(trim(factor_version)) > 0),\n        quality_status TEXT NOT NULL CHECK (quality_status IN ('accepted','quarantined')),\n        supersedes_version TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (low <= open AND open <= high AND low <= close AND close <= high),\n        CHECK (event_time <= available_at AND event_time <= ingested_at),\n        CHECK (supersedes_version IS NULL OR supersedes_version <> source_version),\n        UNIQUE (bar_id, source, source_version),\n        UNIQUE (bar_id, source, supersedes_version),\n        FOREIGN KEY (bar_id, source, supersedes_version)\n            REFERENCES daily_bar_versions(bar_id, source, source_version)\n    )"
+      },
+      {
+        "type": "table",
+        "name": "daily_bars",
+        "tbl_name": "daily_bars",
+        "sql": "CREATE TABLE daily_bars (\n        bar_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL REFERENCES instruments(instrument_id),\n        trade_date TEXT NOT NULL CHECK (\n            trade_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'\n            AND date(trade_date, '+0 days') IS NOT NULL\n            AND date(trade_date, '+0 days') = trade_date),\n        adjustment_method TEXT NOT NULL CHECK (adjustment_method IN ('none', 'qfq', 'hfq')),\n        UNIQUE (instrument_id, trade_date, adjustment_method)\n    )"
+      },
+      {
+        "type": "table",
+        "name": "ingestion_runs",
+        "tbl_name": "ingestion_runs",
+        "sql": "CREATE TABLE ingestion_runs (\n        run_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(run_id)) > 0),\n        recorded_at TEXT NOT NULL\n    )"
+      },
+      {
+        "type": "table",
+        "name": "instruments",
+        "tbl_name": "instruments",
+        "sql": "CREATE TABLE instruments (\n        instrument_id TEXT PRIMARY KEY NOT NULL CHECK (length(trim(instrument_id)) > 0),\n        symbol TEXT NOT NULL CHECK (\n            length(symbol) = 9 AND substr(symbol, 1, 6) NOT GLOB '*[^0-9]*'\n            AND substr(symbol, 7) IN ('.SH', '.SZ', '.BJ')),\n        UNIQUE (instrument_id, symbol)\n    )"
+      },
+      {
+        "type": "table",
+        "name": "schema_migrations",
+        "tbl_name": "schema_migrations",
+        "sql": "CREATE TABLE schema_migrations (\n    version INTEGER PRIMARY KEY CHECK (version > 0),\n    name TEXT NOT NULL,\n    checksum TEXT NOT NULL,\n    applied_at TEXT NOT NULL\n)"
+      },
+      {
+        "type": "table",
+        "name": "security_versions",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TABLE security_versions (\n        version_id INTEGER PRIMARY KEY,\n        instrument_id TEXT NOT NULL,\n        symbol TEXT NOT NULL,\n        exchange TEXT NOT NULL CHECK (exchange IN ('SH','SZ','BJ') AND substr(symbol,8)=exchange),\n        security_type TEXT NOT NULL CHECK (security_type='A_SHARE'),\n        quality_status TEXT NOT NULL CHECK (quality_status='accepted'),\n        listing_date TEXT NOT NULL CHECK (listing_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(listing_date, '+0 days') IS NOT NULL AND date(listing_date, '+0 days') = listing_date),\n        delisting_date TEXT CHECK (delisting_date IS NULL OR (delisting_date GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(delisting_date, '+0 days') IS NOT NULL AND date(delisting_date, '+0 days') = delisting_date)),\n        periods_json TEXT NOT NULL CHECK (json_valid(periods_json)),\n        event_time TEXT NOT NULL CHECK (\n    length(event_time) = 32 AND substr(event_time, 11, 1) = 'T'\n    AND substr(event_time, 20, 1) = '.' AND substr(event_time, 27) = '+00:00'\n    AND julianday(event_time) IS NOT NULL\n),\navailable_at TEXT NOT NULL CHECK (\n    length(available_at) = 32 AND substr(available_at, 11, 1) = 'T'\n    AND substr(available_at, 20, 1) = '.' AND substr(available_at, 27) = '+00:00'\n    AND julianday(available_at) IS NOT NULL\n),\nobserved_at TEXT NOT NULL CHECK (\n    length(observed_at) = 32 AND substr(observed_at, 11, 1) = 'T'\n    AND substr(observed_at, 20, 1) = '.' AND substr(observed_at, 27) = '+00:00'\n    AND julianday(observed_at) IS NOT NULL\n),\ningested_at TEXT NOT NULL CHECK (\n    length(ingested_at) = 32 AND substr(ingested_at, 11, 1) = 'T'\n    AND substr(ingested_at, 20, 1) = '.' AND substr(ingested_at, 27) = '+00:00'\n    AND julianday(ingested_at) IS NOT NULL\n),\n        source TEXT NOT NULL CHECK (length(trim(source)) > 0 AND source GLOB '*:*:*'),\n        record_version TEXT NOT NULL CHECK (length(trim(record_version)) > 0),\n        evidence_kind TEXT NOT NULL CHECK (evidence_kind IN ('synthetic','source_observation')),\n        evidence_ref TEXT NOT NULL CHECK (length(trim(evidence_ref)) > 0),\n        supersedes_version TEXT,\n        revision_reason TEXT,\n        run_id TEXT NOT NULL REFERENCES ingestion_runs(run_id),\n        CHECK (event_time <= available_at AND event_time <= observed_at AND observed_at <= ingested_at),\n        CHECK ((supersedes_version IS NULL AND revision_reason IS NULL) OR\n               (supersedes_version IS NOT NULL AND revision_reason IS NOT NULL\n                AND length(trim(revision_reason)) > 0 AND supersedes_version <> record_version))\n    ,\n        CHECK (delisting_date IS NULL OR listing_date < delisting_date),\n        CHECK (instrument_id <> symbol AND instrument_id <> substr(symbol,1,6)),\n        CHECK (NOT (length(instrument_id)=6 AND instrument_id NOT GLOB '*[^0-9]*')),\n        CHECK (NOT (length(instrument_id)=9 AND substr(instrument_id,1,6) NOT GLOB '*[^0-9]*'\n                    AND substr(instrument_id,7) IN ('.SH','.SZ','.BJ'))),\n        FOREIGN KEY (instrument_id,symbol) REFERENCES instruments(instrument_id,symbol),\n        UNIQUE (instrument_id,record_version),\n        UNIQUE (instrument_id,supersedes_version),\n        FOREIGN KEY (instrument_id,supersedes_version) REFERENCES security_versions(instrument_id,record_version)\n    )"
+      },
+      {
+        "type": "trigger",
+        "name": "calendar_versions_revision",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE TRIGGER calendar_versions_revision BEFORE INSERT ON calendar_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM calendar_versions p WHERE p.exchange=NEW.exchange AND p.session_date=NEW.session_date AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_calendar_versions_delete",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE TRIGGER immutable_calendar_versions_delete\n                BEFORE DELETE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_calendar_versions_update",
+        "tbl_name": "calendar_versions",
+        "sql": "CREATE TRIGGER immutable_calendar_versions_update\n                BEFORE UPDATE ON calendar_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_daily_bar_versions_delete",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE TRIGGER immutable_daily_bar_versions_delete\n        BEFORE DELETE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_daily_bar_versions_update",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE TRIGGER immutable_daily_bar_versions_update\n        BEFORE UPDATE ON daily_bar_versions\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_daily_bars_delete",
+        "tbl_name": "daily_bars",
+        "sql": "CREATE TRIGGER immutable_daily_bars_delete\n        BEFORE DELETE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_daily_bars_update",
+        "tbl_name": "daily_bars",
+        "sql": "CREATE TRIGGER immutable_daily_bars_update\n        BEFORE UPDATE ON daily_bars\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_ingestion_runs_delete",
+        "tbl_name": "ingestion_runs",
+        "sql": "CREATE TRIGGER immutable_ingestion_runs_delete\n        BEFORE DELETE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_ingestion_runs_update",
+        "tbl_name": "ingestion_runs",
+        "sql": "CREATE TRIGGER immutable_ingestion_runs_update\n        BEFORE UPDATE ON ingestion_runs\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_instruments_delete",
+        "tbl_name": "instruments",
+        "sql": "CREATE TRIGGER immutable_instruments_delete\n        BEFORE DELETE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_instruments_update",
+        "tbl_name": "instruments",
+        "sql": "CREATE TRIGGER immutable_instruments_update\n        BEFORE UPDATE ON instruments\n        BEGIN SELECT RAISE(ABORT, 'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_security_versions_delete",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TRIGGER immutable_security_versions_delete\n                BEFORE DELETE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "immutable_security_versions_update",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TRIGGER immutable_security_versions_update\n                BEFORE UPDATE ON security_versions\n                BEGIN SELECT RAISE(ABORT,'audit records are append-only'); END"
+      },
+      {
+        "type": "trigger",
+        "name": "security_code_lifetime",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TRIGGER security_code_lifetime BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM security_versions p\n                WHERE p.symbol=NEW.symbol AND p.instrument_id<>NEW.instrument_id\n                  AND (p.delisting_date IS NULL OR NEW.listing_date<p.delisting_date)\n                  AND (NEW.delisting_date IS NULL OR p.listing_date<NEW.delisting_date)\n                  AND NOT EXISTS (\n                    SELECT 1 FROM security_versions successor\n                    WHERE successor.instrument_id=p.instrument_id AND successor.supersedes_version=p.record_version\n                      AND max(successor.available_at,successor.ingested_at)<=max(NEW.available_at,NEW.ingested_at)\n                  )\n            ) THEN RAISE(ABORT,'code reuse conflicts in business and visibility time') END;\n        END"
+      },
+      {
+        "type": "trigger",
+        "name": "security_periods",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TRIGGER security_periods BEFORE INSERT ON security_versions BEGIN\n            SELECT CASE WHEN NOT json_valid(NEW.periods_json)\n                THEN RAISE(ABORT,'invalid timeline JSON') END;\n            SELECT CASE WHEN json_type(NEW.periods_json) IS NOT 'array'\n                OR json_array_length(NEW.periods_json) NOT BETWEEN 1 AND 256\n                THEN RAISE(ABORT,'timeline requires 1..256 periods') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p WHERE p.type IS NOT 'object'\n                OR (SELECT count(*) FROM json_each(p.value))<>3\n                OR json_type(p.value,'$.effective_from') IS NOT 'text'\n                OR NOT (json_extract(p.value,'$.effective_from') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_from'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_from'), '+0 days') = json_extract(p.value,'$.effective_from'))\n                OR json_type(p.value,'$.name') IS NOT 'text'\n                OR length(trim(json_extract(p.value,'$.name'))) NOT BETWEEN 1 AND 256\n                OR json_type(p.value,'$.effective_to') IS NULL\n                OR json_type(p.value,'$.effective_to') NOT IN ('null','text')\n                OR (json_extract(p.value,'$.effective_to') IS NOT NULL AND (NOT (json_extract(p.value,'$.effective_to') GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' AND date(json_extract(p.value,'$.effective_to'), '+0 days') IS NOT NULL AND date(json_extract(p.value,'$.effective_to'), '+0 days') = json_extract(p.value,'$.effective_to')) OR json_extract(p.value,'$.effective_to')<=json_extract(p.value,'$.effective_from')))\n                OR json_extract(p.value,'$.effective_from')<NEW.listing_date\n                OR (NEW.delisting_date IS NOT NULL AND (json_extract(p.value,'$.effective_to') IS NULL OR json_extract(p.value,'$.effective_to')>NEW.delisting_date))\n            ) THEN RAISE(ABORT,'invalid period or lifetime boundary') END;\n            SELECT CASE WHEN EXISTS (\n                SELECT 1 FROM json_each(NEW.periods_json) p JOIN json_each(NEW.periods_json) q ON p.key<q.key\n                WHERE json_extract(p.value,'$.effective_to') IS NULL OR\n                      json_extract(p.value,'$.effective_to')>json_extract(q.value,'$.effective_from')\n            ) THEN RAISE(ABORT,'timeline periods overlap or are unsorted') END;\n        END"
+      },
+      {
+        "type": "trigger",
+        "name": "security_versions_revision",
+        "tbl_name": "security_versions",
+        "sql": "CREATE TRIGGER security_versions_revision BEFORE INSERT ON security_versions BEGIN\n                SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                    SELECT 1 FROM security_versions p WHERE p.instrument_id=NEW.instrument_id AND p.record_version=NEW.supersedes_version\n                      AND (NEW.available_at<p.available_at OR NEW.observed_at<p.observed_at\n                           OR NEW.ingested_at<p.ingested_at OR\n                           max(NEW.available_at,NEW.ingested_at)<=max(p.available_at,p.ingested_at))\n                ) THEN RAISE(ABORT,'revision visibility must advance without backdating') END;\n            END"
+      },
+      {
+        "type": "trigger",
+        "name": "validate_bar_version",
+        "tbl_name": "daily_bar_versions",
+        "sql": "CREATE TRIGGER validate_bar_version BEFORE INSERT ON daily_bar_versions\n        BEGIN\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) = 'none' AND NEW.factor_version IS NOT NULL\n                THEN RAISE(ABORT, 'unadjusted bar cannot have factor_version') END;\n            SELECT CASE WHEN (\n                SELECT adjustment_method FROM daily_bars WHERE bar_id = NEW.bar_id\n            ) IN ('qfq','hfq') AND NEW.factor_version IS NULL\n                THEN RAISE(ABORT, 'adjusted bar requires factor_version') END;\n            SELECT CASE WHEN NEW.supersedes_version IS NOT NULL AND EXISTS (\n                SELECT 1 FROM daily_bar_versions p\n                WHERE p.bar_id = NEW.bar_id AND p.source = NEW.source\n                    AND p.source_version = NEW.supersedes_version\n                    AND (NEW.available_at < p.available_at OR NEW.ingested_at < p.ingested_at\n                        OR max(NEW.available_at, NEW.ingested_at) <= max(p.available_at, p.ingested_at))\n            ) THEN RAISE(ABORT, 'revision visibility must advance without backdating') END;\n        END"
+      }
+    ],
+    "latest_trade_date": null
+  },
+  "released_migrations": [
+    {
+      "version": 1,
+      "name": "daily_bar_foundation",
+      "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd"
+    },
+    {
+      "version": 2,
+      "name": "security_master_and_calendar",
+      "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125"
+    }
+  ],
+  "physical_ddl_matches_released_source": true,
+  "source_manifest": [
+    {
+      "path": "docs/architecture/DATA_DICTIONARY.md",
+      "git_blob": "9d69266bcae4fa682c980db29d66cd2d42b679e7",
+      "sha256_git_bytes": "18a55490fb7c20eada0e041b147ebc236c0ebd502e94668fe0250b6943b7cc7d"
+    },
+    {
+      "path": "docs/architecture/DATA_LINEAGE.md",
+      "git_blob": "542938e8ac543b85dbf25e6846b058f17513fa0f",
+      "sha256_git_bytes": "c887853e932e1a7cf6c47abc6b4e97177efd9be7550fc1f6fdd752f4c1bdeec9"
+    },
+    {
+      "path": "docs/architecture/DATA_MIGRATION_PLAN.md",
+      "git_blob": "62c191847b72426fcf1a577a2d99c96ee8e62b96",
+      "sha256_git_bytes": "f0c30f57b88235a41792f86f58e382e7a9ee193b0ba8c4302d54de120206a9a0"
+    },
+    {
+      "path": "docs/architecture/DATA_MODEL.md",
+      "git_blob": "e6ae771159258fb92f0814661075e901679e545c",
+      "sha256_git_bytes": "f7cd54f13532d1228c1d84b12c67fb28f9ebd8180cd1fc29579984f145767390"
+    },
+    {
+      "path": "docs/architecture/DATA_PERSISTENCE_ARCHITECTURE.md",
+      "git_blob": "5635a3f68664303971e24fa35755c1c7d9567c2e",
+      "sha256_git_bytes": "5b18d5bdce27fbe052e5c873e352b99b8e73a4779bc05d2a5d6e01b056f04f88"
+    },
+    {
+      "path": "docs/architecture/M0_M5_PERSISTENCE_MATRIX.md",
+      "git_blob": "edf31c4740b709a49fb872166f97aa15257cfa22",
+      "sha256_git_bytes": "ca51b552455bbf79a9cd6a28856a94cab5f74cc843a99aace82596b4d61edfe8"
+    },
+    {
+      "path": "scripts/preview_legacy_data.py",
+      "git_blob": "a4b86eca714e2e166fda9028efedc9729a4dbf3d",
+      "sha256_git_bytes": "8834112895cc919d437c4886b7272141f33402b3e9f97b5640b813c62a59a832"
+    },
+    {
+      "path": "scripts/start_workbench.ps1",
+      "git_blob": "b96f93cc2b7c58afe5377083e5bafae45b3e9e83",
+      "sha256_git_bytes": "fe199029862f34587bad289f2c97c4fe93694ffe6c6a31d19d784706baeaab21"
+    },
+    {
+      "path": "scripts/verify_m3_pipeline.py",
+      "git_blob": "d7a4addc3c24f3e2c54dfd96db8828cfcfdaabde",
+      "sha256_git_bytes": "e17736f99080e48dede360db89ccf6e26ae4005b88c57ab5c2137beaf4c96728"
+    },
+    {
+      "path": "scripts/verify_m3_sources.py",
+      "git_blob": "a87bddf09674892cfc83f047d3da1beb7ed04c9f",
+      "sha256_git_bytes": "de5a781b1fd9c93367c21a580307675fd89332c530ce1dbe2800edb5a15d8493"
+    },
+    {
+      "path": "src/ai_trade/__init__.py",
+      "git_blob": "e6e881128729f3b8f3de085796596140f76364d6",
+      "sha256_git_bytes": "8940b98133368560cb0a0c297327d72625d59a3a176de95156d4d4038b9cf6a5"
+    },
+    {
+      "path": "src/ai_trade/analysis_page.py",
+      "git_blob": "5189ccd358ecb14907a1bfc78c490bf196c9e8f4",
+      "sha256_git_bytes": "85ef328a764282e8d655a6f5c12af8026e99163c152122bfe55502673a7a8bda"
+    },
+    {
+      "path": "src/ai_trade/daily_candidates.py",
+      "git_blob": "90300e2bbee221addee54c29c16d122356491d4c",
+      "sha256_git_bytes": "7e0457d65419db080f7af6a84e39307451e7657e40e97b183832d36a8a042594"
+    },
+    {
+      "path": "src/ai_trade/daily_candidates_data.py",
+      "git_blob": "7afbe8e7ede68541111374edb6aef6bdd24cb270",
+      "sha256_git_bytes": "4b5924e8d2eeed4f604214d9e2aa129f66f6e67be34a525f7327585aec8a8733"
+    },
+    {
+      "path": "src/ai_trade/daily_candidates_details.py",
+      "git_blob": "0203061d5303ec22a0525963bf13747408454cd0",
+      "sha256_git_bytes": "cf32dcdf28938e5957dec218ec0d3a725cc59012299767e55b2dece4c3a26c9c"
+    },
+    {
+      "path": "src/ai_trade/daily_candidates_page.py",
+      "git_blob": "fc574049f23a26b59c827303a7c0f8681a2ed468",
+      "sha256_git_bytes": "fbfcf0f073e755b3e4defdd581f1ed42d21b1d91fcb55510573d3bbb10779dfa"
+    },
+    {
+      "path": "src/ai_trade/daily_candidates_view.py",
+      "git_blob": "c9bf97ac2e5065aaf7abf909195291192542420e",
+      "sha256_git_bytes": "217803110ef680229ee233600efeff643931cce3ea665815ba4ff820d13da098"
+    },
+    {
+      "path": "src/ai_trade/data_access/__init__.py",
+      "git_blob": "7d2a1430671dc4764427073bb94651ec35c5367a",
+      "sha256_git_bytes": "7499022910b5c9959e7019296159b9eff4278c2888c23d1ef014272b66299f4e"
+    },
+    {
+      "path": "src/ai_trade/data_access/models.py",
+      "git_blob": "d56dff06cbc8c0b7203a0a96a67e4a248f55c83a",
+      "sha256_git_bytes": "3c6fb6c77e0d201286b28cab71e03adec3a08ef7b28514bfc9db34df3f2fd3b9"
+    },
+    {
+      "path": "src/ai_trade/data_access/repository.py",
+      "git_blob": "9c7b540609e3b288c11837522fe2bfefda3003d9",
+      "sha256_git_bytes": "f116aa9b819beb08654770e5524a3d302a9c5e5a7ee0c96f11992f8280f93e0e"
+    },
+    {
+      "path": "src/ai_trade/data_access/validation.py",
+      "git_blob": "54c90f3aab9eb843ea09db766d9cdb1799706007",
+      "sha256_git_bytes": "fc9cd3f9c6edf12c9806cf2247bb33f47f0bfbe6df43038ef9f645f62fb6d45a"
+    },
+    {
+      "path": "src/ai_trade/demo_app.py",
+      "git_blob": "fdfe4c046b8d348eaff84f186ca3bcaf4657255b",
+      "sha256_git_bytes": "90a3972a9732e2614e880e22f54109a17f13e59a90f5859013b57d7d9f7b15e8"
+    },
+    {
+      "path": "src/ai_trade/demo_data.py",
+      "git_blob": "05574bbb9a6c349207ef05d23c32b50559f9a220",
+      "sha256_git_bytes": "fbe9c6592fed6e59515d8364f85e9629fd38fd2f6da541f29145f186ad718c24"
+    },
+    {
+      "path": "src/ai_trade/m3_data_pipeline.py",
+      "git_blob": "1fc31f23e0e801515c2a5d3bb15eec48c51c55a7",
+      "sha256_git_bytes": "7937f29fa35700318bfde14837585758b2af10795be3939a1fe0184af457f91c"
+    },
+    {
+      "path": "src/ai_trade/market_analysis.py",
+      "git_blob": "eba06a782a713d7b62e70960977283e0e8e60dd7",
+      "sha256_git_bytes": "7d1b3858e6fa2a30e13e7904d85ed1676bca982e57e04258686fe176263c9cb0"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_contract.py",
+      "git_blob": "f5871e311d2d38e7eed39c11c28a681164358c75",
+      "sha256_git_bytes": "dd9bbb5ea0774259f94ca3111bfb1e8fd7cc06a5a1e22da761de2e34d8de35b1"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_core.py",
+      "git_blob": "0110aadbf899e2a72a9069f88b8888694d1dd9cb",
+      "sha256_git_bytes": "44b4d4a8c2c7f7c544c1f2ef72f0e59a00746731a0f7cab4b57fd8eb3c5e4cbd"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_data.py",
+      "git_blob": "460c8e8608c103c9e1e120a87aead33e4bf8c4fe",
+      "sha256_git_bytes": "d20e05beca0165dfd3ce26fdc2fd2a61bab9e2b60e530c678537922545bce0cf"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_page.py",
+      "git_blob": "d1352ff335165361e6c8ab92902e282549d90037",
+      "sha256_git_bytes": "e1f88f2a799b8cdf457b6b61959c1509fe619b3953a97743d9f808e54059fd4f"
+    },
+    {
+      "path": "src/ai_trade/market_analysis_view.py",
+      "git_blob": "0a70153b90480b5654082e7ca524eb08a1842a15",
+      "sha256_git_bytes": "51ecdf5f4c0d11dd931e67a0553dfa8ab5c9adbcffb45b9e6d6bcad08fb65080"
+    },
+    {
+      "path": "src/ai_trade/market_data/__init__.py",
+      "git_blob": "c048ac05c4aab0b455db4a81fa33de9351e89bf7",
+      "sha256_git_bytes": "5dc0f9801eee6137c013d63d5067cecca7a8a46a2e2e764e254c9aa5b635021c"
+    },
+    {
+      "path": "src/ai_trade/market_data/akshare_adapter.py",
+      "git_blob": "36f6e8dd771db0b273fc92aaf5843771b3b4a342",
+      "sha256_git_bytes": "77f07641387e1d1f624bccaaf23eeb133007834c957dafec670b3b058fce6da2"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings.py",
+      "git_blob": "c73900e4cbbdfc79bc7771cadac4f861f692048c",
+      "sha256_git_bytes": "e6970f9b3363c4fdc7077d1d62b0b95f76dde894d308aab36ee4a45546b91f9a"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings_models.py",
+      "git_blob": "4216bb2388d5ac00badc1416f6c097fcb3939780",
+      "sha256_git_bytes": "5131b674d56d2697c86e94a70353106b636ccc8f09f8e1f8f7464062b48cb869"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings_time.py",
+      "git_blob": "fd26a8ff1e46e608621a20dba1714f387bcd040e",
+      "sha256_git_bytes": "0b257780d0b0011c9b3739f90e0cb5d7183a43399b840e8873550a5139758b48"
+    },
+    {
+      "path": "src/ai_trade/market_data/cffex_rankings_versions.py",
+      "git_blob": "ca894d7600181c79aa0fdeb84fe264c13d01b24c",
+      "sha256_git_bytes": "8b3a85bff7878ea4de2312d6c204d5a7fd02369e565cd3eac38e9135e3fb56fb"
+    },
+    {
+      "path": "src/ai_trade/market_data/evidence.py",
+      "git_blob": "328e828bc42ee825868c6169dbf2bdc992df48cd",
+      "sha256_git_bytes": "c05c0c39e482be0bb0f171283f6baadd2a210cbd3fd4ea4fd44cf33db1158ca4"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_cli.py",
+      "git_blob": "61861f714d6e9285c6bf4fc3b7daad0df849b3bc",
+      "sha256_git_bytes": "97f849da93a2247ced7c3dfaa83d71fa6eb3573c4476066a3e8d615b6e8a52da"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_models.py",
+      "git_blob": "9fcdd7c8a7c83aa7167d46d29d085b5e110f7b0a",
+      "sha256_git_bytes": "e007ebbc722e03717e3307f750ddc5e63ee3b9cb601d2290629e5e996df31b35"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_schedule.py",
+      "git_blob": "6b027835260a717a2e4c917eb9d2c19bc4e2ba88",
+      "sha256_git_bytes": "ac8482548d0b6f35309e4bedaeb8485b105e645845b57870ab9ddf9350c83724"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_service.py",
+      "git_blob": "e726fc2947591e8bfefdce12dbcda5d33bd4a617",
+      "sha256_git_bytes": "c7f38066f22ddec7c24b4965f93df60f2954910bd13893dd1a34eaa1224dea3b"
+    },
+    {
+      "path": "src/ai_trade/market_data/health_transport.py",
+      "git_blob": "9978e762a073489a19fcaafa9f34dbf3611a5423",
+      "sha256_git_bytes": "d92294c236a181c5f64ee56bdf370913658e838344357de31ce6c3219df84bc8"
+    },
+    {
+      "path": "src/ai_trade/market_data/ingestor.py",
+      "git_blob": "c4441584d0d8fe55b9ac6e24aa5d9d037ca9e53f",
+      "sha256_git_bytes": "e3b8b0d2360507c7a0e7380f8762d385786b2e6eccacc7a7e1d26ea07987716f"
+    },
+    {
+      "path": "src/ai_trade/market_data/models.py",
+      "git_blob": "6f44a13014e3f53ca60b71bfab05f873f5635e5a",
+      "sha256_git_bytes": "8659864f450cdef1bfafc6bc965aa10723ae8ed259532636fcac5bb49614da40"
+    },
+    {
+      "path": "src/ai_trade/market_data/tx_adapter.py",
+      "git_blob": "52576c51c9f2df10baf148be37981bec685532a1",
+      "sha256_git_bytes": "3e172d46d9a3e83a449ad639965e61c788a6b21a95c42496676217421489b972"
+    },
+    {
+      "path": "src/ai_trade/market_state.py",
+      "git_blob": "dd9315e6936de79cb008a94d6e8d7e6788be516f",
+      "sha256_git_bytes": "e83d79675919601b80cf0fbf41638e338ea9da6f412872e5b19633ac3138aa2c"
+    },
+    {
+      "path": "src/ai_trade/project_progress/__init__.py",
+      "git_blob": "bc5849407f586dbc47085afadec96ae8fb346547",
+      "sha256_git_bytes": "29278f55ff523d5c1af48650d9c9cb985425f62e613ae345116d0ed1905dd5c0"
+    },
+    {
+      "path": "src/ai_trade/project_progress/__main__.py",
+      "git_blob": "c2183cfb160530d7f4cf83cebbbcbfeec934204d",
+      "sha256_git_bytes": "4cb51144aaa9f533ca74ede13b6ea4817f1af4b24736e75033a493c53216be12"
+    },
+    {
+      "path": "src/ai_trade/project_progress/app.py",
+      "git_blob": "d1a85588bef836ad78d6c85b03b1c1ba4a4decd4",
+      "sha256_git_bytes": "f085777414e3efa46b03918499661b2dd27e40f8d057fad408af46c5ba72a376"
+    },
+    {
+      "path": "src/ai_trade/project_progress/core.py",
+      "git_blob": "aa3d34d9cb78a64437098cc05f0664d10edb2bb5",
+      "sha256_git_bytes": "ac0b3ab2e3c7e3d4bb7a355dc7da8a990672bea326bff4109241b2799ec28457"
+    },
+    {
+      "path": "src/ai_trade/project_progress/page.py",
+      "git_blob": "896ab806cf0006a7f3c3d1461b8e23020413941d",
+      "sha256_git_bytes": "b4a1eee892b453f3f7e0c43398fa58dbc1ad08ec549aeef0a3cb68db1710dc03"
+    },
+    {
+      "path": "src/ai_trade/project_progress/render.py",
+      "git_blob": "314446840a760ee985d0e4eb7130a622836fb427",
+      "sha256_git_bytes": "a9917e3d3c87c4237146da5c9b275709f712bea491d4b4b5f3ac477a2354c8a6"
+    },
+    {
+      "path": "src/ai_trade/project_progress/views.py",
+      "git_blob": "3a63058a7a409737cbf9c20c6b4122cac16bab6b",
+      "sha256_git_bytes": "6c00f6d7f574cf1d437057494cf44bc5d92fc6c295198546b6e9dea3c19a9116"
+    },
+    {
+      "path": "src/ai_trade/reference_data/__init__.py",
+      "git_blob": "2ce64746de3400a12a56f4e924e5a9c750e96c29",
+      "sha256_git_bytes": "472ecdecb868b8fd087297d6a36f92184ac1109e7ecd69745986a9f418642363"
+    },
+    {
+      "path": "src/ai_trade/reference_data/models.py",
+      "git_blob": "6a43ade64f86deb2a30bc10e68b5bd3c394a6dd7",
+      "sha256_git_bytes": "278a6c64a0bbcd85ff8e72290084f03fde565b557e445b116218e7f397930d72"
+    },
+    {
+      "path": "src/ai_trade/reference_data/repository_support.py",
+      "git_blob": "5d1aa57a8489ac4df64650c85d2d1a37b9d56708",
+      "sha256_git_bytes": "05e461968fefd6a0522a24997bb062a52d54ab23db26040f961bf5c70576363e"
+    },
+    {
+      "path": "src/ai_trade/reference_data/validation.py",
+      "git_blob": "1b13daccb61c3a725c8375d09a0224c25f14f6d6",
+      "sha256_git_bytes": "ce76c50eb544d3546c5a03c05a22162a4b4a44c8fafa4e63e6c7e07759c60873"
+    },
+    {
+      "path": "src/ai_trade/security_master/__init__.py",
+      "git_blob": "9a8c217bf08735569424cc30829e70ecd44a1f87",
+      "sha256_git_bytes": "7cfe4b4e0b9226e3ca083d68b9198c25d788f02fd17f5a0a22985ed2178ecb01"
+    },
+    {
+      "path": "src/ai_trade/security_master/repository.py",
+      "git_blob": "f7bef5e27efeee74ef0267578072e36129e52a74",
+      "sha256_git_bytes": "a0c5bfa1146bf6753a6801956a28e49b23a9a203c48d9e45b9cbfd9cc7bb174a"
+    },
+    {
+      "path": "src/ai_trade/storage/__init__.py",
+      "git_blob": "c8fd89ba1cf9f30aac8fbdc4487b602ec30219af",
+      "sha256_git_bytes": "fec242df9a04b22aaaace4b4e3b4fa2d3358b82b1cf6676eecf6d1883b1b6368"
+    },
+    {
+      "path": "src/ai_trade/storage/__main__.py",
+      "git_blob": "0716a809e9b84dc300ea9e5a6edc41de017d936d",
+      "sha256_git_bytes": "aa041522295feeff389ebc6e3e38803a217e6ad481f4d19c80546742d30c5e94"
+    },
+    {
+      "path": "src/ai_trade/storage/db.py",
+      "git_blob": "15a21d38698ebc59a3e72847fadc1b7bc1ac2738",
+      "sha256_git_bytes": "2eec33f09a3914a8b8d4084dcc50de666fa7d7a7c03b272da7c89ef61e6ecea2"
+    },
+    {
+      "path": "src/ai_trade/storage/reference_schema.py",
+      "git_blob": "58ea085f41bf099dc9bc4a19663d86206872e9d4",
+      "sha256_git_bytes": "2d62135c4b2c802eb802f7a612fe2151e8779a082851970490d3459c2a8e5099"
+    },
+    {
+      "path": "src/ai_trade/storage/schema.py",
+      "git_blob": "2554e131542066ddff75fc724761053562acdf97",
+      "sha256_git_bytes": "05de837b5657dde9184d310146e00f69994589ce607acd3438bd6c40091fe30b"
+    },
+    {
+      "path": "src/ai_trade/storage/workbench.py",
+      "git_blob": "2f0bb0f429602a8d5797f7f83848fb05640e3a89",
+      "sha256_git_bytes": "27de92778ceb0d18580c161a5bd042b070f743ce0aa2282a4871af490ea38592"
+    },
+    {
+      "path": "src/ai_trade/storage/workbench_cli.py",
+      "git_blob": "836405c4db46972c7fe332fd0a1ee800b5794424",
+      "sha256_git_bytes": "5aeb174bbe117c9adb6ecaa6509c3d73c4369f27fb0782976876044130558de7"
+    },
+    {
+      "path": "src/ai_trade/trading_analysis.py",
+      "git_blob": "7f7b9e585b2e2892a103c852e8ac0c6fa31cd358",
+      "sha256_git_bytes": "dd4cd19a91502441937bd885d22b24d91e6a6c1dae7079094624ada4afcb87bd"
+    },
+    {
+      "path": "src/ai_trade/trading_calendar/__init__.py",
+      "git_blob": "820b4b6a7a727446c54fc3d3bf15032b6c531f55",
+      "sha256_git_bytes": "7c0f7548077e49749f5736d6c72d1c74384b878043cd06c6e5624b8e25afca4a"
+    },
+    {
+      "path": "src/ai_trade/trading_calendar/repository.py",
+      "git_blob": "97787cf3809f462b0caddab8cd5ff8bc3d87ecaf",
+      "sha256_git_bytes": "b8188890e4a27ad8bdad59076e1eb41196e55efe74507ebfe7ecd428dba50b9d"
+    }
+  ],
+  "source_symbols": {
+    "scripts/preview_legacy_data.py": [
+      {
+        "name": "sha",
+        "line": 9,
+        "end": 11,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "read",
+        "line": 14,
+        "end": 19,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "main",
+        "line": 22,
+        "end": 122,
+        "kind": "FunctionDef"
+      }
+    ],
+    "scripts/verify_m3_pipeline.py": [
+      {
+        "name": "now",
+        "line": 43,
+        "end": 44,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "write_json",
+        "line": 47,
+        "end": 51,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "checked_root",
+        "line": 54,
+        "end": 58,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "targets",
+        "line": 61,
+        "end": 65,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "capture_http",
+        "line": 69,
+        "end": 130,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "stock_observation",
+        "line": 133,
+        "end": 160,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "worker",
+        "line": 163,
+        "end": 209,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "run",
+        "line": 212,
+        "end": 249,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "main",
+        "line": 252,
+        "end": 264,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "save_event",
+        "line": 81,
+        "end": 83,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "send",
+        "line": 85,
+        "end": 124,
+        "kind": "FunctionDef"
+      }
+    ],
+    "scripts/verify_m3_sources.py": [
+      {
+        "name": "main",
+        "line": 20,
+        "end": 70,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/__init__.py": [],
+    "src/ai_trade/analysis_page.py": [
+      {
+        "name": "_clicked",
+        "line": 21,
+        "end": 22,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "render",
+        "line": 25,
+        "end": 156,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/daily_candidates.py": [
+      {
+        "name": "Evaluation",
+        "line": 23,
+        "end": 37,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CandidateBatch",
+        "line": 41,
+        "end": 52,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "evaluate",
+        "line": 55,
+        "end": 76,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "sort_evaluations",
+        "line": 79,
+        "end": 80,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "score_rows",
+        "line": 83,
+        "end": 91,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "table_row",
+        "line": 94,
+        "end": 107,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "eligible",
+        "line": 32,
+        "end": 33,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "score",
+        "line": 36,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "candidates",
+        "line": 51,
+        "end": 52,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/daily_candidates_data.py": [
+      {
+        "name": "local_coverage",
+        "line": 15,
+        "end": 30,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "load_batch",
+        "line": 33,
+        "end": 68,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/daily_candidates_details.py": [
+      {
+        "name": "value",
+        "line": 11,
+        "end": 12,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "risk_card",
+        "line": 15,
+        "end": 28,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "price_charts",
+        "line": 31,
+        "end": 59,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "render_detail",
+        "line": 62,
+        "end": 97,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/daily_candidates_page.py": [
+      {
+        "name": "_cached_batch",
+        "line": 20,
+        "end": 23,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_fingerprint",
+        "line": 26,
+        "end": 28,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_open_detail",
+        "line": 31,
+        "end": 33,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_open_watch",
+        "line": 36,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_details_picker",
+        "line": 40,
+        "end": 45,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_zero",
+        "line": 48,
+        "end": 52,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_overview",
+        "line": 55,
+        "end": 75,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_monitor",
+        "line": 78,
+        "end": 98,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_picks",
+        "line": 101,
+        "end": 115,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_watch",
+        "line": 118,
+        "end": 142,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_risk",
+        "line": 145,
+        "end": 153,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "render",
+        "line": 156,
+        "end": 248,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/daily_candidates_view.py": [
+      {
+        "name": "number",
+        "line": 23,
+        "end": 24,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "symbols_input",
+        "line": 27,
+        "end": 31,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "load_watch_batch",
+        "line": 34,
+        "end": 46,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "data_status",
+        "line": 49,
+        "end": 60,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "monitor_row",
+        "line": 63,
+        "end": 77,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "risk_row",
+        "line": 80,
+        "end": 93,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "events",
+        "line": 96,
+        "end": 106,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "relation",
+        "line": 66,
+        "end": 68,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/data_access/__init__.py": [],
+    "src/ai_trade/data_access/models.py": [
+      {
+        "name": "ValidationError",
+        "line": 6,
+        "end": 11,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "IntegrityError",
+        "line": 14,
+        "end": 15,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "DuplicateRecordError",
+        "line": 18,
+        "end": 19,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "DataUnavailableError",
+        "line": 22,
+        "end": 23,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "DailyBar",
+        "line": 27,
+        "end": 51,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "WriteResult",
+        "line": 55,
+        "end": 59,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "ReadResult",
+        "line": 63,
+        "end": 76,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 9,
+        "end": 11,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/data_access/repository.py": [
+      {
+        "name": "MarketDataRepository",
+        "line": 24,
+        "end": 30,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SQLiteMarketDataRepository",
+        "line": 33,
+        "end": 132,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "write_many",
+        "line": 27,
+        "end": 27,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_bar",
+        "line": 29,
+        "end": 30,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 36,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "write_many",
+        "line": 39,
+        "end": 91,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_bar",
+        "line": 93,
+        "end": 132,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/data_access/validation.py": [
+      {
+        "name": "text_field",
+        "line": 15,
+        "end": 20,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "iso_date",
+        "line": 23,
+        "end": 31,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "timestamp",
+        "line": 34,
+        "end": 44,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "validate_bar",
+        "line": 47,
+        "end": 120,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/demo_app.py": [
+      {
+        "name": "get_demo_root",
+        "line": 33,
+        "end": 41,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_components",
+        "line": 44,
+        "end": 54,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "proxy_configuration_label",
+        "line": 57,
+        "end": 62,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "record_collect_click",
+        "line": 65,
+        "end": 66,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/demo_data.py": [
+      {
+        "name": "make_request",
+        "line": 32,
+        "end": 45,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "existing_demo_root",
+        "line": 48,
+        "end": 62,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "persistent_workbench_root",
+        "line": 65,
+        "end": 68,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "read_bars",
+        "line": 71,
+        "end": 103,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "verify_written",
+        "line": 106,
+        "end": 116,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "chart_data",
+        "line": 119,
+        "end": 122,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/m3_data_pipeline.py": [
+      {
+        "name": "inventory",
+        "line": 91,
+        "end": 92,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_source",
+        "line": 95,
+        "end": 100,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_stock_frame",
+        "line": 103,
+        "end": 111,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_index_frame",
+        "line": 114,
+        "end": 124,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "build_bundle",
+        "line": 127,
+        "end": 167,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "public_summary",
+        "line": 170,
+        "end": 178,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis.py": [
+      {
+        "name": "visible_prices",
+        "line": 29,
+        "end": 52,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "member_position",
+        "line": 55,
+        "end": 81,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "contract_label",
+        "line": 84,
+        "end": 85,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "wave_scenarios",
+        "line": 88,
+        "end": 147,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "past_percentile",
+        "line": 150,
+        "end": 157,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fear_greed",
+        "line": 160,
+        "end": 194,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "emotion",
+        "line": 197,
+        "end": 200,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "extreme_outcomes",
+        "line": 203,
+        "end": 215,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "environment",
+        "line": 218,
+        "end": 224,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "rank",
+        "line": 151,
+        "end": 156,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis_contract.py": [
+      {
+        "name": "Verification",
+        "line": 22,
+        "end": 26,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Admission",
+        "line": 29,
+        "end": 33,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Status",
+        "line": 36,
+        "end": 47,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "ReasonCode",
+        "line": 50,
+        "end": 69,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Receipt",
+        "line": 73,
+        "end": 84,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SourceEvidence",
+        "line": 88,
+        "end": 107,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CalendarEvidence",
+        "line": 111,
+        "end": 128,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Request",
+        "line": 132,
+        "end": 150,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Coverage",
+        "line": 154,
+        "end": 171,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Reason",
+        "line": 175,
+        "end": 179,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Diagnostic",
+        "line": 183,
+        "end": 216,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "clean",
+        "line": 219,
+        "end": 231,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "strategy_admission",
+        "line": 234,
+        "end": 258,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 77,
+        "end": 80,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "verified",
+        "line": 83,
+        "end": 84,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 99,
+        "end": 107,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 121,
+        "end": 128,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 139,
+        "end": 150,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 161,
+        "end": 167,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "ratio",
+        "line": 170,
+        "end": 171,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "data_snapshot_id",
+        "line": 200,
+        "end": 203,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "to_dict",
+        "line": 205,
+        "end": 216,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis_core.py": [
+      {
+        "name": "_identity",
+        "line": 25,
+        "end": 30,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_declared_identities",
+        "line": 33,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_missing_number",
+        "line": 40,
+        "end": 41,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_number",
+        "line": 44,
+        "end": 65,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_Context",
+        "line": 69,
+        "end": 79,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_coverage",
+        "line": 82,
+        "end": 101,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_prepare",
+        "line": 104,
+        "end": 206,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_finish",
+        "line": 209,
+        "end": 241,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "price_diagnostics",
+        "line": 244,
+        "end": 298,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "breadth_diagnostic",
+        "line": 301,
+        "end": 350,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fear_greed_diagnostic",
+        "line": 353,
+        "end": 399,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "cffex_diagnostic",
+        "line": 402,
+        "end": 464,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "environment_diagnostic",
+        "line": 467,
+        "end": 529,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "add",
+        "line": 78,
+        "end": 79,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis_data.py": [
+      {
+        "name": "now",
+        "line": 28,
+        "end": 29,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "save_snapshot",
+        "line": 32,
+        "end": 42,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "snapshots",
+        "line": 45,
+        "end": 59,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "collect_cffex",
+        "line": 62,
+        "end": 74,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "ranking_rows",
+        "line": 77,
+        "end": 81,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "collect_public",
+        "line": 84,
+        "end": 97,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "price_frame",
+        "line": 100,
+        "end": 106,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "breadth_frame",
+        "line": 109,
+        "end": 115,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_worker",
+        "line": 118,
+        "end": 184,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "bounded_get",
+        "line": 130,
+        "end": 153,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis_page.py": [
+      {
+        "name": "_collect",
+        "line": 31,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_feedback",
+        "line": 40,
+        "end": 43,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_choose",
+        "line": 46,
+        "end": 51,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_details",
+        "line": 54,
+        "end": 86,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_values",
+        "line": 89,
+        "end": 137,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "render",
+        "line": 140,
+        "end": 232,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_analysis_view.py": [
+      {
+        "name": "safe_text",
+        "line": 52,
+        "end": 66,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "LocalInput",
+        "line": 70,
+        "end": 74,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "unavailable",
+        "line": 77,
+        "end": 79,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "catalogue",
+        "line": 82,
+        "end": 87,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "snapshot_ref",
+        "line": 90,
+        "end": 94,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "snapshot_label",
+        "line": 97,
+        "end": 98,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_facts",
+        "line": 101,
+        "end": 112,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "from_snapshots",
+        "line": 115,
+        "end": 148,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "from_stock_frame",
+        "line": 151,
+        "end": 157,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "input_error",
+        "line": 160,
+        "end": 167,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "diagnostic_bundle",
+        "line": 170,
+        "end": 189,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "displayable",
+        "line": 192,
+        "end": 194,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "coverage_text",
+        "line": 197,
+        "end": 200,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "overview_html",
+        "line": 203,
+        "end": 213,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "evidence_payload",
+        "line": 216,
+        "end": 228,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "public_url",
+        "line": 58,
+        "end": 63,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "scrub",
+        "line": 224,
+        "end": 227,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/__init__.py": [],
+    "src/ai_trade/market_data/akshare_adapter.py": [
+      {
+        "name": "DailyHistoryClient",
+        "line": 31,
+        "end": 36,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "AkshareDailyClient",
+        "line": 39,
+        "end": 59,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "validate_request",
+        "line": 62,
+        "end": 80,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "check_frame",
+        "line": 83,
+        "end": 96,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_market_date",
+        "line": 99,
+        "end": 104,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_number",
+        "line": 107,
+        "end": 113,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_shares",
+        "line": 116,
+        "end": 124,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "map_frame",
+        "line": 127,
+        "end": 162,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fetch",
+        "line": 36,
+        "end": 36,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 42,
+        "end": 48,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fetch",
+        "line": 50,
+        "end": 59,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings.py": [
+      {
+        "name": "CffexRankingsClient",
+        "line": 56,
+        "end": 100,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_decode",
+        "line": 103,
+        "end": 109,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "classify_payload",
+        "line": 112,
+        "end": 125,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_scope_for",
+        "line": 128,
+        "end": 131,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_int_or_none",
+        "line": 134,
+        "end": 146,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_check_trade_date_and_contract",
+        "line": 149,
+        "end": 160,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_rows_for_side",
+        "line": 163,
+        "end": 175,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_parse_sections",
+        "line": 178,
+        "end": 240,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "parse_named",
+        "line": 243,
+        "end": 244,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "parse_legacy",
+        "line": 247,
+        "end": 248,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "parse",
+        "line": 251,
+        "end": 259,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "build_record",
+        "line": 262,
+        "end": 293,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_response_outcome",
+        "line": 296,
+        "end": 304,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "ingest",
+        "line": 307,
+        "end": 341,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "MemberNetPosition",
+        "line": 345,
+        "end": 356,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "net_positions",
+        "line": 359,
+        "end": 385,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 64,
+        "end": 67,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "source_label",
+        "line": 69,
+        "end": 70,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fetch",
+        "line": 72,
+        "end": 100,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings_models.py": [
+      {
+        "name": "CffexRankingsError",
+        "line": 27,
+        "end": 29,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankFormatError",
+        "line": 32,
+        "end": 33,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingResponseError",
+        "line": 36,
+        "end": 42,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingTransportError",
+        "line": 45,
+        "end": 46,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingCalendarError",
+        "line": 49,
+        "end": 50,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingVersionError",
+        "line": 53,
+        "end": 54,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingDataUnavailableError",
+        "line": 57,
+        "end": 58,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingValidationError",
+        "line": 61,
+        "end": 62,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "MemberScope",
+        "line": 65,
+        "end": 72,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingSide",
+        "line": 75,
+        "end": 78,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CffexRankingsRequest",
+        "line": 85,
+        "end": 111,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingRow",
+        "line": 115,
+        "end": 133,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CffexRankingsRecord",
+        "line": 137,
+        "end": 160,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "IngestionOutcome",
+        "line": 164,
+        "end": 175,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingSessionDay",
+        "line": 179,
+        "end": 195,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "RankingCalendar",
+        "line": 198,
+        "end": 199,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 39,
+        "end": 42,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "validate",
+        "line": 97,
+        "end": 105,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "url",
+        "line": 107,
+        "end": 111,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_day",
+        "line": 199,
+        "end": 199,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings_time.py": [
+      {
+        "name": "aware",
+        "line": 13,
+        "end": 20,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "iso",
+        "line": 23,
+        "end": 24,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "calendar_day",
+        "line": 27,
+        "end": 31,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_calendar_day",
+        "line": 34,
+        "end": 57,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "time_fence",
+        "line": 60,
+        "end": 94,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/cffex_rankings_versions.py": [
+      {
+        "name": "_key",
+        "line": 19,
+        "end": 20,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_check",
+        "line": 23,
+        "end": 99,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "compare_revision",
+        "line": 102,
+        "end": 123,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "assert_visible",
+        "line": 126,
+        "end": 135,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "select_visible_version",
+        "line": 138,
+        "end": 176,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "net_positions_at",
+        "line": 179,
+        "end": 190,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/evidence.py": [
+      {
+        "name": "EvidenceStore",
+        "line": 16,
+        "end": 75,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 23,
+        "end": 24,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_write",
+        "line": 27,
+        "end": 31,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "begin",
+        "line": 33,
+        "end": 47,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_json",
+        "line": 50,
+        "end": 51,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "response",
+        "line": 53,
+        "end": 66,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "finish",
+        "line": 68,
+        "end": 75,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/health_cli.py": [
+      {
+        "name": "main",
+        "line": 13,
+        "end": 48,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/health_models.py": [
+      {
+        "name": "CheckType",
+        "line": 11,
+        "end": 14,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "HealthStatus",
+        "line": 17,
+        "end": 27,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CalendarExpectation",
+        "line": 31,
+        "end": 48,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "HealthResult",
+        "line": 52,
+        "end": 134,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 38,
+        "end": 48,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 75,
+        "end": 127,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "to_dict",
+        "line": 129,
+        "end": 130,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "from_dict",
+        "line": 133,
+        "end": 134,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/health_schedule.py": [
+      {
+        "name": "HealthResultStore",
+        "line": 14,
+        "end": 36,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "source_report",
+        "line": 39,
+        "end": 80,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "calendar_expectation",
+        "line": 83,
+        "end": 108,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "schedule_plan",
+        "line": 111,
+        "end": 121,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "compare_saved_records",
+        "line": 124,
+        "end": 145,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 15,
+        "end": 16,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "append",
+        "line": 18,
+        "end": 24,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "read_all",
+        "line": 26,
+        "end": 36,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "index",
+        "line": 126,
+        "end": 134,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/health_service.py": [
+      {
+        "name": "HealthSource",
+        "line": 25,
+        "end": 32,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_ObservedClient",
+        "line": 45,
+        "end": 64,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_ScratchWriter",
+        "line": 67,
+        "end": 85,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "HealthService",
+        "line": 88,
+        "end": 263,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 46,
+        "end": 50,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__getattr__",
+        "line": 52,
+        "end": 53,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fetch",
+        "line": 55,
+        "end": 64,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 70,
+        "end": 75,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "write_many",
+        "line": 77,
+        "end": 85,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 89,
+        "end": 92,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "check",
+        "line": 94,
+        "end": 263,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "finish",
+        "line": 107,
+        "end": 109,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/health_transport.py": [
+      {
+        "name": "BudgetBlocked",
+        "line": 16,
+        "end": 17,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "HealthTransport",
+        "line": 20,
+        "end": 90,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 21,
+        "end": 32,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "installed",
+        "line": 35,
+        "end": 90,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "verified",
+        "line": 41,
+        "end": 42,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "session_send",
+        "line": 44,
+        "end": 55,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "adapter_send",
+        "line": 57,
+        "end": 81,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/ingestor.py": [
+      {
+        "name": "utc_now",
+        "line": 24,
+        "end": 25,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_transport_type_chain",
+        "line": 36,
+        "end": 46,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "DailyHistoryIngestor",
+        "line": 49,
+        "end": 170,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__init__",
+        "line": 56,
+        "end": 73,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_now",
+        "line": 75,
+        "end": 82,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "collect",
+        "line": 84,
+        "end": 170,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/models.py": [
+      {
+        "name": "DailyHistoryRequest",
+        "line": 11,
+        "end": 18,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "IngestionStatus",
+        "line": 21,
+        "end": 30,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "IngestionResult",
+        "line": 34,
+        "end": 52,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "BarWriter",
+        "line": 55,
+        "end": 58,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SourceSchemaError",
+        "line": 61,
+        "end": 62,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SourceResponseError",
+        "line": 65,
+        "end": 66,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "EvidenceWriteError",
+        "line": 69,
+        "end": 74,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "write_many",
+        "line": 58,
+        "end": 58,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 72,
+        "end": 74,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_data/tx_adapter.py": [
+      {
+        "name": "tx_check_frame",
+        "line": 27,
+        "end": 44,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "TxDailyClient",
+        "line": 47,
+        "end": 103,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "tx_map_frame",
+        "line": 105,
+        "end": 165,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 54,
+        "end": 61,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "provider",
+        "line": 64,
+        "end": 65,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "endpoint",
+        "line": 68,
+        "end": 69,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "source_label",
+        "line": 71,
+        "end": 72,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_tx_symbol",
+        "line": 74,
+        "end": 81,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "fetch",
+        "line": 83,
+        "end": 87,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "request_parameters",
+        "line": 89,
+        "end": 94,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "check_frame",
+        "line": 96,
+        "end": 98,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "map_frame",
+        "line": 100,
+        "end": 103,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/market_state.py": [
+      {
+        "name": "MarketState",
+        "line": 15,
+        "end": 33,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "allows",
+        "line": 23,
+        "end": 33,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/project_progress/__init__.py": [],
+    "src/ai_trade/project_progress/__main__.py": [
+      {
+        "name": "main",
+        "line": 12,
+        "end": 79,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/project_progress/app.py": [],
+    "src/ai_trade/project_progress/core.py": [
+      {
+        "name": "PlanError",
+        "line": 19,
+        "end": 20,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "digest",
+        "line": 23,
+        "end": 26,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_pairs",
+        "line": 29,
+        "end": 35,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "read_json",
+        "line": 38,
+        "end": 43,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "seal",
+        "line": 46,
+        "end": 51,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "snapshots",
+        "line": 54,
+        "end": 55,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_total",
+        "line": 58,
+        "end": 60,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "validate",
+        "line": 63,
+        "end": 180,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "load",
+        "line": 183,
+        "end": 184,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "dependency_failures",
+        "line": 187,
+        "end": 199,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "calculate",
+        "line": 202,
+        "end": 225,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "recommendations",
+        "line": 228,
+        "end": 236,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "propose",
+        "line": 239,
+        "end": 249,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "cycle",
+        "line": 96,
+        "end": 109,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "visit",
+        "line": 98,
+        "end": 107,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/project_progress/page.py": [
+      {
+        "name": "render",
+        "line": 8,
+        "end": 101,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/project_progress/render.py": [
+      {
+        "name": "_cell",
+        "line": 6,
+        "end": 7,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "board",
+        "line": 10,
+        "end": 64,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "roadmap",
+        "line": 67,
+        "end": 84,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/project_progress/views.py": [
+      {
+        "name": "recent_deliveries",
+        "line": 7,
+        "end": 18,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "task_rows",
+        "line": 21,
+        "end": 40,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/reference_data/__init__.py": [],
+    "src/ai_trade/reference_data/models.py": [
+      {
+        "name": "Provenance",
+        "line": 10,
+        "end": 20,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SecurityPeriod",
+        "line": 24,
+        "end": 29,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SecuritySnapshot",
+        "line": 33,
+        "end": 49,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SecurityAtDate",
+        "line": 53,
+        "end": 56,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CalendarDay",
+        "line": 60,
+        "end": 66,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "ReferenceResult",
+        "line": 73,
+        "end": 87,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SecurityDataMissingError",
+        "line": 90,
+        "end": 91,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SecurityNotActiveError",
+        "line": 94,
+        "end": 95,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CalendarDataMissingError",
+        "line": 98,
+        "end": 99,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "CalendarSourceError",
+        "line": 102,
+        "end": 103,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "NoKnownTradingDayError",
+        "line": 106,
+        "end": 107,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "complete",
+        "line": 85,
+        "end": 87,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/reference_data/repository_support.py": [
+      {
+        "name": "write_batch",
+        "line": 18,
+        "end": 39,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "insert_row",
+        "line": 42,
+        "end": 48,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "meta_from_row",
+        "line": 51,
+        "end": 52,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "envelope",
+        "line": 55,
+        "end": 76,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "encode",
+        "line": 70,
+        "end": 73,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/reference_data/validation.py": [
+      {
+        "name": "exchange",
+        "line": 13,
+        "end": 16,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "query",
+        "line": 19,
+        "end": 22,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "provenance",
+        "line": 25,
+        "end": 46,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "security",
+        "line": 49,
+        "end": 88,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "calendar",
+        "line": 91,
+        "end": 105,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/security_master/__init__.py": [],
+    "src/ai_trade/security_master/repository.py": [
+      {
+        "name": "SecurityMaster",
+        "line": 20,
+        "end": 25,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "SQLiteSecurityMaster",
+        "line": 28,
+        "end": 90,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "write_many",
+        "line": 21,
+        "end": 21,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get",
+        "line": 23,
+        "end": 23,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "resolve",
+        "line": 25,
+        "end": 25,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 29,
+        "end": 30,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_insert",
+        "line": 33,
+        "end": 44,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "write_many",
+        "line": 46,
+        "end": 47,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_result",
+        "line": 50,
+        "end": 65,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get",
+        "line": 67,
+        "end": 75,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "resolve",
+        "line": 77,
+        "end": 90,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/__init__.py": [],
+    "src/ai_trade/storage/__main__.py": [
+      {
+        "name": "main",
+        "line": 8,
+        "end": 13,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/db.py": [
+      {
+        "name": "DatabaseConfig",
+        "line": 16,
+        "end": 53,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "Database",
+        "line": 56,
+        "end": 139,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "__post_init__",
+        "line": 26,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "from_env",
+        "line": 40,
+        "end": 53,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 59,
+        "end": 60,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "connection",
+        "line": 63,
+        "end": 90,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "transaction",
+        "line": 93,
+        "end": 104,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "initialize",
+        "line": 106,
+        "end": 139,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/reference_schema.py": [
+      {
+        "name": "_date",
+        "line": 4,
+        "end": 6,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "reference_statements",
+        "line": 9,
+        "end": 131,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/schema.py": [
+      {
+        "name": "Migration",
+        "line": 11,
+        "end": 22,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "checksum",
+        "line": 19,
+        "end": 22,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/workbench.py": [
+      {
+        "name": "persistent_root",
+        "line": 15,
+        "end": 29,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "workbench_config",
+        "line": 32,
+        "end": 51,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_objects",
+        "line": 54,
+        "end": 57,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "expected_objects",
+        "line": 61,
+        "end": 71,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "inspect_database",
+        "line": 74,
+        "end": 108,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/storage/workbench_cli.py": [
+      {
+        "name": "file_state",
+        "line": 16,
+        "end": 25,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "ensure_absent",
+        "line": 28,
+        "end": 30,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "reserve",
+        "line": 33,
+        "end": 37,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "backup_new",
+        "line": 40,
+        "end": 55,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "initialize_new",
+        "line": 58,
+        "end": 85,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "code_identity",
+        "line": 88,
+        "end": 93,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "main",
+        "line": 96,
+        "end": 121,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "progress",
+        "line": 45,
+        "end": 47,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "git",
+        "line": 90,
+        "end": 91,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/trading_analysis.py": [
+      {
+        "name": "Analysis",
+        "line": 30,
+        "end": 33,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_visible",
+        "line": 36,
+        "end": 75,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "indicators",
+        "line": 78,
+        "end": 109,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "risk_reference",
+        "line": 112,
+        "end": 123,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "analyze",
+        "line": 126,
+        "end": 178,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "candidate_row",
+        "line": 181,
+        "end": 186,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "number",
+        "line": 157,
+        "end": 158,
+        "kind": "FunctionDef"
+      }
+    ],
+    "src/ai_trade/trading_calendar/__init__.py": [],
+    "src/ai_trade/trading_calendar/repository.py": [
+      {
+        "name": "TradingCalendar",
+        "line": 18,
+        "end": 27,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "_day",
+        "line": 30,
+        "end": 33,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "SQLiteTradingCalendar",
+        "line": 36,
+        "end": 111,
+        "kind": "ClassDef"
+      },
+      {
+        "name": "write_many",
+        "line": 19,
+        "end": 19,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_day",
+        "line": 21,
+        "end": 21,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "trading_days",
+        "line": 23,
+        "end": 24,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "previous_known_trading_day",
+        "line": 26,
+        "end": 27,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "__init__",
+        "line": 37,
+        "end": 38,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "_insert",
+        "line": 41,
+        "end": 46,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "write_many",
+        "line": 48,
+        "end": 49,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "get_day",
+        "line": 51,
+        "end": 64,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "trading_days",
+        "line": 66,
+        "end": 93,
+        "kind": "FunctionDef"
+      },
+      {
+        "name": "previous_known_trading_day",
+        "line": 95,
+        "end": 111,
+        "kind": "FunctionDef"
+      }
+    ]
+  },
+  "limits": {
+    "database_writes": false,
+    "initialize_or_migrate": false,
+    "network_market_or_aws": false,
+    "app_started": false,
+    "new_schema_implemented": false,
+    "tests_executed": false
+  },
+  "selected_dictionary_sections": [
+    {
+      "id": "B01",
+      "title": "B01 data_sources",
+      "source_line": 98,
+      "text_sha256": "49f0476bce1c70b6b1dda7d8823f0d7a1758551b0f2f152c20d1394726b23c9a"
+    },
+    {
+      "id": "B02",
+      "title": "B02 evidence_objects",
+      "source_line": 104,
+      "text_sha256": "3ce9273def51c094b6c6acb6057542012d8a975f1ad9428af8c5e6c506a0a9eb"
+    },
+    {
+      "id": "B03",
+      "title": "B03 ingestion_attempts",
+      "source_line": 110,
+      "text_sha256": "cd2f5d3fab9e463bcf107568d642168ce00e48c7953df4282022fb7a16e7c122"
+    },
+    {
+      "id": "B04",
+      "title": "B04 data_versions（通用引用目录，不替代事实表）",
+      "source_line": 116,
+      "text_sha256": "61206b8b06e896c25085340246ee271b99a78f71e458b097e0b335466838cf6f"
+    },
+    {
+      "id": "B05",
+      "title": "B05 legacy_version_links",
+      "source_line": 123,
+      "text_sha256": "17a96de8c61161fd6e459e93291ee53e0849e3264faabe88280830263e7aca4a"
+    },
+    {
+      "id": "B06",
+      "title": "B06 quality_assessments",
+      "source_line": 129,
+      "text_sha256": "cfa51b8d853e9c87ba8992be30d7dedc6a449b356e9cf3bce6eafa88a98be113"
+    },
+    {
+      "id": "B07",
+      "title": "B07 verification_receipts",
+      "source_line": 135,
+      "text_sha256": "49e62b07ebc8ace5d1ff10187f4d5cfd49f8536f94e73457e5d83764b65bd726"
+    },
+    {
+      "id": "B08",
+      "title": "B08 instrument_catalog",
+      "source_line": 141,
+      "text_sha256": "bf271e75f003bfe2666a8941aad6a8e2f2ea20fcd18cb4832ba76697eb6eb6d6"
+    },
+    {
+      "id": "B09",
+      "title": "B09 security_state_versions",
+      "source_line": 147,
+      "text_sha256": "df6c89e3381c9f0508f540e311d21310576902a9b38eccb431883ccfdf63570d"
+    },
+    {
+      "id": "B10",
+      "title": "B10 market_session_versions",
+      "source_line": 153,
+      "text_sha256": "96ce0926112dac75c14bdf80afe8840e2148398a90edb0a2a499da6447c2ab09"
+    },
+    {
+      "id": "B11",
+      "title": "B11 index_bar_versions",
+      "source_line": 159,
+      "text_sha256": "708a5fb2c3fa4b2d88c6519103e32faf19281ffcfa067db58b901df8248e1d03"
+    },
+    {
+      "id": "B14",
+      "title": "B14 universe_versions",
+      "source_line": 177,
+      "text_sha256": "30b0973f5a11bffe9841d55efa143bd36c4e0b04f2a41768f01212b31d0240bf"
+    },
+    {
+      "id": "B15",
+      "title": "B15 universe_members",
+      "source_line": 183,
+      "text_sha256": "754ce96d6e9704e887b5329c07146ffecbdd6b07af345ea24e6a822612cccb21"
+    },
+    {
+      "id": "R01",
+      "title": "R01 market_breadth_versions",
+      "source_line": 197,
+      "text_sha256": "3f16a10366e2dbe3f76364a531cc1629b2052f9b2b22c7e5c37cc5ab1546e903"
+    },
+    {
+      "id": "R02",
+      "title": "R02 market_amount_versions",
+      "source_line": 203,
+      "text_sha256": "e8bcdcec02b5ea3070bea7fe863cd6fc90a0555da9678b80a52b30098cbb5539"
+    },
+    {
+      "id": "R03",
+      "title": "R03 cffex_report_versions",
+      "source_line": 209,
+      "text_sha256": "655c5dc3cc13c5be042ea8b4340c9b1f94d5b8bf13e6b40a506197e9fa176d0c"
+    },
+    {
+      "id": "R04",
+      "title": "R04 cffex_rank_rows",
+      "source_line": 215,
+      "text_sha256": "0c1f30fbfc6bc6850c177185f5079dddcb83d7bcc35f12c2ebbbb5a42b02e925"
+    },
+    {
+      "id": "A01",
+      "title": "A01 input_snapshots",
+      "source_line": 235,
+      "text_sha256": "5ffd2825c761938d83bcb164963b326448c4be1e06d74cf063f8856989ea4414"
+    },
+    {
+      "id": "A02",
+      "title": "A02 input_snapshot_items",
+      "source_line": 241,
+      "text_sha256": "2da0deb2e10086b1751dbb8f4742746136052667a0175842e2c93663e907020f"
+    },
+    {
+      "id": "A03",
+      "title": "A03 analysis_runs",
+      "source_line": 247,
+      "text_sha256": "b05816c7f04de46e0d9c3c39aba17a0942d44389917d44823a232a47944b2f76"
+    },
+    {
+      "id": "A04",
+      "title": "A04 analysis_dependencies",
+      "source_line": 253,
+      "text_sha256": "119f70ff67acc986e51e95055d944ac0519a55f27b972a1386b7d741f4afa1ba"
+    },
+    {
+      "id": "A06",
+      "title": "A06 m3_diagnostics",
+      "source_line": 265,
+      "text_sha256": "3860f9218cd805b116e0b74432ba6db8d16b7f2d2bd21d6ccd754070b804dfca"
+    },
+    {
+      "id": "A07",
+      "title": "A07 factor_values",
+      "source_line": 288,
+      "text_sha256": "54d4974e951e7f6bcebe96d07c9d03bc9dddf05246e205b7e297fe489e791d1d"
+    },
+    {
+      "id": "A17",
+      "title": "A17 input_snapshot_checks",
+      "source_line": 348,
+      "text_sha256": "10a0e0ed7fcad06c2091ad8ce80b8f04e6d5c373de7df87467dfb5c585ee3179"
+    }
+  ],
+  "deferred_dictionary_sections": [
+    {
+      "id": "B12",
+      "title": "B12 corporate_action_versions"
+    },
+    {
+      "id": "B13",
+      "title": "B13 adjustment_factor_versions"
+    },
+    {
+      "id": "B16",
+      "title": "B16 instrument_alias_versions（P2受限映射）"
+    },
+    {
+      "id": "R05",
+      "title": "R05 sector_versions"
+    },
+    {
+      "id": "R06",
+      "title": "R06 sector_members"
+    },
+    {
+      "id": "A05",
+      "title": "A05 m2_snapshots"
+    },
+    {
+      "id": "A08",
+      "title": "A08 m4_evaluations"
+    },
+    {
+      "id": "A09",
+      "title": "A09 trade_plans"
+    },
+    {
+      "id": "A10",
+      "title": "A10 m5_runs"
+    },
+    {
+      "id": "A11",
+      "title": "A11 m5_trades"
+    },
+    {
+      "id": "A12",
+      "title": "A12 m5_metrics"
+    },
+    {
+      "id": "A13",
+      "title": "A13 publication_batches"
+    },
+    {
+      "id": "A14",
+      "title": "A14 publication_items"
+    },
+    {
+      "id": "A15",
+      "title": "A15 publication_events"
+    },
+    {
+      "id": "A16",
+      "title": "A16 m5_account_events"
+    }
+  ],
+  "test_sources_read": {
+    "tests/unit/test_cffex_rankings.py": {
+      "sha256": "da5bc4d80880b7a534df2a3dc7605832b34cce6bc2a63323dfe449c4cf9ebaba",
+      "definitions": [
+        {
+          "name": "test_url_month_day_keyed",
+          "line": 90
+        },
+        {
+          "name": "test_url_rejects_bad_variety_at_ingest",
+          "line": 93
+        },
+        {
+          "name": "test_parses_all_four_varieties",
+          "line": 103
+        },
+        {
+          "name": "test_rank_completeness_per_contract",
+          "line": 110
+        },
+        {
+          "name": "test_member_scope_detection",
+          "line": 117
+        },
+        {
+          "name": "test_missing_side_is_unknown_not_zero",
+          "line": 125
+        },
+        {
+          "name": "test_net_is_none_when_side_missing",
+          "line": 146
+        },
+        {
+          "name": "test_net_known_when_both_sides_known",
+          "line": 158
+        },
+        {
+          "name": "test_refuses_unknown_or_combined_scope",
+          "line": 169
+        },
+        {
+          "name": "test_available_at_floors_to_next_session",
+          "line": 180
+        },
+        {
+          "name": "test_known_publication_time_advances_available_at",
+          "line": 188
+        },
+        {
+          "name": "test_ingested_before_observed_rejected",
+          "line": 198
+        },
+        {
+          "name": "test_2019_category_format",
+          "line": 206
+        },
+        {
+          "name": "test_2010_first_day",
+          "line": 217
+        },
+        {
+          "name": "test_404_page_is_response_not_data",
+          "line": 226
+        },
+        {
+          "name": "test_home_fallback_is_response_not_data",
+          "line": 232
+        },
+        {
+          "name": "test_empty_body",
+          "line": 238
+        },
+        {
+          "name": "test_malformed_named_csv_fails_explicitly",
+          "line": 243
+        },
+        {
+          "name": "test_date_mismatch_rejected",
+          "line": 248
+        },
+        {
+          "name": "test_variety_mismatch_rejected",
+          "line": 253
+        },
+        {
+          "name": "test_success_returns_record",
+          "line": 267
+        },
+        {
+          "name": "test_404_known_closed_requires_calendar",
+          "line": 276
+        },
+        {
+          "name": "test_home_fallback_is_response_error_not_success",
+          "line": 290
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_cffex_high_assurance.py": {
+      "sha256": "a4f71c0a557a2c7b5da50194557866cbc3871d8417dee186239f69c8f3cec16a",
+      "definitions": [
+        {
+          "name": "test_all_request_paths",
+          "line": 22
+        },
+        {
+          "name": "test_invalid_request_never_reaches_transport",
+          "line": 27
+        },
+        {
+          "name": "test_named_rejects_structural_corruption",
+          "line": 37
+        },
+        {
+          "name": "test_mixed_rejects_same_corruption",
+          "line": 61
+        },
+        {
+          "name": "test_utf8_bom_quoted_member_and_separate_volume",
+          "line": 75
+        },
+        {
+          "name": "test_zero_missing_and_scope_nets_are_distinct",
+          "line": 86
+        },
+        {
+          "name": "test_weekend_and_late_acquisition",
+          "line": 108
+        },
+        {
+          "name": "test_synthetic_holiday_range_and_first_session",
+          "line": 115
+        },
+        {
+          "name": "test_missing_calendar_fails_closed",
+          "line": 122
+        },
+        {
+          "name": "test_no_invented_or_future_publication",
+          "line": 138
+        },
+        {
+          "name": "test_actual_read_and_net_gate",
+          "line": 142
+        },
+        {
+          "name": "test_revision_read_preserves_old_cutoff_and_evidence",
+          "line": 161
+        },
+        {
+          "name": "test_duplicate_is_not_durable_registration",
+          "line": 171
+        },
+        {
+          "name": "test_revision_conflicts_fail_closed",
+          "line": 181
+        },
+        {
+          "name": "test_http_single_get_no_redirect_no_retry",
+          "line": 206
+        },
+        {
+          "name": "test_transport_chain_retained_credentials_not_reported",
+          "line": 216
+        },
+        {
+          "name": "test_transport_body_bounds_and_resource_release",
+          "line": 228
+        },
+        {
+          "name": "test_timeout_bounded",
+          "line": 240
+        },
+        {
+          "name": "test_404_requires_independent_calendar",
+          "line": 246
+        },
+        {
+          "name": "test_200_body_failure_is_not_valid_empty_data",
+          "line": 254
+        },
+        {
+          "name": "test_sqlite_contract_remains_existing_schema_only",
+          "line": 260
+        },
+        {
+          "name": "test_read_gate_revalidates_caller_constructed_record",
+          "line": 269
+        },
+        {
+          "name": "test_unknown_calendar_times_are_calendar_errors_and_no_run_no_request",
+          "line": 283
+        },
+        {
+          "name": "test_derived_read_selects_the_visible_revision_not_the_latest_payload",
+          "line": 293
+        },
+        {
+          "name": "test_scope_tampering_and_self_revision_are_rejected_by_read",
+          "line": 303
+        },
+        {
+          "name": "test_declared_mixed_section_cannot_silently_disappear",
+          "line": 312
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_market_analysis_core.py": {
+      "sha256": "8b926ea646e8be1de789defdd5c5a128f61355580a054d4b9b6a9189892eee9e",
+      "definitions": [
+        {
+          "name": "test_contract_unknown_zero_json_and_snapshot_identity",
+          "line": 68
+        },
+        {
+          "name": "test_daily_exact_minimum",
+          "line": 92
+        },
+        {
+          "name": "test_weekly_closed_minimum_ohlc",
+          "line": 100
+        },
+        {
+          "name": "test_partial_first_week_is_excluded",
+          "line": 110
+        },
+        {
+          "name": "test_missing_calendar_session_stale_and_no_fake_denominator",
+          "line": 120
+        },
+        {
+          "name": "test_late_capture_does_not_enter_historical_as_of",
+          "line": 135
+        },
+        {
+          "name": "test_invalid_input_fail_closed",
+          "line": 148
+        },
+        {
+          "name": "test_no_data_and_uncertified_historical_time_modes",
+          "line": 162
+        },
+        {
+          "name": "test_right_confirmation_and_prefix_replay",
+          "line": 175
+        },
+        {
+          "name": "test_breadth_denominator_partition_and_dated_universe",
+          "line": 190
+        },
+        {
+          "name": "test_breadth_missing_bad_or_future_universe_never_qualifies",
+          "line": 208
+        },
+        {
+          "name": "test_full_six_factors_and_proxy_separate_and_exact_formula",
+          "line": 221
+        },
+        {
+          "name": "test_any_missing_market_factor_nulls_full_score",
+          "line": 238
+        },
+        {
+          "name": "test_percentile_excludes_current_and_future",
+          "line": 245
+        },
+        {
+          "name": "test_cffex_arithmetic_scope_contract_zero_unknown_and_expiry",
+          "line": 265
+        },
+        {
+          "name": "test_cffex_requires_publication_scope_and_calendar_before_direction",
+          "line": 282
+        },
+        {
+          "name": "test_environment_conflict_missing_and_snapshot_mismatch",
+          "line": 298
+        },
+        {
+          "name": "test_l3_needs_sha_data_and_independent_execution_review_receipt",
+          "line": 317
+        },
+        {
+          "name": "test_synthetic_or_unknown_authorization_cannot_reach_research",
+          "line": 334
+        },
+        {
+          "name": "test_public_worker_bounds_and_tls",
+          "line": 343
+        },
+        {
+          "name": "test_old_snapshots_do_not_acquire_fabricated_ingestion_time",
+          "line": 377
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_market_analysis_core_validation.py": {
+      "sha256": "695aff30bebd589cb32d80e690169a168467f648324b96adea84b35c7dddab36",
+      "definitions": [
+        {
+          "name": "test_review_counterexamples_fail_closed",
+          "line": 69
+        },
+        {
+          "name": "test_every_visible_identity_is_checked",
+          "line": 88
+        },
+        {
+          "name": "test_explicit_quality_rejection_cannot_be_overridden_by_receipts",
+          "line": 100
+        },
+        {
+          "name": "test_missing_quality_remains_unknown",
+          "line": 113
+        },
+        {
+          "name": "test_absent_quality_column_is_not_accepted",
+          "line": 127
+        },
+        {
+          "name": "test_turnover_bad_sample_is_structured_not_an_exception",
+          "line": 139
+        },
+        {
+          "name": "test_accepted_control_still_qualifies",
+          "line": 149
+        },
+        {
+          "name": "test_real_zero_and_finite_numeric_turnover_survive",
+          "line": 160
+        },
+        {
+          "name": "test_cffex_quality_gate",
+          "line": 179
+        },
+        {
+          "name": "test_cffex_missing_quality_is_not_certified_by_receipts",
+          "line": 184
+        },
+        {
+          "name": "test_cffex_explicit_accepted_control",
+          "line": 193
+        },
+        {
+          "name": "test_rejected_component_never_opens_environment_or_l3",
+          "line": 199
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_market_analysis_core_boundaries.py": {
+      "sha256": "f1850acff1d1347be4b9d11368cf71e2b7a975ff5baf0cf5b6c3e0725e3b735c",
+      "definitions": [
+        {
+          "name": "test_review_regressions",
+          "line": 80
+        },
+        {
+          "name": "test_matching_invalid_declaration_and_records_cannot_gain_admission",
+          "line": 106
+        },
+        {
+          "name": "test_cffex_matching_control_character_identities_are_structured",
+          "line": 126
+        },
+        {
+          "name": "test_record_only_controls_are_checked_at_every_position",
+          "line": 133
+        },
+        {
+          "name": "test_unsupported_or_overflowing_scalars_are_contextual",
+          "line": 149
+        },
+        {
+          "name": "test_supported_numeric_scalars_have_full_chain_controls",
+          "line": 161
+        },
+        {
+          "name": "test_equivalent_offsets_have_identical_diagnostics_and_preserve_inputs",
+          "line": 182
+        },
+        {
+          "name": "test_invalid_cffex_component_clears_environment_values",
+          "line": 202
+        },
+        {
+          "name": "test_invalid_numeric_components_cannot_open_environment",
+          "line": 215
+        },
+        {
+          "name": "test_numpy_missing_quality_retains_unknown_semantics",
+          "line": 228
+        },
+        {
+          "name": "test_offset_normalization_does_not_admit_a_future_acquisition",
+          "line": 239
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_market_analysis_view.py": {
+      "sha256": "b117cac819b266589a7406b5a8d1469c906dc45ba3b7c90f188c5f734424e53d",
+      "definitions": [
+        {
+          "name": "test_formal_family_mapping_and_unknown_denominator",
+          "line": 24
+        },
+        {
+          "name": "test_real_core_scenario_mapping_does_not_upgrade",
+          "line": 46
+        },
+        {
+          "name": "test_conflict_is_preserved_and_blocked_payload_never_displayable",
+          "line": 77
+        },
+        {
+          "name": "test_archive_mapping_preserves_row_identity_time_and_unknown_receipts",
+          "line": 95
+        },
+        {
+          "name": "test_breadth_does_not_overwrite_dates_or_deduplicate_versions",
+          "line": 114
+        },
+        {
+          "name": "test_stock_never_fabricates_observation_from_ingestion",
+          "line": 125
+        },
+        {
+          "name": "test_metadata_is_sanitized_and_raw_payload_omitted",
+          "line": 132
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_m3_data_pipeline.py": {
+      "sha256": "3736a22ee7e01fdab6c231accfb73c256811c5ab331cfc203e80a2182268e59d",
+      "definitions": [
+        {
+          "name": "test_empty_sources_are_separate_blocked_core_diagnostics",
+          "line": 41
+        },
+        {
+          "name": "test_transport_success_does_not_issue_receipts_or_hide_unknown_quality",
+          "line": 50
+        },
+        {
+          "name": "test_legacy_observation_does_not_gain_ingestion_or_event_time",
+          "line": 62
+        },
+        {
+          "name": "test_late_acquisition_cannot_replay_old_history",
+          "line": 69
+        },
+        {
+          "name": "test_bad_records_propagate_without_selection_or_partial_calculation",
+          "line": 76
+        },
+        {
+          "name": "test_partial_breadth_and_stock_amount_cannot_make_full_score",
+          "line": 91
+        },
+        {
+          "name": "test_raw_cffex_csv_is_not_converted_into_a_certified_ranking_version",
+          "line": 106
+        },
+        {
+          "name": "test_publishable_summary_drops_all_input_and_numeric_output_values",
+          "line": 113
+        },
+        {
+          "name": "test_default_run_never_constructs_a_client_or_starts_network_worker",
+          "line": 122
+        },
+        {
+          "name": "test_worker_requires_enable_before_directory_or_client",
+          "line": 133
+        },
+        {
+          "name": "test_output_cannot_target_a_production_path",
+          "line": 139
+        },
+        {
+          "name": "test_transport_budget_blocks_before_real_send_and_restores_patch",
+          "line": 146
+        },
+        {
+          "name": "test_response_size_failure_keeps_observed_http_status",
+          "line": 169
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_workbench_storage.py": {
+      "sha256": "af020da763cf622f07e585955b82c7ab9afda18516c5fabfaa1b5b30b0227396",
+      "definitions": [
+        {
+          "name": "test_initialization_backup_restore_and_repeat_refusal",
+          "line": 30
+        },
+        {
+          "name": "test_ordinary_open_and_repository_cannot_write_or_initialize",
+          "line": 43
+        },
+        {
+          "name": "test_init_refuses_protected_paths_before_any_creation",
+          "line": 65
+        },
+        {
+          "name": "test_strict_configuration_never_chooses_demo",
+          "line": 87
+        },
+        {
+          "name": "test_configuration_conflicts_and_explicit_writer",
+          "line": 94
+        },
+        {
+          "name": "test_schema_or_corruption_stops_without_repair",
+          "line": 111
+        },
+        {
+          "name": "test_missing_file_after_config_does_not_recreate",
+          "line": 139
+        },
+        {
+          "name": "test_backup_refuses_existing_destination_and_preserves_source",
+          "line": 151
+        },
+        {
+          "name": "test_existing_wrong_journal_is_not_switched",
+          "line": 161
+        },
+        {
+          "name": "test_backup_restore_preserves_nonempty_versions_and_times",
+          "line": 174
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_db.py": {
+      "sha256": "2eae7d017aebd7451b6828a61ff6f6143636977fd0d806b5de78cfd087d197d2",
+      "definitions": [
+        {
+          "name": "test_first_initialization_and_ledger",
+          "line": 15
+        },
+        {
+          "name": "test_repeated_initialization_preserves_data",
+          "line": 30
+        },
+        {
+          "name": "test_connection_closed_on_both_paths",
+          "line": 40
+        },
+        {
+          "name": "test_transaction_commit_and_exception_rollback",
+          "line": 55
+        },
+        {
+          "name": "test_interrupt_rolls_back_and_closes",
+          "line": 66
+        },
+        {
+          "name": "test_foreign_keys_enforced",
+          "line": 77
+        },
+        {
+          "name": "test_second_migration_is_repeatable",
+          "line": 84
+        },
+        {
+          "name": "test_failed_migration_rolls_back_ddl_and_version",
+          "line": 94
+        },
+        {
+          "name": "test_first_migration_failure_is_atomic",
+          "line": 105
+        },
+        {
+          "name": "test_checksum_drift_rejected",
+          "line": 114
+        },
+        {
+          "name": "test_future_schema_rejected",
+          "line": 120
+        },
+        {
+          "name": "test_history_gap_rejected",
+          "line": 126
+        },
+        {
+          "name": "test_registry_gap_rejected",
+          "line": 133
+        },
+        {
+          "name": "test_unversioned_database_not_adopted",
+          "line": 138
+        },
+        {
+          "name": "test_delete_journal_option",
+          "line": 148
+        },
+        {
+          "name": "test_config_environments_are_explicit",
+          "line": 155
+        },
+        {
+          "name": "test_invalid_configuration_rejected",
+          "line": 171
+        },
+        {
+          "name": "test_blank_env_path_rejected",
+          "line": 176
+        },
+        {
+          "name": "test_test_databases_are_isolated",
+          "line": 181
+        },
+        {
+          "name": "test_initialization_cli_from_another_directory",
+          "line": 192
+        },
+        {
+          "name": "test_audit_data_is_append_only",
+          "line": 206
+        },
+        {
+          "name": "test_replace_cannot_bypass_immutable_history",
+          "line": 214
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_reference_data.py": {
+      "sha256": "d4fec8142e0a1033e7738d246e8a8d48cab3e39cbf65d93eb96c16818da775f1",
+      "definitions": [
+        {
+          "name": "test_v1_upgrade_preserves_daily_data_and_released_checksum",
+          "line": 75
+        },
+        {
+          "name": "test_v2_failure_rolls_back_tables_and_ledger",
+          "line": 90
+        },
+        {
+          "name": "test_master_read_metadata_and_repeat_initialization",
+          "line": 107
+        },
+        {
+          "name": "test_exchange_and_code_formats",
+          "line": 121
+        },
+        {
+          "name": "test_invalid_master_rejected_without_rows",
+          "line": 141
+        },
+        {
+          "name": "test_listing_and_delisting_half_open_boundaries",
+          "line": 150
+        },
+        {
+          "name": "test_name_change_and_historical_revision_do_not_backfill",
+          "line": 160
+        },
+        {
+          "name": "test_unknown_effective_period_and_risk_stay_unknown",
+          "line": 174
+        },
+        {
+          "name": "test_both_cutoffs_and_timezone_required",
+          "line": 183
+        },
+        {
+          "name": "test_master_duplicate_never_overwrites",
+          "line": 194
+        },
+        {
+          "name": "test_master_conflict_and_backdated_revision_rejected",
+          "line": 209
+        },
+        {
+          "name": "test_canonical_source_change_requires_explicit_revision_and_cannot_fork",
+          "line": 217
+        },
+        {
+          "name": "test_existing_bar_anchor_reused_and_symbol_change_not_silent",
+          "line": 227
+        },
+        {
+          "name": "test_code_reuse_requires_nonoverlapping_lifetimes",
+          "line": 236
+        },
+        {
+          "name": "test_code_reuse_checks_historical_visibility_not_only_current_head",
+          "line": 250
+        },
+        {
+          "name": "test_open_closed_missing_source_error_are_distinct",
+          "line": 266
+        },
+        {
+          "name": "test_calendar_range_and_previous_known_are_bounded_and_explicit",
+          "line": 279
+        },
+        {
+          "name": "test_partial_ranges_never_hide_missing_or_errors",
+          "line": 291
+        },
+        {
+          "name": "test_all_closed_is_not_same_as_missing",
+          "line": 307
+        },
+        {
+          "name": "test_calendar_revisions_future_announcements_and_error_do_not_revive_old",
+          "line": 318
+        },
+        {
+          "name": "test_calendar_exchange_isolation",
+          "line": 337
+        },
+        {
+          "name": "test_calendar_invalid_fact_rejected",
+          "line": 351
+        },
+        {
+          "name": "test_metadata_is_explicit_and_not_fabricated",
+          "line": 363
+        },
+        {
+          "name": "test_batch_validation_duplicate_and_generator_failure_roll_back_all",
+          "line": 370
+        },
+        {
+          "name": "test_new_tables_are_append_only",
+          "line": 390
+        },
+        {
+          "name": "test_sql_master_integrity_without_repository_validation",
+          "line": 405
+        },
+        {
+          "name": "test_database_integrity_and_run_id_shared_across_datasets",
+          "line": 431
+        },
+        {
+          "name": "test_previous_with_no_usable_day_preserves_failure_kind",
+          "line": 443
+        },
+        {
+          "name": "test_sql_calendar_constraints",
+          "line": 452
+        },
+        {
+          "name": "test_calendar_duplicate_conflicting_root_and_fork_are_not_overwritten",
+          "line": 472
+        },
+        {
+          "name": "test_invalid_range_query_is_explicit",
+          "line": 491
+        },
+        {
+          "name": "test_calendar_first_observation_waits_for_ingestion",
+          "line": 497
+        },
+        {
+          "name": "test_reference_suite_inherits_default_network_block",
+          "line": 504
+        }
+      ],
+      "execution": "NOT_RUN"
+    },
+    "tests/unit/test_market_data_repository.py": {
+      "sha256": "19ba5fb7acb1fd1426fb7a6e2298837b999519fc17dbfccc41de50db0c6d2ca4",
+      "definitions": [
+        {
+          "name": "test_normal_batch_and_portable_read",
+          "line": 26
+        },
+        {
+          "name": "test_same_version_duplicate_never_overwrites",
+          "line": 40
+        },
+        {
+          "name": "test_duplicate_run_rejected",
+          "line": 48
+        },
+        {
+          "name": "test_duplicate_within_same_batch_rolls_back",
+          "line": 55
+        },
+        {
+          "name": "test_late_invalid_record_rolls_back_entire_batch",
+          "line": 61
+        },
+        {
+          "name": "test_late_conflict_preserves_existing_rows_only",
+          "line": 67
+        },
+        {
+          "name": "test_generator_failure_rolls_back",
+          "line": 75
+        },
+        {
+          "name": "test_missing_run_id_rejected",
+          "line": 85
+        },
+        {
+          "name": "test_empty_batch_rejected",
+          "line": 91
+        },
+        {
+          "name": "test_strict_read_waits_for_both_timestamps",
+          "line": 101
+        },
+        {
+          "name": "test_available_after_ingestion_still_limits_read",
+          "line": 108
+        },
+        {
+          "name": "test_revision_is_append_only_and_not_backfilled",
+          "line": 116
+        },
+        {
+          "name": "test_sources_are_separate_and_never_automatically_selected",
+          "line": 130
+        },
+        {
+          "name": "test_adjustment_methods_have_distinct_logical_objects",
+          "line": 140
+        },
+        {
+          "name": "test_symbol_reuse_does_not_merge_listing_entities",
+          "line": 150
+        },
+        {
+          "name": "test_instrument_symbol_conflict_rejected",
+          "line": 158
+        },
+        {
+          "name": "test_invalid_revision_chain_rejected",
+          "line": 174
+        },
+        {
+          "name": "test_revision_cannot_fork",
+          "line": 182
+        },
+        {
+          "name": "test_quarantined_revision_blocks_strict_instead_of_reviving_old",
+          "line": 193
+        },
+        {
+          "name": "test_research_still_refuses_future_records",
+          "line": 204
+        },
+        {
+          "name": "test_read_requires_explicit_valid_query",
+          "line": 214
+        },
+        {
+          "name": "test_sql_constraints_defend_against_repository_bypass",
+          "line": 225
+        },
+        {
+          "name": "test_sql_logical_key_is_unique",
+          "line": 241
+        }
+      ],
+      "execution": "NOT_RUN"
+    }
+  },
+  "formal_observation_archive": {
+    "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\m3-observations",
+    "exists": false,
+    "json_file_count": 0,
+    "raw_payload_read": false
+  },
+  "existing_pipeline_artifact": {
+    "path": "F:\\codex-agnes\\AI-trade-m3-data-pipeline-001\\artifacts\\m3-data-pipeline-001\\live\\pipeline-20261020T153923Z-c55591fd\\pipeline-bundle.json",
+    "bytes": 260345,
+    "sha256": "e4de80a6e6041dda389bf4e5a8a014881481e3c438a7561102ae648598aa2589",
+    "run_id": "pipeline-20261020T153923Z-c55591fd",
+    "request": {
+      "analysis_date": "2026-10-19",
+      "as_of": "2026-10-20T15:39:40.727243+00:00",
+      "mode": "research"
+    },
+    "baseline_sha": "94cdd487bfd4633ecc2f002aad014f98dec961a5",
+    "diagnostic_count": 12,
+    "all_diagnostics_have_values_key": true,
+    "meaning": "HISTORICAL_FILE_ONLY; not a formal DB row or source verification"
+  },
+  "static_validation": {
+    "selected_sections_exact_match": 24,
+    "deferred_sections": 15,
+    "local_links_checked": 10,
+    "fixed_source_anchors_checked": 7,
+    "markdown_fences": "PASS",
+    "json_parse": "PASS",
+    "source_files_unchanged": 69,
+    "formal_database_and_sidecars_unchanged_since_read": true,
+    "pytest": "NOT_RUN",
+    "schema_implementation": "NOT_STARTED",
+    "links": [
+      {
+        "from": "docs/audits/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../architecture/M3_CORE_DATA_MODEL_DICTIONARY.md"
+      },
+      {
+        "from": "docs/audits/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json"
+      },
+      {
+        "from": "docs/audits/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../tasks/TASK-M3-CORE-DATA-MODEL-001.md"
+      },
+      {
+        "from": "docs/audits/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../architecture/M3_CORE_DATA_MODEL_DICTIONARY.md"
+      },
+      {
+        "from": "docs/architecture/M3_CORE_DATA_MODEL_DICTIONARY.md",
+        "target": "DATA_DICTIONARY.md#0-记法与所有候选表适用的规则"
+      },
+      {
+        "from": "docs/architecture/M3_CORE_DATA_MODEL_DICTIONARY.md",
+        "target": "../audits/TASK-M3-CORE-DATA-MODEL-001.md"
+      },
+      {
+        "from": "docs/architecture/M3_CORE_DATA_MODEL_DICTIONARY.md",
+        "target": "../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json"
+      },
+      {
+        "from": "docs/tasks/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../audits/TASK-M3-CORE-DATA-MODEL-001.md"
+      },
+      {
+        "from": "docs/tasks/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../architecture/M3_CORE_DATA_MODEL_DICTIONARY.md"
+      },
+      {
+        "from": "docs/tasks/TASK-M3-CORE-DATA-MODEL-001.md",
+        "target": "../evidence/TASK_M3_CORE_DATA_MODEL_001_AUDIT.json"
+      }
+    ]
+  }
+}

@@ -157,10 +157,15 @@ def past_percentile(values: pd.Series, window=60, minimum=20) -> pd.Series:
     return values.rolling(window+1, min_periods=minimum+1).apply(rank, raw=True)
 
 
-def fear_greed(frame: pd.DataFrame, *, analysis_date: str, as_of: str, breadth: pd.DataFrame | None = None) -> pd.DataFrame:
+def _fear_greed(frame: pd.DataFrame, *, analysis_date: str, as_of: str, breadth: pd.DataFrame | None = None):
     f = visible_prices(frame, analysis_date=analysis_date, as_of=as_of)
     close = f.close
     factors = pd.DataFrame(index=f.index)
+    raw = pd.DataFrame(index=f.index)
+    raw["趋势"] = close/close.rolling(20, min_periods=20).mean()-1
+    raw["动量"] = close/close.shift(5)-1
+    raw["低波动"] = close.pct_change(fill_method=None).rolling(20, min_periods=20).std(ddof=0)
+    raw["上涨占比"], raw["涨停占比"], raw["成交额"] = float("nan"), float("nan"), float("nan")
     factors["趋势"] = (50+500*(close/close.rolling(20, min_periods=20).mean()-1)).clip(0, 100)
     factors["动量"] = past_percentile(close/close.shift(5)-1)
     factors["低波动"] = 100-past_percentile(close.pct_change(fill_method=None).rolling(20, min_periods=20).std(ddof=0))
@@ -170,6 +175,7 @@ def fear_greed(frame: pd.DataFrame, *, analysis_date: str, as_of: str, breadth: 
         if ((amount.dropna() < 0) | ~amount.dropna().map(math.isfinite)).any():
             raise ValueError("成交额无效")
         factors["成交额"] = past_percentile(amount/amount.shift(1).rolling(20, min_periods=20).mean().replace(0, float("nan")))
+        raw["成交额"] = amount/amount.shift(1).rolling(20, min_periods=20).mean().replace(0, float("nan"))
     if breadth is not None and not breadth.empty:
         b = breadth.copy()
         if b.trade_date.duplicated().any():
@@ -185,13 +191,45 @@ def fear_greed(frame: pd.DataFrame, *, analysis_date: str, as_of: str, breadth: 
             mask = f.trade_date == row["trade_date"]
             factors.loc[mask, "上涨占比"] = 100*numbers[0]/total if total else float("nan")
             factors.loc[mask, "涨停占比"] = 100*numbers[3]/limits if limits else float("nan")
+            raw.loc[mask, "上涨占比"] = numbers[0]/total if total else float("nan")
+            raw.loc[mask, "涨停占比"] = numbers[3]/limits if limits else float("nan")
     f = pd.concat([f, factors], axis=1)
     f["coverage"] = sum(f[k].notna()*w for k, w in WEIGHTS.items())
     f["score"] = sum(f[k]*w for k, w in WEIGHTS.items())  # NaN propagation is intentional
     f["index_proxy"] = sum(f[k]*WEIGHTS[k] for k in list(WEIGHTS)[:3])/.65
     f["percentile"] = past_percentile(f.score, 252)
     f["proxy_percentile"] = past_percentile(f.index_proxy, 252)
-    return f
+    return f, raw
+
+
+def fear_greed(frame: pd.DataFrame, *, analysis_date: str, as_of: str, breadth: pd.DataFrame | None = None) -> pd.DataFrame:
+    """The original return contract and all scoring expressions are unchanged."""
+    return _fear_greed(frame, analysis_date=analysis_date, as_of=as_of, breadth=breadth)[0]
+
+
+def fear_greed_with_trace(frame: pd.DataFrame, *, analysis_date: str, as_of: str,
+                          breadth: pd.DataFrame | None = None):
+    """Expose normalization inputs from the same calculation, without admission.
+
+    Callers must use the core-validated price/ALL_A series and freeze their
+    exact versions. This trace is not a substitute for core diagnostics.
+    """
+    computed, raw = _fear_greed(frame, analysis_date=analysis_date, as_of=as_of, breadth=breadth)
+    trace=[]
+    for index, row in computed.iterrows():
+        for key, weight in WEIGHTS.items():
+            value, normalized=raw.loc[index,key],row[key]
+            rv=None if pd.isna(value) else float(value)
+            nv=None if pd.isna(normalized) else float(normalized)
+            reason=[]
+            if nv is None:
+                reason=['NORMALIZATION_HISTORY_INSUFFICIENT' if rv is not None else
+                        'MARKET_INPUT_OR_DENOMINATOR_MISSING' if key in ('上涨占比','涨停占比','成交额') else 'PRICE_HISTORY_INSUFFICIENT']
+            trace.append(dict(factor_key=key,business_date=row.trade_date,raw_value=rv,
+                raw_unit='ratio',normalized_value=nv,normalization_version='m3-core-rules-v1',
+                weight=weight,contribution=None if nv is None else nv*weight,
+                status='MISSING' if nv is None else 'AVAILABLE',reasons_json=reason))
+    return computed,trace
 
 
 def emotion(score) -> str:

@@ -9,6 +9,8 @@ import pytest
 from ai_trade.data_access.models import IntegrityError
 from ai_trade.data_access.repository import SQLiteMarketDataRepository
 from ai_trade.storage.db import Database, DatabaseConfig
+from ai_trade.storage.schema import MIGRATIONS
+from ai_trade.storage.m3_schema import TABLES
 from ai_trade.storage.workbench import inspect_database, workbench_config
 from ai_trade.storage.workbench_cli import backup_new, initialize_new
 
@@ -32,8 +34,9 @@ def test_initialization_backup_restore_and_repeat_refusal(store):
     result = initialize_new(root, backup, restore)
     assert result["idempotence"]
     assert result["database"]["counts"] == {
-        "schema_migrations": 2, "instruments": 0, "ingestion_runs": 0, "daily_bars": 0,
-        "daily_bar_versions": 0, "security_versions": 0, "calendar_versions": 0}
+        "schema_migrations": len(MIGRATIONS), "instruments": 0, "ingestion_runs": 0, "daily_bars": 0,
+        "daily_bar_versions": 0, "security_versions": 0, "calendar_versions": 0,
+        **dict.fromkeys(TABLES,0)}
     before = {p: digest(p) for p in (root / "workbench.sqlite3", backup, restore)}
     with pytest.raises(FileExistsError):
         initialize_new(root, backup.with_name("unused.sqlite3"), restore.with_name("unused.sqlite3"))

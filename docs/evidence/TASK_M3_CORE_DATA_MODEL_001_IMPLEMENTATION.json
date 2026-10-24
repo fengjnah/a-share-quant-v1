@@ -1,0 +1,4732 @@
+{
+  "task": "TASK-M3-CORE-DATA-MODEL-001",
+  "state": "BLOCKED_G10_NOT_COMPLETE",
+  "captured_at": "2026-10-21T23:58:53.190249+00:00",
+  "approval": "Explicit user reply: 批准该最小方案",
+  "executor": {
+    "model": "gpt-6.1-sol",
+    "reasoning": "high",
+    "delegated": false
+  },
+  "baseline_main": "04e530871e2c8b4889c60027ac8d1ec4275009a2",
+  "baseline_verification": "GitHub connector branches/main API after native git connectivity failure",
+  "implementation_sha": "10c6f2cf6a33327d5e24d7b3880ef485052bb0ca",
+  "source_tests_manifest": [
+    {
+      "path": "src/ai_trade/m3_store_catalog.py",
+      "sha256": "5359e853879763268ea754dff69e0b634b2486aa214c175c9fd0c3a71395680a",
+      "symbols": [
+        {
+          "name": "Batch",
+          "line": 14
+        },
+        {
+          "name": "Provenance",
+          "line": 25
+        },
+        {
+          "name": "audited_write",
+          "line": 38
+        },
+        {
+          "name": "CatalogRepository",
+          "line": 55
+        },
+        {
+          "name": "call",
+          "line": 41
+        },
+        {
+          "name": "__init__",
+          "line": 56
+        },
+        {
+          "name": "_now",
+          "line": 62
+        },
+        {
+          "name": "require",
+          "line": 64
+        },
+        {
+          "name": "_put",
+          "line": 69
+        },
+        {
+          "name": "register_source",
+          "line": 80
+        },
+        {
+          "name": "register_instrument",
+          "line": 89
+        },
+        {
+          "name": "evidence_path",
+          "line": 97
+        },
+        {
+          "name": "put_evidence",
+          "line": 109
+        },
+        {
+          "name": "evidence_bytes",
+          "line": 129
+        },
+        {
+          "name": "record_attempt",
+          "line": 139
+        },
+        {
+          "name": "assess",
+          "line": 149
+        },
+        {
+          "name": "_trusted",
+          "line": 156
+        },
+        {
+          "name": "receipt",
+          "line": 163
+        },
+        {
+          "name": "decision_at",
+          "line": 176
+        },
+        {
+          "name": "_identity",
+          "line": 197
+        },
+        {
+          "name": "_prepare",
+          "line": 200
+        },
+        {
+          "name": "_write",
+          "line": 222
+        },
+        {
+          "name": "_version",
+          "line": 265
+        },
+        {
+          "name": "_unbound",
+          "line": 283
+        },
+        {
+          "name": "get_version",
+          "line": 286
+        },
+        {
+          "name": "select_visible",
+          "line": 290
+        },
+        {
+          "name": "_legacy",
+          "line": 302
+        },
+        {
+          "name": "link_legacy",
+          "line": 312
+        }
+      ],
+      "committed_lf_sha256": "5359e853879763268ea754dff69e0b634b2486aa214c175c9fd0c3a71395680a",
+      "git_blob_sha1": "1db8645d0c31208d673efe2874f3b7cc3ef4e9e8"
+    },
+    {
+      "path": "src/ai_trade/m3_store_market.py",
+      "sha256": "27d7501cf3f5c6726c4007a9095e0d87c6b97309c4a73c1121e3f50333328b11",
+      "symbols": [
+        {
+          "name": "MarketInputRepository",
+          "line": 12
+        },
+        {
+          "name": "save_index",
+          "line": 14
+        },
+        {
+          "name": "save_session",
+          "line": 26
+        },
+        {
+          "name": "save_states",
+          "line": 35
+        },
+        {
+          "name": "_visible",
+          "line": 57
+        },
+        {
+          "name": "save_universe",
+          "line": 62
+        },
+        {
+          "name": "_market_gate",
+          "line": 79
+        },
+        {
+          "name": "save_breadth",
+          "line": 106
+        },
+        {
+          "name": "save_amount",
+          "line": 115
+        },
+        {
+          "name": "save_cffex",
+          "line": 148
+        },
+        {
+          "name": "ranking_calendar",
+          "line": 178
+        },
+        {
+          "name": "get_cffex",
+          "line": 194
+        },
+        {
+          "name": "validate",
+          "line": 18
+        },
+        {
+          "name": "validate",
+          "line": 39
+        },
+        {
+          "name": "validate",
+          "line": 67
+        },
+        {
+          "name": "validate",
+          "line": 108
+        },
+        {
+          "name": "validate",
+          "line": 117
+        },
+        {
+          "name": "finalize",
+          "line": 174
+        },
+        {
+          "name": "Calendar",
+          "line": 186
+        },
+        {
+          "name": "get_day",
+          "line": 187
+        }
+      ],
+      "committed_lf_sha256": "27d7501cf3f5c6726c4007a9095e0d87c6b97309c4a73c1121e3f50333328b11",
+      "git_blob_sha1": "9460a662abb8c09ca448d5b2658773a903a6b641"
+    },
+    {
+      "path": "src/ai_trade/m3_store_results.py",
+      "sha256": "cf9a42ef405ce7e17b919980d209f7a06307bd459f58abb8635d76ad6ae6b904",
+      "symbols": [
+        {
+          "name": "Computation",
+          "line": 30
+        },
+        {
+          "name": "capture_build",
+          "line": 35
+        },
+        {
+          "name": "result_hash",
+          "line": 57
+        },
+        {
+          "name": "M3ResultRepository",
+          "line": 65
+        },
+        {
+          "name": "git",
+          "line": 42
+        },
+        {
+          "name": "_diagnostics",
+          "line": 66
+        },
+        {
+          "name": "_factors",
+          "line": 117
+        },
+        {
+          "name": "_review",
+          "line": 149
+        },
+        {
+          "name": "execute",
+          "line": 158
+        },
+        {
+          "name": "record_failure",
+          "line": 176
+        },
+        {
+          "name": "_execute",
+          "line": 186
+        },
+        {
+          "name": "_run",
+          "line": 238
+        },
+        {
+          "name": "get_run",
+          "line": 248
+        },
+        {
+          "name": "find_runs",
+          "line": 254
+        },
+        {
+          "name": "numeric",
+          "line": 86
+        }
+      ],
+      "committed_lf_sha256": "cf9a42ef405ce7e17b919980d209f7a06307bd459f58abb8635d76ad6ae6b904",
+      "git_blob_sha1": "8c2878369a1318f130ccf8deadc97f1cf5d9fdae"
+    },
+    {
+      "path": "src/ai_trade/m3_store_snapshots.py",
+      "sha256": "df94255c4cb82ed74c001fe238bc47f2d88622c5c201d93dd9f059661b522cc5",
+      "symbols": [
+        {
+          "name": "snapshot_hash",
+          "line": 13
+        },
+        {
+          "name": "SnapshotRepository",
+          "line": 19
+        },
+        {
+          "name": "_check_record",
+          "line": 20
+        },
+        {
+          "name": "seal_snapshot",
+          "line": 43
+        },
+        {
+          "name": "_snapshot",
+          "line": 115
+        },
+        {
+          "name": "get_snapshot",
+          "line": 134
+        }
+      ],
+      "committed_lf_sha256": "df94255c4cb82ed74c001fe238bc47f2d88622c5c201d93dd9f059661b522cc5",
+      "git_blob_sha1": "89baa6955e1905ff089b396ec2598f1488e295a8"
+    },
+    {
+      "path": "src/ai_trade/m3_store_values.py",
+      "sha256": "c3516b71d8b2acd2968821567c77ae3b2d00f9df7f44bfb030f8fee256ebd5e6",
+      "symbols": [
+        {
+          "name": "utc_now",
+          "line": 12
+        },
+        {
+          "name": "stamp",
+          "line": 16
+        },
+        {
+          "name": "text",
+          "line": 23
+        },
+        {
+          "name": "_json_values",
+          "line": 34
+        },
+        {
+          "name": "canonical",
+          "line": 57
+        },
+        {
+          "name": "digest",
+          "line": 64
+        },
+        {
+          "name": "fields",
+          "line": 68
+        },
+        {
+          "name": "insert",
+          "line": 96
+        },
+        {
+          "name": "decoded",
+          "line": 103
+        },
+        {
+          "name": "one",
+          "line": 112
+        },
+        {
+          "name": "rows",
+          "line": 117
+        }
+      ],
+      "committed_lf_sha256": "c3516b71d8b2acd2968821567c77ae3b2d00f9df7f44bfb030f8fee256ebd5e6",
+      "git_blob_sha1": "036cc91a90ffab1b8771f44152e488d7d4c68b05"
+    },
+    {
+      "path": "src/ai_trade/market_analysis.py",
+      "sha256": "7445d3dbef732e2af5d81dcaf5e5ceda24b74bec3d74d925aae9a08d88d78726",
+      "symbols": [
+        {
+          "name": "visible_prices",
+          "line": 29
+        },
+        {
+          "name": "member_position",
+          "line": 55
+        },
+        {
+          "name": "contract_label",
+          "line": 84
+        },
+        {
+          "name": "wave_scenarios",
+          "line": 88
+        },
+        {
+          "name": "past_percentile",
+          "line": 150
+        },
+        {
+          "name": "_fear_greed",
+          "line": 160
+        },
+        {
+          "name": "fear_greed",
+          "line": 205
+        },
+        {
+          "name": "fear_greed_with_trace",
+          "line": 210
+        },
+        {
+          "name": "emotion",
+          "line": 235
+        },
+        {
+          "name": "extreme_outcomes",
+          "line": 241
+        },
+        {
+          "name": "environment",
+          "line": 256
+        },
+        {
+          "name": "rank",
+          "line": 151
+        }
+      ],
+      "committed_lf_sha256": "432ea8a65e00fb11716267a2c3f9ce0b936777e9ec75c2c13f79e22ba2604049",
+      "git_blob_sha1": "d0983b1245a160cb7e717cd7716e7a46a9845318"
+    },
+    {
+      "path": "src/ai_trade/storage/m3_schema.py",
+      "sha256": "48404b9b088ad53732218ba523dad5385c3c20ef52d31f84ec455af1d124bc99",
+      "symbols": [
+        {
+          "name": "date_check",
+          "line": 10
+        },
+        {
+          "name": "time_check",
+          "line": 14
+        },
+        {
+          "name": "hash_check",
+          "line": 18
+        },
+        {
+          "name": "Table",
+          "line": 23
+        },
+        {
+          "name": "_column",
+          "line": 131
+        },
+        {
+          "name": "_table",
+          "line": 144
+        },
+        {
+          "name": "_guard",
+          "line": 165
+        },
+        {
+          "name": "_version_seal",
+          "line": 169
+        },
+        {
+          "name": "provenance_statements",
+          "line": 192
+        },
+        {
+          "name": "market_statements",
+          "line": 202
+        },
+        {
+          "name": "analysis_statements",
+          "line": 215
+        },
+        {
+          "name": "fields",
+          "line": 30
+        }
+      ],
+      "committed_lf_sha256": "48404b9b088ad53732218ba523dad5385c3c20ef52d31f84ec455af1d124bc99",
+      "git_blob_sha1": "ef84d5a21c07efdd47975bb1fff32ae588c8d81e"
+    },
+    {
+      "path": "src/ai_trade/storage/schema.py",
+      "sha256": "748fecfd6ad209949b83d344a3ecacab5f04bc2e2f1f0f7733a904c06c598e20",
+      "symbols": [
+        {
+          "name": "Migration",
+          "line": 12
+        },
+        {
+          "name": "checksum",
+          "line": 20
+        }
+      ],
+      "committed_lf_sha256": "5c056020bd65e2f8f7319f12c3775a02f2c8a3e9b25c2787b8e6464062dc1a91",
+      "git_blob_sha1": "d9e2894f222bf2aeec61be687592063cf42813ba"
+    },
+    {
+      "path": "src/ai_trade/storage/workbench.py",
+      "sha256": "3c72737de28d2813f1e76286642b0e10e9f983b5291d44b8e0d1011d410c6995",
+      "symbols": [
+        {
+          "name": "persistent_root",
+          "line": 15
+        },
+        {
+          "name": "workbench_config",
+          "line": 32
+        },
+        {
+          "name": "_objects",
+          "line": 54
+        },
+        {
+          "name": "expected_objects",
+          "line": 61
+        },
+        {
+          "name": "inspect_database",
+          "line": 78
+        }
+      ],
+      "committed_lf_sha256": "dbe18c3c3bd0c6c491bbe44624c4510e91a81ed3a38f9358dacc3574163bab03",
+      "git_blob_sha1": "a4068bd30f7a25d55e1b7601bd0ce62c62fbb187"
+    },
+    {
+      "path": "tests/unit/m3_fear_greed_baseline.py",
+      "sha256": "bd2eb5c41862947b4882ee5883fe75462ae2b12c387fc43d3cd54434216bced4",
+      "symbols": [
+        {
+          "name": "baseline_fear_greed",
+          "line": 9
+        }
+      ],
+      "committed_lf_sha256": "977cab44416844c0a265b440f17390d6045100aa67d3b7a6c850d3d428cc61da",
+      "git_blob_sha1": "1fce77b79cd77b641c3148cfadafb1863175f0df"
+    },
+    {
+      "path": "tests/unit/m3_storage_fixtures.py",
+      "sha256": "4354ac2276994ef60bdb28add7c65112c9cb2e3710a1941873bd80244362ba19",
+      "symbols": [
+        {
+          "name": "repo",
+          "line": 27
+        },
+        {
+          "name": "source",
+          "line": 31
+        },
+        {
+          "name": "batch",
+          "line": 38
+        },
+        {
+          "name": "provenance",
+          "line": 44
+        },
+        {
+          "name": "evidence",
+          "line": 48
+        },
+        {
+          "name": "index",
+          "line": 52
+        },
+        {
+          "name": "scope",
+          "line": 64
+        },
+        {
+          "name": "snapshot",
+          "line": 69
+        },
+        {
+          "name": "receipt",
+          "line": 75
+        },
+        {
+          "name": "compute",
+          "line": 84
+        }
+      ],
+      "committed_lf_sha256": "4354ac2276994ef60bdb28add7c65112c9cb2e3710a1941873bd80244362ba19",
+      "git_blob_sha1": "a037522020446a8f522087ecf7f5099990e3d742"
+    },
+    {
+      "path": "tests/unit/test_cffex_high_assurance.py",
+      "sha256": "e9adc2b5cdd0eafbce109ba4804d5b4a99652acdb707f99d7f982c4012599d08",
+      "symbols": [
+        {
+          "name": "test_all_request_paths",
+          "line": 22
+        },
+        {
+          "name": "test_invalid_request_never_reaches_transport",
+          "line": 27
+        },
+        {
+          "name": "test_named_rejects_structural_corruption",
+          "line": 37
+        },
+        {
+          "name": "test_mixed_rejects_same_corruption",
+          "line": 61
+        },
+        {
+          "name": "test_utf8_bom_quoted_member_and_separate_volume",
+          "line": 75
+        },
+        {
+          "name": "test_zero_missing_and_scope_nets_are_distinct",
+          "line": 86
+        },
+        {
+          "name": "test_weekend_and_late_acquisition",
+          "line": 108
+        },
+        {
+          "name": "test_synthetic_holiday_range_and_first_session",
+          "line": 115
+        },
+        {
+          "name": "test_missing_calendar_fails_closed",
+          "line": 122
+        },
+        {
+          "name": "test_no_invented_or_future_publication",
+          "line": 138
+        },
+        {
+          "name": "test_actual_read_and_net_gate",
+          "line": 142
+        },
+        {
+          "name": "pair",
+          "line": 153
+        },
+        {
+          "name": "test_revision_read_preserves_old_cutoff_and_evidence",
+          "line": 161
+        },
+        {
+          "name": "test_duplicate_is_not_durable_registration",
+          "line": 171
+        },
+        {
+          "name": "test_revision_conflicts_fail_closed",
+          "line": 181
+        },
+        {
+          "name": "session_mock",
+          "line": 195
+        },
+        {
+          "name": "test_http_single_get_no_redirect_no_retry",
+          "line": 206
+        },
+        {
+          "name": "test_transport_chain_retained_credentials_not_reported",
+          "line": 216
+        },
+        {
+          "name": "test_transport_body_bounds_and_resource_release",
+          "line": 228
+        },
+        {
+          "name": "test_timeout_bounded",
+          "line": 240
+        },
+        {
+          "name": "test_404_requires_independent_calendar",
+          "line": 246
+        },
+        {
+          "name": "test_200_body_failure_is_not_valid_empty_data",
+          "line": 254
+        },
+        {
+          "name": "test_sqlite_contract_remains_existing_schema_only",
+          "line": 260
+        },
+        {
+          "name": "test_read_gate_revalidates_caller_constructed_record",
+          "line": 270
+        },
+        {
+          "name": "test_unknown_calendar_times_are_calendar_errors_and_no_run_no_request",
+          "line": 284
+        },
+        {
+          "name": "test_derived_read_selects_the_visible_revision_not_the_latest_payload",
+          "line": 294
+        },
+        {
+          "name": "test_scope_tampering_and_self_revision_are_rejected_by_read",
+          "line": 304
+        },
+        {
+          "name": "test_declared_mixed_section_cannot_silently_disappear",
+          "line": 313
+        },
+        {
+          "name": "Port",
+          "line": 126
+        },
+        {
+          "name": "Invalid",
+          "line": 285
+        },
+        {
+          "name": "get_day",
+          "line": 127
+        },
+        {
+          "name": "get_day",
+          "line": 286
+        }
+      ],
+      "committed_lf_sha256": "45a1fbdaf7ed29fafac6117fb50eb653bf377cec6aa90ceeb9f3eaef31813625",
+      "git_blob_sha1": "2bc5bedb385a3b3ba8c07f23e7a1e6e101b91e35"
+    },
+    {
+      "path": "tests/unit/test_m3_factor_trace.py",
+      "sha256": "323a545d3bbbb1e6c692226c1b7640dec6d2c6ba81fd4d6f8c8b80b34d2b7dce",
+      "symbols": [
+        {
+          "name": "market",
+          "line": 10
+        },
+        {
+          "name": "test_trace_and_public_dataframe_exactly_equal_frozen_original",
+          "line": 15
+        },
+        {
+          "name": "test_raw_values_and_current_sample_exclusion_hand_check",
+          "line": 38
+        }
+      ],
+      "committed_lf_sha256": "323a545d3bbbb1e6c692226c1b7640dec6d2c6ba81fd4d6f8c8b80b34d2b7dce",
+      "git_blob_sha1": "baa11ef2ceb07f2c66030f65a1552dafbc6d0848"
+    },
+    {
+      "path": "tests/unit/test_m3_storage_catalog.py",
+      "sha256": "08225dbea6655f27124989156785bc9e5694d2f00d64acbeece3bfb5494581e5",
+      "symbols": [
+        {
+          "name": "test_evidence_content_addressed_duplicate_and_tamper",
+          "line": 13
+        },
+        {
+          "name": "test_evidence_path_escape_refused",
+          "line": 26
+        },
+        {
+          "name": "test_strict_json_no_nonfinite_or_secret",
+          "line": 31
+        },
+        {
+          "name": "test_exact_integer_no_coercion",
+          "line": 36
+        },
+        {
+          "name": "test_timezone_canonicalization",
+          "line": 40
+        },
+        {
+          "name": "test_source_identity_cannot_change_units",
+          "line": 45
+        },
+        {
+          "name": "test_duplicate_same_content_records_attempt_without_second_run",
+          "line": 51
+        },
+        {
+          "name": "test_conflicting_same_source_version_rolls_back_and_audits",
+          "line": 61
+        },
+        {
+          "name": "test_batch_failure_is_atomic_and_not_successful_run",
+          "line": 70
+        },
+        {
+          "name": "test_latest_quarantine_never_falls_back_to_old_accepted",
+          "line": 80
+        },
+        {
+          "name": "test_legacy_bar_keeps_unknown_observation_and_old_rows",
+          "line": 91
+        },
+        {
+          "name": "test_receipts_trust_expiry_revocation_and_asof",
+          "line": 106
+        },
+        {
+          "name": "test_expired_and_ambiguous_receipts_fail_closed",
+          "line": 118
+        },
+        {
+          "name": "test_quality_no_backdate_no_pick_pass_among_roots",
+          "line": 126
+        }
+      ],
+      "committed_lf_sha256": "08225dbea6655f27124989156785bc9e5694d2f00d64acbeece3bfb5494581e5",
+      "git_blob_sha1": "1ee43bdbbd81f5a6b78fc92c6914b413e729dba5"
+    },
+    {
+      "path": "tests/unit/test_m3_storage_market.py",
+      "sha256": "e5aaf76f0b11da7a02a11a841ad71713eebd56bbc3eaaeac6c21ece57cdf60e8",
+      "symbols": [
+        {
+          "name": "universe",
+          "line": 17
+        },
+        {
+          "name": "aggregate_setup",
+          "line": 33
+        },
+        {
+          "name": "breadth_record",
+          "line": 42
+        },
+        {
+          "name": "test_unknown_historical_state_does_not_become_eligible",
+          "line": 47
+        },
+        {
+          "name": "test_state_overlap_is_not_silently_closed",
+          "line": 55
+        },
+        {
+          "name": "test_breadth_requires_exact_known_partition",
+          "line": 64
+        },
+        {
+          "name": "test_breadth_full_partition_saves_but_never_certifies_real_source",
+          "line": 71
+        },
+        {
+          "name": "test_market_receipt_gate_fail_closed",
+          "line": 79
+        },
+        {
+          "name": "amount",
+          "line": 91
+        },
+        {
+          "name": "test_native_total_not_double_counted_and_all_lineage_retained",
+          "line": 101
+        },
+        {
+          "name": "test_native_total_manifest_must_match_exact_scope_and_unit",
+          "line": 111
+        },
+        {
+          "name": "sessions",
+          "line": 117
+        },
+        {
+          "name": "report",
+          "line": 126
+        },
+        {
+          "name": "test_cffex_named_zero_quantities_and_frozen_calendar_roundtrip",
+          "line": 136
+        },
+        {
+          "name": "test_unrepresentable_cffex_remains_evidence_and_blocked_attempt",
+          "line": 152
+        },
+        {
+          "name": "test_missing_cffex_calendar_never_weekday_fallback",
+          "line": 163
+        }
+      ],
+      "committed_lf_sha256": "e5aaf76f0b11da7a02a11a841ad71713eebd56bbc3eaaeac6c21ece57cdf60e8",
+      "git_blob_sha1": "18f179480f5691b477a3c71bc348ebd98630a737"
+    },
+    {
+      "path": "tests/unit/test_m3_storage_results.py",
+      "sha256": "8820b0190225bf3fb96e2bad453dfe4b1e433fe071eca858cc0707fe25c2a9ac",
+      "symbols": [
+        {
+          "name": "execute",
+          "line": 17
+        },
+        {
+          "name": "test_snapshot_unknown_denominator_decisions_stay_partial",
+          "line": 22
+        },
+        {
+          "name": "test_snapshot_scope_future_and_missing_roles",
+          "line": 37
+        },
+        {
+          "name": "test_snapshot_freezes_old_quality_decision_after_later_failure",
+          "line": 51
+        },
+        {
+          "name": "test_snapshot_freezes_receipt_and_business_range",
+          "line": 61
+        },
+        {
+          "name": "test_cffex_snapshot_requires_full_calendar_and_lineage_decision",
+          "line": 73
+        },
+        {
+          "name": "test_real_core_outputs_and_6_per_day_trace_persist_and_replay",
+          "line": 86
+        },
+        {
+          "name": "test_empty_input_runs_persist_blocking_diagnostics_no_factors",
+          "line": 107
+        },
+        {
+          "name": "broken_adapter",
+          "line": 114
+        },
+        {
+          "name": "test_adapter_failure_records_failed_run_without_partial_results",
+          "line": 117
+        },
+        {
+          "name": "mutated_adapter",
+          "line": 125
+        },
+        {
+          "name": "wrong_factor_adapter",
+          "line": 131
+        },
+        {
+          "name": "false_research_adapter",
+          "line": 137
+        },
+        {
+          "name": "test_invalid_adapter_output_never_seals_partial_rows",
+          "line": 145
+        },
+        {
+          "name": "test_declared_build_must_equal_actual_build",
+          "line": 152
+        },
+        {
+          "name": "test_replay_parameter_changes_are_rejected",
+          "line": 159
+        }
+      ],
+      "committed_lf_sha256": "8820b0190225bf3fb96e2bad453dfe4b1e433fe071eca858cc0707fe25c2a9ac",
+      "git_blob_sha1": "dc9cf7ad8300f2a6efe476bc6ba4c347623a4bb9"
+    },
+    {
+      "path": "tests/unit/test_m3_storage_schema.py",
+      "sha256": "016071213bf5fde7f502bdc54eb4575be8a790a64e415280bd25b465ceb2a84d",
+      "symbols": [
+        {
+          "name": "sha",
+          "line": 18
+        },
+        {
+          "name": "test_released_checksums_and_exact_24_fields",
+          "line": 21
+        },
+        {
+          "name": "test_exact_readonly_prefix_never_upgrades",
+          "line": 37
+        },
+        {
+          "name": "test_prefix_drift_refused_without_repair",
+          "line": 51
+        },
+        {
+          "name": "test_failed_upgrade_is_atomic_and_old_data_survives",
+          "line": 67
+        },
+        {
+          "name": "test_v2_backup_restores_old_store_after_successful_upgrade",
+          "line": 81
+        },
+        {
+          "name": "test_audit_rows_are_immutable_even_direct_sql",
+          "line": 95
+        },
+        {
+          "name": "test_sealed_version_cannot_append_or_update_and_wrong_fk_rolls_back",
+          "line": 103
+        }
+      ],
+      "committed_lf_sha256": "016071213bf5fde7f502bdc54eb4575be8a790a64e415280bd25b465ceb2a84d",
+      "git_blob_sha1": "e331a11baab6dd7c49bfeb855eedf9f4c89a5fd6"
+    },
+    {
+      "path": "tests/unit/test_reference_data.py",
+      "sha256": "14e7491410af08ae4e6a45d1828285883cacd8c0195494d861a0568ce43ddbb6",
+      "symbols": [
+        {
+          "name": "provenance",
+          "line": 26
+        },
+        {
+          "name": "security",
+          "line": 33
+        },
+        {
+          "name": "day",
+          "line": 39
+        },
+        {
+          "name": "master",
+          "line": 44
+        },
+        {
+          "name": "calendar",
+          "line": 49
+        },
+        {
+          "name": "revision",
+          "line": 53
+        },
+        {
+          "name": "get",
+          "line": 60
+        },
+        {
+          "name": "read",
+          "line": 65
+        },
+        {
+          "name": "table_count",
+          "line": 70
+        },
+        {
+          "name": "test_v1_upgrade_preserves_daily_data_and_released_checksum",
+          "line": 75
+        },
+        {
+          "name": "test_v2_failure_rolls_back_tables_and_ledger",
+          "line": 91
+        },
+        {
+          "name": "test_master_read_metadata_and_repeat_initialization",
+          "line": 108
+        },
+        {
+          "name": "test_exchange_and_code_formats",
+          "line": 122
+        },
+        {
+          "name": "test_invalid_master_rejected_without_rows",
+          "line": 142
+        },
+        {
+          "name": "test_listing_and_delisting_half_open_boundaries",
+          "line": 151
+        },
+        {
+          "name": "test_name_change_and_historical_revision_do_not_backfill",
+          "line": 161
+        },
+        {
+          "name": "test_unknown_effective_period_and_risk_stay_unknown",
+          "line": 175
+        },
+        {
+          "name": "test_both_cutoffs_and_timezone_required",
+          "line": 184
+        },
+        {
+          "name": "test_master_duplicate_never_overwrites",
+          "line": 195
+        },
+        {
+          "name": "test_master_conflict_and_backdated_revision_rejected",
+          "line": 210
+        },
+        {
+          "name": "test_canonical_source_change_requires_explicit_revision_and_cannot_fork",
+          "line": 218
+        },
+        {
+          "name": "test_existing_bar_anchor_reused_and_symbol_change_not_silent",
+          "line": 228
+        },
+        {
+          "name": "test_code_reuse_requires_nonoverlapping_lifetimes",
+          "line": 237
+        },
+        {
+          "name": "test_code_reuse_checks_historical_visibility_not_only_current_head",
+          "line": 251
+        },
+        {
+          "name": "test_open_closed_missing_source_error_are_distinct",
+          "line": 267
+        },
+        {
+          "name": "test_calendar_range_and_previous_known_are_bounded_and_explicit",
+          "line": 280
+        },
+        {
+          "name": "test_partial_ranges_never_hide_missing_or_errors",
+          "line": 292
+        },
+        {
+          "name": "test_all_closed_is_not_same_as_missing",
+          "line": 308
+        },
+        {
+          "name": "test_calendar_revisions_future_announcements_and_error_do_not_revive_old",
+          "line": 319
+        },
+        {
+          "name": "test_calendar_exchange_isolation",
+          "line": 338
+        },
+        {
+          "name": "test_calendar_invalid_fact_rejected",
+          "line": 352
+        },
+        {
+          "name": "test_metadata_is_explicit_and_not_fabricated",
+          "line": 364
+        },
+        {
+          "name": "test_batch_validation_duplicate_and_generator_failure_roll_back_all",
+          "line": 371
+        },
+        {
+          "name": "test_new_tables_are_append_only",
+          "line": 391
+        },
+        {
+          "name": "test_sql_master_integrity_without_repository_validation",
+          "line": 406
+        },
+        {
+          "name": "test_database_integrity_and_run_id_shared_across_datasets",
+          "line": 432
+        },
+        {
+          "name": "test_previous_with_no_usable_day_preserves_failure_kind",
+          "line": 444
+        },
+        {
+          "name": "test_sql_calendar_constraints",
+          "line": 453
+        },
+        {
+          "name": "test_calendar_duplicate_conflicting_root_and_fork_are_not_overwritten",
+          "line": 473
+        },
+        {
+          "name": "test_invalid_range_query_is_explicit",
+          "line": 492
+        },
+        {
+          "name": "test_calendar_first_observation_waits_for_ingestion",
+          "line": 498
+        },
+        {
+          "name": "test_reference_suite_inherits_default_network_block",
+          "line": 505
+        },
+        {
+          "name": "stream",
+          "line": 379
+        }
+      ],
+      "committed_lf_sha256": "e147bf6e408bcf8a6884b7c23b6c4459be9def608c7813cccbf4f0098b0c1898",
+      "git_blob_sha1": "136dad74716d6d39ca16fff6540b57834e368bf3"
+    },
+    {
+      "path": "tests/unit/test_workbench_storage.py",
+      "sha256": "bf59e4547cdc4dc3a39fdb3c211b4143d64acc0baa3935871f3f7cbf73597486",
+      "symbols": [
+        {
+          "name": "store",
+          "line": 19
+        },
+        {
+          "name": "digest",
+          "line": 28
+        },
+        {
+          "name": "test_initialization_backup_restore_and_repeat_refusal",
+          "line": 32
+        },
+        {
+          "name": "test_ordinary_open_and_repository_cannot_write_or_initialize",
+          "line": 46
+        },
+        {
+          "name": "test_init_refuses_protected_paths_before_any_creation",
+          "line": 68
+        },
+        {
+          "name": "test_strict_configuration_never_chooses_demo",
+          "line": 90
+        },
+        {
+          "name": "test_configuration_conflicts_and_explicit_writer",
+          "line": 97
+        },
+        {
+          "name": "test_schema_or_corruption_stops_without_repair",
+          "line": 114
+        },
+        {
+          "name": "test_missing_file_after_config_does_not_recreate",
+          "line": 142
+        },
+        {
+          "name": "test_backup_refuses_existing_destination_and_preserves_source",
+          "line": 154
+        },
+        {
+          "name": "test_existing_wrong_journal_is_not_switched",
+          "line": 164
+        },
+        {
+          "name": "test_backup_restore_preserves_nonempty_versions_and_times",
+          "line": 177
+        }
+      ],
+      "committed_lf_sha256": "80f051ebc7d0ae0cf78b9230a9673e3be653a5b2a1c271495c3d845f9a764ac6",
+      "git_blob_sha1": "5764049815e28704d744e9332bb1a929aad7e8e2"
+    }
+  ],
+  "migrations": [
+    {
+      "version": 1,
+      "name": "daily_bar_foundation",
+      "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+      "statements": 18
+    },
+    {
+      "version": 2,
+      "name": "security_master_and_calendar",
+      "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+      "statements": 18
+    },
+    {
+      "version": 3,
+      "name": "provenance_and_version_catalog",
+      "checksum": "b762a2804c08a0f7cc9144df18253ca4f1b4563e37eccb89b79e21d9324b3758",
+      "statements": 53
+    },
+    {
+      "version": 4,
+      "name": "minimal_m3_market_inputs",
+      "checksum": "fbe115ff3cd218f1817f0c16fd3cebbd4a43a94cb85e3e7fd5695d7fcee63809",
+      "statements": 56
+    },
+    {
+      "version": 5,
+      "name": "m3_analysis_persistence",
+      "checksum": "5c7a8d52281ccf540497ac3d709d2248c2a8bfd222cc5c99c4bd6a3760021053",
+      "statements": 43
+    }
+  ],
+  "isolated_memory_ddl": {
+    "tables": 31,
+    "new_tables": 24,
+    "groups": [
+      8,
+      9,
+      7
+    ],
+    "contract_columns_and_nullability_match_original": true,
+    "physical": {
+      "data_sources": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "source_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "provider",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "endpoint_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "adapter_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "dataset_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "units_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "time_policy_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "registered_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_data_sources_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_data_sources_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_data_sources_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "evidence_objects": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "evidence_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "relative_uri",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "byte_size",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "media_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "captured_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "registered_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "privacy_class",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_evidence_objects_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_evidence_objects_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_evidence_objects_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "ingestion_attempts": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "attempt_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "source_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "request_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "request_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "started_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "finished_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "outcome",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "error_code",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "returned_rows",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "committed_run_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "evidence_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "evidence_objects",
+            "from": "evidence_id",
+            "to": "evidence_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_runs",
+            "from": "committed_run_id",
+            "to": "run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "data_sources",
+            "from": "source_id",
+            "to": "source_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_ingestion_attempts_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_ingestion_attempts_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_ingestion_attempts_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_ingestion_attempts_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_ingestion_attempts_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "data_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "dataset_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "business_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "source_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "record_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "event_time",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "observed_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "ingested_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "registered_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "payload_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "evidence_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "evidence_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "attempt_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "supersedes_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "revision_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "supersedes_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "ingestion_attempts",
+            "from": "attempt_id",
+            "to": "attempt_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "evidence_objects",
+            "from": "evidence_id",
+            "to": "evidence_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 3,
+            "seq": 0,
+            "table": "data_sources",
+            "from": "source_id",
+            "to": "source_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_version_root",
+            "unique": 1,
+            "origin": "c",
+            "partial": 1
+          },
+          {
+            "seq": 1,
+            "name": "m3_data_versions_4",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_data_versions_3",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "m3_data_versions_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "m3_data_versions_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "m3_data_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 6,
+            "name": "sqlite_autoindex_data_versions_3",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 7,
+            "name": "sqlite_autoindex_data_versions_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 8,
+            "name": "sqlite_autoindex_data_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "legacy_version_links": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "daily_bar_version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "security_version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "calendar_version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "calendar_versions",
+            "from": "calendar_version_id",
+            "to": "version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "security_version_id",
+            "to": "version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "daily_bar_versions",
+            "from": "daily_bar_version_id",
+            "to": "version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 3,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_legacy_version_links_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_legacy_version_links_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_legacy_version_links_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_legacy_version_links_4",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_legacy_version_links_3",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_legacy_version_links_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 6,
+            "name": "sqlite_autoindex_legacy_version_links_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "quality_assessments": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "assessment_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "attempt_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "rules_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "assessed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "decision",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "reasons_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "metrics_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "evidence_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "supersedes_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "quality_assessments",
+            "from": "supersedes_id",
+            "to": "assessment_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "evidence_objects",
+            "from": "evidence_id",
+            "to": "evidence_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "ingestion_attempts",
+            "from": "attempt_id",
+            "to": "attempt_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 3,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_quality_assessments_3",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_quality_assessments_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_quality_assessments_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "m3_quality_assessments_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_quality_assessments_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_quality_assessments_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "verification_receipts": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "receipt_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "scope_type",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "source_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "claims_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "decision",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "issued_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "available_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "expires_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "evidence_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "supersedes_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "verification_receipts",
+            "from": "supersedes_id",
+            "to": "receipt_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "evidence_objects",
+            "from": "evidence_id",
+            "to": "evidence_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 3,
+            "seq": 0,
+            "table": "data_sources",
+            "from": "source_id",
+            "to": "source_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_verification_receipts_4",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_verification_receipts_3",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_verification_receipts_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "m3_verification_receipts_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "m3_verification_receipts_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_verification_receipts_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 6,
+            "name": "sqlite_autoindex_verification_receipts_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "instrument_catalog": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "catalog_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "entity_kind",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "namespace",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "entity_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "equity_anchor_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "registered_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "equity_anchor_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_instrument_catalog_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_instrument_catalog_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_instrument_catalog_3",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_instrument_catalog_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_instrument_catalog_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "security_state_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "effective_from",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "effective_to",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "st_status",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "suspended",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "delisting_organization",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "buy_allowed",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "sell_allowed",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "lot_size",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "limit_up_price",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "limit_down_price",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_security_state_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_security_state_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "market_session_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "market_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "session_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "is_trading_day",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "opens_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "closes_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "error_reason",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_market_session_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_market_session_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "index_bar_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "catalog_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "open",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "high",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "low",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "close",
+            "type": "REAL",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "volume",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "volume_unit",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "amount_cny",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "adjustment_definition",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "instrument_catalog",
+            "from": "catalog_id",
+            "to": "catalog_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_index_bar_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_index_bar_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "universe_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "universe_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "definition_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "eligible_count",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "member_count",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "members_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_universe_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_universe_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "universe_members": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "universe_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "instrument_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "membership_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "security_version_id",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "state_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "inclusion_reason",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "security_state_versions",
+            "from": "state_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "security_versions",
+            "from": "security_version_id",
+            "to": "version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "instruments",
+            "from": "instrument_id",
+            "to": "instrument_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 3,
+            "seq": 0,
+            "table": "universe_versions",
+            "from": "universe_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_universe_members_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_universe_members_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_universe_members_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_universe_members_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "market_breadth_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "universe_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "market_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "advances",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "declines",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "flat",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "limit_up",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "limit_down",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "suspended",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "unavailable",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "missing",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "eligible_count",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "definition_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "universe_versions",
+            "from": "universe_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_market_breadth_versions_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_market_breadth_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_market_breadth_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "market_amount_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "universe_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "market_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "market_amount_cny",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "contributing_count",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "definition_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "universe_versions",
+            "from": "universe_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_market_amount_versions_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_market_amount_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_market_amount_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "cffex_report_versions": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "exchange",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "variety",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "trade_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "format_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "published_at",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "earliest_session_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "calendar_version_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "row_count",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "rows_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "scope_evidence_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "evidence_objects",
+            "from": "scope_evidence_id",
+            "to": "evidence_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "market_session_versions",
+            "from": "calendar_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_cffex_report_versions_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_cffex_report_versions_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_cffex_report_versions_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_cffex_report_versions_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "cffex_rank_rows": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "report_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "contract",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "side",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 3
+          },
+          {
+            "cid": 3,
+            "name": "rank",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 4
+          },
+          {
+            "cid": 4,
+            "name": "member_label_raw",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "member_key",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "member_scope",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "open_interest",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "open_interest_change",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "volume",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "volume_change",
+            "type": "INTEGER",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "cffex_report_versions",
+            "from": "report_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_cffex_rank_rows_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_cffex_rank_rows_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_cffex_rank_rows_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "input_snapshots": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "analysis_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "as_of",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "mode",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "scope_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "selection_policy_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "manifest_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "item_count",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "check_count",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "checks_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "completeness",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "blocking_reasons_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "created_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_input_snapshots_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_input_snapshots_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_input_snapshots_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "input_snapshot_items": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "role",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "ordinal",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 3
+          },
+          {
+            "cid": 3,
+            "name": "data_version_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "expected_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "required",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "data_versions",
+            "from": "data_version_id",
+            "to": "data_version_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "input_snapshots",
+            "from": "snapshot_id",
+            "to": "snapshot_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_input_snapshot_items_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_input_snapshot_items_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_input_snapshot_items_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "input_snapshot_checks": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "check_role",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "ordinal",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 3
+          },
+          {
+            "cid": 3,
+            "name": "assessment_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "receipt_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "expected_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "verification_receipts",
+            "from": "receipt_id",
+            "to": "receipt_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "quality_assessments",
+            "from": "assessment_id",
+            "to": "assessment_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "input_snapshots",
+            "from": "snapshot_id",
+            "to": "snapshot_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_input_snapshot_checks_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_input_snapshot_checks_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_input_snapshot_checks_3",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_input_snapshot_checks_2",
+            "unique": 1,
+            "origin": "u",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "sqlite_autoindex_input_snapshot_checks_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "analysis_runs": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "analysis_run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "module",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 2,
+            "name": "analysis_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "as_of",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "generated_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "code_sha",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "rules_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "contract_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "parameters_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "parameters_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "environment_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "environment_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "input_snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 13,
+            "name": "status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 14,
+            "name": "quality_status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 15,
+            "name": "blocking_reasons_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 16,
+            "name": "result_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 17,
+            "name": "review_receipt_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 18,
+            "name": "replay_of_run_id",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "analysis_runs",
+            "from": "replay_of_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "verification_receipts",
+            "from": "review_receipt_id",
+            "to": "receipt_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "input_snapshots",
+            "from": "input_snapshot_id",
+            "to": "snapshot_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_analysis_runs_4",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_analysis_runs_3",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_analysis_runs_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "m3_analysis_runs_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 4,
+            "name": "m3_analysis_runs_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 5,
+            "name": "sqlite_autoindex_analysis_runs_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "analysis_dependencies": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "analysis_run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "role",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "upstream_run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 3
+          },
+          {
+            "cid": 3,
+            "name": "upstream_result_sha256",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "consumed_at",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "gate_policy_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "analysis_runs",
+            "from": "upstream_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "analysis_runs",
+            "from": "analysis_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_analysis_dependencies_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "sqlite_autoindex_analysis_dependencies_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "m3_diagnostics": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "analysis_run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "indicator",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "input_snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 3,
+            "name": "diagnostic_snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 4,
+            "name": "status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "admission",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "calculated",
+            "type": "INTEGER",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "data_latest_date",
+            "type": "TEXT",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "diagnostic_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "strategy_admission_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "input_snapshots",
+            "from": "input_snapshot_id",
+            "to": "snapshot_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "analysis_runs",
+            "from": "analysis_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_m3_diagnostics_2",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_m3_diagnostics_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "m3_m3_diagnostics_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 3,
+            "name": "sqlite_autoindex_m3_diagnostics_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      },
+      "factor_values": {
+        "columns": [
+          {
+            "cid": 0,
+            "name": "analysis_run_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 1
+          },
+          {
+            "cid": 1,
+            "name": "indicator",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 2
+          },
+          {
+            "cid": 2,
+            "name": "factor_key",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 3
+          },
+          {
+            "cid": 3,
+            "name": "business_date",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 4
+          },
+          {
+            "cid": 4,
+            "name": "input_snapshot_id",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 5,
+            "name": "raw_value",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 6,
+            "name": "raw_unit",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 7,
+            "name": "normalized_value",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 8,
+            "name": "normalization_version",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 9,
+            "name": "weight",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 10,
+            "name": "contribution",
+            "type": "REAL",
+            "notnull": 0,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 11,
+            "name": "status",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          },
+          {
+            "cid": 12,
+            "name": "reasons_json",
+            "type": "TEXT",
+            "notnull": 1,
+            "dflt_value": null,
+            "pk": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "id": 0,
+            "seq": 0,
+            "table": "m3_diagnostics",
+            "from": "analysis_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 0,
+            "seq": 1,
+            "table": "m3_diagnostics",
+            "from": "indicator",
+            "to": "indicator",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 1,
+            "seq": 0,
+            "table": "input_snapshots",
+            "from": "input_snapshot_id",
+            "to": "snapshot_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          },
+          {
+            "id": 2,
+            "seq": 0,
+            "table": "analysis_runs",
+            "from": "analysis_run_id",
+            "to": "analysis_run_id",
+            "on_update": "NO ACTION",
+            "on_delete": "RESTRICT",
+            "match": "NONE"
+          }
+        ],
+        "indexes": [
+          {
+            "seq": 0,
+            "name": "m3_factor_values_1",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 1,
+            "name": "m3_factor_values_0",
+            "unique": 0,
+            "origin": "c",
+            "partial": 0
+          },
+          {
+            "seq": 2,
+            "name": "sqlite_autoindex_factor_values_1",
+            "unique": 1,
+            "origin": "pk",
+            "partial": 0
+          }
+        ]
+      }
+    }
+  },
+  "formal_file_only_check": {
+    "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+    "bytes": 147456,
+    "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64",
+    "connected_after_phase1": false,
+    "sidecars": {
+      "-wal": false,
+      "-shm": false,
+      "-journal": false
+    }
+  },
+  "pre_checkpoint_logs": [
+    {
+      "path": "artifacts/m3-core-data-model-001/existing-targeted-1.log",
+      "bytes": 427,
+      "sha256": "393ddb372451ab5cc0efd1554d26a58c69e8a12a5f62550c2f83d6da91e5dec2",
+      "last_lines": [
+        "........................................................................ [ 23%]",
+        "........................................................................ [ 46%]",
+        "........................................................................ [ 69%]",
+        "........................................................................ [ 93%]",
+        ".....................                                                    [100%]",
+        "309 passed in 21.74s"
+      ]
+    },
+    {
+      "path": "artifacts/m3-core-data-model-001/market-1.log",
+      "bytes": 126223,
+      "sha256": "56aad8737607015ea14c268f000ab68e017a8f62cdc1a3dde385a7df14ceb2b7",
+      "last_lines": [
+        "FAILED tests/unit/test_m3_storage_market.py::test_native_total_manifest_must_match_exact_scope_and_unit[change0]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_native_total_manifest_must_match_exact_scope_and_unit[change1]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_native_total_manifest_must_match_exact_scope_and_unit[change2]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_native_total_manifest_must_match_exact_scope_and_unit[change3]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_native_total_manifest_must_match_exact_scope_and_unit[change4]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_cffex_named_zero_quantities_and_frozen_calendar_roundtrip",
+        "FAILED tests/unit/test_m3_storage_market.py::test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[mixed]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[blank]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_missing_cffex_calendar_never_weekday_fallback",
+        "24 failed in 4.11s"
+      ]
+    },
+    {
+      "path": "artifacts/m3-core-data-model-001/market-2.log",
+      "bytes": 10214,
+      "sha256": "dc51195a4c920bbd0dc37cbba6c5c88bdaaae28efa039412afe30cf57ec60b0e",
+      "last_lines": [
+        ">           raise RankingValidationError('run_id: explicit safe batch identifier required')",
+        "E           ai_trade.market_data.cffex_rankings_models.RankingValidationError: run_id: explicit safe batch identifier required",
+        "",
+        "src\\ai_trade\\market_data\\cffex_rankings.py:267: RankingValidationError",
+        "=========================== short test summary info ===========================",
+        "FAILED tests/unit/test_m3_storage_market.py::test_cffex_named_zero_quantities_and_frozen_calendar_roundtrip",
+        "FAILED tests/unit/test_m3_storage_market.py::test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[mixed]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[blank]",
+        "FAILED tests/unit/test_m3_storage_market.py::test_missing_cffex_calendar_never_weekday_fallback",
+        "4 failed, 20 passed in 17.10s"
+      ]
+    },
+    {
+      "path": "artifacts/m3-core-data-model-001/market-results-3.log",
+      "bytes": 25026,
+      "sha256": "447e9c8cf86b56a81e5427ca6f985a494e4d5690e27fef6133807b5733506aee",
+      "last_lines": [
+        "tests\\unit\\m3_storage_fixtures.py:95: TypeError",
+        "=========================== short test summary info ===========================",
+        "FAILED tests/unit/test_m3_storage_market.py::test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[blank]",
+        "FAILED tests/unit/test_m3_storage_results.py::test_real_core_outputs_and_6_per_day_trace_persist_and_replay",
+        "FAILED tests/unit/test_m3_storage_results.py::test_empty_input_runs_persist_blocking_diagnostics_no_factors",
+        "FAILED tests/unit/test_m3_storage_results.py::test_invalid_adapter_output_never_seals_partial_rows[mutated_adapter-mutated]",
+        "FAILED tests/unit/test_m3_storage_results.py::test_invalid_adapter_output_never_seals_partial_rows[wrong_factor_adapter-weight]",
+        "FAILED tests/unit/test_m3_storage_results.py::test_invalid_adapter_output_never_seals_partial_rows[false_research_adapter-incomplete]",
+        "FAILED tests/unit/test_m3_storage_results.py::test_replay_parameter_changes_are_rejected",
+        "7 failed, 35 passed in 26.54s"
+      ]
+    },
+    {
+      "path": "artifacts/m3-core-data-model-001/storage-1.log",
+      "bytes": 182,
+      "sha256": "e8065be9ce8859227ebcb5b1db4c688664c01d22dbb378eff5304eba6e8d1f82",
+      "last_lines": [
+        "........................................................................ [ 75%]",
+        ".......................                                                  [100%]",
+        "95 passed in 6.47s"
+      ]
+    }
+  ],
+  "final_offline_suite": {
+    "state": "FAILED",
+    "command": "python -m pytest -q --junitxml=artifacts/m3-core-data-model-001/offline-blocked.xml",
+    "exit_code": 1,
+    "code_sha": "10c6f2cf6a33327d5e24d7b3880ef485052bb0ca",
+    "suite": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "7",
+      "skipped": "1",
+      "tests": "3036",
+      "time": "307.706",
+      "timestamp": "2026-10-22T07:53:35.472898+08:00",
+      "hostname": "DESKTOP-M3HG690"
+    },
+    "passed": 3028,
+    "failed": 7,
+    "skipped": 1,
+    "pytest_duration_seconds": 307.76,
+    "failures": [
+      {
+        "class": "tests.unit.test_m3_storage_market",
+        "name": "test_unrepresentable_cffex_remains_evidence_and_blocked_attempt[blank]",
+        "message": "ai_trade.market_data.cffex_rankings_models.RankingValidationError: numeric facts require an explicit member"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_real_core_outputs_and_6_per_day_trace_persist_and_replay",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_empty_input_runs_persist_blocking_diagnostics_no_factors",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_invalid_adapter_output_never_seals_partial_rows[mutated_adapter-mutated]",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_invalid_adapter_output_never_seals_partial_rows[wrong_factor_adapter-weight]",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_invalid_adapter_output_never_seals_partial_rows[false_research_adapter-incomplete]",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      },
+      {
+        "class": "tests.unit.test_m3_storage_results",
+        "name": "test_replay_parameter_changes_are_rejected",
+        "message": "TypeError: cffex_diagnostic() got an unexpected keyword argument 'contract'"
+      }
+    ],
+    "log": {
+      "path": "artifacts/m3-core-data-model-001/offline-blocked.log",
+      "sha256": "37e6c20e664465380a4f2266ff8cb5f182759566a24948b248ac7421deda60d2"
+    },
+    "junit": {
+      "path": "artifacts/m3-core-data-model-001/offline-blocked.xml",
+      "sha256": "371e94e1517d47a35d3dcfe795cd9d654330c40565e92f3f02dc6b4a445d4fa2"
+    }
+  },
+  "boundaries": {
+    "formal_migrated": false,
+    "real_source_verified": false,
+    "page_consumes_new_store": false,
+    "ec2_publish": false,
+    "independent_h_passed": false,
+    "full_acceptance_passed": false
+  },
+  "dependency_check": {
+    "command": "python -m pip check",
+    "exit_code": 0,
+    "output": "No broken requirements found.",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "git_transport": {
+    "native_push_attempts": 2,
+    "error": "Failed to connect to github.com port 443 after approximately 21 seconds",
+    "next": "Use authenticated GitHub connector; verify exact committed tree before branch update; preserve original local SHA.",
+    "native_push_shell_exit_codes": [
+      1,
+      1
+    ]
+  }
+}

@@ -104,13 +104,17 @@ def _objects(conn):
         "WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name")]
 
 
-@lru_cache(maxsize=1)
-def expected_objects():
+@lru_cache(maxsize=None)
+def expected_objects(version=None):
     # Deterministic reference derived solely from immutable released migrations.
     conn = sqlite3.connect(":memory:")
     try:
         conn.execute(LEDGER_SQL)
-        for migration in MIGRATIONS:
+        if version is None:
+            version = len(MIGRATIONS)
+        if type(version) is not int or not 2 <= version <= len(MIGRATIONS):
+            raise IntegrityError("unsupported workbench schema prefix")
+        for migration in MIGRATIONS[:version]:
             for statement in migration.statements:
                 conn.execute(statement)
         return _objects(conn)
@@ -126,11 +130,14 @@ def inspect_database(db: Database) -> dict:
         if quick != ["ok"]:
             raise IntegrityError(f"SQLite quick_check failed: {quick}")
         migrations = [dict(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
-        expected = [(m.version, m.name, m.checksum) for m in MIGRATIONS]
+        version = len(migrations)
+        if not 2 <= version <= len(MIGRATIONS):
+            raise IntegrityError("unsupported workbench schema version; explicit maintenance required")
+        expected = [(m.version, m.name, m.checksum) for m in MIGRATIONS[:version]]
         if [(r["version"], r["name"], r["checksum"]) for r in migrations] != expected:
             raise IntegrityError("workbench schema version/checksum mismatch; explicit maintenance required")
         objects = _objects(conn)
-        if objects != expected_objects():
+        if objects != expected_objects(version):
             raise IntegrityError("workbench physical schema drift (tables/indexes/triggers)")
         foreign_errors = [tuple(row) for row in conn.execute("PRAGMA foreign_key_check")]
         if foreign_errors:

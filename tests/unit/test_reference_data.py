@@ -78,7 +78,8 @@ def test_v1_upgrade_preserves_daily_data_and_released_checksum(tmp_path, bar):
     assert db.initialize(MIGRATIONS[:1]) == 1
     repository = SQLiteMarketDataRepository(db)
     repository.write_many([bar], run_id="v1-existing")
-    assert db.initialize() == db.initialize() == 2
+    assert db.initialize(MIGRATIONS[:2]) == db.initialize(MIGRATIONS[:2]) == 2
+    assert db.initialize() == len(MIGRATIONS)
     assert table_count(db, "daily_bar_versions") == 1
     result = repository.get_bar(instrument_id=bar.instrument_id, trade_date=bar.trade_date,
                                 source=bar.source, adjustment_method="none", as_of="2026-10-17T00:00:00Z",
@@ -101,13 +102,13 @@ def test_v2_failure_rolls_back_tables_and_ledger(tmp_path, existing_v1):
             assert conn.execute("SELECT max(version) FROM schema_migrations").fetchone()[0] == 1
         else:
             assert names == set()
-    assert db.initialize() == 2
+    assert db.initialize(MIGRATIONS[:2]) == 2
 
 
 def test_master_read_metadata_and_repeat_initialization(master, database, security):
     assert master.write_many([security], run_id="master").inserted == 1
     before = get(master, security)
-    assert database.initialize() == database.initialize() == 2
+    assert database.initialize() == database.initialize() == len(MIGRATIONS)
     assert get(master, security) == before
     assert before.value.period.name == "Synthetic Old Name"
     assert before.value.risk_status is None
