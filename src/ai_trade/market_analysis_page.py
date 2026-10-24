@@ -130,8 +130,9 @@ def _values(name, d):
         field = 'score' if full else 'index_proxy'
         if not series.empty and field in series and series[field].notna().sum() >= 2:
             st.line_chart(series.set_index('trade_date')[[field]])
-    elif name == 'cffex_position':
-        st.json(v)
+        elif name == 'cffex_position':
+            from ai_trade.market_analysis_cffex_page import render_cffex_holdings
+            render_cffex_holdings()
     elif name == 'environment':
         st.metric('综合结论（研究解释）', safe_text(v.get('conclusion')))
         st.json(v.get('components', {}))
