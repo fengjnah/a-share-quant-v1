@@ -130,9 +130,6 @@ def _values(name, d):
         field = 'score' if full else 'index_proxy'
         if not series.empty and field in series and series[field].notna().sum() >= 2:
             st.line_chart(series.set_index('trade_date')[[field]])
-        elif name == 'cffex_position':
-            from ai_trade.market_analysis_cffex_page import render_cffex_holdings
-            render_cffex_holdings()
     elif name == 'environment':
         st.metric('综合结论（研究解释）', safe_text(v.get('conclusion')))
         st.json(v.get('components', {}))
@@ -221,6 +218,11 @@ def render(db):
         st.write(f'{STATUS_LABELS[d.status]} · {d.status.value} · {d.admission.value}')
         st.caption(f'分析 {d.request.analysis_date}｜实际截止 {safe_text(d.data_latest_date)}｜覆盖 {coverage_text(d)}')
         _values(name, d)
+        if name == 'cffex_position':
+            # Stored raw facts remain inspectable when research diagnostics
+            # block. This does not upgrade the diagnostic or its allowed uses.
+            from ai_trade.market_analysis_cffex_page import render_cffex_holdings
+            render_cffex_holdings(db=db)
         facts = cf_facts if name == 'cffex_position' else market.facts if name == 'market_breadth' else price.facts
         if name == 'fear_greed':
             facts = {'price_input': price.facts, 'market_input': market.facts, **price.facts}
