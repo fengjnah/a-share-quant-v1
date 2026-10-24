@@ -123,6 +123,24 @@ def test_readback_error_is_not_disguised_as_empty_data(database, monkeypatch):
     assert not any('No stored CFFEX report' in x.value for x in app.info)
 
 
+def test_legacy_path_only_caller_fails_closed_without_crashing_or_creating_db(tmp_path, monkeypatch):
+    import ai_trade.market_analysis_cffex_page as page
+    def forbidden():
+        raise AssertionError('invalid workbench binding must not select test data')
+    monkeypatch.setattr(page, '_open_test_db', forbidden)
+    missing = tmp_path / 'must-not-create.sqlite3'
+    script = f'''
+from pathlib import Path
+from types import SimpleNamespace
+from ai_trade.market_analysis_cffex_page import render_cffex_holdings
+render_cffex_holdings(SimpleNamespace(config=SimpleNamespace(path=Path({str(missing)!r}))))
+'''
+    app = AppTest.from_string(script, default_timeout=20).run()
+    assert not app.exception
+    assert any('Workbench database binding invalid: TypeError' in x.value for x in app.error)
+    assert not missing.exists()
+
+
 def test_workbench_module_reopens_writable_handle_read_only(database, monkeypatch):
     import ai_trade.market_analysis_cffex_page as page
     from ai_trade.market_analysis_cffex_db import cffex_report

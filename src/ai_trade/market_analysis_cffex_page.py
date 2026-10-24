@@ -60,7 +60,11 @@ def render_cffex_holdings(db=None):
         from ai_trade.storage.db import Database
         # Reopen with actual SQLite mode=ro even if a caller supplied a writable
         # handle. Do not initialize, migrate or consult test database settings.
-        db = Database(replace(db.config, read_only=True, require_existing=True))
+        try:
+            db = Database(replace(db.config, read_only=True, require_existing=True))
+        except (AttributeError, TypeError, ValueError) as exc:
+            st.error(f"Workbench database binding invalid: {type(exc).__name__}")
+            return
         evidence_root = Path(db.config.path).parent / 'evidence'
         st.info(f"Connected to workbench database: {db.config.path}")
         st.caption("只读工作台已保存数据；不联网采集。原始 Top-N 展示不解除来源认证或研究准入门禁。")
