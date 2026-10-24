@@ -18,3 +18,9 @@ artifacts/
 *.sqlite3-*
 *.pem
 *.key
+# Isolated task-local working trees (not part of the tracked repository)
+_deploy.py
+_deploy2.py
+_tmp_sessions.py
+_sessions_section.txt
+test-data/
