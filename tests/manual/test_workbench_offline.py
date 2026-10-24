@@ -14,7 +14,8 @@ from ai_trade.storage.db import Database
 from ai_trade.storage.workbench_cli import initialize_new
 
 base = Path(sys.argv[1])
-root = base / 'formal'
+data_root = base / 'data'
+root = data_root / 'sqlite'
 real = socket.socket.connect
 def loopback(sock, address):
     if isinstance(address, tuple) and address[0] in ('127.0.0.1', '::1'):
@@ -26,6 +27,7 @@ socket.create_connection = lambda *a, **k: (_ for _ in ()).throw(AssertionError(
 with patch('ai_trade.storage.workbench.tempfile.gettempdir', return_value=str(base/'os-temp')):
     initialize_new(root, base/'backup.sqlite3', base/'restore.sqlite3')
     os.environ['AI_TRADE_WORKBENCH_ROOT'] = str(root)
+    os.environ['AI_TRADE_DATA_ROOT'] = str(data_root)
     os.environ['AI_TRADE_STRICT_WORKBENCH'] = '1'
     for name in ('AI_TRADE_DEMO_ROOT', 'AI_TRADE_READ_ONLY', 'QUANT_DB_PATH', 'QUANT_DB_ENV', 'QUANT_DB_JOURNAL'):
         os.environ.pop(name, None)
@@ -47,11 +49,13 @@ with patch('ai_trade.storage.workbench.tempfile.gettempdir', return_value=str(ba
         assert hashlib.sha256(path.read_bytes()).hexdigest()==before
         assert not list(root.glob('m3-observations/*'))
         os.environ['AI_TRADE_WORKBENCH_ROOT']=str(base/'missing')
+        os.environ['AI_TRADE_DATA_ROOT']=str(base/'missing-data')
         fresh=AppTest.from_file('src/ai_trade/demo_app.py',default_timeout=30).run()
         assert not fresh.exception
         assert any('已停止' in e.value for e in fresh.error)
         assert not (base/'missing').exists()
         os.environ.pop('AI_TRADE_WORKBENCH_ROOT')
+        os.environ.pop('AI_TRADE_DATA_ROOT')
         fresh=AppTest.from_file('src/ai_trade/demo_app.py',default_timeout=30).run()
         assert any('不回退临时库' in e.value for e in fresh.error)
 print('strict M1-M4; no initialize; missing binding fails; no network: PASS')

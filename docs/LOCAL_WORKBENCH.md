@@ -5,10 +5,13 @@
 - 代码工作区：F:\codex-agnes\AI-trade-dev
 - 日常分支：main
 - 日常 Python：F:\codex-agnes\AI-trade-dev\.venv\Scripts\python.exe
-- 正式研究数据库：F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3
+- 新入口数据根：AI_TRADE_DATA_ROOT（未设置时，Windows启动脚本使用已审计的固定候选 F:\codex-agnes\AI-trade-data）
+- 迁移后的正式数据库：F:\codex-agnes\AI-trade-data\sqlite\workbench.sqlite3
 - 启动脚本：scripts/start_workbench.ps1
 
-日常入口与旧临时 Demo 明确分开。研究库不连接交易账户或 EC2，不代表交易生产数据库。数据库目录在 Git 中忽略；备份和运行日志保存在源码树外。
+日常入口与旧临时 Demo 明确分开。研究库不连接交易账户或 EC2，不代表交易生产数据库。新数据根在Git仓库之外、不纳入版本管理；旧目录的忽略保护仍保留，备份和运行日志保存在源码树外。
+
+**切换尚未执行。** 本PR仅交付配置/隔离迁移工具；现有8524仍指向旧正式库 `F:\codex-agnes\AI-trade\data\sqlite\workbench.sqlite3`。新入口必须在独立H审查、用户人工合并、停写/备份恢复/迁移确认后使用，见[分阶段记录与回滚](audits/TASK-M0-DATA-DIRECTORY-RELOCATION-001.md)。旧库保留为显式回滚来源，不自动回退、不重跑初始化。
 
 启动脚本只允许从固定工作区的干净 main 分支运行，并且只使用该工作区的虚拟环境。若分支错误、工作区不干净、解释器不存在或正式数据库不存在，脚本直接停止；不会自动切换分支、清理修改、创建数据库或回退 Demo。
 
@@ -38,6 +41,8 @@ Set-Location 'F:\codex-agnes\AI-trade-dev'
 ~~~
 
 默认绑定 127.0.0.1:8524。脚本固定核验工作区路径、main 分支和干净状态，使用 AI-trade-dev\.venv，设置正式 ROOT/QUANT_DB_PATH、local、DELETE、STRICT_WORKBENCH=1、READ_ONLY=1，并去除该进程的 Demo 根。启动前输出实际 Git SHA、Python/数据库路径，检查实际 SQLite 连接、Schema/checksum、DDL 和完整性；失败即退出，不启动页面、不回退临时库。
+
+新入口以 `AI_TRADE_DATA_ROOT` 为唯一数据根，将WORKBENCH_ROOT派生为其sqlite子目录、QUANT_DB_PATH派生为同一workbench.sqlite3；如果已继承的别名不一致则报错，不覆盖冲突配置。可在新的PowerShell进程中明确设置该变量，或传 `-DataRoot 'F:\codex-agnes\AI-trade-data'`。不写User/Machine环境或依赖cwd。缺根、缺sqlite子目录、缺DB、链接越界、仓库/Temp目录均停止，不自动创建。Python配置解析没有旧路径默认；Windows严格模式无DATA_ROOT也会停止。
 
 浏览器地址：http://127.0.0.1:8524/?view=market。端口占用时可通过 -Port 指定另一个端口。
 

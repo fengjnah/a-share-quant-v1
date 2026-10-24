@@ -2,6 +2,7 @@
 
 import os
 import sqlite3
+import sys
 import tempfile
 from functools import lru_cache
 from pathlib import Path
@@ -29,12 +30,58 @@ def persistent_root(value: str, *, must_exist: bool = True) -> Path:
     return root
 
 
-def workbench_config(environ: Mapping[str, str] | None = None) -> DatabaseConfig:
+def is_workbench(environ: Mapping[str, str] | None = None) -> bool:
     env = os.environ if environ is None else environ
+    return ("AI_TRADE_DATA_ROOT" in env or "AI_TRADE_WORKBENCH_ROOT" in env
+            or env.get("AI_TRADE_STRICT_WORKBENCH") == "1")
+
+
+def data_root(value: str, *, must_exist: bool = True) -> Path:
+    """Formal local data lives outside every Git checkout and OS Temp.
+
+    This function validates only. Even a missing root is never created here.
+    """
+    if not isinstance(value, str) or not value.strip() or value != value.strip():
+        raise ValueError("AI_TRADE_DATA_ROOT requires an absolute data directory")
+    configured = Path(value).expanduser()
+    if not configured.is_absolute():
+        raise ValueError("AI_TRADE_DATA_ROOT requires an absolute data directory")
+    absolute = configured.absolute()
+    resolved = configured.resolve(strict=must_exist)
+    if absolute != resolved or configured.is_symlink():
+        raise ValueError("data directory links/ambiguous paths are forbidden")
+    if (((must_exist or resolved.exists()) and not resolved.is_dir()) or resolved.is_relative_to(Path(tempfile.gettempdir()).resolve())
+            or any((p / ".git").exists() for p in (resolved, *resolved.parents))):
+        raise ValueError("data directory must be outside Git and Temp")
+    return resolved
+
+
+def workbench_root(environ: Mapping[str, str] | None = None) -> Path:
+    env = os.environ if environ is None else environ
+    if "AI_TRADE_DATA_ROOT" in env:
+        sqlite_root = data_root(env["AI_TRADE_DATA_ROOT"]) / "sqlite"
+        if sqlite_root.is_symlink() or sqlite_root.resolve() != sqlite_root:
+            raise ValueError("sqlite directory links outside data root are forbidden")
+        root = persistent_root(str(sqlite_root))
+        if "AI_TRADE_WORKBENCH_ROOT" in env:
+            alias = env["AI_TRADE_WORKBENCH_ROOT"]
+            if not alias.strip() or not Path(alias).is_absolute() or Path(alias).resolve() != root:
+                raise ValueError("AI_TRADE_WORKBENCH_ROOT conflicts with AI_TRADE_DATA_ROOT/sqlite")
+        return root
+    # Preserve the explicit Linux deployment interface. The local strict
+    # Windows entry point must opt in to the independent data root, never fall
+    # back to a previously inherited checkout-owned database.
+    if sys.platform == "win32" and env.get("AI_TRADE_STRICT_WORKBENCH") == "1":
+        raise ValueError("正式工作台未配置 AI_TRADE_DATA_ROOT；停止，不回退临时库或旧库")
     raw = env.get("AI_TRADE_WORKBENCH_ROOT", "")
     if not raw.strip() or not Path(raw).is_absolute():
         raise ValueError("formal workbench requires absolute AI_TRADE_WORKBENCH_ROOT")
-    root = persistent_root(raw)
+    return persistent_root(raw)
+
+
+def workbench_config(environ: Mapping[str, str] | None = None) -> DatabaseConfig:
+    env = os.environ if environ is None else environ
+    root = workbench_root(env)
     path = root / "workbench.sqlite3"
     if not path.is_file() or path.is_symlink():
         raise ValueError(f"existing regular workbench database required: {path}")

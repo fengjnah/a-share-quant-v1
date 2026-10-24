@@ -1,0 +1,538 @@
+{
+  "task": "TASK-M0-DATA-DIRECTORY-RELOCATION-001",
+  "status": "PARTIAL",
+  "baseline_main": "04e530871e2c8b4889c60027ac8d1ec4275009a2",
+  "executor": {
+    "model": "gpt-6.1-sol",
+    "reasoning": "medium",
+    "runtime_evidence_timestamp": "2026-10-24T04:22:52.104Z",
+    "user_confirmed": "本任务固定使用当前 medium 实施",
+    "classification": "H",
+    "delegated": false,
+    "budget_minutes": 120,
+    "cost": "UNKNOWN"
+  },
+  "phase_a_database": {
+    "at": "2026-10-24T04:25:06.297593+00:00",
+    "uri_mode": "ro",
+    "query_only": 1,
+    "connected_path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+    "journal_mode": "delete",
+    "integrity_check": [
+      "ok"
+    ],
+    "foreign_key_check": [],
+    "migrations": [
+      {
+        "version": 1,
+        "name": "daily_bar_foundation",
+        "checksum": "c6d31829bdef4ad9c6f45279c7696cfe94ac6acb9ff016c59320298b8e8dc0bd",
+        "applied_at": "2026-10-21T14:43:53.601589+00:00"
+      },
+      {
+        "version": 2,
+        "name": "security_master_and_calendar",
+        "checksum": "a4a5c6b2bbf2008d1f452610ecc3213de3dc4fbfe62daa0f55c161e36ef88125",
+        "applied_at": "2026-10-21T14:43:53.603654+00:00"
+      }
+    ],
+    "table_count": 7,
+    "counts": {
+      "calendar_versions": 0,
+      "daily_bar_versions": 0,
+      "daily_bars": 0,
+      "ingestion_runs": 0,
+      "instruments": 0,
+      "schema_migrations": 2,
+      "security_versions": 0
+    },
+    "explicit_object_counts": {
+      "table": 7,
+      "index": 12,
+      "trigger": 17
+    },
+    "ddl_sha256": "f5f21f32d7aa1fed4b976bd1ac4c609cdb4c2ca7811b2234574794ba71abdf5d",
+    "before": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+        "exists": true,
+        "is_link": false,
+        "bytes": 147456,
+        "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+        "exists": false,
+        "is_link": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+        "exists": false,
+        "is_link": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+        "exists": false,
+        "is_link": false
+      }
+    ],
+    "after": [
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3",
+        "exists": true,
+        "is_link": false,
+        "bytes": 147456,
+        "sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64"
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-wal",
+        "exists": false,
+        "is_link": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-shm",
+        "exists": false,
+        "is_link": false
+      },
+      {
+        "path": "F:\\codex-agnes\\AI-trade\\data\\sqlite\\workbench.sqlite3-journal",
+        "exists": false,
+        "is_link": false
+      }
+    ],
+    "file_state_unchanged": true
+  },
+  "phase_a_exact_ddl_match": {
+    "sql_objects": 36,
+    "table_count": 7,
+    "index_count": 12,
+    "trigger_count": 17,
+    "matched_released_main": true,
+    "created_reference_database": false
+  },
+  "phase_a_processes": {
+    "checked_at": "2026-10-24T04:25:46.897187+00:00",
+    "listener_pid": 19676,
+    "parent_python_pid": 19440,
+    "workspace": "F:/codex-agnes/AI-trade-dev",
+    "environment_whitelist": {
+      "AI_TRADE_WORKBENCH_ROOT": "F:/codex-agnes/AI-trade/data/sqlite",
+      "QUANT_DB_PATH": "F:/codex-agnes/AI-trade/data/sqlite/workbench.sqlite3",
+      "AI_TRADE_READ_ONLY": "1",
+      "AI_TRADE_STRICT_WORKBENCH": "1",
+      "QUANT_DB_ENV": "local",
+      "QUANT_DB_JOURNAL": "DELETE",
+      "AI_TRADE_DATA_ROOT": null,
+      "PYTHONPATH": "F:/codex-agnes/AI-trade-dev/src"
+    },
+    "method": "Reviewed pre-existing x64 PEB QUERY_INFORMATION|VM_READ probe, bounded64KB, historical file writer removed in memory, whitelist-only stdout",
+    "other_db_holders": "UNKNOWN",
+    "quiescence_confirmed": false
+  },
+  "phase_a_target": {
+    "path": "F:/codex-agnes/AI-trade-data",
+    "existed": false,
+    "created": false
+  },
+  "git_protection": {
+    "dev_branch": "main",
+    "dev_sha": "04e530871e2c8b4889c60027ac8d1ec4275009a2",
+    "dev_clean": true,
+    "existing_worktrees": 25,
+    "existing_stashes": 2,
+    "untouched_dirty_checkouts": [
+      "F:/codex-agnes/AI-trade",
+      "F:/codex-agnes/AI-trade-main-demo"
+    ]
+  },
+  "dependencies": {
+    "pr47": {
+      "state": "merged",
+      "base": "c4b682d12c7c8dc42f75e717b855238f635ce05b",
+      "head": "149c2df1ee880ef60500031751ddc38deffa3351",
+      "merge": "603715b08b40dfa33ff75987bd21f5d193f7e5a1"
+    },
+    "pr51": {
+      "state": "draft_open_unmerged",
+      "head": "29d11241b8f33f7d12214d1ea100bc8e504fc07d",
+      "not_imported": true
+    }
+  },
+  "phase_b_tests": {
+    "status": "PASSED_WITH_DECLARED_SKIPS",
+    "code_sha": "6e5f2d6432461bc30064ca55382c02759cf3095a",
+    "command": "python -m pytest -q --junitxml=artifacts/m0-data-directory-relocation-001/offline.xml",
+    "exit_code": 0,
+    "passed": 2931,
+    "failed": 0,
+    "skipped": 4,
+    "seconds": 292.69,
+    "suite": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "4",
+      "tests": "2935",
+      "time": "292.649",
+      "timestamp": "2026-10-24T12:38:50.053056+08:00"
+    },
+    "skip_reasons": [
+      "one real AKShare integration not enabled",
+      "three Windows symlink privilege 1314; actual directory junction checks passed"
+    ],
+    "targeted": [
+      {
+        "file": "targeted-1.log",
+        "passed": 92,
+        "skipped": 3,
+        "exit_code": 0,
+        "seconds": 12.35
+      },
+      {
+        "file": "targeted-2-junction.log",
+        "passed": 42,
+        "skipped": 3,
+        "exit_code": 0,
+        "seconds": 6.44
+      }
+    ],
+    "dependency_check": {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "output": "No broken requirements found."
+    },
+    "ui_type": "isolated Streamlit AppTest, not live8524 browser acceptance",
+    "production_paths_used_by_tests": false,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "phase_c_d": {
+    "formal_database_relocated": false,
+    "new_data_root_created": false,
+    "main_modified": false,
+    "existing_8524_restarted": false,
+    "independent_review_executed": false,
+    "formal_backup_or_restore_executed": false,
+    "aws_modified": false,
+    "live_market_requests": 0,
+    "requires": [
+      "independent H on final SHA",
+      "human merge and clean main update",
+      "confirm stopped readers/writers and database identity",
+      "backup and isolated restore before target",
+      "actual main UI path/read-only/refresh/rollback evidence"
+    ]
+  },
+  "native_push": {
+    "shell_exit": 1,
+    "error": "Invalid username or token / Authentication failed",
+    "credentials_modified": false,
+    "global_config_modified": false,
+    "fallback": "authenticated GitHub connector with exact tree verification"
+  },
+  "logs": [
+    {
+      "path": "artifacts/m0-data-directory-relocation-001/offline.log",
+      "bytes": 3789,
+      "sha256": "3f3618602ccc29d570877ddebedb885d72862be9801262aff90c86c986689fe0"
+    },
+    {
+      "path": "artifacts/m0-data-directory-relocation-001/offline.xml",
+      "bytes": 534920,
+      "sha256": "38aeec40981a2dacbf225b66198b7de311ca3a335ed2c21732f2fc6c84206c89"
+    },
+    {
+      "path": "artifacts/m0-data-directory-relocation-001/pip-check.log",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "artifacts/m0-data-directory-relocation-001/targeted-1.log",
+      "bytes": 370,
+      "sha256": "b0f7f0f0b6b6a62e8fadb406f88ffeff4cc468d2401e341dd70783ef82653444"
+    },
+    {
+      "path": "artifacts/m0-data-directory-relocation-001/targeted-2-junction.log",
+      "bytes": 288,
+      "sha256": "d1985065b4954d36498848b1b514b989af9fceeef0cba874346eff5e7b81a7b2"
+    }
+  ],
+  "tested_sources": [
+    {
+      "path": "scripts/start_workbench.ps1",
+      "working_sha256": "64578bf5452b923f99a21e59f37c36105ed89727722bb2609b576c10d08836d6",
+      "git_blob_sha1": "7aa3bc1bff87d7280dc45dca1963d9736d2cc706",
+      "committed_sha256": "79180d6441b8e28d1451fc6d99c5bec158a67c54903e087ea703bf15b19db47a"
+    },
+    {
+      "path": "src/ai_trade/demo_app.py",
+      "working_sha256": "c0a5f01270ce73d9bfb9aec71749b027759237d6fa5194e997d5b24edcfc72ed",
+      "git_blob_sha1": "2578ef36cdbe972437f2fc85bb8e15655fc65ae1",
+      "committed_sha256": "0687b18d150202d8d37a72319ae2cdedb400bc8a1e1dd2ba1b922144a8cd0d02",
+      "symbols": [
+        {
+          "name": "get_demo_root",
+          "line": 34
+        },
+        {
+          "name": "get_components",
+          "line": 43
+        },
+        {
+          "name": "proxy_configuration_label",
+          "line": 56
+        },
+        {
+          "name": "record_collect_click",
+          "line": 64
+        }
+      ]
+    },
+    {
+      "path": "src/ai_trade/storage/db.py",
+      "working_sha256": "26ecc639f5b990b19fa6533b71441ae53247523c73e2ba947e478b8ffc5a1260",
+      "git_blob_sha1": "0fd11076ac7c2af1d779ef492db8274cf91b4f91",
+      "committed_sha256": "bb3460a883650fbfc275115dcadde8d5761e4931df04dccd895b590661573dbe",
+      "symbols": [
+        {
+          "name": "DatabaseConfig",
+          "line": 16
+        },
+        {
+          "name": "Database",
+          "line": 57
+        },
+        {
+          "name": "__post_init__",
+          "line": 26
+        },
+        {
+          "name": "from_env",
+          "line": 40
+        },
+        {
+          "name": "__init__",
+          "line": 60
+        },
+        {
+          "name": "connection",
+          "line": 64
+        },
+        {
+          "name": "transaction",
+          "line": 94
+        },
+        {
+          "name": "initialize",
+          "line": 107
+        }
+      ]
+    },
+    {
+      "path": "src/ai_trade/storage/relocation.py",
+      "working_sha256": "ef6d077ab841cd8cd7ec3203fa3a83a105561697c48dab3448022ce82dd4c5d5",
+      "git_blob_sha1": "b1b3fe488d4c47fc657f3c3d3b29d85196268f91",
+      "committed_sha256": "ef6d077ab841cd8cd7ec3203fa3a83a105561697c48dab3448022ce82dd4c5d5",
+      "symbols": [
+        {
+          "name": "reader",
+          "line": 19
+        },
+        {
+          "name": "inventory",
+          "line": 26
+        },
+        {
+          "name": "_new_path",
+          "line": 46
+        },
+        {
+          "name": "relocate",
+          "line": 54
+        },
+        {
+          "name": "main",
+          "line": 113
+        },
+        {
+          "name": "unchanged",
+          "line": 82
+        },
+        {
+          "name": "copy_and_verify",
+          "line": 86
+        }
+      ]
+    },
+    {
+      "path": "src/ai_trade/storage/workbench.py",
+      "working_sha256": "e3c84a2207c1d9a6d1ded81b325b3c45f580f20b90a32609898c2fdc096c60a4",
+      "git_blob_sha1": "77378b00f700c1a6c9ceb6f81dba5b4cd1f5ebb1",
+      "committed_sha256": "7b7ab57b780c1d1bed269e2458c837f20325d4498ee0f115ce71bb9a564c891c",
+      "symbols": [
+        {
+          "name": "persistent_root",
+          "line": 16
+        },
+        {
+          "name": "is_workbench",
+          "line": 33
+        },
+        {
+          "name": "data_root",
+          "line": 39
+        },
+        {
+          "name": "workbench_root",
+          "line": 59
+        },
+        {
+          "name": "workbench_config",
+          "line": 82
+        },
+        {
+          "name": "_objects",
+          "line": 101
+        },
+        {
+          "name": "expected_objects",
+          "line": 108
+        },
+        {
+          "name": "inspect_database",
+          "line": 121
+        }
+      ]
+    },
+    {
+      "path": "tests/manual/test_workbench_offline.py",
+      "working_sha256": "651299314df4152503f1b2b9c7e3cff5cb4c7bb49b2238b1f44aff7e28d8da4b",
+      "git_blob_sha1": "c5120e1874fc171455a0f9b9126b1ed1eadabcfb",
+      "committed_sha256": "80acdd4004b942040ad910a122e6067f1cdc12b08b2e798154e40e7bd2d389c0",
+      "symbols": [
+        {
+          "name": "test_strict_workbench_all_pages_and_missing_store",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_data_directory_config.py",
+      "working_sha256": "48962172a4eca3d13bde3eca9c96dbe44ede1d322e5fdec2b82de8b7eeaf5a1b",
+      "git_blob_sha1": "b4b9dece068950420c37f2196c317fa1afcc2687",
+      "committed_sha256": "48962172a4eca3d13bde3eca9c96dbe44ede1d322e5fdec2b82de8b7eeaf5a1b",
+      "symbols": [
+        {
+          "name": "formal",
+          "line": 16
+        },
+        {
+          "name": "sha",
+          "line": 24
+        },
+        {
+          "name": "test_new_root_is_single_source_and_never_depends_on_cwd",
+          "line": 27
+        },
+        {
+          "name": "test_alias_and_profile_conflicts_do_not_choose_another_database",
+          "line": 45
+        },
+        {
+          "name": "test_old_absolute_alias_cannot_override_new_root",
+          "line": 52
+        },
+        {
+          "name": "test_missing_primary_never_falls_back_to_valid_legacy_or_creates",
+          "line": 60
+        },
+        {
+          "name": "test_default_readonly_cannot_initialize_or_write",
+          "line": 70
+        },
+        {
+          "name": "test_strict_windows_requires_new_root_but_linux_explicit_interface_remains",
+          "line": 83
+        },
+        {
+          "name": "test_data_root_inside_git_or_temp_is_rejected",
+          "line": 91
+        },
+        {
+          "name": "test_links_cannot_redirect_formal_data",
+          "line": 99
+        },
+        {
+          "name": "test_launcher_has_new_default_and_preserves_main_guard",
+          "line": 112
+        },
+        {
+          "name": "test_windows_junction_cannot_redirect_data_without_symlink_privilege",
+          "line": 122
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_data_directory_relocation.py",
+      "working_sha256": "1743f895c274d5475c27a17381b80496dd18a9700f9f5da149d85b2c0b46c605",
+      "git_blob_sha1": "507ef49f3adf743a0230ff76093babf4ba5bcb7c",
+      "committed_sha256": "1743f895c274d5475c27a17381b80496dd18a9700f9f5da149d85b2c0b46c605",
+      "symbols": [
+        {
+          "name": "setup",
+          "line": 14
+        },
+        {
+          "name": "test_nonempty_v2_backup_restore_relocate_and_explicit_rollback",
+          "line": 24
+        },
+        {
+          "name": "test_unknown_destination_or_sidecar_is_never_overwritten",
+          "line": 41
+        },
+        {
+          "name": "test_missing_ack_wrong_identity_and_traversal_stop_before_creation",
+          "line": 53
+        },
+        {
+          "name": "test_source_sidecars_are_preserved_and_block_maintenance",
+          "line": 60
+        },
+        {
+          "name": "test_failed_api_step_keeps_evidence_without_switching_or_cleaning",
+          "line": 67
+        },
+        {
+          "name": "test_detects_concurrent_source_change_without_creating_target",
+          "line": 81
+        },
+        {
+          "name": "test_unversioned_or_drifted_source_cannot_be_adopted",
+          "line": 93
+        },
+        {
+          "name": "copy",
+          "line": 69
+        },
+        {
+          "name": "changing",
+          "line": 83
+        }
+      ]
+    }
+  ],
+  "protected_paths_no_diff": true,
+  "after_tests": {
+    "at": "2026-10-24T04:45:02.088133+00:00",
+    "formal_sha256": "48511c2092d0e08c02e9384647e5d51365feb04232248f7b95e0df1b5c998f64",
+    "formal_bytes": 147456,
+    "formal_sidecars": {
+      "-wal": false,
+      "-shm": false,
+      "-journal": false
+    },
+    "target_root_exists": false,
+    "dev_branch": "main",
+    "dev_sha": "04e530871e2c8b4889c60027ac8d1ec4275009a2",
+    "dev_status": ""
+  }
+}
