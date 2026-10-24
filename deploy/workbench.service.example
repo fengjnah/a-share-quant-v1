@@ -1,4 +1,4 @@
-# Reference only: reconcile with an EXISTING service. Never overwrite the Java/bazi service.
+# Install under a new, dedicated name only after checking existing services. Preserve Java/bazi.
 [Unit]
 Description=Private A-share research workbench
 After=network.target
@@ -18,8 +18,12 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
 ReadWritePaths=/var/lib/a-share-quant-workbench
-MemoryMax=450M
-CPUQuota=70%
+MemoryMax=240M
+# t3.micro baseline is 0.2 vCPU in total; keep display workload below it.
+CPUQuota=20%
+TasksMax=64
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=100
 
 [Install]
 WantedBy=multi-user.target
