@@ -8,6 +8,9 @@ ROLES = {'price_row':{'index_bar','daily_bar'}, 'calendar_row':{'calendar','mark
          'status':{'security_state'},'security':{'security'},'cffex_report':{'cffex_report'}}
 CHECK_ROLES={'quality','source_verification','research_authorization','time_verification',
              'universe_verification','scope_verification','publication_verification','review'}
+# Same purposes required by persisted market-input gates. Receipt authenticity
+# alone never grants permission to store and use an input for M3 research.
+ANALYSIS_RECEIPT_USES=frozenset({'research','storage'})
 
 
 def snapshot_hash(parent,items,checks):
@@ -38,6 +41,8 @@ class SnapshotRepository(MarketInputRepository):
         self.evidence_bytes(d['evidence_id'],c)
         warnings=[]
         if d['decision']!='VERIFIED' or not self._trusted(d): warnings.append('RECEIPT_'+d['decision'])
+        if d['scope_type']!='REVIEW' and not ANALYSIS_RECEIPT_USES.issubset(claims['allowed_uses']):
+            warnings.append('RECEIPT_USE_NOT_AUTHORIZED:'+check['check_role'])
         return d,warnings
 
     def seal_snapshot(self, *, analysis_date, as_of, mode, scope, items, checks=(), selection_policy_version='m3-explicit-inputs-v1', blocking_reasons=()):

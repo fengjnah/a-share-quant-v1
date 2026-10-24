@@ -144,12 +144,32 @@ class MarketInputRepository(CatalogRepository):
             if seen!=expected or len(seen)!=r['contributing_count'] or abs(total-r['market_amount_cny'])>2*math.ulp(total): raise ValueError('amount provenance/total mismatch')
         return self._write([p],batch,returned_rows=1,validate=validate)[0]
 
-    @audited_write
     def save_cffex(self, payload, record, provenance, *, batch, calendar_version_ids, scope_evidence_id=None):
         """Only the approved complete named subset. Other files remain evidence."""
+        from ai_trade.m3_store_catalog import Batch
+        evidence=None
+        try:
+            with self.database.connection() as c:
+                previous=c.execute('SELECT outcome FROM ingestion_attempts WHERE attempt_id=?',(batch.attempt_id,)).fetchone()
+            if previous is not None and previous[0] in ('FAILED','BLOCKED'):
+                raise ValueError('attempt already finalized; retry with a new attempt ID')
+            evidence=self.put_evidence(payload,evidence_kind='synthetic' if provenance.evidence_kind=='synthetic' else 'source_payload',media_type='text/csv',captured_at=provenance.observed_at)
+            return self._save_cffex(payload,record,provenance,batch=batch,calendar_version_ids=calendar_version_ids,scope_evidence_id=scope_evidence_id,evidence=evidence)
+        except Exception as original:
+            if isinstance(batch,Batch):
+                try:
+                    with self.database.connection() as c:
+                        exists=c.execute('SELECT 1 FROM ingestion_attempts WHERE attempt_id=?',(batch.attempt_id,)).fetchone()
+                    if not exists:
+                        self.record_attempt(batch,outcome='FAILED',error_code=type(original).__name__,evidence_id=evidence)
+                except Exception as audit_error:
+                    raise ValueError('input rejected; failure audit also failed: '+type(audit_error).__name__) from original
+            raise
+
+    def _save_cffex(self, payload, record, provenance, *, batch, calendar_version_ids, scope_evidence_id, evidence):
+        """Validate only after the exact response is archived for failure audit."""
         from ai_trade.market_data.cffex_rankings import parse, build_record
         from ai_trade.market_data.cffex_rankings_models import CffexRankingsRequest
-        evidence=self.put_evidence(payload,evidence_kind='synthetic' if provenance.evidence_kind=='synthetic' else 'source_payload',media_type='text/csv',captured_at=provenance.observed_at)
         request=CffexRankingsRequest(record.exchange,record.variety,record.trade_date)
         fmt,parsed=parse(payload,request)
         if fmt!='named' or any(not r.member for r in parsed):
@@ -173,7 +193,7 @@ class MarketInputRepository(CatalogRepository):
             if p[0][key]!=stamp(getattr(record,key)): raise ValueError('report time envelope mismatch')
         def finalize(c,ids):
             insert(c,'quality_assessments',dict(assessment_id='cffex-lineage:'+ids[0],data_version_id=ids[0],rules_version='m3-cffex-lineage-v1',assessed_at=self._now(),decision='UNKNOWN',reasons_json=['SOURCE_SCOPE_PUBLICATION_REQUIRE_INDEPENDENT_VERIFICATION'],metrics_json={'schema_version':'m3-quality-v1','lineage_evidence_id':manifest_id},evidence_id=manifest_id))
-        return self._write([p],batch,returned_rows=len(parsed),finalize=finalize)[0]
+        return self._write([p],batch,returned_rows=len(parsed),finalize=finalize,failure_evidence_id=evidence)[0]
 
     def ranking_calendar(self, version_ids):
         from ai_trade.market_data.cffex_rankings_models import RankingSessionDay

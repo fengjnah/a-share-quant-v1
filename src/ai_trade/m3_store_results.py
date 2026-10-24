@@ -16,7 +16,7 @@ from ai_trade.market_analysis_contract import (
     Admission, CALCULATION_VERSION, CONTRACT_VERSION, Diagnostic, Status,
     strategy_admission,
 )
-from ai_trade.m3_store_snapshots import SnapshotRepository
+from ai_trade.m3_store_snapshots import ANALYSIS_RECEIPT_USES, SnapshotRepository
 from ai_trade.m3_store_values import canonical, digest, fields, insert, one, rows, stamp, text
 
 
@@ -106,6 +106,8 @@ class M3ResultRepository(SnapshotRepository):
                     continue
                 if receipt.verified and any(r not in receipts or receipts[r]['claims_json']['claim_type']!=role or receipts[r]['decision']!='VERIFIED' for r in receipt.refs):
                     raise ValueError('core verification must bind frozen matching receipts')
+                if receipt.verified and any(not ANALYSIS_RECEIPT_USES.issubset(receipts[r]['claims_json']['allowed_uses']) for r in receipt.refs):
+                    raise ValueError('core verification receipt uses do not authorize research/storage')
             value=d.to_dict(); canonical(value)
             gate=strategy_admission(d,implementation_sha=code_sha,review=review)
             result.append(fields('m3_diagnostics',dict(analysis_run_id=run_id,indicator=key,
